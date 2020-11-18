@@ -9,6 +9,7 @@ import { TasksComponent } from './pages/tasks/tasks.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
+import { AppHeaderComponent } from './components/app-header/app-header.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TaskDetailsComponent } from './pages/task-details/task-details.componen
     StatisticsComponent,
     ProjectDetailsComponent,
     TaskDetailsComponent,
-    LoginComponent
+    LoginComponent,
+    AppHeaderComponent
   ],
   imports: [
     BrowserModule,
