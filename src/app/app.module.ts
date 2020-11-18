@@ -11,6 +11,8 @@ import { ProjectDetailsComponent } from './pages/project-details/project-details
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProjectDetailsComponent,
     TaskDetailsComponent,
     LoginComponent,
-    AppHeaderComponent
+    AppHeaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
