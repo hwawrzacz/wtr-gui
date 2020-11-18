@@ -10,6 +10,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AppHeaderComponent } from './components/app-header/app-header.component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
