@@ -8,18 +8,8 @@ import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
 })
 export class SidenavComponent implements OnInit {
 
-  @ViewChild('drawer')
-  private drawer: MatSidenav;
-
   constructor() { }
 
   ngOnInit(): void {
-    this.drawer.toggle();
   }
-
-  public toggle() {
-    console.log(this.drawer);
-    console.log('toggle');
-  }
-
 }
