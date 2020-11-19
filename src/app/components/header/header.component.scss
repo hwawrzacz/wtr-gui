@@ -7,3 +7,10 @@ mat-toolbar {
 button {
   margin-right: $icon-margin;
 }
+
+h1 {
+  width: 100%;
+  padding-right: calc(#{$icon-width} + #{$icon-margin});
+
+  text-align: center;
+}
