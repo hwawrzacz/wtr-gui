@@ -4,6 +4,7 @@
     <app-sidenav></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
-    <button (click)="toggleSidenav()">Toggle</button>
+    <button mat-raised-button (click)="toggleSidenav()">Toggle</button>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
