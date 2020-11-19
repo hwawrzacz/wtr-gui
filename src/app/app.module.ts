@@ -9,10 +9,13 @@ import { TasksComponent } from './pages/tasks/tasks.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
-import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { AppHeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -24,13 +27,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     TaskDetailsComponent,
     LoginComponent,
     AppHeaderComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

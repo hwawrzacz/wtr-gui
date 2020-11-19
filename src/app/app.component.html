@@ -1,4 +1,9 @@
 <app-header></app-header>
-<p>sidebar</p>
-
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav mode="push">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button (click)="toggleSidenav()">Toggle</button>
+  </mat-sidenav-content>
+</mat-sidenav-container>

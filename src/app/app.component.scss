@@ -1,0 +1,9 @@
+@import '../variables';
+
+mat-sidenav-container {
+  height: calc(100vh - #{$app-header-height});
+}
+
+mat-sidenav {
+  width: $sidenav-width;
+}
