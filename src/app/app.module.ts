@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { MatListModule } from '@angular/material/list';
 
 @NgModule({
@@ -27,7 +27,7 @@ import { MatListModule } from '@angular/material/list';
     TaskDetailsComponent,
     LoginComponent,
     AppHeaderComponent,
-    SidebarComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,

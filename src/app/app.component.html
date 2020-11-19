@@ -1,4 +1,10 @@
 <app-header></app-header>
-<p>sidebar</p>
-
-<router-outlet></router-outlet>
+<mat-sidenav-container style="height: 500px;">
+  <!-- <app-sidenav></app-sidenav> -->
+  <mat-sidenav #sidenav>
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button (click)="toggleSidenav()">Toggle</button>
+  </mat-sidenav-content>
+</mat-sidenav-container>
