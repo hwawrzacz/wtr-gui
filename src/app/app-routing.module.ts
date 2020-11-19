@@ -5,6 +5,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
+import { UsersComponent } from './pages/users/users.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'tasks', component: TasksComponent },
   { path: 'projects/:id', component: ProjectDetailsComponent },
   { path: 'tasks/:id', component: TaskDetailsComponent },
+  { path: 'users', component: UsersComponent },
   { path: 'statistics', component: StatisticsComponent }
 ];
 
