@@ -1,5 +1,6 @@
 <mat-toolbar color="primary">
-  <!-- TODO (hwawrzacz): Replace with company logo -->
-  <mat-icon>building</mat-icon>
+  <button mat-icon-button (click)="emitToggleSidenav()">
+    <mat-icon>{{ iconName }}</mat-icon>
+  </button>
   <h1>Somecompany</h1>
 </mat-toolbar>

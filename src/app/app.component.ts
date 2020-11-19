@@ -1,13 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   title = 'wtr-gui';
 
   @ViewChild(MatSidenav)
@@ -15,11 +14,11 @@ export class AppComponent implements AfterViewInit {
 
   constructor() { }
 
-  ngAfterViewInit() {
-    this.sidenav.toggle();
+  get sidenavOpened(): boolean {
+    return this.sidenav ? this.sidenav.opened : false;
   }
 
-  toggleSidenav() {
+  toggleSidenav(): void {
     this.sidenav.toggle();
   }
 }
