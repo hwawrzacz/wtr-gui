@@ -1,3 +1,5 @@
-mat-icon {
-  margin-right: 24px;
+@import '../../../variables';
+
+mat-toolbar {
+  height: $app-header-height;
 }
