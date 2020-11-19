@@ -1,6 +1,6 @@
-<app-header></app-header>
+<app-header [sidenavOpened]="sidenavOpened" (toggleSidenav)="toggleSidenav()"></app-header>
 <mat-sidenav-container>
-  <mat-sidenav mode="push">
+  <mat-sidenav mode="side">
     <app-sidenav></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>

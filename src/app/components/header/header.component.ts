@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +6,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
-
   constructor() { }
+
+  @Input()
+  sidenavOpened: boolean;
+
+  @Output()
+  toggleSidenav = new EventEmitter();
+
+  get iconName(): string {
+    return this.sidenavOpened ? 'chevron_left' : 'menu';
+  }
 
   ngOnInit(): void {
   }
 
+  emitToggleSidenav() {
+    this.toggleSidenav.emit();
+  }
 }
