@@ -1,0 +1,35 @@
+@import '../../../variables';
+
+header {
+  margin-bottom: $h1-margin-bottom;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  h1 {
+    margin-bottom: 0 !important;
+  };
+
+  button {
+    margin-left: $header-button-margin;
+  } 
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-infix {
+  padding: .5em 0 1em 0 !important;
+}
+
+table {
+  width: 100%;
+
+  td, 
+  th {
+    &:not(:first-child) {
+      text-align: center;
+    }
+  }
+}

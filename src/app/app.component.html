@@ -1,10 +1,10 @@
-<app-header [sidenavOpened]="sidenavOpened" (toggleSidenav)="toggleSidenav()"></app-header>
+<app-header [sidenavOpened]="sidenavOpened" (toggleSidenav)="toggleSidenav()">
+</app-header>
 <mat-sidenav-container>
-  <mat-sidenav mode="side">
+  <mat-sidenav [mode]="sidenavMode">
     <app-sidenav></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
-    <button mat-raised-button (click)="toggleSidenav()">Toggle</button>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
