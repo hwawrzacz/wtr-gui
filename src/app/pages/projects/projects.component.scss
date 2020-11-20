@@ -21,4 +21,11 @@ mat-form-field {
 
 table {
   width: 100%;
+
+  td, 
+  th {
+    &:not(:first-child) {
+      text-align: center;
+    }
+  }
 }

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Project } from 'src/app/model/project';
 
 export interface ColumnDefinition {
+  defName: string;
   displayName: string;
   propertyName: string;
 }
 
 export interface ActionDefinition {
   icon: string;
-  action: () => void;
+  action: (id: number) => void;
   color?: string;
-  toolip?: string;
+  tooltip?: string;
 }
 
 @Component({
@@ -18,28 +19,56 @@ export interface ActionDefinition {
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent {
   private _pageTitle: string;
-  private _columnsDefinitions = [
+  private _columnsDefinitions: ColumnDefinition[] = [
     {
+      defName: 'id',
       displayName: 'ID',
       propertyName: 'stringId',
     },
     {
+      defName: 'title',
       displayName: 'Title',
       propertyName: 'title',
     },
     {
+      defName: 'manager',
       displayName: 'Manager',
       propertyName: 'manager',
     },
     {
+      defName: 'employees',
       displayName: 'Employees',
       propertyName: 'workersCount',
     },
   ];
 
-  private _actionsDefinitions = []
+  private _actionsDefinitions: ActionDefinition[] = [
+    {
+      icon: 'pie_chart',
+      action: (id: number) => {
+        console.log(`statistics for ${id}`);
+      },
+      color: 'primary',
+      tooltip: 'Show statistics'
+    },
+    {
+      icon: 'edit',
+      action: (id: number) => {
+        console.log(`edit ${id}`);
+      },
+      tooltip: 'Edit item'
+    },
+    {
+      icon: 'delete',
+      action: (id: number) => {
+        console.log(`delete ${id}`);
+      },
+      color: 'warn',
+      tooltip: 'Delete item'
+    }
+  ]
 
   private _dataSource: Project[] = [
     {
@@ -60,7 +89,9 @@ export class ProjectsComponent implements OnInit {
     }
   ]
 
-  constructor() { }
+  constructor() {
+    this._pageTitle = 'Projects';
+  }
 
   get pageTitle(): string {
     return this._pageTitle;
@@ -71,15 +102,18 @@ export class ProjectsComponent implements OnInit {
   }
 
   get columnsToDisplay(): string[] {
-    return this._columnsDefinitions.map(item => item.displayName);
+    return this._columnsDefinitions.map(item => item.defName).concat(this.actionsDefined ? 'actions' : null).filter(col => !!col);
   }
 
-  get columnsDefinitions(): any[] {
+  get columnsDefinitions(): ColumnDefinition[] {
     return this._columnsDefinitions;
   }
 
-  ngOnInit(): void {
-    this._pageTitle = 'Projects';
+  get actionsDefinitions(): ActionDefinition[] {
+    return this._actionsDefinitions;
   }
 
+  get actionsDefined(): boolean {
+    return this._actionsDefinitions.length > 0;
+  }
 }
