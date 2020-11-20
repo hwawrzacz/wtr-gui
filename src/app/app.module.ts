@@ -25,6 +25,7 @@ import { CommonTableComponent } from './components/common-table/common-table.com
 @NgModule({
   declarations: [
     AppComponent,
+    CommonTableComponent,
     ProjectsComponent,
     TasksComponent,
     StatisticsComponent,
@@ -33,7 +34,6 @@ import { CommonTableComponent } from './components/common-table/common-table.com
     LoginComponent,
     AppHeaderComponent,
     SidenavComponent,
-    CommonTableComponent,
   ],
   imports: [
     BrowserModule,
