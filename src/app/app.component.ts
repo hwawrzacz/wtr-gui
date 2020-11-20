@@ -7,18 +7,32 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'wtr-gui';
+
+  //#region Fields definitions
+  private _title = 'Somecompany';
+  private _sidenavMode = 'side';
 
   @ViewChild(MatSidenav)
-  sidenav: MatSidenav;
+  private _sidenav: MatSidenav;
+  //#endregion
 
   constructor() { }
 
-  get sidenavOpened(): boolean {
-    return this.sidenav ? this.sidenav.opened : false;
+  //#region Getters and setters
+  get title(): string {
+    return this._title;
   }
 
+  get sidenavMode(): string {
+    return this._sidenavMode;
+  }
+
+  get sidenavOpened(): boolean {
+    return this._sidenav ? this._sidenav.opened : false;
+  }
+  //#endregion
+
   toggleSidenav(): void {
-    this.sidenav.toggle();
+    this._sidenav.toggle();
   }
 }
