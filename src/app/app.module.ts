@@ -20,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { CommonTableComponent } from './components/common-table/common-table.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MatTableModule } from '@angular/material/table';
     LoginComponent,
     AppHeaderComponent,
     SidenavComponent,
+    CommonTableComponent,
   ],
   imports: [
     BrowserModule,
