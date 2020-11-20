@@ -1,1 +1,23 @@
-<p>projects works!</p>
+<header>
+  <h1>{{ pageTitle }}</h1>
+  <button mat-stroked-button>
+    <mat-icon>add</mat-icon>
+    <span>Create project</span>
+  </button>
+</header>
+
+<mat-form-field appearance="outline">
+  <mat-icon matPrefix>search</mat-icon>
+  <input matInput type="text" placeholder="Search" />
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource">
+  <ng-container *ngFor="let column of columnsDefinitions" matColumnDef="{{ column['displayName'] }}">
+    <th mat-header-cell *matHeaderCellDef>{{ column.displayName }}</th>
+    <td mat-cell *matCellDef="let project">{{ project[column.propertyName] }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+
+</table>
