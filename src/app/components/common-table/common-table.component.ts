@@ -63,5 +63,9 @@ export class CommonTableComponent<T> {
   get actionsDefined(): boolean {
     return this._actionsDefinitions.length > 0;
   }
+
+  get anyItemExists(): boolean {
+    return this.dataSource ? this.dataSource.data.value.length > 0 : false;
+  }
   //#endregion
 }
