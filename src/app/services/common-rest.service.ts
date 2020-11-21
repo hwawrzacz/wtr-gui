@@ -6,14 +6,6 @@ import { Filter } from '../model/filter';
 import { Pagination } from '../model/pagination';
 import { Project } from '../model/project';
 
-export enum Method {
-  GET = 'get',
-  DELETE = 'delete',
-  PUT = 'put',
-  POST = 'post',
-  PATCH = 'patch'
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -24,12 +16,17 @@ export class CommonRestService<T> {
   // TODO (HW): Remove any type annotation - it is just for testing purposes. Target anotation is T.
   // TODO (HW): Add common request
   public get(query: string, pagination?: Pagination, filters?: Filter[]): Observable<any> {
-    return this.mockGetProjects();
+    return of(
+      this.mockGetProjects()
+        .filter(project => {
+          return project.stringId.includes(query) || project.title.includes(query) || project.description.includes(query);
+        })
+    ).pipe(delay(2000));
   }
 
   // TODO (HW): Remove below
-  private mockGetProjects(): Observable<Project[]> {
-    return of([
+  private mockGetProjects(): Project[] {
+    return [
       {
         id: 1,
         stringId: 'PROJ_1',
@@ -70,6 +67,6 @@ export class CommonRestService<T> {
         manager: 'Cameron Diaz',
         workersCount: 3,
       }
-    ]).pipe(delay(2000));
+    ];
   }
 }
