@@ -1,15 +1,4 @@
-<header>
-  <h1>{{ pageTitle }}</h1>
-  <button mat-stroked-button color="primary">
-    <mat-icon>add</mat-icon>
-    <span>Create {{ themeItemNameSingle }}</span>
-  </button>
-</header>
-
-<mat-form-field appearance="outline">
-  <mat-icon matPrefix>search</mat-icon>
-  <input matInput type="text" placeholder="Search" />
-</mat-form-field>
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
 
 <table mat-table [dataSource]="dataSource">
   <ng-container *ngFor="let column of columnsDefinitions" matColumnDef="{{ column.defName }}">
@@ -29,4 +18,5 @@
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+
 </table>
