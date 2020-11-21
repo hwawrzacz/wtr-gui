@@ -23,6 +23,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { TasksComponent } from './pages/tasks/tasks.component';
     MatFormFieldModule,
     MatTableModule,
     MatInputModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

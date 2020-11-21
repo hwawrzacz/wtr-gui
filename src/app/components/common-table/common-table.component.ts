@@ -47,6 +47,7 @@ export class CommonTableComponent<T> {
 
   @Input('isLoading')
   set isLoading(value: boolean) {
+    console.log(`${value ? '' : 'not '}loading`)
     this._isLoading = value;
   }
 
