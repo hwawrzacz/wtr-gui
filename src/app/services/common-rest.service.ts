@@ -6,6 +6,7 @@ import { Filter } from '../model/filter';
 import { Position } from '../model/model';
 import { Pagination } from '../model/pagination';
 import { Project } from '../model/project';
+import { Query } from '../model/query';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,16 @@ export class CommonRestService<T> {
 
   // TODO (HW): Remove any type annotation - it is just for testing purposes. Target anotation is T.
   // TODO (HW): Add common request
-  public get(query: string, pagination?: Pagination, filters?: Filter[]): Observable<any> {
+  public get(query: Query): Observable<any> {
+    const searchString = query.searchString
     return of(
       this.mockGetProjects()
         .filter(project => {
-          return project.stringId.includes(query) || project.title.includes(query) || project.description.includes(query);
+          return (
+            project.stringId.includes(searchString) ||
+            project.title.includes(searchString) ||
+            project.description.includes(searchString)
+          );
         })
     ).pipe(delay(2000));
   }

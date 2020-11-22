@@ -25,44 +25,4 @@ export class TasksListComponent extends CommonListViewComponent<Task> implements
     this._themeItemNameSingle = 'task'
     this._restService = new TasksListService(http);
   }
-
-  public onStatusFilterChange(event): void {
-    const statuses = event.value;
-    const filter = {
-      name: 'status',
-      value: statuses
-    } as Filter;
-
-    console.log(filter);
-    // this.emitFilterChange();
-  }
-  public onPriorityFilterChange(event): void {
-    const priorities = event.value;
-    const filter = {
-      name: 'priority',
-      value: priorities
-    } as Filter;
-
-    console.log(filter);
-    // this.emitFilterChange();
-  }
-
-  private emitFilterChange(value: Filter) {
-    this.deobunceFilterChange.emit('filter-change');
-  }
-
-  public onQueryChanged(query: Query) {
-    console.log('here');
-
-    console.log(query);
-  }
-
-  // private subscribeToFilterChange(): void {
-  //   fromEvent(this.deobunceFilterChange, 'filter-change').pipe(
-  //     debounceTime(FILTER_DEBOUNCE_TIMEOUT),
-  //     tap(() => {
-  //       this.loadData(query);
-  //     })
-  //   ).subscribe();
-  // }
 }
