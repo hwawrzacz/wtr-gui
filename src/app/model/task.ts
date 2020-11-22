@@ -1,16 +1,6 @@
+import { Priority } from './enums/priority';
+import { Status } from './enums/status';
 import { SimpleEmployee } from './model';
-
-export enum Status {
-  NEW = 'new',
-  IN_PROGRESS = 'in_progress',
-  DONE = 'done',
-}
-
-export enum Priority {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-}
 
 export interface Task {
   id: number;

@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
-import { Priority, Status, Task } from 'src/app/model/task';
+import { Priority, PriorityStringifier } from 'src/app/model/enums/priority';
+import { Status, StatusStringifier } from 'src/app/model/enums/status';
+import { Task } from 'src/app/model/task';
 import { TasksListService } from 'src/app/services/tasks-list.service';
 
 @Component({
@@ -19,28 +21,18 @@ export class TasksListComponent extends CommonListViewComponent<Task> implements
   }
 
   get statuses(): Status[] {
-    return Object.values(Status) as Status[];
+    return StatusStringifier.statusList;
   }
 
   get priorities(): Priority[] {
-    return Object.values(Priority) as Priority[];
+    return PriorityStringifier.prioritiesList;
   }
 
   public getStatusString(value: Status): string {
-    switch (value) {
-      case Status.NEW: return 'New';
-      case Status.IN_PROGRESS: return 'In progress';
-      case Status.DONE: return 'Done';
-      default: return value;
-    }
+    return StatusStringifier.getStatusString(value);
   }
 
   public getPriorityString(value: Priority): string {
-    switch (value) {
-      case Priority.LOW: return 'Low';
-      case Priority.MEDIUM: return 'Medium';
-      case Priority.HIGH: return 'High';
-      default: return value;
-    }
+    return PriorityStringifier.getPriorityString(value);
   }
 }
