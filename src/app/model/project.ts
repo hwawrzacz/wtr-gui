@@ -8,5 +8,5 @@ export interface Project {
   manager: SimpleEmployee;
   workers: number[];
   creationDate: number; // timestamp
-  dutyDate: string; // timestamp
+  dutyDate: number; // timestamp
 }
