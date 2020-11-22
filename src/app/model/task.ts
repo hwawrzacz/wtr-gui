@@ -5,7 +5,7 @@ import { SimpleEmployee } from './model';
 export interface Task {
   id: number;
   title: string;
-  descritpion: string;
+  description: string;
   status: Status;
   priority: Priority;
   workers: number[];

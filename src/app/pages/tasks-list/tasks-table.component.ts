@@ -20,6 +20,11 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
         propertyName: 'title'
       },
       {
+        defName: 'description',
+        displayName: 'Description',
+        propertyName: 'description'
+      },
+      {
         defName: 'status',
         displayName: 'Status',
         propertyName: 'status'
