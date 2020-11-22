@@ -8,7 +8,8 @@
     <mat-form-field appearance="outline" class="filter">
       <mat-label>Status</mat-label>
       <mat-select multiple (selectionChange)="onStatusFilterChange($event)">
-        <mat-option *ngFor="let status of statuses" name="status" [value]="status">{{ getStatusString(status) }}
+        <mat-option *ngFor="let status of statuses" name="status" [value]="status">
+          <span [attr.class]="'status-label status-label--' + status">{{ getStatusString(status) }}</span>
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -17,7 +18,8 @@
       <mat-label>Priority</mat-label>
       <mat-select multiple (selectionChange)="onPriorityFilterChange($event)">
         <mat-option *ngFor="let priority of priorities" name="priority" [value]="priority">
-          {{ getPriorityString(priority) | titlecase }}
+          <span
+            [attr.class]="'priority-label priority-label--' + priority">{{ getPriorityString(priority) | titlecase }}</span>
         </mat-option>
       </mat-select>
     </mat-form-field>

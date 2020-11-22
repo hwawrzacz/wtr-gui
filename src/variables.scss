@@ -6,19 +6,37 @@
 
 /*==== SIZES ====*/
 // Spacing
+$spacing-nano: 2px;
 $spacing-tiny: 4px;
 $spacing-small: 8px;
 $spacing-regular: 16px;
 $spacing-big: 32px;
 $spacing-huge: 64px;
 
+$border-radius: 4px;
+
 // Margins
 $h1-margin-bottom: $spacing-regular;
 $header-button-margin: $spacing-regular;
 $icon-margin: $spacing-regular;
+
+// Paddings
+$status-label-padding: $spacing-nano $spacing-tiny;
 
 // Components
 $sidenav-width: 200px;
 $app-header-height: 64px;
 
 $icon-width: 40px;
+
+/*==== COLORS ====*/
+// General
+$color-red: rgb(211, 0, 0);
+$color-orange: rgb(255, 136, 0);
+$color-yellow: gold;
+$color-green: rgb(0, 200, 0);
+$color-bluegray: rgb(60, 80, 116);
+
+// Text 
+$text-black: rgba(black, .87);
+$text-white: rgba(white, .87);

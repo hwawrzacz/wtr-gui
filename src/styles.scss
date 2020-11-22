@@ -7,3 +7,38 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+// Status label
+.status-label {
+  padding: $status-label-padding;
+  border-radius: $border-radius;
+
+  &--new {
+    background-color: $color-green;
+    color: black;
+  }
+
+  &--in_progress {
+    background-color: gold;
+    color: black;
+  }
+
+  &--done {
+    background-color: $color-bluegray;
+    color: white;
+  }
+}
+
+// Priority
+.priority-label {
+  &--low {
+    color: $color-green;  }
+
+  &--medium {
+    color: $color-orange;
+  }
+
+  &--high {
+    color: $color-red;
+  }
+}
