@@ -1,9 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Task } from '../model/task';
+import { CommonRestService } from './common-rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TasksListService {
+export class TasksListService extends CommonRestService<Task> {
 
-  constructor() { }
+  constructor(http: HttpClient) {
+    super(http);
+    this.url = 'http://someurladdress.com/tasks'
+  }
 }

@@ -1,15 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
+import { Task } from 'src/app/model/task';
+import { TasksListService } from 'src/app/services/tasks-list.service';
 
 @Component({
   selector: 'app-tasks',
-  templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.scss']
+  templateUrl: '../../components/common-list-view/common-list-view.component.html',
+  styleUrls: ['../../components/common-list-view/common-list-view.component.scss']
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent extends CommonListViewComponent<Task> implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(http: HttpClient) {
+    super();
+    this._pageTitle = 'Tasks';
+    this._themeItemNameSingle = 'task'
+    this._restService = new TasksListService(http);
   }
-
 }
