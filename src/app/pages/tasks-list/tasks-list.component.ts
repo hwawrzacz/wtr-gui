@@ -5,11 +5,11 @@ import { Task } from 'src/app/model/task';
 import { TasksListService } from 'src/app/services/tasks-list.service';
 
 @Component({
-  selector: 'app-tasks',
+  selector: 'app-tasks-list',
   templateUrl: '../../components/common-list-view/common-list-view.component.html',
   styleUrls: ['../../components/common-list-view/common-list-view.component.scss']
 })
-export class TasksComponent extends CommonListViewComponent<Task> implements OnInit {
+export class TasksListComponent extends CommonListViewComponent<Task> implements OnInit {
 
   constructor(http: HttpClient) {
     super();

@@ -5,20 +5,16 @@ import { Project } from 'src/app/model/project';
 import { ProjectsListService } from 'src/app/services/projects-list.service';
 
 @Component({
-  selector: 'app-projects',
+  selector: 'app-projects-list',
   templateUrl: '../../components/common-list-view/common-list-view.component.html',
   styleUrls: ['../../components/common-list-view/common-list-view.component.scss']
 })
-export class ProjectsComponent extends CommonListViewComponent<Project> implements OnInit {
+export class ProjectsListComponent extends CommonListViewComponent<Project> {
   constructor(http: HttpClient) {
     super();
 
     this._pageTitle = "Projects";
     this._themeItemNameSingle = "project";
     this._restService = new ProjectsListService(http);
-  }
-
-  public ngOnInit(): void {
-    super.ngOnInit();
   }
 }
