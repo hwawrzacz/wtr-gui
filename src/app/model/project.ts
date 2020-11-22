@@ -1,11 +1,12 @@
-import { Employee } from './employee';
+import { SimpleEmployee } from './model';
 
 export interface Project {
   id: number;
   stringId: string;
   title: string;
-  description: string;
-  // TODO (HW): Change string to Employee. String is just a temporary solution for mockup
-  manager: string;
-  workersCount: number;
+  description: string
+  manager: SimpleEmployee;
+  workers: number[];
+  creationDate: number; // timestamp
+  dutyDate: string; // timestamp
 }

@@ -3,8 +3,10 @@ export interface Employee {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
   phoneNumber: string;
-  qrCodeImg: string;
-  faceImg: string;
+  position: Position
+  login: string;
+  password: string;
+  faceImage: string;
+  qrImage: string;
 }
