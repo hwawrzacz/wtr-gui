@@ -26,6 +26,8 @@ import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { MatSelectModule } from '@angular/material/select';
+import { CommonSearchBarComponent } from './components/common-search-bar/common-search-bar.component';
+import { FilterSearchBarComponent } from './components/filter-search-bar/filter-search-bar.component';
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import { MatSelectModule } from '@angular/material/select';
     SidenavComponent,
     CommonListViewComponent,
     TasksTableComponent,
+    CommonSearchBarComponent,
+    FilterSearchBarComponent,
   ],
   imports: [
     BrowserModule,

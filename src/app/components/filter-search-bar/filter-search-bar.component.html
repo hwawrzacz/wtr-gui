@@ -1,0 +1,25 @@
+<div class="search-wrapper">
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput type="text" placeholder="Search" (keyup)="onSeachChange($event)" />
+  </mat-form-field>
+
+  <div class=" filters-wrapper">
+    <mat-form-field appearance="outline" class="filter">
+      <mat-label>Status</mat-label>
+      <mat-select multiple (selectionChange)="onStatusFilterChange($event)">
+        <mat-option *ngFor="let status of statuses" name="status" [value]="status">{{ getStatusString(status) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Priority</mat-label>
+      <mat-select multiple (selectionChange)="onPriorityFilterChange($event)">
+        <mat-option *ngFor="let priority of priorities" name="priority" [value]="priority">
+          {{ getPriorityString(priority) | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

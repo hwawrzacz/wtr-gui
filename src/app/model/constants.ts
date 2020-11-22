@@ -1,0 +1,1 @@
+export const FILTER_DEBOUNCE_TIMEOUT = 500;

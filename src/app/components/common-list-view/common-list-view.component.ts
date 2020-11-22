@@ -1,6 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { fromEvent, of } from 'rxjs';
 import { catchError, debounceTime, tap } from 'rxjs/operators';
+import { Filter } from 'src/app/model/filter';
+import { Query } from 'src/app/model/query';
 import { CommonRestService } from 'src/app/services/common-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
@@ -19,7 +22,8 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   protected _dataSource: CommonDataSource<T>;
 
   // Search
-  @ViewChild('queryInput') public _queryInput: ElementRef;
+  // protected deobunceFilterChange = new EventEmitter<Query>();
+
   private readonly DEBOUNCE_TIMEOUT = 700;
 
   // Boolean
@@ -60,12 +64,12 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.subscribeToQueryChange();
+    // this.subscribeToQueryChange();
   }
 
-  private loadData(query = '') {
+  protected loadData(query = '', pagination = null, filters = null) {
     this._isLoading = true;
-    this._restService.get(query)
+    this._restService.get(query, pagination, filters)
       .pipe(
         tap((result) => {
           this._dataSource.refresh(result);
@@ -76,13 +80,13 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
       ).subscribe();
   }
 
-  private subscribeToQueryChange(): void {
-    fromEvent(this._queryInput.nativeElement, 'keyup').pipe(
-      debounceTime(this.DEBOUNCE_TIMEOUT),
-      tap((event: any) => {
-        const query = event.target.value;
-        this.loadData(query);
-      })
-    ).subscribe();
-  }
+  // private subscribeToQueryChange(): void {
+  //   fromEvent(this.deobunceFilterChange, 'keyup').pipe(
+  //     debounceTime(this.DEBOUNCE_TIMEOUT),
+  //     tap((event: any) => {
+  //       const query = event.target.value;
+  //       this.loadData(query);
+  //     })
+  //   ).subscribe();
+  // }
 }
