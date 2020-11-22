@@ -25,6 +25,7 @@ import { TaskDetailsComponent } from './pages/task-details/task-details.componen
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
     MatInputModule,
     HttpClientModule,
     MatProgressBarModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

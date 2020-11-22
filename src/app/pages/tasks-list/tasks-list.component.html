@@ -6,9 +6,30 @@
   </button>
 </header>
 
-<mat-form-field appearance="outline">
-  <mat-icon matPrefix>search</mat-icon>
-  <input matInput #queryInput type="text" placeholder="Search" />
-</mat-form-field>
+<div class="search-wrapper">
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput #queryInput type="text" placeholder="Search" />
+  </mat-form-field>
+
+  <div class="filters-wrapper">
+    <mat-form-field appearance="outline" class="filter">
+      <mat-label>Status</mat-label>
+      <mat-select multiple>
+        <mat-option *ngFor="let status of statuses" name="status" [value]="status">{{ getStatusString(status) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Priority</mat-label>
+      <mat-select multiple placeholder="Priority">
+        <mat-option *ngFor="let priority of priorities" name="priority" [value]="priority">
+          {{ getPriorityString(priority) | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
 
 <app-tasks-table [dataSource]="dataSource" [isLoading]="isLoading"></app-tasks-table>
