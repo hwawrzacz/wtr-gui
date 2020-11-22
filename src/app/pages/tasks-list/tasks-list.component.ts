@@ -6,7 +6,7 @@ import { TasksListService } from 'src/app/services/tasks-list.service';
 
 @Component({
   selector: 'app-tasks-list',
-  templateUrl: '../../components/common-list-view/common-list-view.component.html',
+  templateUrl: './tasks-list.component.html',
   styleUrls: ['../../components/common-list-view/common-list-view.component.scss']
 })
 export class TasksListComponent extends CommonListViewComponent<Task> implements OnInit {

@@ -24,6 +24,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     AppHeaderComponent,
     SidenavComponent,
     CommonListViewComponent,
+    TasksTableComponent,
   ],
   imports: [
     BrowserModule,
