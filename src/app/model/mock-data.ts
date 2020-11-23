@@ -99,8 +99,8 @@ export const mockTasks = [
     id: 1,
     title: 'Zadanie 1',
     description: 'Lorem ipsum dolor sit amet something else',
-    status: Status.NEW,
-    priority: Priority.LOW,
+    status: Status.IN_PROGRESS,
+    priority: Priority.HIGH,
     workers: [1, 2, 3, 4],
     projectId: 1,
     reporter: {
@@ -120,7 +120,7 @@ export const mockTasks = [
     title: 'Zadanie 2',
     description: 'Lorem ipsum dolor sit amet something else',
     status: Status.NEW,
-    priority: Priority.LOW,
+    priority: Priority.MEDIUM,
     workers: [1, 2, 3, 4],
     projectId: 1,
     reporter: {

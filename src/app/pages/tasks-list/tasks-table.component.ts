@@ -5,7 +5,7 @@ import { Task } from 'src/app/model/task';
 
 @Component({
   selector: 'app-tasks-table',
-  templateUrl: '../../components/common-table/common-table.component.html',
+  templateUrl: './tasks-table.component.html',
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class TasksTableComponent extends CommonTableComponent<Task> {
@@ -61,6 +61,14 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
         tooltip: 'Delete item'
       }
     ]
+  }
+
+  public getClassForProperty(propName: string, value: string): string {
+    return `${propName}-label ${propName}-label--${value}`;
+  }
+
+  public isFormattableProperty(propName: string): boolean {
+    return ['status', 'priority'].includes(propName);
   }
 
 }
