@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
+import { Employee } from 'src/app/model/employee';
 import { Project } from 'src/app/model/project';
 
 @Component({
@@ -26,11 +27,13 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
         defName: 'manager',
         displayName: 'Manager',
         propertyName: 'manager',
+        formatter: (employee: Employee) => `${employee.firstName} ${employee.lastName}`,
       },
       {
         defName: 'employees',
-        displayName: 'Employees',
-        propertyName: 'workersCount',
+        displayName: 'People working on',
+        propertyName: 'workers',
+        formatter: (arr: number[]) => `${arr.length}`,
       },
     ];
 

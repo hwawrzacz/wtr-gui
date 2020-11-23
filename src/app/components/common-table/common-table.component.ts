@@ -5,6 +5,11 @@ export interface ColumnDefinition {
   defName: string;
   displayName: string;
   propertyName: string;
+  /** Allows to format field.
+   * For example when you want to stringify employee object so that
+   * first and last name are displayed.
+   */
+  formatter?: (obj: any) => string;
 }
 
 export interface ActionDefinition {
