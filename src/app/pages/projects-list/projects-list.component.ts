@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
 import { Project } from 'src/app/model/project';
 import { ProjectsListService } from 'src/app/services/projects-list.service';
 
 @Component({
   selector: 'app-projects-list',
-  templateUrl: '../../components/common-list-view/common-list-view.component.html',
+  templateUrl: './projects-list.component.html',
   styleUrls: ['../../components/common-list-view/common-list-view.component.scss']
 })
 export class ProjectsListComponent extends CommonListViewComponent<Project> {

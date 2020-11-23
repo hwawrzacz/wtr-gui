@@ -5,10 +5,3 @@
     <span>Create {{ themeItemNameSingle }}</span>
   </button>
 </header>
-
-<mat-form-field appearance="outline">
-  <mat-icon matPrefix>search</mat-icon>
-  <input matInput #queryInput type="text" placeholder="Search" />
-</mat-form-field>
-
-<app-projects-table [dataSource]="dataSource" [isLoading]="isLoading"></app-projects-table>
