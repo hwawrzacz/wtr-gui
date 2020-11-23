@@ -21,11 +21,11 @@
     </td>
   </ng-container>
 
-  <ng-container *ngIf="!anyItemExists" matColumnDef="empty">
+  <ng-container *ngIf="!anyItemExists && !isLoading" matColumnDef="empty">
     <td mat-footer-cell *matFooterCellDef [attr.colspan]="columnsToDisplay.length + 1">No items found</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-  <tr mat-footer-row *matFooterRowDef="anyItemExists ? [] : ['empty']"></tr>
+  <tr mat-footer-row *matFooterRowDef="anyItemExists || isLoading ? [] : ['empty']"></tr>
 </table>
