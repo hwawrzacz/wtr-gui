@@ -1,0 +1,11 @@
+<header>
+  <h1>{{ pageTitle }}</h1>
+  <button mat-stroked-button color="primary">
+    <mat-icon>add</mat-icon>
+    <span>Create {{ themeItemNameSingle }}</span>
+  </button>
+</header>
+
+<app-common-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-common-search-bar>
+
+<app-projects-table [dataSource]="dataSource" [isLoading]="isLoading"></app-projects-table>
