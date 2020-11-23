@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { fromEvent, of } from 'rxjs';
-import { catchError, debounceTime, tap } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Query } from 'src/app/model/query';
 import { CommonRestService } from 'src/app/services/common-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
@@ -9,7 +10,7 @@ import { CommonDataSource } from '../../model/common-data-source';
   templateUrl: './common-list-view.component.html',
   styleUrls: ['./common-list-view.component.scss']
 })
-export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
+export class CommonListViewComponent<T> implements OnInit {
   // Labels
   protected _pageTitle: string;
   protected _themeItemNameSingle: string;
@@ -19,8 +20,7 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   protected _dataSource: CommonDataSource<T>;
 
   // Search
-  @ViewChild('queryInput') public _queryInput: ElementRef;
-  private readonly DEBOUNCE_TIMEOUT = 700;
+  private _query = { searchString: '', filters: [] } as Query;
 
   // Boolean
   protected _isLoading: boolean;
@@ -56,14 +56,10 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   //#endregion
 
   public ngOnInit(): void {
-    this.loadData();
+    this.loadData(this._query);
   }
 
-  ngAfterViewInit(): void {
-    this.subscribeToQueryChange();
-  }
-
-  private loadData(query = '') {
+  protected loadData(query: Query) {
     this._isLoading = true;
     this._restService.get(query)
       .pipe(
@@ -76,13 +72,8 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
       ).subscribe();
   }
 
-  private subscribeToQueryChange(): void {
-    fromEvent(this._queryInput.nativeElement, 'keyup').pipe(
-      debounceTime(this.DEBOUNCE_TIMEOUT),
-      tap((event: any) => {
-        const query = event.target.value;
-        this.loadData(query);
-      })
-    ).subscribe();
+  public onQueryChanged(query: Query) {
+    this._query = query;
+    this.loadData(this._query);
   }
 }

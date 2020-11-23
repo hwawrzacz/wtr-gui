@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
-import { ProjectsComponent } from './pages/projects/projects.component';
+import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
-import { TasksComponent } from './pages/tasks/tasks.component';
-import { UsersComponent } from './pages/users/users.component';
+import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
+import { UsersListComponent } from './pages/users-list/users-list.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'tasks', component: TasksComponent },
+  { path: 'projects', component: ProjectsListComponent },
+  { path: 'tasks', component: TasksListComponent },
   { path: 'projects/:id', component: ProjectDetailsComponent },
   { path: 'tasks/:id', component: TaskDetailsComponent },
-  { path: 'users', component: UsersComponent },
+  { path: 'users', component: UsersListComponent },
   { path: 'statistics', component: StatisticsComponent }
 ];
 

@@ -18,21 +18,25 @@ import { AppHeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
-import { ProjectsTableComponent } from './pages/projects/projects-table.component';
-import { ProjectsComponent } from './pages/projects/projects.component';
+import { ProjectsTableComponent } from './pages/projects-list/projects-table.component';
+import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
-import { TasksComponent } from './pages/tasks/tasks.component';
+import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
+import { MatSelectModule } from '@angular/material/select';
+import { CommonSearchBarComponent } from './components/common-search-bar/common-search-bar.component';
+import { FilterSearchBarComponent } from './components/filter-search-bar/filter-search-bar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CommonTableComponent,
-    ProjectsComponent,
+    ProjectsListComponent,
     ProjectsTableComponent,
-    TasksComponent,
+    TasksListComponent,
     StatisticsComponent,
     ProjectDetailsComponent,
     TaskDetailsComponent,
@@ -40,6 +44,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     AppHeaderComponent,
     SidenavComponent,
     CommonListViewComponent,
+    TasksTableComponent,
+    CommonSearchBarComponent,
+    FilterSearchBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +62,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatInputModule,
     HttpClientModule,
     MatProgressBarModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
