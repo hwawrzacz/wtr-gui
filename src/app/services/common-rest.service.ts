@@ -18,11 +18,17 @@ export class CommonRestService<T> {
     const searchString = query.searchString
     return of(
       this._mockData
-        .filter(project => {
+        .filter(item => {
           return (
-            (project.stringId && project.stringId.includes(searchString)) ||
-            (project.title && project.title.includes(searchString)) ||
-            (project.description && project.description.includes(searchString))
+            // In case of Project or Task object
+            (item.stringId && item.stringId.includes(searchString)) ||
+            (item.title && item.title.includes(searchString)) ||
+            (item.description && item.description.includes(searchString)) ||
+
+            // In case of Empoyee object
+            (item.login && item.login.includes(searchString)) ||
+            (item.firstName && item.firstName.includes(searchString)) ||
+            (item.lastName && item.lastName.includes(searchString))
           );
         })
     ).pipe(delay(2000));
