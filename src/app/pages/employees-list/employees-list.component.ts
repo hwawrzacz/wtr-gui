@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
-import { Employee } from 'src/app/model/model';
+import { Employee } from 'src/app/model/employee';
 import { EmployeesRestService } from 'src/app/services/employees-rest.service';
 
 @Component({

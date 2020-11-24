@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Employee } from 'src/app/model/employee';
-import { PositionStringifier } from 'src/app/model/enums/position';
-import { Position } from 'src/app/model/model';
+import { Position, PositionStringifier } from 'src/app/model/enums/position';
 
 @Component({
   selector: 'app-employees-table',

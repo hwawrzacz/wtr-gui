@@ -1,5 +1,6 @@
+import { Position } from "./enums/position";
 import { Priority } from './enums/priority';
-import { Position, Status } from "./model";
+import { Status } from "./enums/status";
 
 export const mockProjects = [
   {

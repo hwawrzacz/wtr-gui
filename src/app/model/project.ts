@@ -1,4 +1,4 @@
-import { SimpleEmployee } from './model';
+import { SimpleEmployee } from './simple-employee';
 
 export interface Project {
   id: number;
