@@ -23,9 +23,10 @@ export class CommonListViewComponent<T> implements OnInit {
   private _query = { searchString: '', filters: [] } as Query;
 
   // Boolean
-  protected _isLoading: boolean;
+  protected _isLoading: number;
 
   constructor() {
+    this._isLoading = 0;
     this._dataSource = new CommonDataSource<T>([]);
   }
 
@@ -51,7 +52,7 @@ export class CommonListViewComponent<T> implements OnInit {
 
   //#region Boolean calculated
   get isLoading(): boolean {
-    return this._isLoading;
+    return this._isLoading > 0;
   }
   //#endregion
 
@@ -60,12 +61,12 @@ export class CommonListViewComponent<T> implements OnInit {
   }
 
   protected loadData(query: Query) {
-    this._isLoading = true;
+    this._isLoading++;
     this._restService.get(query)
       .pipe(
         tap((result) => {
           this._dataSource.refresh(result);
-          this._isLoading = false;
+          this._isLoading--;
         }),
         // TODO (HW): Handle error properly
         catchError(() => of(console.error(`Couldn't load data`)))
