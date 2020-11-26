@@ -30,6 +30,7 @@ import { CommonSearchBarComponent } from './components/common-search-bar/common-
 import { FilterSearchBarComponent } from './components/filter-search-bar/filter-search-bar.component';
 import { EmployeesTableComponent } from './pages/employees-list/employees-table.component';
 import { EmployeesListComponent } from './pages/employees-list/employees-list.component';
+import { CommonItemDetailsComponent } from './components/common-item-details/common-item-details.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { EmployeesListComponent } from './pages/employees-list/employees-list.co
     EmployeesListComponent,
     CommonSearchBarComponent,
     FilterSearchBarComponent,
+    CommonItemDetailsComponent,
   ],
   imports: [
     BrowserModule,
