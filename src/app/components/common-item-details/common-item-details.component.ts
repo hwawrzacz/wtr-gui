@@ -13,9 +13,11 @@ export class CommonItemDetailsComponent<T> implements OnInit {
 
   constructor(private _router: Router) { }
 
+  //#region Getters and setters
   get itemId(): number | string {
     return this._itemId;
   }
+  //#endregion
 
   ngOnInit(): void {
     this._itemId = this.getIdFromUrl();

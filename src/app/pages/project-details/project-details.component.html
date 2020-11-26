@@ -1,1 +1,38 @@
-<p>project-details works!</p>
+<form [formGroup]="form">
+  <h1>{{ stringId }}
+    <mat-form-field appearance="outline" [attr.readonly]="readonly" (dblclick)="readonly = false"
+      (focusout)="readonly = true">
+      <input matInput type="text" formControlName="title" [readonly]="readonly" />
+    </mat-form-field>
+  </h1>
+
+  <h3>Manager</h3>
+  <div>
+    <mat-form-field appearance="outline" [attr.readonly]="readonly" (dblclick)="readonly = false"
+      (focusout)="readonly = true">
+      <input matInput *ngIf="readonly" (dblclick)="readonly = false" readonly [value]="'John Travolta'" />
+      <mat-select *ngIf="!readonly" formControlName="manager" (focusout)="readonly = true">
+        <div disabled>Loading data</div>
+        <!-- <mat-option *ngFor="let manager of getManagers | async" [value]="manager.id">{{ manager.firstName + ' ' + manager.lastName | titlecase}}</mat-option> -->
+        <mat-option [value]="1">Samuel L Jackson</mat-option>
+        <mat-option [value]="2">John Travolta
+        </mat-option>
+        <mat-option [value]="3">John Lajoile</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <h3>Description</h3>
+  <div>
+    <mat-form-field appearance="outline" [attr.readonly]="readonly" (dblclick)="readonly = false"
+      (focusout)="readonly = true">
+      <textarea matInput formControlName="description" [readonly]="readonly" (dblclick)="readonly = false"
+        (focusout)="readonly = true"></textarea>
+    </mat-form-field>
+  </div>
+
+</form>
+
+<h3>Tasks</h3>
+<app-filter-search-bar></app-filter-search-bar>
+<app-tasks-table></app-tasks-table>

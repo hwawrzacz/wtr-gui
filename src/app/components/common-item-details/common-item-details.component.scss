@@ -1,0 +1,36 @@
+form {
+
+  h3 {
+    font-size: 1em;
+    margin-bottom: 0;
+  }
+  
+  .mat-form-field {
+    font-size: 1.3em;
+  }
+  
+  ::ng-deep {
+    h1 {
+      .mat-form-field {
+        font-size: inherit !important;
+
+        .mat-form-field-wrapper {
+          padding: 0 !important;
+          border: none;
+        }
+      } 
+    }
+
+    .mat-form-field-infix {
+      padding: 0 0 .5em 0 !important;
+    }
+
+    .mat-form-field-appearance-outline[readonly='true'] {
+      .mat-form-field-outline,
+      .mat-form-field-outline-thick {
+        color: transparent !important;
+      }
+    }
+  }
+}
+  

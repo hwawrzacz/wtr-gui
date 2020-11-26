@@ -31,6 +31,7 @@ import { FilterSearchBarComponent } from './components/filter-search-bar/filter-
 import { EmployeesTableComponent } from './pages/employees-list/employees-table.component';
 import { EmployeesListComponent } from './pages/employees-list/employees-list.component';
 import { CommonItemDetailsComponent } from './components/common-item-details/common-item-details.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -68,7 +69,9 @@ import { CommonItemDetailsComponent } from './components/common-item-details/com
     MatInputModule,
     HttpClientModule,
     MatProgressBarModule,
-    MatSelectModule
+    MatSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
