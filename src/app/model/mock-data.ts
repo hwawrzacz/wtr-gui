@@ -1,5 +1,6 @@
+import { Position } from "./enums/position";
 import { Priority } from './enums/priority';
-import { Position, Status } from "./model";
+import { Status } from "./enums/status";
 
 export const mockProjects = [
   {
@@ -134,5 +135,53 @@ export const mockTasks = [
     },
     creationDate: Date.now() - 12837823,
     dutyDate: Date.now()
+  },
+]
+
+export const mockEmployees = [
+  {
+    id: 1,
+    login: 'jowick',
+    firstName: 'John',
+    lastName: 'Wick',
+    position: Position.MANAGER,
+    email: 'j.wick@somecompany.com',
+    phoneNumber: '345 534 345'
+  },
+  {
+    id: 2,
+    login: 'stespie',
+    firstName: 'Steven',
+    lastName: 'Spierlberg',
+    position: Position.MANAGER,
+    email: 's.spielberg@somecompany.com',
+    phoneNumber: '345 534 345'
+  },
+  {
+    id: 3,
+    login: 'asan',
+    firstName: 'Adam',
+    lastName: 'Sandler',
+    position: Position.MANAGER,
+    email: 'a.sandler@somecompany.com',
+    phoneNumber: '345 534 345'
+  },
+  {
+    id: 4,
+    login: 'seacon',
+    firstName: 'Sean',
+    lastName: 'Connery',
+    position: Position.MANAGER,
+    email: 's.connery@somecompany.com',
+    phoneNumber: '345 534 345'
+  },
+  {
+    id: 5,
+    login: 'camdiaz',
+    firstName: 'Cameron',
+    lastName: 'Diaz',
+    position: Position.MANAGER,
+    email: 'c.diaz@somecompany.com',
+    phoneNumber: '345 534 345'
   },
 ]

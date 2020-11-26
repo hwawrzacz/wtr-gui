@@ -28,6 +28,8 @@ import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonSearchBarComponent } from './components/common-search-bar/common-search-bar.component';
 import { FilterSearchBarComponent } from './components/filter-search-bar/filter-search-bar.component';
+import { EmployeesTableComponent } from './pages/employees-list/employees-table.component';
+import { EmployeesListComponent } from './pages/employees-list/employees-list.component';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { FilterSearchBarComponent } from './components/filter-search-bar/filter-
     SidenavComponent,
     CommonListViewComponent,
     TasksTableComponent,
+    EmployeesTableComponent,
+    EmployeesListComponent,
     CommonSearchBarComponent,
     FilterSearchBarComponent,
   ],

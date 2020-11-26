@@ -1,6 +1,6 @@
 import { Priority } from './enums/priority';
 import { Status } from './enums/status';
-import { SimpleEmployee } from './model';
+import { SimpleEmployee } from './simple-employee';
 
 export interface Task {
   id: number;
