@@ -1,0 +1,2 @@
+<app-filter-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-filter-search-bar>
+<app-tasks-table [dataSource]="dataSource" [isLoading]="isLoading"></app-tasks-table>

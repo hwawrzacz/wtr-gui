@@ -32,6 +32,7 @@ import { EmployeesTableComponent } from './pages/employees-list/employees-table.
 import { EmployeesListComponent } from './pages/employees-list/employees-list.component';
 import { CommonItemDetailsComponent } from './components/common-item-details/common-item-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonSearchBarComponent,
     FilterSearchBarComponent,
     CommonItemDetailsComponent,
+    ProjectTasksComponent,
   ],
   imports: [
     BrowserModule,
