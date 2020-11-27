@@ -1,11 +1,16 @@
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
+import { stringifyEmployee } from 'src/app/helpers/parsers';
 import { Employee } from 'src/app/model/employee';
+import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
+import { Query } from 'src/app/model/query';
+import { SimpleEmployee } from 'src/app/model/simple-employee';
+import { ProjectRestService } from 'src/app/services/project-rest.service';
 
 @Component({
   selector: 'app-project-details',
@@ -13,8 +18,8 @@ import { Project } from 'src/app/model/project';
   styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './project-details.component.scss']
 })
 export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project> implements OnInit {
-  readonly: boolean;
   private _form: FormGroup;
+  private _initialProject: Project;
   private _editables: Map<string, boolean>;
 
   //#region Getters and setters
@@ -25,18 +30,41 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   get form(): FormGroup {
     return this._form;
   }
+
+  get project(): Project {
+    return this._initialProject;
+  }
   //#endregion
 
-  constructor(router: Router, private _formBuilder: FormBuilder) {
+  constructor(router: Router, private _formBuilder: FormBuilder, private _restService: ProjectRestService) {
     super(router);
-    this.readonly = true;
   }
 
   ngOnInit(): void {
     super.ngOnInit();
+    this._form = this.buildEmptyForm();
     this.reinitializeEditables();
-    this.reinitializeForm();
+    this.loadData();
   }
+
+  //#region Data loaders
+  private loadData() {
+    const projectFilter = { name: 'stringId', value: [`${this.stringId}`] } as Filter;
+    const projectQuery = { searchString: '', filters: [projectFilter] } as Query;
+    this._restService.get(projectQuery)
+      .pipe(
+        tap(proj => {
+          if (!!proj) {
+            this._initialProject = proj;
+            console.log('project');
+            console.log(this._initialProject);
+            this.reinitializeForm();
+          }
+        }),
+        catchError(err => of(console.log(err)))
+      ).subscribe();
+  }
+  //#endregion
 
   //#region Initializers
   private reinitializeEditables(): void {
@@ -53,12 +81,17 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
 
   private buildForm(): FormGroup {
     return this._formBuilder.group({
-      // title: [this._item.title, [Validators.required]],
-      // manager: [this._item.manager, [Validators.required]],
-      // description: [this._item.description]
-      title: ['Super duper title', [Validators.required]],
-      manager: [2, [Validators.required]],
-      description: ['In officia laboris aliqua deserunt ullamco magna exercitation in aute aliqua. In reprehenderit id commodo anim cupidatat dolore ullamco enim nostrud anim consequat nisi nulla. Tempor aliquip aliqua esse aliquip mollit nostrud do. Incididunt minim excepteur laborum et duis Lorem excepteur laboris in. Irure ex sit pariatur cillum commodo voluptate veniam nulla non duis minim eiusmod incididunt. Id aliquip pariatur ipsum laboris et ea. Nostrud pariatur et magna nisi ad non ea aute ipsum.']
+      title: [this._initialProject.title, [Validators.required]],
+      manager: [this._initialProject.manager.id, [Validators.required]],
+      description: [this._initialProject.description]
+    });
+  }
+
+  private buildEmptyForm(): FormGroup {
+    return this._formBuilder.group({
+      title: ['', [Validators.required]],
+      manager: [null, [Validators.required]],
+      description: ['']
     });
   }
   //#endregion
@@ -92,6 +125,12 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
     const field = this._form.get(name);
     console.log(field.value);
     this.disableEdition(name);
+  }
+  //#endregion
+
+  //#region Helpers
+  stringifyManager(manager: Employee | SimpleEmployee): string {
+    return stringifyEmployee(manager);
   }
   //#endregion
 }
