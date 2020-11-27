@@ -10,8 +10,12 @@
           <mat-icon>edit</mat-icon>
         </button>
 
-        <button mat-icon-button *ngIf="isEditable('title')" (click)="disableEdition('title')">
+        <button mat-icon-button *ngIf="isEditable('title')" (click)="onSaveField('title')">
           <mat-icon>save</mat-icon>
+        </button>
+
+        <button mat-icon-button *ngIf="isEditable('title')" (click)="onDiscardFieldChange('title')">
+          <mat-icon>cancel</mat-icon>
         </button>
       </div>
     </h1>
@@ -31,7 +35,7 @@
     <h3>Manager</h3>
     <div class="editable-input-wrapper">
       <mat-form-field appearance="outline" [attr.readonly]="!isEditable('manager')">
-        <input matInput *ngIf="!isEditable('manager')" [value]="'John Travolta'" />
+        <input matInput *ngIf="!isEditable('manager')" readonly [value]="'John Travolta'" />
         <mat-select *ngIf="isEditable('manager')" formControlName="manager">
           <!-- <div disabled>Loading data</div> -->
           <!-- <mat-option *ngFor="let manager of getManagers | async" [value]="manager.id">{{ manager.firstName + ' ' + manager.lastName | titlecase}}</mat-option> -->
@@ -46,8 +50,12 @@
         <mat-icon>edit</mat-icon>
       </button>
 
-      <button mat-icon-button *ngIf="isEditable('manager')" (click)="disableEdition('manager')">
+      <button mat-icon-button *ngIf="isEditable('manager')" (click)="onSaveField('manager')">
         <mat-icon>save</mat-icon>
+      </button>
+
+      <button mat-icon-button *ngIf="isEditable('manager')" (click)="onDiscardFieldChange('manager')">
+        <mat-icon>cancel</mat-icon>
       </button>
     </div>
   </section>
@@ -64,8 +72,12 @@
         <mat-icon>edit</mat-icon>
       </button>
 
-      <button mat-icon-button *ngIf="isEditable('description')" (click)="disableEdition('description')">
+      <button mat-icon-button *ngIf="isEditable('description')" (click)="onSaveField('description')">
         <mat-icon>save</mat-icon>
+      </button>
+
+      <button mat-icon-button *ngIf="isEditable('description')" (click)="onDiscardFieldChange('description')">
+        <mat-icon>cancel</mat-icon>
       </button>
     </div>
   </section>

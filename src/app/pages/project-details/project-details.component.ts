@@ -63,7 +63,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   }
   //#endregion
 
-
+  //#region Editable handling
   isEditable(controlName: string): boolean {
     return this._editables.get(controlName);
   }
@@ -79,4 +79,19 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   private setEditionStatus(controlName: string, value: boolean): void {
     this._editables.set(controlName, value);
   }
+  //#endregion
+
+  //#region Saving changes
+  public onSaveField(name: string) {
+    const field = this._form.get(name);
+    console.log(field.value);
+    this.disableEdition(name);
+  }
+
+  public onDiscardFieldChange(name: string) {
+    const field = this._form.get(name);
+    console.log(field.value);
+    this.disableEdition(name);
+  }
+  //#endregion
 }
