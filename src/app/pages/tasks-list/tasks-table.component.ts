@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { title } from 'process';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Task } from 'src/app/model/task';
 
@@ -10,8 +10,8 @@ import { Task } from 'src/app/model/task';
 })
 export class TasksTableComponent extends CommonTableComponent<Task> {
 
-  constructor() {
-    super();
+  constructor(router: Router) {
+    super(router);
 
     this._columnsDefinitions = [
       {

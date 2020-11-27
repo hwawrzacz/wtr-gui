@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Employee } from 'src/app/model/employee';
 import { Project } from 'src/app/model/project';
@@ -9,8 +10,8 @@ import { Project } from 'src/app/model/project';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class ProjectsTableComponent extends CommonTableComponent<Project> {
-  constructor() {
-    super();
+  constructor(router: Router) {
+    super(router);
 
     this._columnsDefinitions = [
       {
