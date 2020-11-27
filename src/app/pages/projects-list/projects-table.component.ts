@@ -40,7 +40,7 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
     this._actionsDefinitions = [
       {
         icon: 'pie_chart',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`statistics for ${id}`);
         },
         color: 'primary',
@@ -48,14 +48,14 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
       },
       {
         icon: 'edit',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`edit ${id}`);
         },
         tooltip: 'Edit item'
       },
       {
         icon: 'delete',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`delete ${id}`);
         },
         color: 'warn',

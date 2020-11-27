@@ -44,7 +44,7 @@ export class EmployeesTableComponent extends CommonTableComponent<Employee> {
     this._actionsDefinitions = [
       {
         icon: 'pie_chart',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`statistics for ${id}`);
         },
         color: 'primary',
@@ -52,14 +52,14 @@ export class EmployeesTableComponent extends CommonTableComponent<Employee> {
       },
       {
         icon: 'edit',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`edit ${id}`);
         },
         tooltip: 'Edit item'
       },
       {
         icon: 'delete',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`delete ${id}`);
         },
         color: 'warn',

@@ -14,7 +14,7 @@ export interface ColumnDefinition {
 
 export interface ActionDefinition {
   icon: string;
-  action: (id: number) => void;
+  action: (id: string) => void;
   color?: string;
   tooltip?: string;
 }

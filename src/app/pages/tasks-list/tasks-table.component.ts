@@ -39,7 +39,7 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
     this._actionsDefinitions = [
       {
         icon: 'pie_chart',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`statistics for ${id}`);
         },
         color: 'primary',
@@ -47,14 +47,14 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
       },
       {
         icon: 'edit',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`edit ${id}`);
         },
         tooltip: 'Edit item'
       },
       {
         icon: 'delete',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`delete ${id}`);
         },
         color: 'warn',

@@ -1,7 +1,7 @@
 import { SimpleEmployee } from './simple-employee';
 
 export interface Project {
-  id: number;
+  id: string;
   stringId: string;
   title: string;
   description: string

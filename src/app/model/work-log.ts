@@ -6,7 +6,7 @@ export enum WorkLogType {
 }
 
 export interface WorkLog {
-  id: number;
+  id: string;
   taskId: number;
   userId: number;
   dateTime: number; // timestamp  

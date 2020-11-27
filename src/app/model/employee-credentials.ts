@@ -1,5 +1,5 @@
 export interface EmployeeCredentials {
-  id: number;
+  id: string;
   login: string;
   password: string;
   faceImage: string;

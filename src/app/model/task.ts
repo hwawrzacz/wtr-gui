@@ -3,7 +3,9 @@ import { Status } from './enums/status';
 import { SimpleEmployee } from './simple-employee';
 
 export interface Task {
-  id: number;
+  id: string;
+  stringId: string;
+  projectStringId: string
   title: string;
   description: string;
   status: Status;
