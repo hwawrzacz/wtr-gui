@@ -10,11 +10,11 @@
           <mat-icon>edit</mat-icon>
         </button>
 
-        <button mat-icon-button *ngIf="isEditable('title')" (click)="onSaveField('title')">
+        <button mat-icon-button color="primary" *ngIf="isEditable('title')" (click)="onSaveField('title')">
           <mat-icon>save</mat-icon>
         </button>
 
-        <button mat-icon-button *ngIf="isEditable('title')" (click)="onDiscardFieldChange('title')">
+        <button mat-icon-button color="warn" *ngIf="isEditable('title')" (click)="onDiscardFieldChange('title')">
           <mat-icon>cancel</mat-icon>
         </button>
       </div>
@@ -51,11 +51,11 @@
         <mat-icon>edit</mat-icon>
       </button>
 
-      <button mat-icon-button *ngIf="isEditable('manager')" (click)="onSaveField('manager')">
+      <button mat-icon-button color="primary" *ngIf="isEditable('manager')" (click)="onSaveField('manager')">
         <mat-icon>save</mat-icon>
       </button>
 
-      <button mat-icon-button *ngIf="isEditable('manager')" (click)="onDiscardFieldChange('manager')">
+      <button mat-icon-button color="warn" *ngIf="isEditable('manager')" (click)="onDiscardFieldChange('manager')">
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
@@ -73,11 +73,12 @@
         <mat-icon>edit</mat-icon>
       </button>
 
-      <button mat-icon-button *ngIf="isEditable('description')" (click)="onSaveField('description')">
+      <button mat-icon-button color="primary" *ngIf="isEditable('description')" (click)="onSaveField('description')">
         <mat-icon>save</mat-icon>
       </button>
 
-      <button mat-icon-button *ngIf="isEditable('description')" (click)="onDiscardFieldChange('description')">
+      <button mat-icon-button color="warn" *ngIf="isEditable('description')"
+        (click)="onDiscardFieldChange('description')">
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
@@ -85,5 +86,9 @@
 
 </form>
 
-<h3>Tasks</h3>
-<app-project-tasks [projectId]="stringId"></app-project-tasks>
+<section>
+  <h3>Tasks</h3>
+  <div class="tasks-list-wrapper">
+    <app-project-tasks [projectId]="stringId"></app-project-tasks>
+  </div>
+</section>

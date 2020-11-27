@@ -1,34 +1,6 @@
 @import '../../../variables.scss';
 
-form {
-  header {
-    display: flex;
-    align-items: center;
-
-    h1 {
-      display: flex;
-      flex: 1 1;
-      align-items: center;
-      margin-bottom: 0; 
-    }
-
-    & > button {
-      margin-left: $header-button-margin
-    }
-  }
-
-  header,
-  section {
-    margin-bottom: $spacing-regular;
-  }
-
-  section {
-    h3 {
-      font-size: 1em;
-      margin-bottom: 0;
-    }
-  }
-  
+form {  
   .mat-form-field {
     font-size: 1.3em;
   }
@@ -88,4 +60,38 @@ form {
       }
     }
   }
+}
+
+header {
+  display: flex;
+  align-items: center;
+  padding: 0 $spacing-regular;
+
+  h1 {
+    display: flex;
+    flex: 1 1;
+    align-items: center;
+    margin-bottom: 0; 
+  }
+
+  & > button {
+    margin-left: $header-button-margin
+  }
+}
+
+header,
+section {
+  margin-bottom: $spacing-regular;
+}
+
+section {
+  h3 {
+    font-size: 1em;
+    margin-bottom: 0;
+    padding: 0 $spacing-regular;
+  }
+}
+
+.tasks-list-wrapper {
+  padding: 0 $spacing-regular;
 }
