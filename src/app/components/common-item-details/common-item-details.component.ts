@@ -9,13 +9,17 @@ import { Router } from '@angular/router';
 export class CommonItemDetailsComponent<T> implements OnInit {
   protected _isLoading: boolean;
   protected _itemId: number | string;
-  protected _item: T;
+  protected _initialItem: T;
 
   constructor(private _router: Router) { }
 
   //#region Getters and setters
   get itemId(): number | string {
     return this._itemId;
+  }
+
+  get isLoading(): boolean {
+    return !this._initialItem;
   }
   //#endregion
 

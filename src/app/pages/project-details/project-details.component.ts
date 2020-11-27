@@ -19,7 +19,6 @@ import { ProjectRestService } from 'src/app/services/project-rest.service';
 })
 export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project> implements OnInit {
   private _form: FormGroup;
-  private _initialProject: Project;
   private _editables: Map<string, boolean>;
 
   //#region Getters and setters
@@ -32,7 +31,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   }
 
   get project(): Project {
-    return this._initialProject;
+    return this._initialItem;
   }
   //#endregion
 
@@ -55,9 +54,9 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
       .pipe(
         tap(proj => {
           if (!!proj) {
-            this._initialProject = proj;
+            this._initialItem = proj;
             console.log('project');
-            console.log(this._initialProject);
+            console.log(this._initialItem);
             this.reinitializeForm();
           }
         }),
@@ -81,9 +80,9 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
 
   private buildForm(): FormGroup {
     return this._formBuilder.group({
-      title: [this._initialProject.title, [Validators.required]],
-      manager: [this._initialProject.manager.id, [Validators.required]],
-      description: [this._initialProject.description]
+      title: [this._initialItem.title, [Validators.required]],
+      manager: [this._initialItem.manager.id, [Validators.required]],
+      description: [this._initialItem.description]
     });
   }
 
@@ -117,7 +116,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#region Saving changes
   public onSaveField(name: string) {
     const field = this._form.get(name);
-    this._initialProject[name] = field.value;
+    this._initialItem[name] = field.value;
     this.disableEdition(name);
     // TODO (HW): Sent update request to API
   }
@@ -125,7 +124,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   public onDiscardFieldChange(name: string) {
     const field = this._form.get(name);
     // If project[name] has property id then save its id, else save property itself
-    field.patchValue(this._initialProject[name].id || this._initialProject[name])
+    field.patchValue(this._initialItem[name].id || this._initialItem[name])
     this.disableEdition(name);
   }
   //#endregion
