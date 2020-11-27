@@ -27,6 +27,7 @@ export class CommonListViewComponent<T> implements OnInit {
 
   constructor() {
     this._isLoading = 0;
+    this._query = { searchString: '', filters: [] } as Query;
     this._dataSource = new CommonDataSource<T>([]);
   }
 

@@ -10,7 +10,10 @@ import { Query } from '../model/query';
 export class CommonRestService<T> {
   protected url: string;
   protected _mockData: any;
-  constructor(protected http: HttpClient) { }
+  constructor(protected http: HttpClient) {
+    this.url = '';
+    this._mockData = [];
+  }
 
   // TODO (HW): Remove any type annotation - it is just for testing purposes. Target anotation is T.
   // TODO (HW): Add common request
