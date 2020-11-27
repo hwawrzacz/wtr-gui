@@ -15,12 +15,7 @@ import { Project } from 'src/app/model/project';
 export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project> implements OnInit {
   readonly: boolean;
   private _form: FormGroup;
-
-  constructor(router: Router, private _formBuilder: FormBuilder) {
-    super(router);
-    this.readonly = true;
-    this.reinitializeForm();
-  }
+  private _editables: Map<string, boolean>;
 
   //#region Getters and setters
   get stringId(): number | string {
@@ -32,8 +27,24 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   }
   //#endregion
 
+  constructor(router: Router, private _formBuilder: FormBuilder) {
+    super(router);
+    this.readonly = true;
+  }
+
   ngOnInit(): void {
     super.ngOnInit();
+    this.reinitializeEditables();
+    this.reinitializeForm();
+  }
+
+  //#region Initializers
+  private reinitializeEditables(): void {
+    this._editables = new Map([
+      ['title', false],
+      ['manager', false],
+      ['description', false],
+    ]);
   }
 
   private reinitializeForm(): void {
@@ -50,8 +61,22 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
       description: ['In officia laboris aliqua deserunt ullamco magna exercitation in aute aliqua. In reprehenderit id commodo anim cupidatat dolore ullamco enim nostrud anim consequat nisi nulla. Tempor aliquip aliqua esse aliquip mollit nostrud do. Incididunt minim excepteur laborum et duis Lorem excepteur laboris in. Irure ex sit pariatur cillum commodo voluptate veniam nulla non duis minim eiusmod incididunt. Id aliquip pariatur ipsum laboris et ea. Nostrud pariatur et magna nisi ad non ea aute ipsum.']
     });
   }
+  //#endregion
 
-  getMangers(): Observable<Employee[]> {
-    return
+
+  isEditable(controlName: string): boolean {
+    return this._editables.get(controlName);
+  }
+
+  enableEdition(controlName: string): void {
+    this.setEditionStatus(controlName, true);
+  }
+
+  disableEdition(controlName: string): void {
+    this.setEditionStatus(controlName, false);
+  }
+
+  private setEditionStatus(controlName: string, value: boolean): void {
+    this._editables.set(controlName, value);
   }
 }

@@ -1,35 +1,74 @@
 <form [formGroup]="form">
-  <h1>{{ stringId }}
-    <mat-form-field appearance="outline" [attr.readonly]="readonly" (dblclick)="readonly = false"
-      (focusout)="readonly = true">
-      <input matInput type="text" formControlName="title" [readonly]="readonly" />
-    </mat-form-field>
-  </h1>
+  <header>
+    <h1>{{ stringId }}
+      <div class="editable-input-wrapper title-wrapper">
+        <mat-form-field appearance="outline" [attr.readonly]="!isEditable('title')">
+          <input matInput type="text" formControlName="title" [readonly]="!isEditable('title')" />
+        </mat-form-field>
 
-  <h3>Manager</h3>
-  <div>
-    <mat-form-field appearance="outline" [attr.readonly]="readonly" (dblclick)="readonly = false"
-      (focusout)="readonly = true">
-      <input matInput *ngIf="readonly" (dblclick)="readonly = false" readonly [value]="'John Travolta'" />
-      <mat-select *ngIf="!readonly" formControlName="manager" (focusout)="readonly = true">
-        <div disabled>Loading data</div>
-        <!-- <mat-option *ngFor="let manager of getManagers | async" [value]="manager.id">{{ manager.firstName + ' ' + manager.lastName | titlecase}}</mat-option> -->
-        <mat-option [value]="1">Samuel L Jackson</mat-option>
-        <mat-option [value]="2">John Travolta
-        </mat-option>
-        <mat-option [value]="3">John Lajoile</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+        <button mat-icon-button *ngIf="!isEditable('title')" (click)="enableEdition('title')">
+          <mat-icon>edit</mat-icon>
+        </button>
 
-  <h3>Description</h3>
-  <div>
-    <mat-form-field appearance="outline" [attr.readonly]="readonly" (dblclick)="readonly = false"
-      (focusout)="readonly = true">
-      <textarea matInput formControlName="description" [readonly]="readonly" (dblclick)="readonly = false"
-        (focusout)="readonly = true"></textarea>
-    </mat-form-field>
-  </div>
+        <button mat-icon-button *ngIf="isEditable('title')" (click)="disableEdition('title')">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </h1>
+
+    <button mat-stroked-button color="primary">
+      <mat-icon>add</mat-icon>
+      <span>Add task</span>
+    </button>
+
+    <button mat-stroked-button color="primary">
+      <mat-icon>pie_chart</mat-icon>
+      <span>Show staistics</span>
+    </button>
+  </header>
+
+  <section>
+    <h3>Manager</h3>
+    <div class="editable-input-wrapper">
+      <mat-form-field appearance="outline" [attr.readonly]="!isEditable('manager')">
+        <input matInput *ngIf="!isEditable('manager')" [value]="'John Travolta'" />
+        <mat-select *ngIf="isEditable('manager')" formControlName="manager">
+          <!-- <div disabled>Loading data</div> -->
+          <!-- <mat-option *ngFor="let manager of getManagers | async" [value]="manager.id">{{ manager.firstName + ' ' + manager.lastName | titlecase}}</mat-option> -->
+          <mat-option [value]="1">Samuel L Jackson</mat-option>
+          <mat-option [value]="2">John Travolta
+          </mat-option>
+          <mat-option [value]="3">John Lajoile</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-icon-button *ngIf="!isEditable('manager')" (click)="enableEdition('manager')">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button mat-icon-button *ngIf="isEditable('manager')" (click)="disableEdition('manager')">
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </section>
+
+  <section>
+    <h3>Description</h3>
+    <div class="editable-input-wrapper description-wrapper">
+      <mat-form-field appearance="outline" [attr.readonly]="!isEditable('description')">
+        <textarea matInput formControlName="description" [readonly]="!isEditable('description')"
+          cdkTextareaAutosize></textarea>
+      </mat-form-field>
+
+      <button mat-icon-button *ngIf="!isEditable('description')" (click)="enableEdition('description')">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button mat-icon-button *ngIf="isEditable('description')" (click)="disableEdition('description')">
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </section>
 
 </form>
 

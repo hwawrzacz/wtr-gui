@@ -1,12 +1,57 @@
-form {
+@import '../../../variables.scss';
 
-  h3 {
-    font-size: 1em;
-    margin-bottom: 0;
+form {
+  header {
+    display: flex;
+    align-items: center;
+
+    h1 {
+      display: flex;
+      flex: 1 1;
+      align-items: center;
+      margin-bottom: 0; 
+    }
+
+    & > button {
+      margin-left: $header-button-margin
+    }
+  }
+
+  header,
+  section {
+    margin-bottom: $spacing-regular;
+  }
+
+  section {
+    h3 {
+      font-size: 1em;
+      margin-bottom: 0;
+    }
   }
   
   .mat-form-field {
     font-size: 1.3em;
+  }
+  
+  .editable-input-wrapper {
+    display: flex;
+    align-items: center;
+
+    &.title-wrapper {
+      mat-form-field {
+        max-width: 100% !important;
+      }
+    }
+
+    &.description-wrapper {
+      align-items: flex-start;
+      max-height: 100%;
+
+      mat-form-field {
+        max-height: 100%;
+        width: 100%;
+      }
+    }
   }
   
   ::ng-deep {
@@ -20,9 +65,20 @@ form {
         }
       } 
     }
+    
+    .mat-form-field-wrapper {
+      padding: 0 !important;
+      border: none;
+    }
 
     .mat-form-field-infix {
       padding: 0 0 .5em 0 !important;
+    }
+
+    .mat-form-field-appearance-outline { 
+      .mat-select-arrow-wrapper {
+        transform: translateY(0);
+      }
     }
 
     .mat-form-field-appearance-outline[readonly='true'] {
@@ -33,4 +89,3 @@ form {
     }
   }
 }
-  

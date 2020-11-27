@@ -42,3 +42,9 @@ a {
     color: $color-red;
   }
 }
+
+button {
+  mat-icon {
+    margin-right: $icon-margin;
+  }
+}
