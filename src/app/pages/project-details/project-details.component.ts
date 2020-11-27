@@ -117,13 +117,15 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#region Saving changes
   public onSaveField(name: string) {
     const field = this._form.get(name);
-    console.log(field.value);
+    this._initialProject[name] = field.value;
     this.disableEdition(name);
+    // TODO (HW): Sent update request to API
   }
 
   public onDiscardFieldChange(name: string) {
     const field = this._form.get(name);
-    console.log(field.value);
+    // If project[name] has property id then save its id, else save property itself
+    field.patchValue(this._initialProject[name].id || this._initialProject[name])
     this.disableEdition(name);
   }
   //#endregion
