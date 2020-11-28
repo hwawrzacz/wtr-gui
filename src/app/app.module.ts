@@ -37,6 +37,7 @@ import { ProjectTasksComponent } from './components/project-tasks/project-tasks.
 import { UserSearchSelectComponent } from './components/user-search-select/user-search-select.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FullScreenErrorComponent } from './components/full-screen-error/full-screen-error.component';
+import { FullScreenLoaderComponent } from './components/full-screen-loader/full-screen-loader.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { FullScreenErrorComponent } from './components/full-screen-error/full-sc
     ProjectTasksComponent,
     UserSearchSelectComponent,
     FullScreenErrorComponent,
+    FullScreenLoaderComponent,
   ],
   imports: [
     BrowserModule,

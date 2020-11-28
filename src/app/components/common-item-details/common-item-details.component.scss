@@ -1,24 +1,5 @@
 @import '../../../variables.scss';
 
-.loader {
-  z-index: 10;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: $spacing-regular;
-
-  display: flex;
-  align-items: center;
-
-  background-color: $bg-color-white;
-
-  mat-progress-bar {
-    width: 100%;
-  }
-}
-
 form {  
   position: relative;
   
