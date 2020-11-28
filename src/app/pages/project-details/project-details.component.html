@@ -1,5 +1,5 @@
-<div class="container" *ngIf="!isLoading && !error">
-  <form [formGroup]="form">
+<div class="container">
+  <form [formGroup]="form" *ngIf="!isLoading && !error">
     <header>
       <h1>{{ stringId }}
         <div class="editable-input-wrapper title-wrapper">
@@ -83,7 +83,7 @@
     </section>
   </form>
 
-  <section>
+  <section [ngClass]="isLoading || error ? 'hidden' : ''">
     <h3>Tasks</h3>
     <div class="tasks-list-wrapper">
       <app-project-tasks [projectId]="stringId"></app-project-tasks>
@@ -91,7 +91,5 @@
   </section>
 </div>
 
-<div class="loader" *ngIf="isLoading">
-  <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
-</div>
+<app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader>
 <app-full-screen-error *ngIf="error" (reloadRequest)="reloadData()"></app-full-screen-error>

@@ -1,11 +1,11 @@
 <mat-form-field appearance="outline">
-  <input matInput type="text" [matAutocomplete]="auto" (keyup)="onKeyUp($event)" />
+  <input matInput autofocus type="text" [matAutocomplete]="auto" (keyup)="onKeyUp($event)" />
 </mat-form-field>
 
 <mat-autocomplete #auto="matAutocomplete" [displayWith]="stringifyEmployee">
   <mat-option *ngIf="isLoading">
-    <div>
-      <mat-spinner [diameter]="50"></mat-spinner>
+    <div class="loader">
+      <mat-spinner [diameter]="32"></mat-spinner>
     </div>
   </mat-option>
 
