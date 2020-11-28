@@ -34,7 +34,7 @@ form {
 
     &.manager-wrapper {
       justify-content: flex-start;
-      padding-left: $spacing-regular;
+      padding: $spacing-regular;
       font-size: 1.3em;
 
       input {
@@ -49,6 +49,7 @@ form {
 
     &.description-wrapper {
       max-height: 100%;
+      padding-right: $spacing-regular;
 
       mat-form-field {
         max-height: 100%;
@@ -95,6 +96,7 @@ form {
 
 header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding: 0 $spacing-regular;
 
@@ -105,8 +107,13 @@ header {
     margin-bottom: 0; 
   }
 
-  & > button {
-    margin-left: $header-button-margin
+  .header__button-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+
+    & > button:not(:first-child) {
+      margin-left: $header-button-margin
+    }
   }
 }
 

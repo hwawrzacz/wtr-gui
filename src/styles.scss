@@ -43,7 +43,7 @@ a {
   }
 }
 
-button {
+button:not(.mat-icon-button) {
   mat-icon {
     margin-right: $icon-margin;
   }
