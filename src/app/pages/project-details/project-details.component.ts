@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, take, tap } from 'rxjs/operators';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { stringifyEmployee } from 'src/app/helpers/parsers';
 import { Employee } from 'src/app/model/employee';
@@ -41,26 +41,34 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
 
   ngOnInit(): void {
     super.ngOnInit();
+    this._error = false;
     this._form = this.buildEmptyForm();
     this.reinitializeEditables();
     this.loadData();
   }
 
   //#region Data loaders
+  public reloadData(): void {
+    this.loadData();
+  }
+
   private loadData() {
+    this._loadingCounter++;
+    this._error = false;
     const projectFilter = { name: 'stringId', value: [`${this.stringId}`] } as Filter;
     const projectQuery = { searchString: '', filters: [projectFilter] } as Query;
     this._restService.get(projectQuery)
       .pipe(
+        take(1),
         tap(proj => {
+          this._loadingCounter--;
           if (!!proj) {
             this._initialItem = proj;
-            console.log('project');
-            console.log(this._initialItem);
             this.reinitializeForm();
+            this._error = false;
           }
         }),
-        catchError(err => of(console.log(err)))
+        catchError(() => of(this._error = true))
       ).subscribe();
   }
   //#endregion

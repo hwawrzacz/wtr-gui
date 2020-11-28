@@ -7,11 +7,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./common-item-details.component.scss']
 })
 export class CommonItemDetailsComponent<T> implements OnInit {
-  protected _isLoading: boolean;
+  protected _loadingCounter: number;
+  protected _error: boolean;
   protected _itemId: number | string;
   protected _initialItem: T;
-
-  constructor(private _router: Router) { }
 
   //#region Getters and setters
   get itemId(): number | string {
@@ -19,9 +18,17 @@ export class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   get isLoading(): boolean {
-    return !this._initialItem;
+    return this._loadingCounter > 0;
+  }
+
+  get error(): boolean {
+    return this._error;
   }
   //#endregion
+
+  constructor(private _router: Router) {
+    this._loadingCounter = 0;
+  }
 
   ngOnInit(): void {
     this._itemId = this.getIdFromUrl();
