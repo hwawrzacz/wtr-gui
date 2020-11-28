@@ -24,6 +24,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonSearchBarComponent } from './components/common-search-bar/common-search-bar.component';
@@ -33,6 +34,8 @@ import { EmployeesListComponent } from './pages/employees-list/employees-list.co
 import { CommonItemDetailsComponent } from './components/common-item-details/common-item-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
+import { UserSearchSelectComponent } from './components/user-search-select/user-search-select.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -56,6 +59,7 @@ import { ProjectTasksComponent } from './components/project-tasks/project-tasks.
     FilterSearchBarComponent,
     CommonItemDetailsComponent,
     ProjectTasksComponent,
+    UserSearchSelectComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +78,8 @@ import { ProjectTasksComponent } from './components/project-tasks/project-tasks.
     MatSelectModule,
     ReactiveFormsModule,
     FormsModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

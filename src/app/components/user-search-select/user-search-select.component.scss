@@ -1,0 +1,10 @@
+mat-form-field,
+.mat-form-field {
+  margin-left: -.75em !important;
+  
+  ::ng-deep {
+    .mat-form-field-wrapper {
+      margin: 0 0 -.25em 0 !important;
+    }
+  }
+}

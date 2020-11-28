@@ -81,7 +81,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   private buildForm(): FormGroup {
     return this._formBuilder.group({
       title: [this._initialItem.title, [Validators.required]],
-      manager: [this._initialItem.manager.id, [Validators.required]],
+      manager: [this._initialItem.manager, [Validators.required]],
       description: [this._initialItem.description]
     });
   }
@@ -114,17 +114,22 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#endregion
 
   //#region Saving changes
+  public updateTempManager(employee: SimpleEmployee): void {
+    const field = this._form.get('manager');
+    field.patchValue(employee);
+  }
+
   public onSaveField(name: string) {
     const field = this._form.get(name);
     this._initialItem[name] = field.value;
     this.disableEdition(name);
+    console.log(this._initialItem[name]);
     // TODO (HW): Sent update request to API
   }
 
   public onDiscardFieldChange(name: string) {
     const field = this._form.get(name);
-    // If project[name] has property id then save its id, else save property itself
-    field.patchValue(this._initialItem[name].id || this._initialItem[name])
+    field.patchValue(this._initialItem[name]);
     this.disableEdition(name);
   }
   //#endregion

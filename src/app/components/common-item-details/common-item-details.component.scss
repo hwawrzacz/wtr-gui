@@ -32,8 +32,22 @@ form {
       }
     }
 
+    &.manager-wrapper {
+      justify-content: flex-start;
+      padding-left: $spacing-regular;
+      font-size: 1.3em;
+
+      input {
+        width: auto;
+        margin-top: 6px;
+      }
+      
+      mat-form-field {
+        max-width: initial !important;
+      }
+    }
+
     &.description-wrapper {
-      align-items: flex-start;
       max-height: 100%;
 
       mat-form-field {
