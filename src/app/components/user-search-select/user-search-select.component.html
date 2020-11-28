@@ -1,5 +1,6 @@
 <mat-form-field appearance="outline">
-  <input matInput autofocus type="text" [matAutocomplete]="auto" (keyup)="onKeyUp($event)" />
+  <input matInput autofocus type="text" [matAutocomplete]="auto" [value]="stringifyEmployee(initialValue)"
+    (keyup)="onKeyUp($event)" />
 </mat-form-field>
 
 <mat-autocomplete #auto="matAutocomplete" [displayWith]="stringifyEmployee">

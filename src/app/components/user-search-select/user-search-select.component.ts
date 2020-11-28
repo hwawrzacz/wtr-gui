@@ -17,6 +17,7 @@ import { EmployeesRestService } from 'src/app/services/employees-rest.service';
 })
 export class UserSearchSelectComponent {
   private _loadingCounter: number;
+  private _initialValue: Employee;
   private _singleSelection: boolean;
   private _employees: Employee[];
   private _filteredEmployees: Employee[];
@@ -32,6 +33,15 @@ export class UserSearchSelectComponent {
   @Input('singleSelection')
   set singleSelection(value: boolean) {
     this._singleSelection = value;
+  }
+
+  @Input('initialValue')
+  set initialValue(value: Employee) {
+    this._initialValue = value;
+  }
+
+  get initialValue(): Employee {
+    return this._initialValue;
   }
 
   @Output('selectionChange') selectionChangeEmitter: EventEmitter<Employee>;
