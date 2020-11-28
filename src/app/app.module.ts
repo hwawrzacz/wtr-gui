@@ -24,12 +24,20 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonSearchBarComponent } from './components/common-search-bar/common-search-bar.component';
 import { FilterSearchBarComponent } from './components/filter-search-bar/filter-search-bar.component';
 import { EmployeesTableComponent } from './pages/employees-list/employees-table.component';
 import { EmployeesListComponent } from './pages/employees-list/employees-list.component';
+import { CommonItemDetailsComponent } from './components/common-item-details/common-item-details.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
+import { UserSearchSelectComponent } from './components/user-search-select/user-search-select.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FullScreenErrorComponent } from './components/full-screen-error/full-screen-error.component';
+import { FullScreenLoaderComponent } from './components/full-screen-loader/full-screen-loader.component';
 
 
 @NgModule({
@@ -51,6 +59,11 @@ import { EmployeesListComponent } from './pages/employees-list/employees-list.co
     EmployeesListComponent,
     CommonSearchBarComponent,
     FilterSearchBarComponent,
+    CommonItemDetailsComponent,
+    ProjectTasksComponent,
+    UserSearchSelectComponent,
+    FullScreenErrorComponent,
+    FullScreenLoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +79,11 @@ import { EmployeesListComponent } from './pages/employees-list/employees-list.co
     MatInputModule,
     HttpClientModule,
     MatProgressBarModule,
-    MatSelectModule
+    MatSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

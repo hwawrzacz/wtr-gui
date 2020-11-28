@@ -1,0 +1,19 @@
+<mat-form-field appearance="outline">
+  <input matInput autofocus type="text" [matAutocomplete]="auto" [value]="stringifyEmployee(initialValue)"
+    (keyup)="onKeyUp($event)" />
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="stringifyEmployee">
+  <mat-option *ngIf="isLoading">
+    <div class="loader">
+      <mat-spinner [diameter]="32"></mat-spinner>
+    </div>
+  </mat-option>
+
+  <mat-option *ngFor="let employee of filteredEmployees" [value]="employee" (click)="onSelectionChange(employee)">
+    <span>{{ employee.firstName + ' ' + employee.lastName }}</span>
+    <button mat-icon-button *ngIf="!singleSelection">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-option>
+</mat-autocomplete>

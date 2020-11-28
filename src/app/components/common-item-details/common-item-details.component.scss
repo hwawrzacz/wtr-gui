@@ -1,0 +1,120 @@
+@import '../../../variables.scss';
+
+form {  
+  position: relative;
+  
+  .mat-form-field {
+    font-size: 1.3em;
+  }
+  
+  .editable-input-wrapper {
+    display: flex;
+    align-items: center;
+
+    &.title-wrapper {
+      mat-form-field {
+        max-width: 100% !important;
+      }
+    }
+
+    &.manager-wrapper {
+      justify-content: flex-start;
+      padding: $spacing-regular;
+      font-size: 1.3em;
+
+      input {
+        width: auto;
+        margin-top: 1px;
+      }
+      
+      mat-form-field {
+        max-width: initial !important;
+      }
+    }
+
+    &.description-wrapper {
+      max-height: 100%;
+      padding-right: $spacing-regular;
+
+      mat-form-field {
+        max-height: 100%;
+        width: 100%;
+      }
+    }
+  }
+  
+  ::ng-deep {
+    h1 {
+      .mat-form-field {
+        font-size: inherit !important;
+
+        .mat-form-field-wrapper {
+          padding: 0 !important;
+          border: none;
+        }
+      } 
+    }
+    
+    .mat-form-field-wrapper {
+      padding: 0 !important;
+      border: none;
+    }
+
+    .mat-form-field-infix {
+      padding: 0 0 .5em 0 !important;
+    }
+
+    .mat-form-field-appearance-outline { 
+      .mat-select-arrow-wrapper {
+        transform: translateY(0);
+      }
+    }
+
+    .mat-form-field-appearance-outline[readonly='true'] {
+      .mat-form-field-outline,
+      .mat-form-field-outline-thick {
+        color: transparent !important;
+      }
+    }
+  }
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0 $spacing-regular;
+
+  h1 {
+    display: flex;
+    flex: 1 1;
+    align-items: center;
+    margin-bottom: 0; 
+  }
+
+  .header__button-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+
+    & > button:not(:first-child) {
+      margin-left: $header-button-margin
+    }
+  }
+}
+
+header,
+section {
+  margin-bottom: $spacing-regular;
+}
+
+section {
+  h3 {
+    font-size: 1em;
+    margin-bottom: 0;
+    padding: 0 $spacing-regular;
+  }
+}
+
+.tasks-list-wrapper {
+  padding: 0 $spacing-regular;
+}

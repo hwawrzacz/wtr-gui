@@ -1,7 +1,13 @@
 @import './variables';
+@import './common';
+@import './flex';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+* {
+  box-sizing: border-box;
+}
 
 a {
   text-decoration: none;
@@ -41,4 +47,14 @@ a {
   &--high {
     color: $color-red;
   }
+}
+
+button:not(.mat-icon-button) {
+  mat-icon {
+    margin-right: $icon-margin;
+  }
+}
+
+.mat-table {
+  background-color: $bg-color-white;
 }

@@ -20,13 +20,14 @@ export class CommonListViewComponent<T> implements OnInit {
   protected _dataSource: CommonDataSource<T>;
 
   // Search
-  private _query = { searchString: '', filters: [] } as Query;
+  protected _query = { searchString: '', filters: [] } as Query;
 
   // Boolean
   protected _isLoading: number;
 
   constructor() {
     this._isLoading = 0;
+    this._query = { searchString: '', filters: [] } as Query;
     this._dataSource = new CommonDataSource<T>([]);
   }
 

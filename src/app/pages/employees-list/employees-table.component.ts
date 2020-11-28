@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Employee } from 'src/app/model/employee';
 import { Position, PositionStringifier } from 'src/app/model/enums/position';
@@ -9,8 +10,8 @@ import { Position, PositionStringifier } from 'src/app/model/enums/position';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class EmployeesTableComponent extends CommonTableComponent<Employee> {
-  constructor() {
-    super();
+  constructor(router: Router) {
+    super(router);
 
     this._columnsDefinitions = [
       {
@@ -44,7 +45,7 @@ export class EmployeesTableComponent extends CommonTableComponent<Employee> {
     this._actionsDefinitions = [
       {
         icon: 'pie_chart',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`statistics for ${id}`);
         },
         color: 'primary',
@@ -52,14 +53,14 @@ export class EmployeesTableComponent extends CommonTableComponent<Employee> {
       },
       {
         icon: 'edit',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`edit ${id}`);
         },
         tooltip: 'Edit item'
       },
       {
         icon: 'delete',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`delete ${id}`);
         },
         color: 'warn',

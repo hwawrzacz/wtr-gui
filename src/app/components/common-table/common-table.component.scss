@@ -9,4 +9,12 @@ table {
       text-align: center;
     }
   }
+
+  tr:not([class*='header']) {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $bg-color-hover;
+    }
+  }
 }

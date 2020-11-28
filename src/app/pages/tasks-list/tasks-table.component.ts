@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { title } from 'process';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Task } from 'src/app/model/task';
 
@@ -10,8 +10,8 @@ import { Task } from 'src/app/model/task';
 })
 export class TasksTableComponent extends CommonTableComponent<Task> {
 
-  constructor() {
-    super();
+  constructor(router: Router) {
+    super(router);
 
     this._columnsDefinitions = [
       {
@@ -39,7 +39,7 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
     this._actionsDefinitions = [
       {
         icon: 'pie_chart',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`statistics for ${id}`);
         },
         color: 'primary',
@@ -47,14 +47,14 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
       },
       {
         icon: 'edit',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`edit ${id}`);
         },
         tooltip: 'Edit item'
       },
       {
         icon: 'delete',
-        action: (id: number) => {
+        action: (id: string) => {
           console.log(`delete ${id}`);
         },
         color: 'warn',

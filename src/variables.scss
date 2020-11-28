@@ -18,7 +18,7 @@ $border-radius: 4px;
 // Margins
 $h1-margin-bottom: $spacing-regular;
 $header-button-margin: $spacing-regular;
-$icon-margin: $spacing-regular;
+$icon-margin: $spacing-small;
 
 // Paddings
 $status-label-padding: $spacing-nano $spacing-tiny;
@@ -30,6 +30,10 @@ $app-header-height: 64px;
 $icon-width: 40px;
 
 /*==== COLORS ====*/
+// Background
+$bg-color-white: #fafafa;
+$bg-color-hover: rgba(black, .2);
+
 // General
 $color-red: rgb(211, 0, 0);
 $color-orange: rgb(255, 136, 0);
