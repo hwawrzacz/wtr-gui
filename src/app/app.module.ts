@@ -36,6 +36,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
 import { UserSearchSelectComponent } from './components/user-search-select/user-search-select.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FullScreenErrorComponent } from './components/full-screen-error/full-screen-error.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     CommonItemDetailsComponent,
     ProjectTasksComponent,
     UserSearchSelectComponent,
+    FullScreenErrorComponent,
   ],
   imports: [
     BrowserModule,

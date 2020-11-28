@@ -94,17 +94,4 @@
 <div class="loader" *ngIf="isLoading">
   <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
 </div>
-
-<div class="error-wrapper" *ngIf="error">
-  <div>
-    <h3>
-      <mat-icon>sentiment_dissatisfied</mat-icon>
-      <span>Could not load item</span>
-    </h3>
-    <div class="fx-center">
-      <button mat-raised-button color="primary" (click)="reloadData()">
-        <mat-icon>refresh</mat-icon>Refresh
-      </button>
-    </div>
-  </div>
-</div>
+<app-full-screen-error *ngIf="error" (reloadRequest)="reloadData()"></app-full-screen-error>
