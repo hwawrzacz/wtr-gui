@@ -1,0 +1,9 @@
+@import '../../../variables';
+
+.work-logger {
+  height: 200px;
+  padding: 0 $spacing-regular;
+  
+  border-top: 1px solid $bg-color-hover;
+  border-bottom: 1px solid $bg-color-hover;
+}
