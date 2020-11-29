@@ -68,7 +68,7 @@ export class CommonTableComponent<T> {
 
   //#region Boolean calculated
   get actionsDefined(): boolean {
-    return this._actionsDefinitions.length > 0;
+    return !!this._actionsDefinitions && this._actionsDefinitions.length > 0;
   }
 
   get anyItemExists(): boolean {

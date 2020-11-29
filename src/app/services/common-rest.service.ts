@@ -32,7 +32,10 @@ export class CommonRestService<T> {
               // In case of Empoyee object
               (item.login && item.login.includes(searchString)) ||
               (item.firstName && item.firstName.includes(searchString)) ||
-              (item.lastName && item.lastName.includes(searchString))
+              (item.lastName && item.lastName.includes(searchString)) ||
+
+              // In casae of WorkLog object
+              (item.taskId)
             );
           })
       ).pipe(delay(2000))
