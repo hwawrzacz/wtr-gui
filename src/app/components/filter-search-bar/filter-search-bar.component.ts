@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Priority, PriorityStringifier } from 'src/app/model/enums/priority';
-import { Status, StatusStringifier } from 'src/app/model/enums/status';
+import { Priority } from 'src/app/model/enums/priority';
+import { Status } from 'src/app/model/enums/status';
+import { PriorityStringifier, StatusStringifier } from '../../helpers/parsers'
 import { Filter } from 'src/app/model/filter';
 import { CommonSearchBarComponent } from '../common-search-bar/common-search-bar.component';
 
