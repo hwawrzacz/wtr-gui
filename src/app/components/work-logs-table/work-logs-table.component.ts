@@ -8,8 +8,8 @@ import { ColumnDefinition, CommonTableComponent } from '../common-table/common-t
 
 @Component({
   selector: 'app-work-logs-table',
-  templateUrl: './work-logs-table.component.html',
-  styleUrls: ['./work-logs-table.component.scss']
+  templateUrl: '../../components/common-table/common-table.component.html',
+  styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class WorkLogsTableComponent extends CommonTableComponent<WorkLog> implements OnInit {
 
