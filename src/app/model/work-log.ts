@@ -1,4 +1,4 @@
-import { Employee } from './employee';
+import { SimpleEmployee } from './simple-employee';
 
 export enum WorkLogType {
   WORK = 'work',
@@ -10,7 +10,7 @@ export enum WorkLogType {
 export interface WorkLog {
   id: string;
   taskId: number;
-  employee: Employee;
+  employee: SimpleEmployee;
   dateTime: number; // timestamp  
   type: WorkLogType;
 }
