@@ -37,6 +37,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
+import { WorkLogsTableComponent } from './components/work-logs-table/work-logs-table.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
     UserSearchSelectComponent,
     FullScreenErrorComponent,
     FullScreenLoaderComponent,
+    WorkLogsTableComponent,
   ],
   imports: [
     BrowserModule,
