@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Task } from 'src/app/model/task';
+import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 
 @Component({
   selector: 'app-tasks-table',
@@ -10,8 +11,8 @@ import { Task } from 'src/app/model/task';
 })
 export class TasksTableComponent extends CommonTableComponent<Task> {
 
-  constructor(router: Router) {
-    super(router);
+  constructor(router: Router, itemDetailsBroker: ItemDetailsBrokerService<Task>) {
+    super(router, itemDetailsBroker);
 
     this._columnsDefinitions = [
       {

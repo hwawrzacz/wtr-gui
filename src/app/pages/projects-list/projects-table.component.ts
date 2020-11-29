@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Employee } from 'src/app/model/employee';
 import { Project } from 'src/app/model/project';
+import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -10,8 +11,8 @@ import { Project } from 'src/app/model/project';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class ProjectsTableComponent extends CommonTableComponent<Project> {
-  constructor(router: Router) {
-    super(router);
+  constructor(router: Router, itemDetailsBroker: ItemDetailsBrokerService<Project>) {
+    super(router, itemDetailsBroker);
 
     this._columnsDefinitions = [
       {

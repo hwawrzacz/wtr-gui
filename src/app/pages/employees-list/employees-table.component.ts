@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Employee } from 'src/app/model/employee';
 import { Position, PositionStringifier } from 'src/app/model/enums/position';
+import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 
 @Component({
   selector: 'app-employees-table',
@@ -10,8 +11,8 @@ import { Position, PositionStringifier } from 'src/app/model/enums/position';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class EmployeesTableComponent extends CommonTableComponent<Employee> {
-  constructor(router: Router) {
-    super(router);
+  constructor(router: Router, itemDetailsBroker: ItemDetailsBrokerService<Employee>) {
+    super(router, itemDetailsBroker);
 
     this._columnsDefinitions = [
       {
