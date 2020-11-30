@@ -27,4 +27,22 @@
   flex: 1 1;
   min-width: 200px;
   border-left: 1px solid $bg-color-gray;
+
+  h3 {
+    margin-bottom: $spacing-small;
+  }
+
+  .search-wrapper {
+    padding: 0 $spacing-regular;
+
+    app-user-search-select {
+      width: 100%;
+    }
+  }
+
+  mat-list-item {
+    span {
+      width: 100%;
+    }
+  }
 }

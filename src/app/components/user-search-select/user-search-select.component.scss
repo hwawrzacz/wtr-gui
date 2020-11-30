@@ -1,10 +1,18 @@
 mat-form-field,
 .mat-form-field {
   // margin-left: -.75em !important;
+  box-sizing: border-box;
+  width: 100%;
   
   ::ng-deep {
     .mat-form-field-wrapper {
       margin: 0 !important;
+      // width: 100%;
+    }
+    
+    .mat-form-field-infix {
+      padding: 0 0 .5em 0 !important;
+      font-size: 1.3em;
     }
   }
 }

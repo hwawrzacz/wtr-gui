@@ -68,16 +68,18 @@
     <section [ngClass]="isLoading || error ? 'hidden' : ''">
       <h3>History</h3>
       <div class="task-history-wrapper">
-        Logs history
         <app-work-logs-list [taskId]="this.itemId"></app-work-logs-list>
       </div>
     </section>
   </section>
 
   <section class="workers-panel">
-    <app-user-search-select [singleSelection]="false" (selectionChange)="addWorker($event)"></app-user-search-select>
+    <h3>Workers</h3>
+    <div class="search-wrapper">
+      <app-user-search-select [singleSelection]="false" (selectionChange)="addWorker($event)"></app-user-search-select>
+    </div>
     <mat-list>
-      <mat-list-item *ngFor="workersLoading">
+      <mat-list-item *ngIf="workersLoading">
         <div class="fx-center">
           <mat-spinner [diameter]="32"></mat-spinner>
         </div>
@@ -90,7 +92,7 @@
         </button>
       </mat-list-item>
 
-      <mat-list-item *ngFor="!!workers && !isLoading">
+      <mat-list-item *ngIf="(!workers || !workers.length) && !workersLoading">
         <span>No workers.</span>
       </mat-list-item>
     </mat-list>
