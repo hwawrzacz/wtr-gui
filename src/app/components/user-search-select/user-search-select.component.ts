@@ -1,8 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatFormFieldControl } from '@angular/material/form-field';
-import { debounceTime, tap } from 'rxjs/operators';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { stringifyEmployee } from 'src/app/helpers/parsers';
-import { FILTER_DEBOUNCE_TIMEOUT } from 'src/app/model/constants';
 import { Employee } from 'src/app/model/employee';
 import { Position } from 'src/app/model/enums/position';
 import { Filter } from 'src/app/model/filter';
@@ -15,21 +13,14 @@ import { EmployeesRestService } from 'src/app/services/employees-rest.service';
   templateUrl: './user-search-select.component.html',
   styleUrls: ['./user-search-select.component.scss']
 })
-export class UserSearchSelectComponent {
+export class UserSearchSelectComponent implements OnInit {
   private _loadingCounter: number;
   private _initialValue: Employee;
   private _singleSelection: boolean;
   private _employees: Employee[];
   private _filteredEmployees: Employee[];
   private _onlyManagers: boolean;
-
-  get isLoading(): boolean {
-    return this._loadingCounter !== 0;
-  }
-
-  get singleSelection(): boolean {
-    return this._singleSelection;
-  }
+  @ViewChild('input') inputItem: ElementRef;
 
   @Input('onlyManagers')
   set onlyManagers(value: boolean) {
@@ -46,11 +37,19 @@ export class UserSearchSelectComponent {
     this._initialValue = value;
   }
 
+  @Output('selectionChange') selectionChangeEmitter: EventEmitter<Employee>;
+
+  get isLoading(): boolean {
+    return this._loadingCounter !== 0;
+  }
+
+  get singleSelection(): boolean {
+    return this._singleSelection;
+  }
+
   get initialValue(): Employee {
     return this._initialValue;
   }
-
-  @Output('selectionChange') selectionChangeEmitter: EventEmitter<Employee>;
 
   get filteredEmployees(): Employee[] {
     return this._filteredEmployees;
@@ -90,18 +89,15 @@ export class UserSearchSelectComponent {
     console.log(`${employee.firstName} emit`);
     this.selectionChangeEmitter.emit(employee);
 
-    if (this._singleSelection) {
-      this.clearInput();
+    if (!this._singleSelection) {
+      this.inputItem.nativeElement.blur();
+      this.inputItem.nativeElement.focus();
     }
   }
   //#endregion
 
   private filterData(query: string): void {
     this._filteredEmployees = this._employees.filter(employee => `${employee.login} ${employee.firstName} ${employee.lastName}`.includes(query));
-  }
-
-  private clearInput(): void {
-    console.log('clear input')
   }
 
   //#region Helpers

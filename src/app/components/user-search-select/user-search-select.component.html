@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline">
-  <input #input matInput type="text" autofocus [matAutocomplete]="auto"
+  <input #input matInput type="text" [matAutocomplete]="auto"
     [value]="initialValue ? stringifyEmployee(initialValue) : ''" (keyup)="onKeyUp($event)" />
 </mat-form-field>
 
