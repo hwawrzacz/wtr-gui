@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { take, tap } from 'rxjs/operators';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
+import { stringifyEmployee } from 'src/app/helpers/parsers';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
+import { SimpleEmployee } from 'src/app/model/simple-employee';
 import { Task } from 'src/app/model/task';
+import { EmployeesRestService } from 'src/app/services/employees-rest.service';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { TaskService } from 'src/app/services/task.service';
 
@@ -14,6 +18,8 @@ import { TaskService } from 'src/app/services/task.service';
   styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './task-details.component.scss']
 })
 export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> implements OnInit {
+  private _workers: SimpleEmployee[];
+  private _workersLoading: boolean;
 
   //#region Getters and setters
   get stringId(): string {
@@ -23,13 +29,22 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   get project(): Task {
     return this._initialItem;
   }
+
+  get workersLoading(): boolean {
+    return this._workersLoading;
+  }
+
+  get workers(): SimpleEmployee[] {
+    return this._workers;
+  }
   //#endregion
 
   constructor(
     router: Router,
     itemBrokerService: ItemDetailsBrokerService<Task>,
     taskRestService: TaskService,
-    formBuilder: FormBuilder
+    formBuilder: FormBuilder,
+    private _employeeRestService: EmployeesRestService
   ) {
     super(router, itemBrokerService, taskRestService, formBuilder);
 
@@ -39,6 +54,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.loadWorkers();
   }
 
   //#region Initializers
@@ -59,6 +75,43 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
       description: [this._initialItem.description],
       workers: [this._initialItem.workers],
     });
+  }
+  //#endregion
+
+  //#region Data loader
+  private loadWorkers(): void {
+    this._workersLoading = true;
+    const filter = { name: 'taskId', value: [`${this._itemId}`] } as Filter;
+    const query = { searchString: '', filters: [filter] } as Query;
+    this._employeeRestService.get(query)
+      .pipe(
+        take(1),
+        tap(results => {
+          this._workersLoading = false;
+          this._workers = results.filter(worker => this._initialItem.workers.includes(worker.id));
+        })
+      ).subscribe();
+  }
+  //#endregion
+
+  public removeWorker(id: string): void {
+    this._workers = this._workers.filter(worker => worker.id !== id);
+    this._initialItem.workers = this._initialItem.workers.filter(workerId => workerId !== id);
+  }
+
+  public addWorker(worker: SimpleEmployee) {
+    if (!this._initialItem.workers.includes(worker.id)) {
+      this._workers.push(worker);
+      this._initialItem.workers.push(worker.id);
+    } else {
+      // TODO (HW): Add appropriate logger
+      console.log('This worker is already added');
+    }
+  }
+
+  //#region Helpers
+  stringifyEmployee(employee: SimpleEmployee): string {
+    return stringifyEmployee(employee);
   }
   //#endregion
 }

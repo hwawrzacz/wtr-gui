@@ -4,6 +4,27 @@
   height: 200px;
   padding: 0 $spacing-regular;
   
-  border-top: 1px solid $bg-color-hover;
-  border-bottom: 1px solid $bg-color-hover;
+  border-top: 1px solid $bg-color-gray;
+  border-bottom: 1px solid $bg-color-gray;
+}
+
+.container {
+  position: relative;
+  display: flex;
+}
+
+.details {
+  flex: 2 2;
+  min-width: 400px;
+}
+
+.workers-panel {
+  position: sticky;
+  top: $app-header-height;
+  right: 0;
+  bottom: 0;
+  
+  flex: 1 1;
+  min-width: 200px;
+  border-left: 1px solid $bg-color-gray;
 }
