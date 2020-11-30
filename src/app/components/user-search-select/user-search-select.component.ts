@@ -21,6 +21,7 @@ export class UserSearchSelectComponent {
   private _singleSelection: boolean;
   private _employees: Employee[];
   private _filteredEmployees: Employee[];
+  private _onlyManagers: boolean;
 
   get isLoading(): boolean {
     return this._loadingCounter !== 0;
@@ -28,6 +29,11 @@ export class UserSearchSelectComponent {
 
   get singleSelection(): boolean {
     return this._singleSelection;
+  }
+
+  @Input('onlyManagers')
+  set onlyManagers(value: boolean) {
+    this._onlyManagers = value;
   }
 
   @Input('singleSelection')
@@ -63,7 +69,7 @@ export class UserSearchSelectComponent {
   private loadData(): void {
     this._loadingCounter++;
     const filter = { name: 'position', value: [Position.MANAGER] } as Filter;
-    const query = { searchString: '', filters: [filter] } as Query;
+    const query = { searchString: '', filters: this._onlyManagers ? [filter] : [] } as Query;
     this._restService.get(query).pipe(
       tap(items => {
         this._loadingCounter--;
