@@ -40,8 +40,8 @@
         <input matInput *ngIf="!isEditable('manager')" readonly
           [value]="project ? stringifyManager(project.manager) : ''" />
 
-        <app-user-search-select *ngIf="isEditable('manager')" [singleSelection]="true" [initialValue]="project.manager"
-          (selectionChange)="updateTempManager($event)">
+        <app-user-search-select *ngIf="isEditable('manager')" [onlyManagers]="true" [singleSelection]="true"
+          [initialValue]="project.manager" (selectionChange)="updateTempManager($event)">
         </app-user-search-select>
 
         <button mat-icon-button *ngIf="!isEditable('manager')" (click)="enableEdition('manager')">

@@ -1,6 +1,7 @@
 import { Position } from "./enums/position";
 import { Priority } from './enums/priority';
 import { Status } from "./enums/status";
+import { WorkLog, WorkLogType } from './work-log';
 
 export const mockProjects = [
   {
@@ -185,3 +186,52 @@ export const mockEmployees = [
     phoneNumber: '345 534 345'
   },
 ]
+
+export const mockWorkLogs = [
+  {
+    id: '234',
+    taskId: 1,
+    employee: {
+      id: '1',
+      login: 'jowick',
+      firstName: 'John',
+      lastName: 'Wick',
+      position: Position.MANAGER,
+      email: 'j.wick@somecompany.com',
+      phoneNumber: '345 534 345'
+    } as any,
+    dateTime: 12341235134,
+    type: WorkLogType.WORK,
+  } as WorkLog,
+  {
+    id: '234',
+    taskId: 1,
+    employee: {
+      id: '1',
+      login: 'jowick',
+      firstName: 'John',
+      lastName: 'Wick',
+      position: Position.MANAGER,
+      email: 'j.wick@somecompany.com',
+      phoneNumber: '345 534 345'
+    } as any,
+    dateTime: 12341235544,
+    type: WorkLogType.BREAK,
+  } as WorkLog,
+  {
+    id: '234',
+    taskId: 1,
+    employee: {
+      id: '1',
+      login: 'jowick',
+      firstName: 'John',
+      lastName: 'Wick',
+      position: Position.MANAGER,
+      email: 'j.wick@somecompany.com',
+      phoneNumber: '345 534 345'
+    } as any,
+    dateTime: 12341235874,
+    type: WorkLogType.WORK,
+  } as WorkLog,
+
+];

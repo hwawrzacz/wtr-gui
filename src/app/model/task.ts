@@ -10,7 +10,7 @@ export interface Task {
   description: string;
   status: Status;
   priority: Priority;
-  workers: number[];
+  workers: string[];
   projectId: number;
   reporter: SimpleEmployee;
   creationDate: number; // timestamp 

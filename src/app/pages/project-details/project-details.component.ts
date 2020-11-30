@@ -18,12 +18,8 @@ import { ProjectRestService } from 'src/app/services/project-rest.service';
 })
 export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project> implements OnInit {
   //#region Getters and setters
-  get stringId(): number | string {
+  get stringId(): string {
     return this.itemId;
-  }
-
-  get form(): FormGroup {
-    return this._form;
   }
 
   get project(): Project {

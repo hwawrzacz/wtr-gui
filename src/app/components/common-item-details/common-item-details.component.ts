@@ -15,14 +15,14 @@ import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.s
 export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected _loadingCounter: number;
   protected _error: boolean;
-  protected _itemId: number | string;
+  protected _itemId: string;
   protected _query: Query;
   protected _initialItem: T;
   protected _form: FormGroup;
   protected _editables: Map<string, boolean>;
 
   //#region Getters and setters
-  get itemId(): number | string {
+  get itemId(): string {
     return this._itemId;
   }
 
@@ -32,6 +32,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
 
   get error(): boolean {
     return this._error;
+  }
+
+  get form(): FormGroup {
+    return this._form;
   }
   //#endregion
 
@@ -52,7 +56,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   //#region Initializers
-  private getIdFromUrl(): number | string {
+  private getIdFromUrl(): string {
     const params = this._router.url.split('/');
     return params[2];
   }

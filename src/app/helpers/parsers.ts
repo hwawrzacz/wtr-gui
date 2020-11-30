@@ -2,6 +2,7 @@ import { Employee } from '../model/employee';
 import { Priority } from '../model/enums/priority';
 import { Status } from '../model/enums/status';
 import { SimpleEmployee } from '../model/simple-employee';
+import { WorkLogType } from '../model/work-log';
 
 export const stringifyEmployee = (employee: Employee | SimpleEmployee) => `${employee.firstName} ${employee.lastName}`;
 
@@ -30,6 +31,21 @@ export class StatusStringifier {
       case Status.NEW: return 'New';
       case Status.IN_PROGRESS: return 'In progress';
       case Status.DONE: return 'Done';
+      default: return value;
+    }
+  }
+}
+
+export class WorkLogTypeStringifier {
+  static get statusList(): WorkLogType[] {
+    return Object.values(WorkLogType) as WorkLogType[];
+  }
+
+  public static getTypeString(value: WorkLogType): string {
+    switch (value) {
+      case WorkLogType.BREAK: return 'Break';
+      case WorkLogType.AUTOBREAK: return 'Autobreak';
+      case WorkLogType.WORK: return 'Work';
       default: return value;
     }
   }
