@@ -1,20 +1,31 @@
-<div class="container">
-  <div class="timer">
-    7&nbsp;h 43&nbsp;min
-  </div>
+<div class="component-wrapper">
+  <div class="container" *ngIf="!isLoading">
+    <div class="timer">
+      <span *ngIf="isWorking">
+        7&nbsp;h 43&nbsp;min
+      </span>
+      <span *ngIf="isPaused">
+        Paused
+      </span>
+      <span *ngIf="isClosed">
+        Closed
+      </span>
+    </div>
 
-  <div class="controls">
-    <button mat-button color="primary">
-      <mat-icon>play_arrow</mat-icon>
-      <span>Start work</span>
-    </button>
-    <button mat-button color="primary">
-      <mat-icon>pause</mat-icon>
-      <span>Start break</span>
-    </button>
-    <!-- <button mat-button color="primary">
-      <mat-icon>stop</mat-icon>
-      <span>Close task</span>
-    </button> -->
+    <div class="controls" *ngIf="!isClosed">
+      <button mat-button color="primary" *ngIf="!isWorking" (click)="startWork()" [disabled]="isClosed">
+        <mat-icon>play_arrow</mat-icon>
+        <span>Start work</span>
+      </button>
+      <button mat-button color="primary" *ngIf="!isPaused" (click)="startBreak()" [disabled]="isClosed">
+        <mat-icon>pause</mat-icon>
+        <span>Start break</span>
+      </button>
+      <button mat-button color="primary" *ngIf="isPaused" (click)="closeTask()" [disabled]="isClosed">
+        <mat-icon>stop</mat-icon>
+        <span>Close task</span>
+      </button>
+    </div>
   </div>
+  <app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader>
 </div>
