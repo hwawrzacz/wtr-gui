@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
-import { Employee } from 'src/app/model/employee';
 import { Position, PositionStringifier } from 'src/app/model/enums/position';
 import { SimpleEmployee } from 'src/app/model/simple-employee';
-import { EmployeeDetailsBrokerService, ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { EmployeeDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
   selector: 'app-employees-table',
@@ -12,8 +11,8 @@ import { EmployeeDetailsBrokerService, ItemDetailsBrokerService } from 'src/app/
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class EmployeesTableComponent extends CommonTableComponent<SimpleEmployee> {
-  constructor(router: Router, itemDetailsBroker: EmployeeDetailsBrokerService) {
-    super(router, itemDetailsBroker);
+  constructor(navigator: NavigatorService<SimpleEmployee>, itemDetailsBroker: EmployeeDetailsBrokerService) {
+    super(navigator, itemDetailsBroker);
 
     this._detailsUrl = 'employees'
     // this._detailsUrl = 'users'

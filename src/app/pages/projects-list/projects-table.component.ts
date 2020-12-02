@@ -4,6 +4,7 @@ import { CommonTableComponent } from 'src/app/components/common-table/common-tab
 import { Employee } from 'src/app/model/employee';
 import { Project } from 'src/app/model/project';
 import { ItemDetailsBrokerService, ProjectDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -11,8 +12,8 @@ import { ItemDetailsBrokerService, ProjectDetailsBrokerService } from 'src/app/s
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class ProjectsTableComponent extends CommonTableComponent<Project> {
-  constructor(router: Router, itemDetailsBroker: ProjectDetailsBrokerService) {
-    super(router, itemDetailsBroker);
+  constructor(navigator: NavigatorService<Project>, itemDetailsBroker: ProjectDetailsBrokerService) {
+    super(navigator, itemDetailsBroker);
 
     this._detailsUrl = 'projects';
     this._columnsDefinitions = [

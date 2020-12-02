@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { stringifyEmployee } from 'src/app/helpers/parsers';
 import { Employee } from 'src/app/model/employee';
@@ -9,6 +8,7 @@ import { Project } from 'src/app/model/project';
 import { Query } from 'src/app/model/query';
 import { SimpleEmployee } from 'src/app/model/simple-employee';
 import { ProjectDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { ProjectRestService } from 'src/app/services/project-rest.service';
 
 @Component({
@@ -28,12 +28,12 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#endregion
 
   constructor(
-    router: Router,
+    navigator: NavigatorService<Project>,
     formBuilder: FormBuilder,
     itemDetailsBroker: ProjectDetailsBrokerService,
     restService: ProjectRestService,
   ) {
-    super(router, itemDetailsBroker, restService, formBuilder);
+    super(navigator, itemDetailsBroker, restService, formBuilder);
 
     const projectFilter = { name: 'stringId', value: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
