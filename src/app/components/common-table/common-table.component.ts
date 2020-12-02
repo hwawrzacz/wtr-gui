@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
 export interface ColumnDefinition {
@@ -33,7 +33,7 @@ export class CommonTableComponent<T> {
   private _dataSource: CommonDataSource<T>;
   private _isLoading: boolean;
 
-  constructor(private _router: Router, private _itemDetailsBroker: ItemDetailsBrokerService<T>) {
+  constructor(private _navigator: NavigatorService<T>, private _itemDetailsBroker: ItemDetailsBrokerService<T>) {
     this._dataSource = new CommonDataSource<T>([]);
   }
 
@@ -81,14 +81,11 @@ export class CommonTableComponent<T> {
   }
   //#endregion
 
-
-  // TODO (HW): Move to generic component
   public navigateToDetails(itemId: string): void {
-    this._router.navigate([this._detailsUrl, itemId]);
+    this._navigator.navigateToDetails(this._detailsUrl, itemId);
   }
 
   public navigateToDetailsWithData(itemId: string, item: T): void {
-    this._itemDetailsBroker.item = item;
-    this._router.navigate([this._detailsUrl, itemId]);
+    this._navigator.navigateToDetailsWithData(this._detailsUrl, itemId, item);
   }
 }

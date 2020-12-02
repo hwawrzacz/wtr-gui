@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { Query } from 'src/app/model/query';
 import { CommonRestService } from 'src/app/services/common-rest.service';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
   selector: 'app-common-item-details',
@@ -39,7 +39,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
   //#endregion
 
-  constructor(private _router: Router,
+  constructor(private _navigator: NavigatorService<T>,
     private _itemDetailsBroker: ItemDetailsBrokerService<T>,
     private _restService: CommonRestService<T>,
     protected _formBuilder: FormBuilder
@@ -57,8 +57,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
 
   //#region Initializers
   private getIdFromUrl(): string {
-    const params = this._router.url.split('/');
-    return params[2];
+    return this._navigator.getIdFromUrl();
   }
 
   private loadItem() {

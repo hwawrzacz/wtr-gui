@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { stringifyEmployee, WorkLogTypeStringifier } from 'src/app/helpers/parsers';
 import { SimpleEmployee } from 'src/app/model/simple-employee';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { ColumnDefinition, CommonTableComponent } from '../common-table/common-table.component';
 
 @Component({
@@ -13,8 +13,8 @@ import { ColumnDefinition, CommonTableComponent } from '../common-table/common-t
 })
 export class WorkLogsTableComponent extends CommonTableComponent<WorkLog> implements OnInit {
 
-  constructor(router: Router, itemDetailBroker: ItemDetailsBrokerService<WorkLog>) {
-    super(router, itemDetailBroker);
+  constructor(navigator: NavigatorService<WorkLog>, itemDetailBroker: ItemDetailsBrokerService<WorkLog>) {
+    super(navigator, itemDetailBroker);
     this._columnsDefinitions = [
       {
         defName: 'employee',

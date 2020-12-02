@@ -3,3 +3,8 @@
 mat-icon {
   margin-right: $icon-margin
 }
+
+.section-active {
+  background-color: $color-primary;
+  color: $text-white;
+}

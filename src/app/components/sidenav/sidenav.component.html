@@ -1,18 +1,18 @@
 <div class="wrapper">
   <mat-list>
-    <mat-list-item>
+    <mat-list-item [ngClass]="projectsSectionActive ? 'section-active' : ''">
       <mat-icon>ballot</mat-icon><a routerLink="./projects" routerLinkActive="false">Projects</a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item [ngClass]="tasksSectionActive ? 'section-active' : ''">
       <mat-icon>description</mat-icon><a routerLink="./tasks">Tasks</a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item [ngClass]="usersSectionActive ? 'section-active' : ''">
       <mat-icon>people</mat-icon><a routerLink="./users">Users</a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item [ngClass]="statisticsSectionActive ? 'section-active' : ''">
       <mat-icon>pie_chart</mat-icon><a routerLink="./statistics">Statistics</a>
     </mat-list-item>
   </mat-list>

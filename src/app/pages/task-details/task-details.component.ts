@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { take, tap } from 'rxjs/operators';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { stringifyEmployee } from 'src/app/helpers/parsers';
@@ -9,7 +8,8 @@ import { Query } from 'src/app/model/query';
 import { SimpleEmployee } from 'src/app/model/simple-employee';
 import { Task } from 'src/app/model/task';
 import { EmployeesRestService } from 'src/app/services/employees-rest.service';
-import { ItemDetailsBrokerService, TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -40,13 +40,13 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   //#endregion
 
   constructor(
-    router: Router,
+    navigator: NavigatorService<Task>,
     itemBrokerService: TaskDetailsBrokerService,
     taskRestService: TaskService,
     formBuilder: FormBuilder,
     private _employeeRestService: EmployeesRestService
   ) {
-    super(router, itemBrokerService, taskRestService, formBuilder);
+    super(navigator, itemBrokerService, taskRestService, formBuilder);
 
     const projectFilter = { name: 'stringId', value: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
