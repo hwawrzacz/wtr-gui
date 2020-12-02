@@ -8,7 +8,7 @@ import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
 import { Query } from 'src/app/model/query';
 import { SimpleEmployee } from 'src/app/model/simple-employee';
-import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { ProjectDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { ProjectRestService } from 'src/app/services/project-rest.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   constructor(
     router: Router,
     formBuilder: FormBuilder,
-    itemDetailsBroker: ItemDetailsBrokerService<Project>,
+    itemDetailsBroker: ProjectDetailsBrokerService,
     restService: ProjectRestService,
   ) {
     super(router, itemDetailsBroker, restService, formBuilder);

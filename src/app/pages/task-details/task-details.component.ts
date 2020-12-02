@@ -9,7 +9,7 @@ import { Query } from 'src/app/model/query';
 import { SimpleEmployee } from 'src/app/model/simple-employee';
 import { Task } from 'src/app/model/task';
 import { EmployeesRestService } from 'src/app/services/employees-rest.service';
-import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { ItemDetailsBrokerService, TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -41,7 +41,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   constructor(
     router: Router,
-    itemBrokerService: ItemDetailsBrokerService<Task>,
+    itemBrokerService: TaskDetailsBrokerService,
     taskRestService: TaskService,
     formBuilder: FormBuilder,
     private _employeeRestService: EmployeesRestService
