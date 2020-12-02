@@ -1,3 +1,5 @@
+import { Position } from './enums/position';
+
 export interface SimpleEmployee {
   id: string;
   login: string;
