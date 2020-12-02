@@ -14,6 +14,9 @@ export class EmployeesTableComponent extends CommonTableComponent<Employee> {
   constructor(router: Router, itemDetailsBroker: ItemDetailsBrokerService<Employee>) {
     super(router, itemDetailsBroker);
 
+    this._detailsUrl = 'employees'
+    // this._detailsUrl = 'users'
+
     this._columnsDefinitions = [
       {
         defName: 'login',

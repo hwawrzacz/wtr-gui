@@ -14,6 +14,7 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
   constructor(router: Router, itemDetailsBroker: ItemDetailsBrokerService<Task>) {
     super(router, itemDetailsBroker);
 
+    this._detailsUrl = 'tasks';
     this._columnsDefinitions = [
       {
         defName: 'title',

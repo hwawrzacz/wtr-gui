@@ -14,6 +14,7 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
   constructor(router: Router, itemDetailsBroker: ItemDetailsBrokerService<Project>) {
     super(router, itemDetailsBroker);
 
+    this._detailsUrl = 'projects';
     this._columnsDefinitions = [
       {
         defName: 'id',

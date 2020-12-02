@@ -27,6 +27,7 @@ export interface ActionDefinition {
   styleUrls: ['./common-table.component.scss']
 })
 export class CommonTableComponent<T> {
+  protected _detailsUrl: string;
   protected _columnsDefinitions: ColumnDefinition[];
   protected _actionsDefinitions: ActionDefinition[];
   private _dataSource: CommonDataSource<T>;
@@ -34,6 +35,10 @@ export class CommonTableComponent<T> {
 
   constructor(private _router: Router, private _itemDetailsBroker: ItemDetailsBrokerService<T>) {
     this._dataSource = new CommonDataSource<T>([]);
+  }
+
+  get detailsUrl(): string {
+    return this._detailsUrl;
   }
 
   get columnsToDisplay(): string[] {
@@ -79,11 +84,11 @@ export class CommonTableComponent<T> {
 
   // TODO (HW): Move to generic component
   public navigateToDetails(itemId: string): void {
-    this._router.navigate([this._router.url, itemId]);
+    this._router.navigate([this._detailsUrl, itemId]);
   }
 
   public navigateToDetailsWithData(itemId: string, item: T): void {
     this._itemDetailsBroker.item = item;
-    this._router.navigate([this._router.url, itemId]);
+    this._router.navigate([this._detailsUrl, itemId]);
   }
 }
