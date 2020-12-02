@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Project } from '../model/project';
+import { SimpleEmployee } from '../model/simple-employee';
+import { Task } from '../model/task';
 
 @Injectable({
   providedIn: 'root'
@@ -20,3 +23,12 @@ export class ItemDetailsBrokerService<T> {
 
   constructor() { }
 }
+
+@Injectable({ providedIn: 'root' })
+export class ProjectDetailsBrokerService extends ItemDetailsBrokerService<Project> { }
+
+@Injectable({ providedIn: 'root' })
+export class TaskDetailsBrokerService extends ItemDetailsBrokerService<Task> { }
+
+@Injectable({ providedIn: 'root' })
+export class EmployeeDetailsBrokerService extends ItemDetailsBrokerService<SimpleEmployee> { }

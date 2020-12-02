@@ -38,7 +38,7 @@
       <h3>Manager</h3>
       <div class="editable-input-wrapper manager-wrapper">
         <input matInput *ngIf="!isEditable('manager')" readonly
-          [value]="project ? stringifyManager(project.manager) : ''" />
+          [value]="project && project.manager ? stringifyManager(project.manager) : ''" />
 
         <app-user-search-select *ngIf="isEditable('manager')" [onlyManagers]="true" [singleSelection]="true"
           [initialValue]="project.manager" (selectionChange)="updateTempManager($event)">

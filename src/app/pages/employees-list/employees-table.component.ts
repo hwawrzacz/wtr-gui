@@ -3,16 +3,20 @@ import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Employee } from 'src/app/model/employee';
 import { Position, PositionStringifier } from 'src/app/model/enums/position';
-import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { SimpleEmployee } from 'src/app/model/simple-employee';
+import { EmployeeDetailsBrokerService, ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 
 @Component({
   selector: 'app-employees-table',
   templateUrl: '../../components/common-table/common-table.component.html',
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
-export class EmployeesTableComponent extends CommonTableComponent<Employee> {
-  constructor(router: Router, itemDetailsBroker: ItemDetailsBrokerService<Employee>) {
+export class EmployeesTableComponent extends CommonTableComponent<SimpleEmployee> {
+  constructor(router: Router, itemDetailsBroker: EmployeeDetailsBrokerService) {
     super(router, itemDetailsBroker);
+
+    this._detailsUrl = 'employees'
+    // this._detailsUrl = 'users'
 
     this._columnsDefinitions = [
       {
