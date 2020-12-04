@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
+import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { CommonRestService } from 'src/app/services/common-rest.service';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
@@ -44,6 +45,8 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     private _restService: CommonRestService<T>,
     protected _formBuilder: FormBuilder
   ) {
+    const filter = { name: 'login', values: [] } as Filter;
+    this._query = { searchString: '', filters: [filter] } as Query;
     this._loadingCounter = 0;
   }
 
@@ -68,7 +71,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     }
   }
 
-  /** Function which sets editables map */
+  /** Method which sets editables map */
   protected abstract setEditables(): void;
 
   protected reinitializeForm(): void {
@@ -83,6 +86,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     });
   }
 
+  /** Method which returns form group corresponding to item model map */
   protected abstract buildForm(): FormGroup;
   //#endregion
 
@@ -147,5 +151,14 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private setEditionStatus(controlName: string, value: boolean): void {
     this._editables.set(controlName, value);
   }
+  //#endregion
+
+  //#region Form errors
+  public hasError(controlName: string): boolean {
+    return this._form.get(controlName).valid;
+  };
+
+  // /** Method which return sepcific error message */
+  // public abstract getErrorMessage(controlName: string): string;
   //#endregion
 }
