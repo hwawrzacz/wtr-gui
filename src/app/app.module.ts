@@ -40,6 +40,7 @@ import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { WorkLogsTableComponent } from './components/work-logs-table/work-logs-table.component';
 import { WorkLogsListComponent } from './components/work-logs-list/work-logs-list.component';
 import { WorkLoggerComponent } from './components/work-logger/work-logger.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { WorkLoggerComponent } from './components/work-logger/work-logger.compon
     WorkLogsTableComponent,
     WorkLogsListComponent,
     WorkLoggerComponent,
+    UserDetailsComponent,
   ],
   imports: [
     BrowserModule,
