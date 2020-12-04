@@ -14,6 +14,11 @@ import { CommonItemDetailsComponent } from '../common-item-details/common-item-d
   styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmployee> implements OnInit {
+  //#region Getters and setters
+  public get positionsList(): Position[] {
+    return PositionStringifier.positionList;
+  }
+  //#endregion
 
   constructor(
     navigator: NavigatorService<SimpleEmployee>,
@@ -23,6 +28,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
     super(navigator, broker, restService, formBuilder);
   }
 
+  //#endregion Initialization
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
       login: [this._initialItem.login, [Validators.required]],
@@ -50,6 +56,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
       ['position', false]
     ])
   }
+  //#endregion
 
   ngOnInit(): void {
     super.ngOnInit();
@@ -64,11 +71,11 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
     if (control.hasError('maxLength')) return 'Value is too long';
   }
 
-  public positions(): Position[] {
-    return PositionStringifier.positionList;
-  }
-
   public getPositionString(position: Position): string {
     return PositionStringifier.getPositionString(position);
+  }
+
+  public passwordsMatch(): boolean {
+    return true;
   }
 }
