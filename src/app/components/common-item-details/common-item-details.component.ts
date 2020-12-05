@@ -42,7 +42,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
 
   constructor(private _navigator: NavigatorService<T>,
     private _itemDetailsBroker: ItemDetailsBrokerService<T>,
-    private _restService: CommonRestService<T>,
+    protected _restService: CommonRestService<T>,
     protected _formBuilder: FormBuilder
   ) {
     const filter = { name: 'login', values: [] } as Filter;

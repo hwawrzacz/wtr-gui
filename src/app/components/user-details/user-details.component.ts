@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { take, tap } from 'rxjs/operators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
+import { EmployeeCredentials } from 'src/app/model/employee-credentials';
 import { Position } from 'src/app/model/enums/position';
 import { SimpleEmployee } from 'src/app/model/simple-employee';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
@@ -14,9 +16,24 @@ import { CommonItemDetailsComponent } from '../common-item-details/common-item-d
   styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmployee> implements OnInit {
+  private _qrCodeUrl: string;
+  private _faceImageUrl: string;
+
   //#region Getters and setters
   public get positionsList(): Position[] {
     return PositionStringifier.positionList;
+  }
+
+  public get qrCodeUrl(): string {
+    return this._qrCodeUrl;
+  }
+
+  public get faceImageUrl(): string {
+    return this._faceImageUrl;
+  }
+
+  public get login(): string {
+    return this._initialItem.login;
   }
   //#endregion
 
@@ -60,6 +77,27 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.loadCredentials();
+  }
+
+  private loadCredentials() {
+    this._loadingCounter++;
+    this._error = false;
+    (this._restService as UserRestService).getCredentials(this._itemId).pipe(
+      take(1),
+      tap((credentials: EmployeeCredentials) => {
+        this._loadingCounter--;
+        if (!!credentials) {
+          console.log(credentials);
+          this._faceImageUrl = credentials.faceImage;
+          this._qrCodeUrl = credentials.qrImage;
+        } else {
+          console.log('error');
+          this._error = true;
+        }
+      })
+    )
+      .subscribe()
   }
 
   public getErrorMessage(controlName: string): string {

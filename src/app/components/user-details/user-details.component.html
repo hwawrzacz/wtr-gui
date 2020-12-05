@@ -65,7 +65,9 @@
     <div class="images">
 
       <div class="image-wrapper">
-        <img />
+        <figure>
+          <img src="{{ faceImageUrl }}" />
+        </figure>
         <button mat-button color="primary">
           <mat-icon>add_a_photo</mat-icon>
           <span>Update face image</span>
@@ -73,10 +75,12 @@
       </div>
 
       <div class="image-wrapper">
-        <img />
+        <figure>
+          <img src="{{ qrCodeUrl }}" />
+        </figure>
         <button mat-button color="primary">
           <mat-icon>download</mat-icon>
-          <span>Download QR code</span>
+          <a download="{{ login }}qrcode.jpg" href="{{ qrCodeUrl }}">Download QR code</a>
         </button>
       </div>
     </div>
