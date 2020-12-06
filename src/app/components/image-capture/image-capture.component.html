@@ -1,0 +1,23 @@
+<div class="container">
+  <video *ngIf="previewMode" src="{{ videoSrc }}" #cameraPreview>
+  </video>
+
+  <figure>
+    <img *ngIf="!previewMode" src="{{ imageSrc }}" alt="Image taken">
+  </figure>
+
+  <div class="fx-center">
+    <button mat-raised-button color="primary" (click)="takePhoto()">
+      <mat-icon>camera_alt</mat-icon><span>Take photo</span>
+    </button>
+
+    <button mat-raised-button color="primary" (click)="savePhoto()">
+      <mat-icon>save</mat-icon><span>Save</span>
+    </button>
+
+    <button mat-button color="primary" (click)="retakePhoto()">
+      <mat-icon>photo_alt</mat-icon><span>Retake photo</span>
+    </button>
+  </div>
+
+</div>

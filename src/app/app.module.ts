@@ -41,6 +41,8 @@ import { WorkLogsTableComponent } from './components/work-logs-table/work-logs-t
 import { WorkLogsListComponent } from './components/work-logs-list/work-logs-list.component';
 import { WorkLoggerComponent } from './components/work-logger/work-logger.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { ImageCaptureComponent } from './components/image-capture/image-capture.component';
+import { ImageCaptureDialogComponent } from './components/image-capture-dialog/image-capture-dialog.component';
 
 
 @NgModule({
@@ -70,6 +72,8 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     WorkLogsListComponent,
     WorkLoggerComponent,
     UserDetailsComponent,
+    ImageCaptureComponent,
+    ImageCaptureDialogComponent,
   ],
   imports: [
     BrowserModule,
