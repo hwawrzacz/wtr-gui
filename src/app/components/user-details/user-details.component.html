@@ -53,7 +53,8 @@
         <mat-form-field appearance="outline">
           <mat-label>Repeat passwrod</mat-label>
           <input matInput type="password" formControlName="repeatPassword" />
-          <mat-error *ngIf="!passwordsMatch()">Passwords do not match</mat-error>
+          <mat-error *ngIf="!passwordForm.get('repeatPassword').valid">{{ getPasswordErrorMessage('repeatPassword') }}
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -68,7 +69,7 @@
         <figure>
           <img src="{{ faceImageUrl }}" />
         </figure>
-        <button mat-button color="primary">
+        <button mat-button color="primary" (click)="changePhoto()">
           <mat-icon>add_a_photo</mat-icon>
           <span>Update face image</span>
         </button>

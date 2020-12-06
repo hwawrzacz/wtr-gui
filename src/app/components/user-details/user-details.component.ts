@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { take, tap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { filter, take, tap } from 'rxjs/operators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { EmployeeCredentials } from 'src/app/model/employee-credentials';
 import { Position } from 'src/app/model/enums/position';
@@ -9,6 +10,7 @@ import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.s
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
 import { CommonItemDetailsComponent } from '../common-item-details/common-item-details.component';
+import { ImageCaptureDialogComponent } from '../image-capture-dialog/image-capture-dialog.component';
 
 @Component({
   selector: 'app-user-details',
@@ -46,7 +48,8 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
     navigator: NavigatorService<SimpleEmployee>,
     broker: ItemDetailsBrokerService<SimpleEmployee>,
     restService: UserRestService,
-    formBuilder: FormBuilder) {
+    formBuilder: FormBuilder,
+    private _dialogService: MatDialog) {
     super(navigator, broker, restService, formBuilder);
     console.log('before');
     this._passwordForm = this.buildPasswordForm();
@@ -128,6 +131,20 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
       .subscribe()
   }
 
+  public changePhoto(): void {
+    this._dialogService.open(ImageCaptureDialogComponent)
+      .afterClosed()
+      .pipe(
+        take(1),
+        filter(result => !!result),
+        tap(result => {
+          this._faceImageUrl = result;
+        })
+      )
+      .subscribe
+  }
+
+  //#region Helpers
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Value is required';
@@ -138,11 +155,13 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
     if (control.hasError('passwordMatches')) return 'Passwords are not the same';
   }
 
+  public getPasswordErrorMessage(controlName: string): string {
+    const control = this._form.get(controlName);
+    if (control.hasError('passwordMatches')) return 'Passwords are not the same';
+  }
+
   public getPositionString(position: Position): string {
     return PositionStringifier.getPositionString(position);
   }
-
-  public passwordsMatch(): boolean {
-    return true;
-  }
+  //#endregion
 }
