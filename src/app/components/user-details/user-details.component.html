@@ -41,24 +41,24 @@
     </mat-form-field>
   </form>
 
-  <div class="credentials-wrapper">
+  <div *ngIf="!isLoading && !error" class="credentials-wrapper">
     <h1>Credentials</h1>
-    <form class="password-change">
+    <form class="password-change" [formGroup]="passwordForm">
       <div class="fx">
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input matInput type="password" />
+          <input matInput type="password" formControlName="password" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Repeat passwrod</mat-label>
-          <input matInput type="password" />
+          <input matInput type="password" formControlName="repeatPassword" />
           <mat-error *ngIf="!passwordsMatch()">Passwords do not match</mat-error>
         </mat-form-field>
       </div>
 
       <div class="fx">
-        <button mat-raised-button color="primary">Change password</button>
+        <button mat-raised-button color="primary" [disabled]="!passwordForm.valid">Change password</button>
       </div>
 
     </form>

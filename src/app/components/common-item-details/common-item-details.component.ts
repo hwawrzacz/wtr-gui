@@ -79,11 +79,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   private buildEmptyForm(): FormGroup {
-    return this._formBuilder.group({
-      title: ['', [Validators.required]],
-      manager: [null, [Validators.required]],
-      description: ['']
-    });
+    return this._formBuilder.group({});
   }
 
   /** Method which returns form group corresponding to item model map */

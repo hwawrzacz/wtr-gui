@@ -8,6 +8,7 @@
 .personal-details {
   display: flex;
   flex-direction: column;
+  flex: 1 1;
 
   mat-form-field {
     width: 250px;
@@ -16,7 +17,7 @@
 
 .credentials-wrapper {
   padding-left: $spacing-regular;
-  flex: 1 1;
+  flex: 2 2;
 
   .password-change {
     margin-bottom: $spacing-regular;

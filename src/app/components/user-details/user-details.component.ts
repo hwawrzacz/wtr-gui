@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { take, tap } from 'rxjs/operators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { EmployeeCredentials } from 'src/app/model/employee-credentials';
@@ -18,6 +18,7 @@ import { CommonItemDetailsComponent } from '../common-item-details/common-item-d
 export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmployee> implements OnInit {
   private _qrCodeUrl: string;
   private _faceImageUrl: string;
+  private _passwordForm: FormGroup;
 
   //#region Getters and setters
   public get positionsList(): Position[] {
@@ -35,6 +36,10 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
   public get login(): string {
     return this._initialItem.login;
   }
+
+  public get passwordForm(): FormGroup {
+    return this._passwordForm;
+  }
   //#endregion
 
   constructor(
@@ -43,6 +48,9 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
     restService: UserRestService,
     formBuilder: FormBuilder) {
     super(navigator, broker, restService, formBuilder);
+    console.log('before');
+    this._passwordForm = this.buildPasswordForm();
+    console.log('after');
   }
 
   //#endregion Initialization
@@ -57,9 +65,28 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
     })
   }
 
+  private buildPasswordForm(): FormGroup {
+    return this._formBuilder.group({
+      password: [null, [Validators.required]],
+      repeatPassword: [null, [this.matchPasswordValidator]]
+    })
+  }
+
   //#region Custom validators
   private phoneNumberValidator(): ValidatorFn {
-    return (control: FormControl) => control.value.toString().match(/[0-9]{9}/) == control.value ? { phoneNumber: true } : null;
+    return (control: FormControl): { [key: string]: any | null } => control.value.toString().match(/[0-9]{9}/) == control.value ? { phoneNumber: true } : null;
+  }
+
+  private matchPasswordValidator = (): ValidatorFn => {
+    return (control: AbstractControl): { [key: string]: any | null } => {
+      console.log(control.root);
+      const otherControlValue = control.root.get('password').value;
+      console.log('sd');
+      const controlValue = control.root.get('repeatPassword').value;
+      console.log('sd2');
+
+      return otherControlValue === controlValue ? null : { passwordMatches: true };
+    }
   }
   //#endregion
 
@@ -77,6 +104,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
 
   ngOnInit(): void {
     super.ngOnInit();
+    this._passwordForm = this.buildPasswordForm();
     this.loadCredentials();
   }
 
@@ -107,6 +135,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
     if (control.hasError('phoneNumber')) return 'Value must contain only digits';
     if (control.hasError('minLength')) return 'Value is too short';
     if (control.hasError('maxLength')) return 'Value is too long';
+    if (control.hasError('passwordMatches')) return 'Passwords are not the same';
   }
 
   public getPositionString(position: Position): string {
