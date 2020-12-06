@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
@@ -12,14 +12,22 @@ export interface MediaDevice {
   templateUrl: './image-capture.component.html',
   styleUrls: ['./image-capture.component.scss']
 })
-export class ImageCaptureComponent implements OnInit {
+export class ImageCaptureComponent implements OnInit, AfterViewInit {
+  private _streamLoadingCounter: number;
   private _previewMode: boolean;
   private _imageSrc: string;
   private _videoSrc: MediaStream;
   private _devices$: BehaviorSubject<MediaDevice[]>;
   private _selectedDevice$: BehaviorSubject<MediaDevice>;
 
+  @ViewChild('video') video: ElementRef;
+  @ViewChild('imagePlaceholder') canvas: ElementRef;
+
   //#region Getters and setters
+  get streamLoading(): boolean {
+    return this._streamLoadingCounter > 0;
+  }
+
   get previewMode(): boolean {
     return this._previewMode;
   }
@@ -51,13 +59,28 @@ export class ImageCaptureComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initializeDevicesList();
     this.subscribeToSelectedDeviceChange();
+    this.initializeDevicesList();
+    this.setDefaultComponentValues();
+  }
+
+  ngAfterViewInit() {
+    this.reinitializeCanvas()
+  }
+
+  //#region Initializers 
+  public setDefaultComponentValues(): void {
+    this._imageSrc = '';
+    this._previewMode = true;
+  }
+
+  public reinitializeCanvas(): void {
+    this.canvas.nativeElement.width = 0;
+    this.canvas.nativeElement.height = 0;
   }
 
   private initializeDevicesList(): void {
-    navigator.mediaDevices
-      .enumerateDevices()
+    navigator.mediaDevices.enumerateDevices()
       .then(devices => {
         const filteredDevices = devices
           .filter(dvc => dvc.kind === 'videoinput')
@@ -67,7 +90,10 @@ export class ImageCaptureComponent implements OnInit {
         this._selectedDevice$.next(this._devices$.value[0]);
       })
       // TODO: Handle error properly
-      .catch(err => console.warn(err));
+      .catch(err => {
+        console.warn(err);
+        this._streamLoadingCounter--;
+      });
   }
 
   private subscribeToSelectedDeviceChange(): void {
@@ -76,7 +102,9 @@ export class ImageCaptureComponent implements OnInit {
       tap(() => this.reloadCameraPreview())
     ).subscribe()
   }
+  //#endregion
 
+  //#region Media device handlers
   private reloadCameraPreview(): void {
     const constraints = {
       video: { deviceId: { exact: this._selectedDevice$.value.id } },
@@ -86,34 +114,38 @@ export class ImageCaptureComponent implements OnInit {
     navigator.mediaDevices.getUserMedia(constraints)
       .then(stream => {
         this._videoSrc = stream;
+        this._streamLoadingCounter--;
       })
       // TODO: Handle error properly
-      .catch(err => console.warn(err));
+      .catch(err => {
+        console.warn(err);
+        this._streamLoadingCounter--;
+      });
   }
 
   public onInputDeviceChange(deviceId: string): void {
+    this._streamLoadingCounter++;
     this._selectedDevice$.next(this.devices.find(device => device.id == deviceId) || this.devices[0]);
   }
+  //#endregion
 
-  public togglePreviewMode(): void {
-    this._previewMode = !this.previewMode;
-  }
-
+  //#region Photo handlers
   public takePhoto(): void {
-    console.log("take photo");
-    this._previewMode = false
+    const width = this.video.nativeElement.innerWidth || 400;
+    const height = this.video.nativeElement.innerHeight || 300;
+    this.canvas.nativeElement.width = width;
+    this.canvas.nativeElement.height = height;
+    this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, width, height);
+    this._previewMode = false;
   }
 
   public savePhoto(): void {
-    console.log("save photo");
+    this._imageSrc = this.canvas.nativeElement.toDataURL();
   }
 
   public retakePhoto(): void {
-    this.reinitializeComponent();
+    this.setDefaultComponentValues();
+    this.reinitializeCanvas();
   }
-
-  public reinitializeComponent(): void {
-    this._imageSrc = '';
-    this._previewMode = true
-  }
+  //#endregion
 }
