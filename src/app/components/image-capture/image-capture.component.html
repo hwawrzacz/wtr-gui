@@ -1,21 +1,28 @@
 <div class="container">
-  <video *ngIf="previewMode" src="{{ videoSrc }}" #cameraPreview>
+  <video *ngIf="previewMode" [srcObject]="videoSrc" autoplay="true" #cameraPreview>
   </video>
 
   <figure>
     <img *ngIf="!previewMode" src="{{ imageSrc }}" alt="Image taken">
   </figure>
 
+  <mat-form-field appearance="outline">
+    <mat-select (valueChange)="onInputDeviceChange($event)" [value]="selectedDevice ? selectedDevice.id : null"
+      placeholder="Select device">
+      <mat-option *ngFor="let device of devices" [value]="device.id">{{ device.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <div class="fx-center">
-    <button mat-raised-button color="primary" (click)="takePhoto()">
+    <button mat-raised-button color="primary" *ngIf="previewMode" (click)="takePhoto()">
       <mat-icon>camera_alt</mat-icon><span>Take photo</span>
     </button>
 
-    <button mat-raised-button color="primary" (click)="savePhoto()">
+    <button mat-raised-button color="primary" *ngIf="!previewMode" (click)="savePhoto()">
       <mat-icon>save</mat-icon><span>Save</span>
     </button>
 
-    <button mat-button color="primary" (click)="retakePhoto()">
+    <button mat-button color="primary" *ngIf="!previewMode" (click)="retakePhoto()">
       <mat-icon>photo_alt</mat-icon><span>Retake photo</span>
     </button>
   </div>

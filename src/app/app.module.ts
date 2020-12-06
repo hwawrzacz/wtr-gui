@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -94,6 +95,7 @@ import { ImageCaptureDialogComponent } from './components/image-capture-dialog/i
     FormsModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
