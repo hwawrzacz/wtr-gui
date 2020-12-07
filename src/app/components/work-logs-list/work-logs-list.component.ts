@@ -22,7 +22,7 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog[]> im
     super()
     this._restService = restService;
 
-    const projectFilter = { name: 'taskId', value: [`${this._taskId}`] } as Filter;
+    const projectFilter = { name: 'taskId', values: [`${this._taskId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
   }
 

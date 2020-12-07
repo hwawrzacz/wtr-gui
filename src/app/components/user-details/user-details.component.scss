@@ -1,0 +1,84 @@
+@import '../../../variables';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.personal-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+
+  mat-form-field {
+    width: 250px;
+  }
+}
+
+.credentials-wrapper {
+  padding-left: $spacing-regular;
+  flex: 2 2;
+
+  .password-change {
+    margin-bottom: $spacing-regular;
+    
+    mat-form-field {
+      flex: 1 1;
+      
+      &:first-child {
+        margin-right: $spacing-small;
+      }
+
+      &:last-child {
+        margin-left: $spacing-small;
+      }
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .images {
+    display: flex;
+    justify-content: center;
+
+    .image-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &:first-child {
+        margin-right: $spacing-small;
+      }
+
+      &:last-child {
+        margin-left: $spacing-small;
+      }
+
+      figure {
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100px;
+        height: 200px;
+        
+        // border: 1px solid black;
+        // background-color: rgba($color-primary, .2);
+
+        img {
+          display: block;
+          width: auto;
+          height: auto;
+          margin: 0 auto;
+          max-width: 100%;
+          max-height: 100%;          
+        }
+      }
+
+      button {
+        margin-top: $spacing-small;
+      }
+    }
+  }
+}

@@ -55,7 +55,7 @@ export class FilterSearchBarComponent extends CommonSearchBarComponent {
     if (this.queryHasFilter(name)) {
       this.replaceFilterValue(name, value);
     } else {
-      const filter: Filter = { name: name, value: value };
+      const filter: Filter = { name: name, values: value };
       this._query.filters.push(filter);
     }
   }
@@ -65,7 +65,7 @@ export class FilterSearchBarComponent extends CommonSearchBarComponent {
   }
 
   private replaceFilterValue(name: string, value: string[]) {
-    this._query.filters.find(f => f.name === name).value = value;
+    this._query.filters.find(f => f.name === name).values = value;
   }
 
   private removeFilter(name: string) {

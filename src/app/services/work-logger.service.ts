@@ -42,7 +42,7 @@ export class WorkLoggerService {
 
   private getLastWorkLog(): void {
     this._loadingCounter++;
-    const filter = { name: 'userId', value: [`${this.USER_ID}`] } as Filter;
+    const filter = { name: 'userId', values: [`${this.USER_ID}`] } as Filter;
     const query = { searchString: '', filters: [] } as Query;
     this._restService.get(query)
       .pipe(

@@ -22,7 +22,7 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
   constructor(http: HttpClient) {
     super();
     this._restService = new TasksListService(http);
-    const projectFilter = { name: 'projectId', value: [`${this._projectId}`] } as Filter;
+    const projectFilter = { name: 'projectId', values: [`${this._projectId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
   }
 

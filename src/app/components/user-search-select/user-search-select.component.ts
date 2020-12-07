@@ -67,7 +67,7 @@ export class UserSearchSelectComponent implements OnInit {
   //#region Initializers
   private loadData(): void {
     this._loadingCounter++;
-    const filter = { name: 'position', value: [Position.MANAGER] } as Filter;
+    const filter = { name: 'position', values: [Position.MANAGER] } as Filter;
     const query = { searchString: '', filters: this._onlyManagers ? [filter] : [] } as Query;
     this._restService.get(query).pipe(
       tap(items => {

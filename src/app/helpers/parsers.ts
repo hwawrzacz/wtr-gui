@@ -1,4 +1,5 @@
 import { Employee } from '../model/employee';
+import { Position } from '../model/enums/position';
 import { Priority } from '../model/enums/priority';
 import { Status } from '../model/enums/status';
 import { SimpleEmployee } from '../model/simple-employee';
@@ -46,6 +47,21 @@ export class WorkLogTypeStringifier {
       case WorkLogType.BREAK: return 'Break';
       case WorkLogType.AUTOBREAK: return 'Autobreak';
       case WorkLogType.WORK: return 'Work';
+      default: return value;
+    }
+  }
+}
+
+export class PositionStringifier {
+  static get positionList(): Position[] {
+    return Object.values(Position) as Position[];
+  }
+
+  public static getPositionString(value: Position): string {
+    switch (value) {
+      case Position.EMPLOYEE: return 'Employee';
+      case Position.MANAGER: return 'Manager';
+      case Position.ADMIN: return 'Admin';
       default: return value;
     }
   }
