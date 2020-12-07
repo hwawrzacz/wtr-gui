@@ -119,7 +119,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
       tap((credentials: EmployeeCredentials) => {
         this._loadingCounter--;
         if (!!credentials) {
-          console.log(credentials);
           this._faceImageUrl = credentials.faceImage;
           this._qrCodeUrl = credentials.qrImage;
         } else {
@@ -141,7 +140,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
           this._faceImageUrl = result;
         })
       )
-      .subscribe
+      .subscribe();
   }
 
   //#region Helpers

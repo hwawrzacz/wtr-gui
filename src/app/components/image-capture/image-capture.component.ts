@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
@@ -15,7 +15,7 @@ export interface MediaDevice {
 export class ImageCaptureComponent implements OnInit, AfterViewInit {
   private _streamLoadingCounter: number;
   private _previewMode: boolean;
-  private _imageSrc: string;
+  private _imageUrl: string;
   private _videoSrc: MediaStream;
   private _devices$: BehaviorSubject<MediaDevice[]>;
   private _selectedDevice$: BehaviorSubject<MediaDevice>;
@@ -35,10 +35,6 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
     this._previewMode = value;
   }
 
-  get imageSrc(): string {
-    return this._imageSrc;
-  }
-
   get videoSrc(): MediaStream {
     return this._videoSrc;
   }
@@ -50,12 +46,15 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
   get selectedDevice(): MediaDevice {
     return this._selectedDevice$.value;
   }
+
+  @Output('photoChange') photoChangeEventEmitter: EventEmitter<string>;
   //#endregion
 
   constructor() {
     this._previewMode = true;
     this._devices$ = new BehaviorSubject(null);
     this._selectedDevice$ = new BehaviorSubject(null);
+    this.photoChangeEventEmitter = new EventEmitter<string>();
   }
 
   ngOnInit(): void {
@@ -70,7 +69,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
 
   //#region Initializers 
   public setDefaultComponentValues(): void {
-    this._imageSrc = '';
+    this._imageUrl = '';
     this._previewMode = true;
   }
 
@@ -137,15 +136,19 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
     this.canvas.nativeElement.height = height;
     this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, width, height);
     this._previewMode = false;
-  }
-
-  public savePhoto(): void {
-    this._imageSrc = this.canvas.nativeElement.toDataURL();
+    this._imageUrl = this.canvas.nativeElement.toDataURL();
+    this.emitPhotoChange();
   }
 
   public retakePhoto(): void {
     this.setDefaultComponentValues();
     this.reinitializeCanvas();
+    this._imageUrl = null;
+    this.emitPhotoChange();
   }
   //#endregion
+
+  private emitPhotoChange(): void {
+    this.photoChangeEventEmitter.emit(this._imageUrl);
+  }
 }

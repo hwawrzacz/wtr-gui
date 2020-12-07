@@ -5,10 +5,7 @@
     <app-full-screen-loader *ngIf="streamLoading"></app-full-screen-loader>
   </div>
 
-  <figure>
-    <canvas #imagePlaceholder></canvas>
-    <app-full-screen-loader *ngIf="!selectedDevice" [appearance]="'spinner'"></app-full-screen-loader>
-  </figure>
+  <canvas #imagePlaceholder></canvas>
 
   <mat-form-field *ngIf="previewMode" appearance="outline">
     <mat-label>Input device</mat-label>
@@ -21,10 +18,6 @@
   <div class="fx-center">
     <button mat-raised-button color="primary" *ngIf="previewMode" (click)="takePhoto()">
       <mat-icon>camera_alt</mat-icon><span>Take a photo</span>
-    </button>
-
-    <button mat-raised-button color="primary" *ngIf="!previewMode" (click)="savePhoto()">
-      <mat-icon>save</mat-icon><span>Save</span>
     </button>
 
     <button mat-button color="primary" *ngIf="!previewMode" (click)="retakePhoto()">

@@ -7,20 +7,24 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./image-capture-dialog.component.scss']
 })
 export class ImageCaptureDialogComponent implements OnInit {
-  private _imageSrc: string
+  private _imageUrl: string
+
+  get imageExists(): boolean {
+    return !!this._imageUrl;
+  }
 
   constructor(private _dialog: MatDialogRef<ImageCaptureDialogComponent>) { }
-
 
   ngOnInit(): void {
   }
 
-  public onImageTaken(imageSrc: string): void {
-    this._imageSrc = imageSrc
+  public onPhotoChange(imageSrc: string): void {
+    this._imageUrl = imageSrc;
   }
 
   public onSave(): void {
-    this._dialog.close(this._imageSrc);
+    console.log(this._imageUrl);
+    this._dialog.close(this._imageUrl);
   }
 
   public onClose(): void {
