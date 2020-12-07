@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
@@ -12,11 +12,11 @@ export interface MediaDevice {
   templateUrl: './image-capture.component.html',
   styleUrls: ['./image-capture.component.scss']
 })
-export class ImageCaptureComponent implements OnInit, AfterViewInit {
+export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   private _streamLoadingCounter: number;
   private _previewMode: boolean;
   private _imageUrl: string;
-  private _videoSrc: MediaStream;
+  private _videoStream: MediaStream;
   private _devices$: BehaviorSubject<MediaDevice[]>;
   private _selectedDevice$: BehaviorSubject<MediaDevice>;
 
@@ -36,7 +36,11 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
   }
 
   get videoSrc(): MediaStream {
-    return this._videoSrc;
+    return this._videoStream;
+  }
+
+  get imageUrl(): string {
+    return this._imageUrl;
   }
 
   get devices(): MediaDevice[] {
@@ -74,8 +78,10 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
   }
 
   public reinitializeCanvas(): void {
-    this.canvas.nativeElement.width = 0;
-    this.canvas.nativeElement.height = 0;
+    const width = 400;
+    const height = 300;
+    this.canvas.nativeElement.width = width;
+    this.canvas.nativeElement.height = height;
   }
 
   private initializeDevicesList(): void {
@@ -105,14 +111,15 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
 
   //#region Media device handlers
   private reloadCameraPreview(): void {
-    const constraints = {
+    const specificDeviceConstraints = {
       video: { deviceId: { exact: this._selectedDevice$.value.id } },
       audio: false
     } as MediaStreamConstraints;
 
-    navigator.mediaDevices.getUserMedia(constraints)
+    navigator.mediaDevices.getUserMedia(specificDeviceConstraints)
       .then(stream => {
-        this._videoSrc = stream;
+        this.stopCurrentStream();
+        this._videoStream = stream;
         this._streamLoadingCounter--;
       })
       // TODO: Handle error properly
@@ -123,7 +130,6 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
   }
 
   public onInputDeviceChange(deviceId: string): void {
-    this._streamLoadingCounter++;
     this._selectedDevice$.next(this.devices.find(device => device.id == deviceId) || this.devices[0]);
   }
   //#endregion
@@ -132,8 +138,6 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
   public takePhoto(): void {
     const width = this.video.nativeElement.innerWidth || 400;
     const height = this.video.nativeElement.innerHeight || 300;
-    this.canvas.nativeElement.width = width;
-    this.canvas.nativeElement.height = height;
     this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, width, height);
     this._previewMode = false;
     this._imageUrl = this.canvas.nativeElement.toDataURL();
@@ -150,5 +154,16 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit {
 
   private emitPhotoChange(): void {
     this.photoChangeEventEmitter.emit(this._imageUrl);
+  }
+
+  private stopCurrentStream(): void {
+    if (this._videoStream) {
+      this._videoStream.getVideoTracks().forEach(track => track.stop())
+      this._videoStream.getAudioTracks().forEach(track => track.stop());
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.stopCurrentStream();
   }
 }

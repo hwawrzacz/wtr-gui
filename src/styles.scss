@@ -49,7 +49,7 @@ a {
   }
 }
 
-button:not(.mat-icon-button) {
+button:not(.mat-icon-button, .mat-fab) {
   mat-icon {
     margin-right: $icon-margin;
   }

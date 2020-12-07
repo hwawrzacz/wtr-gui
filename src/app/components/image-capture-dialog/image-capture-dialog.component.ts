@@ -15,15 +15,13 @@ export class ImageCaptureDialogComponent implements OnInit {
 
   constructor(private _dialog: MatDialogRef<ImageCaptureDialogComponent>) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
-  public onPhotoChange(imageSrc: string): void {
-    this._imageUrl = imageSrc;
+  public onPhotoChange(imageUrl: string): void {
+    this._imageUrl = imageUrl;
   }
 
   public onSave(): void {
-    console.log(this._imageUrl);
     this._dialog.close(this._imageUrl);
   }
 

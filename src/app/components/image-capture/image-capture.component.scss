@@ -1,6 +1,8 @@
+@import '../../../variables';
+
 video,
 img {
-  border: 1px solid black;
+  background-color: black;
   width: 400px;
   height: 300px;
 }
@@ -11,4 +13,22 @@ mat-form-field {
 
 .video-wrapper {
   position: relative;
+}
+
+.image-wrapper {
+  position: relative;
+
+  canvas {
+    display: none;
+  }
+
+  img {
+    width: 400px;
+    height: 300px;
+  }
+}
+
+.mat-fab {
+  position: absolute;
+  bottom: $spacing-medium;
 }
