@@ -1,0 +1,92 @@
+<div class="container">
+  <form [formGroup]="form" *ngIf="!isLoading && !error" class="personal-details">
+    <h1>Personal details</h1>
+    <mat-form-field appearance="outline">
+      <mat-label>Login</mat-label>
+      <input matInput formControlName="login" />
+      <mat-error *ngIf="hasError('login')">{{ getErrorMessage('login') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>First name</mat-label>
+      <input matInput formControlName="firstName" />
+      <mat-error *ngIf="hasError('firstName')">{{ getErrorMessage('firstName') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Last name</mat-label>
+      <input matInput formControlName="lastName" />
+      <mat-error *ngIf="hasError('lastName')">{{ getErrorMessage('lastName') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Phone number</mat-label>
+      <input matInput formControlName="phoneNumber" />
+      <mat-error *ngIf="hasError('phoneNumber')">{{ getErrorMessage('phoneNumber') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="hasError('email')">{{ getErrorMessage('email') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Position</mat-label>
+      <mat-select formControlName="position">
+        <mat-option *ngFor="let position of positionsList" [value]="position"> {{ getPositionString(position) }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="hasError('position')">{{ getErrorMessage('position') }}</mat-error>
+    </mat-form-field>
+  </form>
+
+  <div *ngIf="!isLoading && !error" class="credentials-wrapper">
+    <h1>Credentials</h1>
+    <form class="password-change" [formGroup]="passwordForm">
+      <div class="fx">
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Repeat passwrod</mat-label>
+          <input matInput type="password" formControlName="repeatPassword" />
+          <mat-error *ngIf="!passwordForm.get('repeatPassword').valid">{{ getPasswordErrorMessage('repeatPassword') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="fx">
+        <button mat-raised-button color="primary" [disabled]="!passwordForm.valid">Change password</button>
+      </div>
+
+    </form>
+    <div class="images">
+
+      <div class="image-wrapper">
+        <figure>
+          <img src="{{ faceImageUrl }}" />
+        </figure>
+        <button mat-button color="primary" (click)="changePhoto()">
+          <mat-icon>add_a_photo</mat-icon>
+          <span>Update face image</span>
+        </button>
+      </div>
+
+      <div class="image-wrapper">
+        <figure>
+          <img src="{{ qrCodeUrl }}" />
+        </figure>
+        <button mat-button color="primary">
+          <mat-icon>download</mat-icon>
+          <a download="{{ login }}qrcode.jpg" href="{{ qrCodeUrl }}">Download QR code</a>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader>
+<app-full-screen-error *ngIf="error" (reloadRequest)="reloadData()"></app-full-screen-error>

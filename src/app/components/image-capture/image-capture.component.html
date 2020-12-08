@@ -1,0 +1,30 @@
+<div class="container">
+
+  <div class="video-wrapper">
+    <video #video *ngIf="previewMode" [srcObject]="videoSrc" autoplay="true" #cameraPreview></video>
+    <app-full-screen-loader *ngIf="streamLoading"></app-full-screen-loader>
+    <div class="fx-center">
+      <button mat-fab color="accent" *ngIf="previewMode" (click)="takePhoto()">
+        <mat-icon>camera_alt</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="image-wrapper">
+    <canvas #imagePlaceholder></canvas>
+    <img *ngIf="!previewMode" src="{{ imageUrl }}" alt="Photo taken" />
+    <div class="fx-center">
+      <button mat-fab color="accent" *ngIf="!previewMode" (click)="retakePhoto()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Input device</mat-label>
+    <mat-select placeholder="Select device" [disabled]="!previewMode"
+      [value]="selectedDevice ? selectedDevice.id : null" (valueChange)="onInputDeviceChange($event)">
+      <mat-option *ngFor="let device of devices" [value]="device.id">{{ device.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

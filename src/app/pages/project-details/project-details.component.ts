@@ -35,7 +35,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   ) {
     super(navigator, itemDetailsBroker, restService, formBuilder);
 
-    const projectFilter = { name: 'stringId', value: [`${this.stringId}`] } as Filter;
+    const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
   }
 

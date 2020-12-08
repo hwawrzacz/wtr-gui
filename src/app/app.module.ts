@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -40,6 +41,9 @@ import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { WorkLogsTableComponent } from './components/work-logs-table/work-logs-table.component';
 import { WorkLogsListComponent } from './components/work-logs-list/work-logs-list.component';
 import { WorkLoggerComponent } from './components/work-logger/work-logger.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { ImageCaptureComponent } from './components/image-capture/image-capture.component';
+import { ImageCaptureDialogComponent } from './components/image-capture-dialog/image-capture-dialog.component';
 
 
 @NgModule({
@@ -68,6 +72,9 @@ import { WorkLoggerComponent } from './components/work-logger/work-logger.compon
     WorkLogsTableComponent,
     WorkLogsListComponent,
     WorkLoggerComponent,
+    UserDetailsComponent,
+    ImageCaptureComponent,
+    ImageCaptureDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +95,7 @@ import { WorkLoggerComponent } from './components/work-logger/work-logger.compon
     FormsModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

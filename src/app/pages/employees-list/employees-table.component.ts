@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
-import { Position, PositionStringifier } from 'src/app/model/enums/position';
+import { PositionStringifier } from 'src/app/helpers/parsers';
+import { Position } from 'src/app/model/enums/position';
 import { SimpleEmployee } from 'src/app/model/simple-employee';
 import { EmployeeDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -14,8 +15,8 @@ export class EmployeesTableComponent extends CommonTableComponent<SimpleEmployee
   constructor(navigator: NavigatorService<SimpleEmployee>, itemDetailsBroker: EmployeeDetailsBrokerService) {
     super(navigator, itemDetailsBroker);
 
-    this._detailsUrl = 'employees'
-    // this._detailsUrl = 'users'
+    // this._detailsUrl = 'employees'
+    this._detailsUrl = 'users'
 
     this._columnsDefinitions = [
       {

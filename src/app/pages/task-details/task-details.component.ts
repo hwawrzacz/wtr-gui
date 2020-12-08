@@ -48,7 +48,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   ) {
     super(navigator, itemBrokerService, taskRestService, formBuilder);
 
-    const projectFilter = { name: 'stringId', value: [`${this.stringId}`] } as Filter;
+    const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
   }
 
@@ -81,7 +81,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   //#region Data loader
   private loadWorkers(): void {
     this._workersLoading = true;
-    const filter = { name: 'taskId', value: [`${this._itemId}`] } as Filter;
+    const filter = { name: 'taskId', values: [`${this._itemId}`] } as Filter;
     const query = { searchString: '', filters: [filter] } as Query;
     this._employeeRestService.get(query)
       .pipe(
