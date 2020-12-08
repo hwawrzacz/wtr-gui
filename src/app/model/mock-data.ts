@@ -14,7 +14,7 @@ export const mockProjects: Project[] = [
     title: 'Jeden projekt',
     description: 'Taki niezwykły projekt, że to to prostu szok i niedowierzanie',
     manager: {
-      id: '1',
+      _id: '1',
       login: 'jowick',
       firstName: 'John',
       lastName: 'Wick',
@@ -32,7 +32,7 @@ export const mockProjects: Project[] = [
     title: 'Dwa projekt',
     description: 'Taki drugi projekt z trochę mniejszym szokiem, ale jednak nadal trochę',
     manager: {
-      id: '2',
+      _id: '2',
       login: 'stespie',
       firstName: 'Steven',
       lastName: 'Spierlberg',
@@ -50,7 +50,7 @@ export const mockProjects: Project[] = [
     title: 'Pobieranie danych',
     description: 'Inny projekt, który służy tylko i wyłącznie temu, żeby pokazać jak są pobierane dane.',
     manager: {
-      id: '3',
+      _id: '3',
       login: 'asan',
       firstName: 'Adam',
       lastName: 'Sandler',
@@ -68,7 +68,7 @@ export const mockProjects: Project[] = [
     title: 'Zabawowe przygotowanie do pracy',
     description: 'Projekt numer cztery powstał z pomyśleniem o fantastycznym serwisie, który jest bardzo przyazny.',
     manager: {
-      id: '4',
+      _id: '4',
       login: 'seacon',
       firstName: 'Sean',
       lastName: 'Connery',
@@ -86,7 +86,7 @@ export const mockProjects: Project[] = [
     title: 'Finale grande',
     description: 'Ten projekt ma taką cechę, że jest ostatni na liście (chyba, że lista się zmieni albo zostanie posortowana)',
     manager: {
-      id: '5',
+      _id: '5',
       login: 'camdiaz',
       firstName: 'Cameron',
       lastName: 'Diaz',
@@ -112,7 +112,7 @@ export const mockTasks: Task[] = [
     workers: ['1', '2', '3', '4'],
     projectId: 1,
     reporter: {
-      id: '1',
+      _id: '1',
       login: 'jowick',
       firstName: 'John',
       lastName: 'Wick',
@@ -134,7 +134,7 @@ export const mockTasks: Task[] = [
     workers: ['1', '2', '3', '4'],
     projectId: 1,
     reporter: {
-      id: '2',
+      _id: '2',
       login: 'stespie',
       firstName: 'Steven',
       lastName: 'Spierlberg',
@@ -149,7 +149,7 @@ export const mockTasks: Task[] = [
 
 export const mockEmployees: SimpleEmployee[] = [
   {
-    id: '1',
+    _id: '1',
     login: 'jowick',
     firstName: 'John',
     lastName: 'Wick',
@@ -158,7 +158,7 @@ export const mockEmployees: SimpleEmployee[] = [
     phoneNumber: '345 534 345'
   },
   {
-    id: '2',
+    _id: '2',
     login: 'stespie',
     firstName: 'Steven',
     lastName: 'Spierlberg',
@@ -167,7 +167,7 @@ export const mockEmployees: SimpleEmployee[] = [
     phoneNumber: '345 534 345'
   },
   {
-    id: '3',
+    _id: '3',
     login: 'asan',
     firstName: 'Adam',
     lastName: 'Sandler',
@@ -176,7 +176,7 @@ export const mockEmployees: SimpleEmployee[] = [
     phoneNumber: '345 534 345'
   },
   {
-    id: '4',
+    _id: '4',
     login: 'seacon',
     firstName: 'Sean',
     lastName: 'Connery',
@@ -185,7 +185,7 @@ export const mockEmployees: SimpleEmployee[] = [
     phoneNumber: '345 534 345'
   },
   {
-    id: '5',
+    _id: '5',
     login: 'camdiaz',
     firstName: 'Cameron',
     lastName: 'Diaz',

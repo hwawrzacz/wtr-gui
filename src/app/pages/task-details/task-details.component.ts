@@ -95,14 +95,14 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   //#endregion
 
   public removeWorker(id: string): void {
-    this._workers = this._workers.filter(worker => worker.id !== id);
+    this._workers = this._workers.filter(worker => worker._id !== id);
     this._initialItem.workers = this._initialItem.workers.filter(workerId => workerId !== id);
   }
 
   public addWorker(worker: SimpleEmployee) {
-    if (!this._initialItem.workers.includes(worker.id)) {
+    if (!this._initialItem.workers.includes(worker._id)) {
       this._workers.push(worker);
-      this._initialItem.workers.push(worker.id);
+      this._initialItem.workers.push(worker._id);
     } else {
       // TODO (HW): Add appropriate logger
       console.log('This worker is already added');
