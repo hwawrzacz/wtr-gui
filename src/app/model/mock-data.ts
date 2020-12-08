@@ -19,7 +19,7 @@ export const mockProjects: Project[] = [
       login: 'jowick',
       firstName: 'John',
       lastName: 'Wick',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 'j.wick@somecompany.com',
       phoneNumber: '345 534 345'
     },
@@ -37,7 +37,7 @@ export const mockProjects: Project[] = [
       login: 'stespie',
       firstName: 'Steven',
       lastName: 'Spierlberg',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 's.spielberg@somecompany.com',
       phoneNumber: '345 534 345'
     },
@@ -55,7 +55,7 @@ export const mockProjects: Project[] = [
       login: 'asan',
       firstName: 'Adam',
       lastName: 'Sandler',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 'a.sandler@somecompany.com',
       phoneNumber: '345 534 345'
     },
@@ -73,7 +73,7 @@ export const mockProjects: Project[] = [
       login: 'seacon',
       firstName: 'Sean',
       lastName: 'Connery',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 's.connery@somecompany.com',
       phoneNumber: '345 534 345'
     },
@@ -91,7 +91,7 @@ export const mockProjects: Project[] = [
       login: 'camdiaz',
       firstName: 'Cameron',
       lastName: 'Diaz',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 'c.diaz@somecompany.com',
       phoneNumber: '345 534 345'
     },
@@ -117,7 +117,7 @@ export const mockTasks: Task[] = [
       login: 'jowick',
       firstName: 'John',
       lastName: 'Wick',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 'j.wick@somecompany.com',
       phoneNumber: '345 534 345'
     },
@@ -139,7 +139,7 @@ export const mockTasks: Task[] = [
       login: 'stespie',
       firstName: 'Steven',
       lastName: 'Spierlberg',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 's.spielberg@somecompany.com',
       phoneNumber: '345 534 345'
     },
@@ -154,7 +154,7 @@ export const mockEmployees: SimpleEmployee[] = [
     login: 'jowick',
     firstName: 'John',
     lastName: 'Wick',
-    position: Position.MANAGER,
+    role: Position.MANAGER,
     email: 'j.wick@somecompany.com',
     phoneNumber: '345 534 345'
   },
@@ -163,7 +163,7 @@ export const mockEmployees: SimpleEmployee[] = [
     login: 'stespie',
     firstName: 'Steven',
     lastName: 'Spierlberg',
-    position: Position.MANAGER,
+    role: Position.MANAGER,
     email: 's.spielberg@somecompany.com',
     phoneNumber: '345 534 345'
   },
@@ -172,7 +172,7 @@ export const mockEmployees: SimpleEmployee[] = [
     login: 'asan',
     firstName: 'Adam',
     lastName: 'Sandler',
-    position: Position.MANAGER,
+    role: Position.MANAGER,
     email: 'a.sandler@somecompany.com',
     phoneNumber: '345 534 345'
   },
@@ -181,7 +181,7 @@ export const mockEmployees: SimpleEmployee[] = [
     login: 'seacon',
     firstName: 'Sean',
     lastName: 'Connery',
-    position: Position.MANAGER,
+    role: Position.MANAGER,
     email: 's.connery@somecompany.com',
     phoneNumber: '345 534 345'
   },
@@ -190,7 +190,7 @@ export const mockEmployees: SimpleEmployee[] = [
     login: 'camdiaz',
     firstName: 'Cameron',
     lastName: 'Diaz',
-    position: Position.MANAGER,
+    role: Position.MANAGER,
     email: 'c.diaz@somecompany.com',
     phoneNumber: '345 534 345'
   },
@@ -205,7 +205,7 @@ export const mockWorkLogs: WorkLog[] = [
       login: 'jowick',
       firstName: 'John',
       lastName: 'Wick',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 'j.wick@somecompany.com',
       phoneNumber: '345 534 345'
     } as any,
@@ -220,7 +220,7 @@ export const mockWorkLogs: WorkLog[] = [
       login: 'jowick',
       firstName: 'John',
       lastName: 'Wick',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 'j.wick@somecompany.com',
       phoneNumber: '345 534 345'
     } as any,
@@ -235,7 +235,7 @@ export const mockWorkLogs: WorkLog[] = [
       login: 'jowick',
       firstName: 'John',
       lastName: 'Wick',
-      position: Position.MANAGER,
+      role: Position.MANAGER,
       email: 'j.wick@somecompany.com',
       phoneNumber: '345 534 345'
     } as any,

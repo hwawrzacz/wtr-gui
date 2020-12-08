@@ -64,7 +64,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
       lastName: [this._initialItem.lastName, [Validators.required]],
       phoneNumber: [this._initialItem.phoneNumber, [Validators.required, this.phoneNumberValidator()]],
       email: [this._initialItem.email, [Validators.required, Validators.email]],
-      position: [this._initialItem.position, [Validators.required]],
+      position: [this._initialItem.role, [Validators.required]],
     })
   }
 

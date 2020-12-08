@@ -6,7 +6,7 @@ export interface Employee {
   lastName: string;
   email: string;
   phoneNumber: string;
-  position: Position
+  role: Position
   login: string;
   password: string;
   faceImage: string;

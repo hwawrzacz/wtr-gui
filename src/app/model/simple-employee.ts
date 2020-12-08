@@ -7,5 +7,5 @@ export interface SimpleEmployee {
   lastName: string;
   email: string;
   phoneNumber: string;
-  position: Position;
+  role: Position;
 }
