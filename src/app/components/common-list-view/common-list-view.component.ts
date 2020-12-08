@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Query } from 'src/app/model/query';
+import { SimpleEmployee } from 'src/app/model/simple-employee';
+import { CommonArrayResponse } from 'src/app/services/common-array-response';
 import { CommonRestService } from 'src/app/services/common-rest.service';
+import { EmployeesRestService } from 'src/app/services/employees-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
 @Component({
@@ -63,6 +66,28 @@ export class CommonListViewComponent<T> implements OnInit {
 
   protected loadData(query: Query) {
     this._loadingCounter++;
+    try {
+      this.getDataFromApi(query);
+    } catch (e) {
+      console.log(e);
+      this.getMockData(query);
+    }
+  }
+
+  private getDataFromApi(query: Query) {
+    (this._restService as EmployeesRestService).getFromApi(query)
+      .pipe(
+        tap((result: CommonArrayResponse<SimpleEmployee[]>) => {
+          this._dataSource.refresh(result.users as any);
+          console.log(result.users);
+          this._loadingCounter--;
+        }),
+        // TODO (HW): Handle error properly
+        catchError((e) => of(this.getMockData(query)))
+      ).subscribe();
+  }
+
+  private getMockData(query: Query) {
     this._restService.get(query)
       .pipe(
         tap((result) => {
