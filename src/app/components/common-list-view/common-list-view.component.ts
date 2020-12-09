@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Query } from 'src/app/model/query';
-import { SimpleEmployee } from 'src/app/model/simple-employee';
+import { SimpleUser } from 'src/app/model/simple-user';
 import { CommonArrayResponse } from 'src/app/services/common-array-response';
 import { CommonRestService } from 'src/app/services/common-rest.service';
-import { EmployeesRestService } from 'src/app/services/employees-rest.service';
+import { UsersRestService } from 'src/app/services/users-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
 @Component({
@@ -75,9 +75,9 @@ export class CommonListViewComponent<T> implements OnInit {
   }
 
   private getDataFromApi(query: Query) {
-    (this._restService as EmployeesRestService).getFromApi(query)
+    (this._restService as UsersRestService).getFromApi(query)
       .pipe(
-        tap((result: CommonArrayResponse<SimpleEmployee[]>) => {
+        tap((result: CommonArrayResponse<SimpleUser[]>) => {
           this._dataSource.refresh(result.users as any);
           console.log(result.users);
           this._loadingCounter--;

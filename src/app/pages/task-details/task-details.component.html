@@ -86,7 +86,7 @@
       </mat-list-item>
 
       <mat-list-item *ngFor="let worker of workers">
-        <span>{{ stringifyEmployee(worker) }}</span>
+        <span>{{ stringifyUser(worker) }}</span>
         <button mat-icon-button (click)="removeWorker(worker.id)">
           <mat-icon>close</mat-icon>
         </button>

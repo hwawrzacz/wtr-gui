@@ -28,8 +28,8 @@ import { AppHeaderComponent } from './components/header/header.component';
 import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { UserSearchSelectComponent } from './components/user-search-select/user-search-select.component';
-import { EmployeesListComponent } from './pages/employees-list/employees-list.component';
-import { EmployeesTableComponent } from './pages/employees-list/employees-table.component';
+import { UsersListComponent } from './pages/users-list/users-list.component';
+import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
@@ -61,8 +61,8 @@ import { ImageCaptureDialogComponent } from './components/image-capture-dialog/i
     SidenavComponent,
     CommonListViewComponent,
     TasksTableComponent,
-    EmployeesTableComponent,
-    EmployeesListComponent,
+    UsersTableComponent,
+    UsersListComponent,
     CommonSearchBarComponent,
     FilterSearchBarComponent,
     ProjectTasksComponent,

@@ -8,7 +8,7 @@ export interface ColumnDefinition {
   displayName: string;
   propertyName: string;
   /** Allows to format field.
-   * For example when you want to stringify employee object so that
+   * For example when you want to stringify user object so that
    * first and last name are displayed.
    */
   formatter?: (obj: any) => string;

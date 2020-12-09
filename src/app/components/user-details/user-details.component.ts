@@ -3,9 +3,9 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Vali
 import { MatDialog } from '@angular/material/dialog';
 import { filter, take, tap } from 'rxjs/operators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
-import { EmployeeCredentials } from 'src/app/model/employee-credentials';
+import { UserCredentials } from 'src/app/model/user-credentials';
 import { Position } from 'src/app/model/enums/position';
-import { SimpleEmployee } from 'src/app/model/simple-employee';
+import { SimpleUser } from 'src/app/model/simple-user';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
@@ -17,7 +17,7 @@ import { ImageCaptureDialogComponent } from '../image-capture-dialog/image-captu
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.scss']
 })
-export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmployee> implements OnInit {
+export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser> implements OnInit {
   private _qrCodeUrl: string;
   private _faceImageUrl: string;
   private _passwordForm: FormGroup;
@@ -45,8 +45,8 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
   //#endregion
 
   constructor(
-    navigator: NavigatorService<SimpleEmployee>,
-    broker: ItemDetailsBrokerService<SimpleEmployee>,
+    navigator: NavigatorService<SimpleUser>,
+    broker: ItemDetailsBrokerService<SimpleUser>,
     restService: UserRestService,
     formBuilder: FormBuilder,
     private _dialogService: MatDialog) {
@@ -116,7 +116,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleEmplo
     this._error = false;
     (this._restService as UserRestService).getCredentials(this._itemId).pipe(
       take(1),
-      tap((credentials: EmployeeCredentials) => {
+      tap((credentials: UserCredentials) => {
         this._loadingCounter--;
         if (!!credentials) {
           this._faceImageUrl = credentials.faceImage;

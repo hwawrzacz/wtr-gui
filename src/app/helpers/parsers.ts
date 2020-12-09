@@ -1,11 +1,11 @@
-import { Employee } from '../model/employee';
+import { User } from '../model/user';
 import { Position } from '../model/enums/position';
 import { Priority } from '../model/enums/priority';
 import { Status } from '../model/enums/status';
-import { SimpleEmployee } from '../model/simple-employee';
+import { SimpleUser } from '../model/simple-user';
 import { WorkLogType } from '../model/work-log';
 
-export const stringifyEmployee = (employee: Employee | SimpleEmployee) => `${employee.firstName} ${employee.lastName}`;
+export const stringifyUser = (user: User | SimpleUser) => `${user.firstName} ${user.lastName}`;
 
 export class PriorityStringifier {
   static get prioritiesList(): Priority[] {
@@ -59,7 +59,7 @@ export class PositionStringifier {
 
   public static getPositionString(value: Position): string {
     switch (value) {
-      case Position.EMPLOYEE: return 'Employee';
+      case Position.EMPLOYEE: return 'User';
       case Position.MANAGER: return 'Manager';
       case Position.ADMIN: return 'Admin';
       default: return value;

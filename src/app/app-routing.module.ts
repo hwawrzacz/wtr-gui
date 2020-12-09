@@ -5,7 +5,7 @@ import { ProjectsListComponent } from './pages/projects-list/projects-list.compo
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
-import { EmployeesListComponent } from './pages/employees-list/employees-list.component';
+import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'tasks', component: TasksListComponent },
   { path: 'projects/:id', component: ProjectDetailsComponent },
   { path: 'tasks/:id', component: TaskDetailsComponent },
-  { path: 'users', component: EmployeesListComponent },
+  { path: 'users', component: UsersListComponent },
   { path: 'users/:id', component: UserDetailsComponent },
   { path: 'statistics', component: StatisticsComponent }
 ];

@@ -1,6 +1,6 @@
 import { Position } from './enums/position';
 
-export interface Employee {
+export interface User {
   _id: string;
   firstName: string;
   lastName: string;

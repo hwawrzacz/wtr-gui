@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take, tap } from 'rxjs/operators';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
-import { stringifyEmployee } from 'src/app/helpers/parsers';
+import { stringifyUser } from 'src/app/helpers/parsers';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
-import { SimpleEmployee } from 'src/app/model/simple-employee';
+import { SimpleUser } from 'src/app/model/simple-user';
 import { Task } from 'src/app/model/task';
-import { EmployeesRestService } from 'src/app/services/employees-rest.service';
+import { UsersRestService as UsersRestService } from 'src/app/services/users-rest.service';
 import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { TaskService } from 'src/app/services/task.service';
@@ -18,7 +18,7 @@ import { TaskService } from 'src/app/services/task.service';
   styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './task-details.component.scss']
 })
 export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> implements OnInit {
-  private _workers: SimpleEmployee[];
+  private _workers: SimpleUser[];
   private _workersLoading: boolean;
 
   //#region Getters and setters
@@ -34,7 +34,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     return this._workersLoading;
   }
 
-  get workers(): SimpleEmployee[] {
+  get workers(): SimpleUser[] {
     return this._workers;
   }
   //#endregion
@@ -44,7 +44,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     itemBrokerService: TaskDetailsBrokerService,
     taskRestService: TaskService,
     formBuilder: FormBuilder,
-    private _employeeRestService: EmployeesRestService
+    private _userRestService: UsersRestService
   ) {
     super(navigator, itemBrokerService, taskRestService, formBuilder);
 
@@ -83,7 +83,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     this._workersLoading = true;
     const filter = { name: 'taskId', values: [`${this._itemId}`] } as Filter;
     const query = { searchString: '', filters: [filter] } as Query;
-    this._employeeRestService.get(query)
+    this._userRestService.get(query)
       .pipe(
         take(1),
         tap(results => {
@@ -99,7 +99,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     this._initialItem.workers = this._initialItem.workers.filter(workerId => workerId !== id);
   }
 
-  public addWorker(worker: SimpleEmployee) {
+  public addWorker(worker: SimpleUser) {
     if (!this._initialItem.workers.includes(worker._id)) {
       this._workers.push(worker);
       this._initialItem.workers.push(worker._id);
@@ -110,8 +110,8 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   }
 
   //#region Helpers
-  stringifyEmployee(employee: SimpleEmployee): string {
-    return stringifyEmployee(employee);
+  stringifyUser(user: SimpleUser): string {
+    return stringifyUser(user);
   }
   //#endregion
 }

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
-import { stringifyEmployee } from 'src/app/helpers/parsers';
-import { Employee } from 'src/app/model/employee';
+import { stringifyUser } from 'src/app/helpers/parsers';
+import { User } from 'src/app/model/user';
 import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
 import { Query } from 'src/app/model/query';
-import { SimpleEmployee } from 'src/app/model/simple-employee';
+import { SimpleUser } from 'src/app/model/simple-user';
 import { ProjectDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ProjectRestService } from 'src/app/services/project-rest.service';
@@ -62,15 +62,15 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#endregion
 
   //#region Saving changes
-  public updateTempManager(employee: SimpleEmployee): void {
+  public updateTempManager(user: SimpleUser): void {
     const field = this._form.get('manager');
-    field.patchValue(employee);
+    field.patchValue(user);
   }
   //#endregion
 
   //#region Helpers
-  stringifyManager(manager: Employee | SimpleEmployee): string {
-    return stringifyEmployee(manager);
+  stringifyManager(manager: User | SimpleUser): string {
+    return stringifyUser(manager);
   }
   //#endregion
 }

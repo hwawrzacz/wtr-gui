@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
-import { Employee } from 'src/app/model/employee';
+import { User } from 'src/app/model/user';
 import { Project } from 'src/app/model/project';
 import { ItemDetailsBrokerService, ProjectDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -31,10 +31,10 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
         defName: 'manager',
         displayName: 'Manager',
         propertyName: 'manager',
-        formatter: (employee: Employee) => `${employee.firstName} ${employee.lastName}`,
+        formatter: (user: User) => `${user.firstName} ${user.lastName}`,
       },
       {
-        defName: 'employees',
+        defName: 'users',
         displayName: 'People working on',
         propertyName: 'workers',
         formatter: (arr: number[]) => `${arr.length}`,

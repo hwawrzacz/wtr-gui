@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { stringifyEmployee, WorkLogTypeStringifier } from 'src/app/helpers/parsers';
-import { SimpleEmployee } from 'src/app/model/simple-employee';
+import { stringifyUser, WorkLogTypeStringifier } from 'src/app/helpers/parsers';
+import { SimpleUser } from 'src/app/model/simple-user';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -17,10 +17,10 @@ export class WorkLogsTableComponent extends CommonTableComponent<WorkLog> implem
     super(navigator, itemDetailBroker);
     this._columnsDefinitions = [
       {
-        defName: 'employee',
-        propertyName: 'employee',
-        displayName: 'Employee',
-        formatter: (item: SimpleEmployee) => stringifyEmployee(item),
+        defName: 'user',
+        propertyName: 'user',
+        displayName: 'User',
+        formatter: (item: SimpleUser) => stringifyUser(item),
       } as ColumnDefinition,
       {
         defName: 'logDate',

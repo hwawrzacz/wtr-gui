@@ -1,17 +1,17 @@
 <mat-form-field appearance="outline">
-  <input #input matInput type="text" [matAutocomplete]="auto"
-    [value]="initialValue ? stringifyEmployee(initialValue) : ''" (keyup)="onKeyUp($event)" />
+  <input #input matInput type="text" [matAutocomplete]="auto" [value]="initialValue ? stringifyUser(initialValue) : ''"
+    (keyup)="onKeyUp($event)" />
 </mat-form-field>
 
-<mat-autocomplete #auto="matAutocomplete" [displayWith]="stringifyEmployee">
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="stringifyUser">
   <mat-option *ngIf="isLoading">
     <div class="loader">
       <mat-spinner [diameter]="32"></mat-spinner>
     </div>
   </mat-option>
 
-  <mat-option *ngFor="let employee of filteredEmployees" [value]="employee" (click)="onSelectionChange(employee)">
-    <span>{{ employee.firstName + ' ' + employee.lastName }}</span>
+  <mat-option *ngFor="let user of filteredUsers" [value]="user" (click)="onSelectionChange(user)">
+    <span>{{ user.firstName + ' ' + user.lastName }}</span>
     <button mat-icon-button *ngIf="!singleSelection">
       <mat-icon>add</mat-icon>
     </button>
