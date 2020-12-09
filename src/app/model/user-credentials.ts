@@ -2,6 +2,6 @@ export interface UserCredentials {
   id: string;
   login: string;
   password: string;
-  faceImage: string;
-  qrImage: string;
+  facePhoto: string;
+  qrCode: string;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, take, tap } from 'rxjs/operators';
+import { catchError, filter, take, tap } from 'rxjs/operators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { UserCredentials } from 'src/app/model/user-credentials';
 import { Position } from 'src/app/model/enums/position';
@@ -11,6 +11,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
 import { CommonItemDetailsComponent } from '../common-item-details/common-item-details.component';
 import { ImageCaptureDialogComponent } from '../image-capture-dialog/image-capture-dialog.component';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-user-details',
@@ -118,9 +119,10 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       take(1),
       tap((credentials: UserCredentials) => {
         this._loadingCounter--;
+        console.log(credentials);
         if (!!credentials) {
-          this._faceImageUrl = credentials.faceImage;
-          this._qrCodeUrl = credentials.qrImage;
+          this._faceImageUrl = credentials.facePhoto;
+          this._qrCodeUrl = credentials.qrCode;
         } else {
           console.log('error');
           this._error = true;
@@ -138,7 +140,18 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
         filter(result => !!result),
         tap(result => {
           this._faceImageUrl = result;
+          this.updatePhoto(this._faceImageUrl);
         })
+      )
+      .subscribe();
+  }
+
+  private updatePhoto(result): void {
+    (this._restService as UserRestService)
+      .patch<string>(this._itemId, 'facePhoto', result)
+      .pipe(
+        tap(response => console.log(response)),
+        catchError(e => of(console.error(e)))
       )
       .subscribe();
   }
