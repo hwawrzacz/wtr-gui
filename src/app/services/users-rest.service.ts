@@ -23,6 +23,6 @@ export class UsersRestService extends CommonRestService<User[]> {
   // TODO: Add this function to generic service, when other endpoints are ready
 
   public getFromApi(query: Query): Observable<CommonArrayResponse<SimpleUser[]>> {
-    return this.http.get<CommonArrayResponse<SimpleUser[]>>(`${environment.apiUrl}/${this.url}`);
+    return this._http.get<CommonArrayResponse<SimpleUser[]>>(`${environment.apiUrl}/${this.url}`);
   }
 }
