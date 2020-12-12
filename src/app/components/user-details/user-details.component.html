@@ -69,9 +69,14 @@
         <figure>
           <img src="{{ faceImageUrl }}" />
         </figure>
-        <button mat-button color="primary" (click)="changePhoto()">
+        <button mat-button color="primary" (click)="openImageCaptureDialog()">
           <mat-icon>add_a_photo</mat-icon>
           <span>Update face image</span>
+        </button>
+        <input #fileInput type="file" class="hidden" />
+        <button mat-button color="primary" (click)="triggerPhotoUpload()">
+          <mat-icon>publish</mat-icon>
+          <span>Upload the image</span>
         </button>
       </div>
 

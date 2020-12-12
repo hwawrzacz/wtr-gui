@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError, filter, take, tap } from 'rxjs/operators';
@@ -11,7 +11,8 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
 import { CommonItemDetailsComponent } from '../common-item-details/common-item-details.component';
 import { ImageCaptureDialogComponent } from '../image-capture-dialog/image-capture-dialog.component';
-import { of } from 'rxjs';
+import { fromEvent, of } from 'rxjs';
+import { InputImageParser } from 'src/app/helpers/input-image-parser';
 
 @Component({
   selector: 'app-user-details',
@@ -22,6 +23,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   private _qrCodeUrl: string;
   private _faceImageUrl: string;
   private _passwordForm: FormGroup;
+  @ViewChild('fileInput') private _fileInput: ElementRef;
 
   //#region Getters and setters
   public get positionsList(): Position[] {
@@ -52,9 +54,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     formBuilder: FormBuilder,
     private _dialogService: MatDialog) {
     super(navigator, broker, restService, formBuilder);
-    console.log('before');
     this._passwordForm = this.buildPasswordForm();
-    console.log('after');
   }
 
   //#endregion Initialization
@@ -132,28 +132,55 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       .subscribe()
   }
 
-  public changePhoto(): void {
+  public openImageCaptureDialog(): void {
     this._dialogService.open(ImageCaptureDialogComponent)
       .afterClosed()
       .pipe(
         take(1),
         filter(result => !!result),
-        tap(result => {
-          this._faceImageUrl = result;
-          this.updatePhoto(this._faceImageUrl);
-        })
-      )
-      .subscribe();
+        tap(result => this.setPreviewAndUpdateImage(result))
+      ).subscribe();
   }
 
-  private updatePhoto(result): void {
+  private setPreviewAndUpdateImage(imageUrl: string): void {
+    this._faceImageUrl = imageUrl;
+    this.updatePhoto(this._faceImageUrl);
+  }
+
+  private updatePhoto(imageUrl: string): void {
     (this._restService as UserRestService)
-      .patch<string>(this._itemId, 'facePhoto', result)
+      .patch<string>(this._itemId, 'facePhoto', imageUrl)
       .pipe(
         tap(response => console.log(response)),
         catchError(e => of(console.error(e)))
-      )
-      .subscribe();
+      ).subscribe();
+  }
+
+  public triggerPhotoUpload(): void {
+    this.subscribeToFileChange();
+    this._fileInput.nativeElement.click();
+  }
+
+  private subscribeToFileChange(): void {
+    fromEvent(this._fileInput.nativeElement, 'change')
+      .pipe(
+        take(1),
+        tap((event: Event) => {
+          const target = event.target as any
+          if (target.files && target.files[0]) {
+            const imageParser = new InputImageParser(target.files[0]);
+            imageParser.convertToUrl()
+              .pipe(
+                filter(res => !!res),
+                take(1),
+                tap(imageUrl => this.setPreviewAndUpdateImage(imageUrl))
+              ).subscribe()
+          } else {
+            // TODO: Handle error
+            console.warn('cannot read file');
+          }
+        })
+      ).subscribe()
   }
 
   //#region Helpers

@@ -16,6 +16,7 @@ export class UserRestService extends CommonRestService<SimpleUser> {
 
   constructor(http: HttpClient) {
     super(http)
+    this.url = 'users';
     this._mockData = mockUsers[0];
   }
 
