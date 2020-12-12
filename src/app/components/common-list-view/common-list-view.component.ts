@@ -140,7 +140,7 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
 
   public onPaginationChange(pagination: PageEvent): void {
     this._pagination = {
-      currentPage: pagination.pageIndex,
+      currentPage: pagination.pageIndex + 1,
       itemsPerPage: pagination.pageSize
     }
     console.log(this._pagination);
