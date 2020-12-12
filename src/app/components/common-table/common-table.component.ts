@@ -33,9 +33,7 @@ export class CommonTableComponent<T> {
   private _dataSource: CommonDataSource<T>;
   private _isLoading: boolean;
 
-  constructor(private _navigator: NavigatorService<T>, private _itemDetailsBroker: ItemDetailsBrokerService<T>) {
-    this._dataSource = new CommonDataSource<T>([]);
-  }
+  //#region Getters and setters
 
   get detailsUrl(): string {
     return this._detailsUrl;
@@ -80,6 +78,11 @@ export class CommonTableComponent<T> {
     return this.dataSource ? this.dataSource.data.value.length > 0 : false;
   }
   //#endregion
+  //#endregion
+
+  constructor(private _navigator: NavigatorService<T>, private _itemDetailsBroker: ItemDetailsBrokerService<T>) {
+    this._dataSource = new CommonDataSource<T>([]);
+  }
 
   public navigateToDetails(itemId: string): void {
     this._navigator.navigateToDetails(this._detailsUrl, itemId);
