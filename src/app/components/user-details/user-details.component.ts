@@ -11,7 +11,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
 import { CommonItemDetailsComponent } from '../common-item-details/common-item-details.component';
 import { ImageCaptureDialogComponent } from '../image-capture-dialog/image-capture-dialog.component';
-import { fromEvent, of } from 'rxjs';
+import { fromEvent, Observable, of } from 'rxjs';
 import { InputImageParser } from 'src/app/helpers/input-image-parser';
 
 @Component({
@@ -23,7 +23,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   private _qrCodeUrl: string;
   private _faceImageUrl: string;
   private _passwordForm: FormGroup;
-  @ViewChild('fileInput') private _fileInput: ElementRef;
 
   //#region Getters and setters
   public get positionsList(): Position[] {
@@ -57,7 +56,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     this._passwordForm = this.buildPasswordForm();
   }
 
-  //#endregion Initialization
+  //#region Initialization
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
       login: [this._initialItem.login, [Validators.required]],
@@ -108,27 +107,27 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
 
   ngOnInit(): void {
     super.ngOnInit();
-    this._passwordForm = this.buildPasswordForm();
     this.loadCredentials();
   }
 
   private loadCredentials() {
     this._loadingCounter++;
     this._error = false;
-    (this._restService as UserRestService).getCredentials(this._itemId).pipe(
-      take(1),
-      tap((credentials: UserCredentials) => {
-        this._loadingCounter--;
-        console.log(credentials);
-        if (!!credentials) {
-          this._faceImageUrl = credentials.facePhoto;
-          this._qrCodeUrl = credentials.qrCode;
-        } else {
-          console.log('error');
-          this._error = true;
-        }
-      })
-    )
+    (this._restService as UserRestService).getCredentials(this._itemId)
+      .pipe(
+        take(1),
+        tap((credentials: UserCredentials) => {
+          this._loadingCounter--;
+          console.log(credentials);
+          if (!!credentials) {
+            this._faceImageUrl = credentials.facePhoto;
+            this._qrCodeUrl = credentials.qrCode;
+          } else {
+            console.log('error');
+            this._error = true;
+          }
+        })
+      )
       .subscribe()
   }
 
@@ -142,46 +141,27 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       ).subscribe();
   }
 
-  private setPreviewAndUpdateImage(imageUrl: string): void {
+  public setPreviewAndUpdateImage(imageUrl: string): void {
     this._faceImageUrl = imageUrl;
     this.updatePhoto(this._faceImageUrl);
   }
 
-  private updatePhoto(imageUrl: string): void {
+
+  //#region Updaters
+  public updatePhoto(imageUrl: string): void {
+    this.patch<string>('facePhoto', imageUrl)
+  }
+
+  private patch<T>(name: string, value: T): void {
     (this._restService as UserRestService)
-      .patch<string>(this._itemId, 'facePhoto', imageUrl)
+      .patch<T>(this._itemId, name, value)
       .pipe(
+        // TODO: Handle success and error SnackBar
         tap(response => console.log(response)),
         catchError(e => of(console.error(e)))
       ).subscribe();
   }
-
-  public triggerPhotoUpload(): void {
-    this.subscribeToFileChange();
-    this._fileInput.nativeElement.click();
-  }
-
-  private subscribeToFileChange(): void {
-    fromEvent(this._fileInput.nativeElement, 'change')
-      .pipe(
-        take(1),
-        tap((event: Event) => {
-          const target = event.target as any
-          if (target.files && target.files[0]) {
-            const imageParser = new InputImageParser(target.files[0]);
-            imageParser.convertToUrl()
-              .pipe(
-                filter(res => !!res),
-                take(1),
-                tap(imageUrl => this.setPreviewAndUpdateImage(imageUrl))
-              ).subscribe()
-          } else {
-            // TODO: Handle error
-            console.warn('cannot read file');
-          }
-        })
-      ).subscribe()
-  }
+  //#endregion
 
   //#region Helpers
   public getErrorMessage(controlName: string): string {
