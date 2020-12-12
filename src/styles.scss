@@ -49,9 +49,16 @@ a {
   }
 }
 
-button:not(.mat-icon-button, .mat-fab) {
-  mat-icon {
-    margin-right: $icon-margin;
+button {
+  &.mat-button {
+    mat-icon {
+      margin-right: $icon-margin;
+    }
+  }
+
+  &.mat-fab,
+  &.mat-icon-button {
+    margin-right: 0;
   }
 }
 
