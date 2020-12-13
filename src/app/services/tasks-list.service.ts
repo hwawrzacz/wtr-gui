@@ -12,6 +12,6 @@ export class TasksListService extends CommonArrayRestService<Task> {
   constructor(http: HttpClient) {
     super(http);
     this._mockData = mockTasks;
-    this.url = 'http://someurladdress.com/tasks'
+    this.url = 'tasks'
   }
 }

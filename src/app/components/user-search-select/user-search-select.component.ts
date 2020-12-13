@@ -69,7 +69,7 @@ export class UserSearchSelectComponent implements OnInit {
     this._loadingCounter++;
     const filter = { name: 'position', values: [Position.MANAGER] } as Filter;
     const query = { searchString: '', filters: this._onlyManagers ? [filter] : [] } as Query;
-    this._restService.get(query).pipe(
+    this._restService.find(query).pipe(
       tap(items => {
         this._loadingCounter--;
         this._users = items;

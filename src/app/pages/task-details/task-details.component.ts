@@ -74,7 +74,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     this._workersLoading = true;
     const filter = { name: 'taskId', values: [`${this._itemId}`] } as Filter;
     const query = { searchString: '', filters: [filter] } as Query;
-    this._userRestService.get(query)
+    this._userRestService.find(query)
       .pipe(
         take(1),
         tap(results => {

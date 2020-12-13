@@ -106,7 +106,7 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   }
 
   private getDataFromApi(query: Query) {
-    this._restService.get(query, this._pagination)
+    this._restService.find(query, this._pagination)
       .pipe(
         tap((result: CommonArrayResponse<SimpleUser[]>) => {
           this._dataSource.refresh(result.items as any);
@@ -120,7 +120,7 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   }
 
   private getMockData(query: Query) {
-    this._restService.get(query)
+    this._restService.find(query)
       .pipe(
         tap((result) => {
           this._dataSource.refresh(result);

@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, ObservedValueOf, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Pagination } from '../model/pagination';
@@ -20,15 +20,19 @@ export class CommonRestService<T> {
 
   // TODO (HW): Remove any type annotation - it is just for testing purposes. Target anotation is T.
   // TODO (HW): Add common request
-  public get(query: Query, pagination?: Pagination): Observable<any> {
+  public get(id: string): Observable<T> {
+    return this.getFromApi(id);
+  }
+
+  public find(query: Query, pagination?: Pagination): Observable<any> {
     try {
-      return this.getFromApi(query, pagination);
+      return this.findInApi(query, pagination);
     } catch {
-      return this.getMock(query, pagination);
+      return this.findMock(query, pagination);
     }
   }
 
-  public getMock(query: Query, pagination?: Pagination): Observable<any> {
+  public findMock(query: Query, pagination?: Pagination): Observable<any> {
     const searchString = query.searchString
     return of(
       this._mockData
@@ -51,9 +55,17 @@ export class CommonRestService<T> {
     ).pipe(delay(500));
   }
 
-  public getFromApi(query: Query, pagination?: Pagination): Observable<CommonArrayResponse<T>> {
+  public findInApi(query: Query, pagination?: Pagination): Observable<CommonArrayResponse<T>> {
     const params = new HttpParams().append('query', JSON.stringify(query)).append('pagination', JSON.stringify(pagination));
-    return this._http.get<CommonArrayResponse<T>>(`${environment.apiUrl}/${this.url}`, { params: params });
+    const url = `${environment.apiUrl}/${this.url}`;
+    console.log('API', url);
+    return this._http.get<CommonArrayResponse<T>>(url, { params: params });
+  }
+
+  public getFromApi(itemId: string): Observable<T> {
+    const url = `${environment.apiUrl}/${this.url}/${itemId}`;
+    console.log('API', url);
+    return this._http.get<T>(url);
   }
 
   public patch<T>(userId: string, name: string, value: T): Observable<any> {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { Filter } from 'src/app/model/filter';
@@ -96,11 +96,12 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private loadDataFromApi(): void {
     this._loadingCounter++;
     this._error = false;
-    this._restService.get(this._query)
+    this._restService.get(this._itemId)
       .pipe(
         take(1),
         tap(item => {
           this._loadingCounter--;
+          console.log(item);
           if (!!item) {
             this._initialItem = item;
             this.reinitializeForm();

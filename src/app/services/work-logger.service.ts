@@ -44,7 +44,7 @@ export class WorkLoggerService {
     this._loadingCounter++;
     const filter = { name: 'userId', values: [`${this.USER_ID}`] } as Filter;
     const query = { searchString: '', filters: [] } as Query;
-    this._restService.get(query)
+    this._restService.find(query)
       .pipe(
         take(1),
         tap((result: WorkLog[]) => {
