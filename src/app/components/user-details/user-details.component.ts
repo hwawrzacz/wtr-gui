@@ -17,7 +17,7 @@ import { InputImageParser } from 'src/app/helpers/input-image-parser';
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.scss']
+  styleUrls: ['../common-item-details/common-item-details.component.scss', './user-details.component.scss']
 })
 export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser> implements OnInit {
   private _qrCodeUrl: string;
