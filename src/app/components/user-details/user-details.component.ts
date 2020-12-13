@@ -63,7 +63,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       lastName: [{ value: this._initialItem.lastName, disabled: true }, [Validators.required]],
       phoneNumber: [{ value: this._initialItem.phoneNumber, disabled: true }, [Validators.required, this.phoneNumberValidator()]],
       email: [{ value: this._initialItem.email, disabled: true }, [Validators.required, Validators.email]],
-      position: [{ value: this._initialItem.role, disabled: true }, [Validators.required]],
+      role: [{ value: this._initialItem.role, disabled: true }, [Validators.required]],
     })
   }
 
@@ -127,17 +127,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
 
   //#region Updaters
   public updatePhoto(imageUrl: string): void {
-    this.patch<string>('facePhoto', imageUrl)
-  }
-
-  private patch<T>(name: string, value: T): void {
-    (this._restService as UserRestService)
-      .patch<T>(this._itemId, name, value)
-      .pipe(
-        // TODO: Handle success and error SnackBar
-        tap(response => console.log(response)),
-        catchError(e => of(console.error(e)))
-      ).subscribe();
+    this.patch('facePhoto', imageUrl);
   }
   //#endregion
 

@@ -64,19 +64,18 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Position</mat-label>
-        <mat-select formControlName="position">
-          <mat-option *ngFor="let position of positionsList" [value]="position"> {{ getPositionString(position) }}
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let role of positionsList" [value]="role"> {{ getPositionString(role) }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="hasError('position')">{{ getErrorMessage('position') }}</mat-error>
+        <mat-error *ngIf="hasError('role')">{{ getErrorMessage('role') }}</mat-error>
       </mat-form-field>
   </form>
 
-  <!-- <div *ngIf="!isLoading && !error" class="credentials-wrapper"> -->
-  <div class="credentials-wrapper">
+  <div *ngIf="!isLoading && !error" class="credentials-wrapper">
     <h2>Credentials</h2>
 
-    <div class="fx">
+    <div class="button-wrapper">
       <button mat-raised-button color="primary" (click)="openPasswordChangeDialog()">Change password</button>
     </div>
 
@@ -105,5 +104,5 @@
   </div>
 </div>
 
-<!-- <app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader> -->
+<app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader>
 <app-full-screen-error *ngIf="error" (reloadRequest)="reloadData()"></app-full-screen-error>

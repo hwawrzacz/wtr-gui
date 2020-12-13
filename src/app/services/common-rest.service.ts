@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Pagination } from '../model/pagination';
 import { Query } from '../model/query';
 
@@ -40,6 +41,12 @@ export class CommonRestService<T> {
             );
           })
       ).pipe(delay(2000))
-      : of(this._mockData).pipe(delay(2000));
+      : of(this._mockData).pipe(delay(500));
+  }
+
+  public patch<T>(userId: string, name: string, value: T): Observable<any> {
+    const url = `${environment.apiUrl}/${this.url}/${userId}`;
+
+    return this._http.patch(url, { [name]: value });
   }
 }

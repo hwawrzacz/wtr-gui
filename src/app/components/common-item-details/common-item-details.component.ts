@@ -130,7 +130,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
 
   private saveAllChanges(): void {
     Object.keys(this._form.controls).forEach(controlName => {
-      console.log(controlName);
       this.onSaveField(controlName);
     });
   }
@@ -161,27 +160,23 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   public onSaveField(name: string) {
     const field = this._form.get(name);
     this._initialItem[name] = field.value;
-    this.disableEdition(name);
     console.log(this._initialItem[name]);
-    // TODO (HW): Sent update request to API
+    this.patch(name, field.value);
+  }
+
+  protected patch<T>(name: string, value: T): void {
+    this._restService.patch<T>(this._itemId, name, value)
+      .pipe(
+        // TODO: Handle success and error SnackBar
+        tap(response => console.log(response)),
+        catchError(e => of(console.error(e)))
+      ).subscribe();
   }
   //#endregion
 
   //#region Editable handling
   public isEditable(controlName: string): boolean {
     return this._editables.get(controlName);
-  }
-
-  public enableEdition(controlName: string): void {
-    this.setEditionStatus(controlName, true);
-  }
-
-  public disableEdition(controlName: string): void {
-    this.setEditionStatus(controlName, false);
-  }
-
-  private setEditionStatus(controlName: string, value: boolean): void {
-    this._editables.set(controlName, value);
   }
   //#endregion
 

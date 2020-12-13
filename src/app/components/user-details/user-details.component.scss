@@ -56,6 +56,14 @@ header {
   padding-left: $spacing-regular;
   flex: 3 3;
 
+  .button-wrapper {
+    margin-bottom: $spacing-regular;
+    width: 100%;
+    
+    button {
+      width: 100%;
+    }
+  }
   .password-change {
     margin-bottom: $spacing-regular;
     

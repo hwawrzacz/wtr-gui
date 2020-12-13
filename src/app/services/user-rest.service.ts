@@ -12,7 +12,7 @@ import { User } from '../model/user';
   providedIn: 'root'
 })
 export class UserRestService extends CommonRestService<SimpleUser> {
-  private readonly _credentialsUrl = '/authentication/credentials';
+  private readonly _credentialsUrl = 'users/credentials';
 
   constructor(http: HttpClient) {
     super(http)
@@ -22,12 +22,6 @@ export class UserRestService extends CommonRestService<SimpleUser> {
 
   public getCredentials(userId: string): Observable<UserCredentials> {
     return this._http.get<UserCredentials>(`${environment.apiUrl}/${this._credentialsUrl}/${userId}`);
-  }
-
-  public patch<T>(userId: string, name: string, value: T): Observable<any> {
-    const url = `${environment.apiUrl}/${this.url}/${userId}`;
-
-    return this._http.patch(url, { [name]: value });
   }
 
   public updatePhoto(user: User): Observable<any> {

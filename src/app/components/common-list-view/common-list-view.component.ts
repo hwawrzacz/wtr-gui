@@ -108,7 +108,7 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
     (this._restService as UsersRestService).getFromApi(query, this._pagination)
       .pipe(
         tap((result: CommonArrayResponse<SimpleUser[]>) => {
-          this._dataSource.refresh(result.users as any);
+          this._dataSource.refresh(result.items as any);
           this._totalResults = result.totalResults
           this._pageSize = result.limit;
           this._loadingCounter--;

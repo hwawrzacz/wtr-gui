@@ -1,6 +1,6 @@
 export interface CommonArrayResponse<T> {
   // TODO: Rename users to items
-  users: T[];
+  items: T[];
   totalResults: 17,
   limit: 10,
   page: 1,
