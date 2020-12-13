@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { of } from 'rxjs';
-import { catchError, filter, take, tap } from 'rxjs/operators';
+import { filter, take, tap } from 'rxjs/operators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { Position } from 'src/app/model/enums/position';
 import { SimpleUser } from 'src/app/model/simple-user';
@@ -75,7 +74,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
         take(1),
         tap((credentials: UserCredentials) => {
           this._loadingCounter--;
-          console.log(credentials);
           if (!!credentials) {
             this._faceImageUrl = credentials.facePhoto;
             this._qrCodeUrl = credentials.qrCode;
@@ -87,12 +85,12 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       )
       .subscribe()
   }
+  //#endregion
 
   //#region Custom validators
   private phoneNumberValidator(): ValidatorFn {
     return (control: FormControl): { [key: string]: any | null } => control.value.toString().match(/[0-9]{9}/) == control.value ? { phoneNumber: true } : null;
   }
-  //#endregion
   //#endregion
 
   ngOnInit(): void {
@@ -100,6 +98,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     this.loadCredentials();
   }
 
+  //#region Dialogs
   public openImageCaptureDialog(): void {
     this._dialogService.open(ImageCaptureDialogComponent)
       .afterClosed()
@@ -118,14 +117,14 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       tap(res => console.log(`Password ${res ? '' : 'not '}changed`))
     ).subscribe();
   }
+  //#endregion
 
+  //#region Updaters
   public setPreviewAndUpdateImage(imageUrl: string): void {
     this._faceImageUrl = imageUrl;
     this.updatePhoto(this._faceImageUrl);
   }
 
-
-  //#region Updaters
   public updatePhoto(imageUrl: string): void {
     this.patch('facePhoto', imageUrl);
   }

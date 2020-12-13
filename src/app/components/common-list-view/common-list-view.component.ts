@@ -6,6 +6,7 @@ import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { CommonArrayResponse } from 'src/app/services/common-array-response';
+import { CommonArrayRestService } from 'src/app/services/common-array-rest.service';
 import { CommonRestService } from 'src/app/services/common-rest.service';
 import { UsersRestService } from 'src/app/services/users-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
@@ -21,7 +22,7 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   protected _themeItemNameSingle: string;
 
   // Data
-  protected _restService: CommonRestService<T[]>
+  protected _restService: CommonArrayRestService<T>
   protected _dataSource: CommonDataSource<T>;
 
   // Table
@@ -105,7 +106,7 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   }
 
   private getDataFromApi(query: Query) {
-    (this._restService as UsersRestService).getFromApi(query, this._pagination)
+    this._restService.get(query, this._pagination)
       .pipe(
         tap((result: CommonArrayResponse<SimpleUser[]>) => {
           this._dataSource.refresh(result.items as any);

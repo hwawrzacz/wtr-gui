@@ -4,12 +4,12 @@ import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { mockWorkLogs } from '../model/mock-data';
 import { WorkLog, WorkLogType } from '../model/work-log';
-import { CommonRestService } from './common-rest.service';
+import { CommonArrayRestService } from './common-array-rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WorkLogsListService extends CommonRestService<WorkLog[]> {
+export class WorkLogsListService extends CommonArrayRestService<WorkLog> {
 
   constructor(http: HttpClient) {
     super(http);
