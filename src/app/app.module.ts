@@ -46,6 +46,7 @@ import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
+import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
     ImageCaptureComponent,
     ImageCaptureDialogComponent,
     ImageUploaderComponent,
+    PasswordChangeDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,18 +1,18 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { of } from 'rxjs';
 import { catchError, filter, take, tap } from 'rxjs/operators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
-import { UserCredentials } from 'src/app/model/user-credentials';
 import { Position } from 'src/app/model/enums/position';
 import { SimpleUser } from 'src/app/model/simple-user';
+import { UserCredentials } from 'src/app/model/user-credentials';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
 import { CommonItemDetailsComponent } from '../common-item-details/common-item-details.component';
 import { ImageCaptureDialogComponent } from '../image-capture-dialog/image-capture-dialog.component';
-import { fromEvent, Observable, of } from 'rxjs';
-import { InputImageParser } from 'src/app/helpers/input-image-parser';
+import { PasswordChangeDialogComponent } from '../password-change-dialog/password-change-dialog.component';
 
 @Component({
   selector: 'app-user-details',
@@ -22,7 +22,6 @@ import { InputImageParser } from 'src/app/helpers/input-image-parser';
 export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser> implements OnInit {
   private _qrCodeUrl: string;
   private _faceImageUrl: string;
-  private _passwordForm: FormGroup;
 
   //#region Getters and setters
   public get positionsList(): Position[] {
@@ -40,11 +39,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   public get login(): string {
     return this._initialItem.login;
   }
-
-  public get passwordForm(): FormGroup {
-    return this._passwordForm;
-  }
-
   //#endregion
 
   constructor(
@@ -55,7 +49,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     private _dialogService: MatDialog
   ) {
     super(navigator, broker, restService, formBuilder);
-    this._passwordForm = this.buildPasswordForm();
   }
 
   //#region Initializers
@@ -72,37 +65,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       email: [{ value: this._initialItem.email, disabled: true }, [Validators.required, Validators.email]],
       position: [{ value: this._initialItem.role, disabled: true }, [Validators.required]],
     })
-  }
-
-  private buildPasswordForm(): FormGroup {
-    return this._formBuilder.group({
-      password: [null, [Validators.required]],
-      repeatPassword: [null, [this.matchPasswordValidator]]
-    })
-  }
-
-  //#region Custom validators
-  private phoneNumberValidator(): ValidatorFn {
-    return (control: FormControl): { [key: string]: any | null } => control.value.toString().match(/[0-9]{9}/) == control.value ? { phoneNumber: true } : null;
-  }
-
-  private matchPasswordValidator = (): ValidatorFn => {
-    return (control: AbstractControl): { [key: string]: any | null } => {
-      console.log(control.root);
-      const otherControlValue = control.root.get('password').value;
-      console.log('sd');
-      const controlValue = control.root.get('repeatPassword').value;
-      console.log('sd2');
-
-      return otherControlValue === controlValue ? null : { passwordMatches: true };
-    }
-  }
-  //#endregion
-
-  //#endregion
-  ngOnInit(): void {
-    super.ngOnInit();
-    this.loadCredentials();
   }
 
   private loadCredentials() {
@@ -126,6 +88,18 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       .subscribe()
   }
 
+  //#region Custom validators
+  private phoneNumberValidator(): ValidatorFn {
+    return (control: FormControl): { [key: string]: any | null } => control.value.toString().match(/[0-9]{9}/) == control.value ? { phoneNumber: true } : null;
+  }
+  //#endregion
+  //#endregion
+
+  ngOnInit(): void {
+    super.ngOnInit();
+    this.loadCredentials();
+  }
+
   public openImageCaptureDialog(): void {
     this._dialogService.open(ImageCaptureDialogComponent)
       .afterClosed()
@@ -134,6 +108,15 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
         filter(result => !!result),
         tap(result => this.setPreviewAndUpdateImage(result))
       ).subscribe();
+  }
+
+  public openPasswordChangeDialog(): void {
+    this._dialogService.open(PasswordChangeDialogComponent, {
+      data: this._itemId
+    }).afterClosed().pipe(
+      take(1),
+      tap(res => console.log(`Password ${res ? '' : 'not '}changed`))
+    ).subscribe();
   }
 
   public setPreviewAndUpdateImage(imageUrl: string): void {
@@ -166,12 +149,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     if (control.hasError('phoneNumber')) return 'Value must contain only digits';
     if (control.hasError('minLength')) return 'Value is too short';
     if (control.hasError('maxLength')) return 'Value is too long';
-    if (control.hasError('passwordMatches')) return 'Passwords are not the same';
-  }
-
-  public getPasswordErrorMessage(controlName: string): string {
-    const control = this._form.get(controlName);
-    if (control.hasError('passwordMatches')) return 'Passwords are not the same';
   }
 
   public getPositionString(position: Position): string {
