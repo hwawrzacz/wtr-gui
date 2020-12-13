@@ -58,15 +58,6 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   }
 
   //#region Initializers
-  protected setEditables(): void {
-    this._editables = new Map([
-      ['title', false],
-      ['priority', false],
-      ['status', false],
-      ['description', false],
-    ]);
-  }
-
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
       title: [this._initialItem.title, [Validators.required]],

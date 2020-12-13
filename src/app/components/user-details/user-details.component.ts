@@ -51,10 +51,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   }
 
   //#region Initializers
-  protected setEditables(): void {
-    this._editables = new Map([]);
-  }
-
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
       login: [{ value: this._initialItem.login, disabled: true }, [Validators.required]],

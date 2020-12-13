@@ -59,7 +59,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this._itemId = this.getIdFromUrl();
     this._error = false;
     this._editMode = false;
-    this.setEditables();
     this._form = this.buildEmptyForm();
     this.loadItem();
   }
@@ -76,9 +75,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       this.loadDataFromApi();
     }
   }
-
-  /** Method which sets editables map */
-  protected abstract setEditables(): void;
 
   protected reinitializeForm(): void {
     this._form = this.buildForm();
@@ -103,10 +99,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this._restService.get(this._query)
       .pipe(
         take(1),
-        tap(proj => {
+        tap(item => {
           this._loadingCounter--;
-          if (!!proj) {
-            this._initialItem = proj;
+          if (!!item) {
+            this._initialItem = item;
             this.reinitializeForm();
             this._error = false;
           }
