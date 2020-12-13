@@ -44,6 +44,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   public get passwordForm(): FormGroup {
     return this._passwordForm;
   }
+
   //#endregion
 
   constructor(
@@ -51,20 +52,25 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     broker: ItemDetailsBrokerService<SimpleUser>,
     restService: UserRestService,
     formBuilder: FormBuilder,
-    private _dialogService: MatDialog) {
+    private _dialogService: MatDialog
+  ) {
     super(navigator, broker, restService, formBuilder);
     this._passwordForm = this.buildPasswordForm();
   }
 
-  //#region Initialization
+  //#region Initializers
+  protected setEditables(): void {
+    this._editables = new Map([]);
+  }
+
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      login: [this._initialItem.login, [Validators.required]],
-      firstName: [this._initialItem.firstName, [Validators.required, Validators.minLength(2)]],
-      lastName: [this._initialItem.lastName, [Validators.required]],
-      phoneNumber: [this._initialItem.phoneNumber, [Validators.required, this.phoneNumberValidator()]],
-      email: [this._initialItem.email, [Validators.required, Validators.email]],
-      position: [this._initialItem.role, [Validators.required]],
+      login: [{ value: this._initialItem.login, disabled: true }, [Validators.required]],
+      firstName: [{ value: this._initialItem.firstName, disabled: true }, [Validators.required, Validators.minLength(2)]],
+      lastName: [{ value: this._initialItem.lastName, disabled: true }, [Validators.required]],
+      phoneNumber: [{ value: this._initialItem.phoneNumber, disabled: true }, [Validators.required, this.phoneNumberValidator()]],
+      email: [{ value: this._initialItem.email, disabled: true }, [Validators.required, Validators.email]],
+      position: [{ value: this._initialItem.role, disabled: true }, [Validators.required]],
     })
   }
 
@@ -93,18 +99,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   }
   //#endregion
 
-  protected setEditables(): void {
-    this._editables = new Map([
-      ['login', false],
-      ['firstName', false],
-      ['lastName', false],
-      ['phoneNumber', false],
-      ['email', false],
-      ['position', false]
-    ])
-  }
   //#endregion
-
   ngOnInit(): void {
     super.ngOnInit();
     this.loadCredentials();

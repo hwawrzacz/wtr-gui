@@ -1,23 +1,53 @@
 @import '../../../variables';
 
-.container {
+header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  
+  h1 {
+    flex: 1 1;
+    margin-bottom: 0;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.editable-input-wrapper {
+  display: flex;
+  align-items: center;
 }
 
 .personal-details {
   display: flex;
+  flex: 2 2;
   flex-direction: column;
-  flex: 1 1;
+  // max-width: 300px;
 
   mat-form-field {
-    width: 250px;
+    width: 100%;
+  }
+
+  .mat-select-value-text,
+  .mat-input-element {
+    color: $text-black;
+  }
+
+  ::ng-deep {
+    .mat-form-field:not(.mat-form-field-disabled) {
+      .mat-form-field-outline {
+        color: $text-black !important;
+      }
+    }
   }
 }
 
 .credentials-wrapper {
   padding-left: $spacing-regular;
-  flex: 2 2;
+  flex: 3 3;
 
   .password-change {
     margin-bottom: $spacing-regular;
@@ -81,4 +111,28 @@
       }
     }
   }
+}
+
+@media screen and (orientation: portrait) {
+  .container {
+    flex-direction: column;
+  }
+
+  .personal-details {
+    max-width: 100%;
+
+    mat-form-field {
+      width: 100%
+    }
+  }
+
+  .credentials-wrapper {
+    max-width: 100%;
+    padding-left: 0;
+
+    .images {
+      justify-content: space-evenly;
+    }
+  }
+
 }

@@ -21,6 +21,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected _initialItem: T;
   protected _form: FormGroup;
   protected _editables: Map<string, boolean>;
+  private _editMode: boolean;
 
   //#region Getters and setters
   get itemId(): string {
@@ -38,6 +39,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   get form(): FormGroup {
     return this._form;
   }
+
+  get editMode(): boolean {
+    return this._editMode;
+  }
   //#endregion
 
   constructor(private _navigator: NavigatorService<T>,
@@ -53,6 +58,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   ngOnInit(): void {
     this._itemId = this.getIdFromUrl();
     this._error = false;
+    this._editMode = false;
     this.setEditables();
     this._form = this.buildEmptyForm();
     this.loadItem();
@@ -116,18 +122,48 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   //#endregion
 
   //#region Saving changes
+
+  public onSaveChanges(): void {
+    this.saveAllChanges();
+    this.disableEditMode();
+  }
+
+  private saveAllChanges(): void {
+    Object.keys(this._form.controls).forEach(controlName => {
+      console.log(controlName);
+      this.onSaveField(controlName);
+    });
+  }
+
+  public onDiscardChanges(): void {
+    this.reinitializeForm();
+    this.disableEditMode();
+  }
+
+  public enableEditMode() {
+    this._editMode = true;
+    this.enableForm();
+  }
+
+  public disableEditMode() {
+    this._editMode = false;
+    this.disableForm();
+  }
+
+  public disableForm() {
+    this._form.disable();
+  }
+
+  public enableForm() {
+    this._form.enable();
+  }
+
   public onSaveField(name: string) {
     const field = this._form.get(name);
     this._initialItem[name] = field.value;
     this.disableEdition(name);
     console.log(this._initialItem[name]);
     // TODO (HW): Sent update request to API
-  }
-
-  public onDiscardFieldChange(name: string) {
-    const field = this._form.get(name);
-    field.patchValue(this._initialItem[name]);
-    this.disableEdition(name);
   }
   //#endregion
 
