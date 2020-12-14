@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { Task } from 'src/app/model/task';
@@ -19,8 +20,8 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
     this._projectId = value;
   }
 
-  constructor(http: HttpClient) {
-    super();
+  constructor(http: HttpClient, _snackBar: MatSnackBar) {
+    super(_snackBar);
     this._restService = new TasksListService(http);
     const projectFilter = { name: 'projectId', values: [`${this._projectId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;

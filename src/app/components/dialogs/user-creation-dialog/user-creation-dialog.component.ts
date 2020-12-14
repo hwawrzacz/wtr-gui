@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { catchError, filter, take, tap } from 'rxjs/operators';
 import { matchOtherControlValidator, phoneNumberValidator } from 'src/app/helpers/custom-validators';
@@ -47,6 +48,7 @@ export class UserCreationDialogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _dialogService: MatDialog,
     private _restService: UserRestService,
+    private _snackBar: MatSnackBar,
   ) {
     this._form = this.buildForm();
   }
@@ -77,13 +79,14 @@ export class UserCreationDialogComponent implements OnInit {
       tap(res => {
         this._isLoading = false;
         if (res === CreationResponse.LOGIN_IS_TAKEN) {
-          this.handleLoginTaken(res);
+          this.handleLoginTaken();
         }
         else if (!!res) this._dialogRef.close(res);
+        else this.handleItemNotAdded();
       }),
       catchError(err => {
         this._isLoading = false;
-        this.handleItemNotAdded(err);
+        this.handleItemNotAdded();
         return of()
       })
     ).subscribe();
@@ -105,14 +108,12 @@ export class UserCreationDialogComponent implements OnInit {
 
   //#region Response handlers
   /** Common */
-  private handleItemNotAdded(error: any): void {
-    // TODO: display proper message
-    console.error('User not added', error);
+  private handleItemNotAdded(): void {
+    this.openSnackBar('Error while adding user');
   }
 
-  private handleLoginTaken(error: any): void {
-    // TODO: display proper message
-    console.error('This login is already taken', error);
+  private handleLoginTaken(): void {
+    this.openSnackBar('This login is already taken');
   }
   //#endregion
 
@@ -136,6 +137,10 @@ export class UserCreationDialogComponent implements OnInit {
   }
 
   //#region Helpers
+  private openSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', { duration: 2000 });
+  }
+
   /** Common */
   public hasError(controlName: string): boolean {
     return !this._form.get(controlName).valid;

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { WorkLog } from 'src/app/model/work-log';
@@ -18,8 +19,8 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
     this._taskId = value;
   }
 
-  constructor(restService: WorkLogsListService) {
-    super()
+  constructor(restService: WorkLogsListService, _snackBar: MatSnackBar) {
+    super(_snackBar);
     this._restService = restService;
 
     const projectFilter = { name: 'taskId', values: [`${this._taskId}`] } as Filter;

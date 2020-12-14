@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
 import { Project } from 'src/app/model/project';
 import { ProjectsListService } from 'src/app/services/projects-list.service';
@@ -10,8 +11,8 @@ import { ProjectsListService } from 'src/app/services/projects-list.service';
   styleUrls: ['../../components/common-list-view/common-list-view.component.scss']
 })
 export class ProjectsListComponent extends CommonListViewComponent<Project> {
-  constructor(http: HttpClient) {
-    super();
+  constructor(http: HttpClient, _snackBar: MatSnackBar) {
+    super(_snackBar);
 
     this._pageTitle = "Projects";
     this._themeItemNameSingle = "project";
