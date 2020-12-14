@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { Filter } from 'src/app/model/filter';
@@ -21,6 +21,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected _initialItem: T;
   protected _form: FormGroup;
   protected _editables: Map<string, boolean>;
+  private _editMode: boolean;
 
   //#region Getters and setters
   get itemId(): string {
@@ -38,6 +39,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   get form(): FormGroup {
     return this._form;
   }
+
+  get editMode(): boolean {
+    return this._editMode;
+  }
   //#endregion
 
   constructor(private _navigator: NavigatorService<T>,
@@ -53,7 +58,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   ngOnInit(): void {
     this._itemId = this.getIdFromUrl();
     this._error = false;
-    this.setEditables();
+    this._editMode = false;
     this._form = this.buildEmptyForm();
     this.loadItem();
   }
@@ -70,9 +75,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       this.loadDataFromApi();
     }
   }
-
-  /** Method which sets editables map */
-  protected abstract setEditables(): void;
 
   protected reinitializeForm(): void {
     this._form = this.buildForm();
@@ -94,13 +96,14 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private loadDataFromApi(): void {
     this._loadingCounter++;
     this._error = false;
-    this._restService.get(this._query)
+    this._restService.get(this._itemId)
       .pipe(
         take(1),
-        tap(proj => {
+        tap(item => {
           this._loadingCounter--;
-          if (!!proj) {
-            this._initialItem = proj;
+          console.log(item);
+          if (!!item) {
+            this._initialItem = item;
             this.reinitializeForm();
             this._error = false;
           }
@@ -116,36 +119,61 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   //#endregion
 
   //#region Saving changes
+
+  public onSaveChanges(): void {
+    this.saveAllChanges();
+    this.disableEditMode();
+  }
+
+  private saveAllChanges(): void {
+    Object.keys(this._form.controls).forEach(controlName => {
+      this.onSaveField(controlName);
+    });
+  }
+
+  public onDiscardChanges(): void {
+    this.reinitializeForm();
+    this.disableEditMode();
+  }
+
+  public enableEditMode() {
+    this._editMode = true;
+    this.enableForm();
+  }
+
+  public disableEditMode() {
+    this._editMode = false;
+    this.disableForm();
+  }
+
+  public disableForm() {
+    this._form.disable();
+  }
+
+  public enableForm() {
+    this._form.enable();
+  }
+
   public onSaveField(name: string) {
     const field = this._form.get(name);
     this._initialItem[name] = field.value;
-    this.disableEdition(name);
     console.log(this._initialItem[name]);
-    // TODO (HW): Sent update request to API
+    this.patch(name, field.value);
   }
 
-  public onDiscardFieldChange(name: string) {
-    const field = this._form.get(name);
-    field.patchValue(this._initialItem[name]);
-    this.disableEdition(name);
+  protected patch<T>(name: string, value: T): void {
+    this._restService.patch<T>(this._itemId, name, value)
+      .pipe(
+        // TODO: Handle success and error SnackBar
+        tap(response => console.log(response)),
+        catchError(e => of(console.error(e)))
+      ).subscribe();
   }
   //#endregion
 
   //#region Editable handling
   public isEditable(controlName: string): boolean {
     return this._editables.get(controlName);
-  }
-
-  public enableEdition(controlName: string): void {
-    this.setEditionStatus(controlName, true);
-  }
-
-  public disableEdition(controlName: string): void {
-    this.setEditionStatus(controlName, false);
-  }
-
-  private setEditionStatus(controlName: string, value: boolean): void {
-    this._editables.set(controlName, value);
   }
   //#endregion
 

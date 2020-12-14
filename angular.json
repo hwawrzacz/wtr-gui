@@ -86,7 +86,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "wtr-gui:build"
+            "browserTarget": "wtr-gui:build",
+            "proxyConfig": "src/proxy.conf.json",
           },
           "configurations": {
             "production": {

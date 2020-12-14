@@ -3,17 +3,18 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,11 +26,15 @@ import { FilterSearchBarComponent } from './components/filter-search-bar/filter-
 import { FullScreenErrorComponent } from './components/full-screen-error/full-screen-error.component';
 import { FullScreenLoaderComponent } from './components/full-screen-loader/full-screen-loader.component';
 import { AppHeaderComponent } from './components/header/header.component';
+import { ImageCaptureDialogComponent } from './components/image-capture-dialog/image-capture-dialog.component';
+import { ImageCaptureComponent } from './components/image-capture/image-capture.component';
 import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UserSearchSelectComponent } from './components/user-search-select/user-search-select.component';
-import { EmployeesListComponent } from './pages/employees-list/employees-list.component';
-import { EmployeesTableComponent } from './pages/employees-list/employees-table.component';
+import { WorkLoggerComponent } from './components/work-logger/work-logger.component';
+import { WorkLogsListComponent } from './components/work-logs-list/work-logs-list.component';
+import { WorkLogsTableComponent } from './components/work-logs-table/work-logs-table.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
@@ -38,43 +43,48 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
-import { WorkLogsTableComponent } from './components/work-logs-table/work-logs-table.component';
-import { WorkLogsListComponent } from './components/work-logs-list/work-logs-list.component';
-import { WorkLoggerComponent } from './components/work-logger/work-logger.component';
-import { UserDetailsComponent } from './components/user-details/user-details.component';
-import { ImageCaptureComponent } from './components/image-capture/image-capture.component';
-import { ImageCaptureDialogComponent } from './components/image-capture-dialog/image-capture-dialog.component';
+import { UsersListComponent } from './pages/users-list/users-list.component';
+import { UsersTableComponent } from './pages/users-list/users-table.component';
+import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
+import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CommonTableComponent,
-    ProjectsListComponent,
-    ProjectsTableComponent,
-    TasksListComponent,
-    StatisticsComponent,
-    ProjectDetailsComponent,
-    TaskDetailsComponent,
     LoginComponent,
     AppHeaderComponent,
     SidenavComponent,
-    CommonListViewComponent,
+
+    // CommonItemDetailsComponent,
+    ProjectDetailsComponent,
+    TaskDetailsComponent,
+    UserDetailsComponent,
+
+    CommonTableComponent,
+    ProjectsTableComponent,
     TasksTableComponent,
-    EmployeesTableComponent,
-    EmployeesListComponent,
+    WorkLogsTableComponent,
+    UsersTableComponent,
+
+    CommonListViewComponent,
+    ProjectsListComponent,
+    TasksListComponent,
+    UsersListComponent,
+    WorkLogsListComponent,
+
+    StatisticsComponent,
+    ProjectTasksComponent,
+    WorkLoggerComponent,
     CommonSearchBarComponent,
     FilterSearchBarComponent,
-    ProjectTasksComponent,
     UserSearchSelectComponent,
     FullScreenErrorComponent,
     FullScreenLoaderComponent,
-    WorkLogsTableComponent,
-    WorkLogsListComponent,
-    WorkLoggerComponent,
-    UserDetailsComponent,
     ImageCaptureComponent,
     ImageCaptureDialogComponent,
+    ImageUploaderComponent,
+    PasswordChangeDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,6 +106,7 @@ import { ImageCaptureDialogComponent } from './components/image-capture-dialog/i
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

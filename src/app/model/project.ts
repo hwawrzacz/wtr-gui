@@ -1,11 +1,11 @@
-import { SimpleEmployee } from './simple-employee';
+import { SimpleUser } from './simple-user';
 
 export interface Project {
   id: string;
   stringId: string;
   title: string;
   description: string
-  manager: SimpleEmployee;
+  manager: SimpleUser;
   workers: string[];
   creationDate: number; // timestamp
   dutyDate: number; // timestamp

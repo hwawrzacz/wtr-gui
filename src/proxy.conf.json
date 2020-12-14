@@ -1,0 +1,10 @@
+{
+  "/wtr-api": {
+    "target": "https://wtr-api.herokuapp.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/wtr-api": ""
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../model/project';
-import { SimpleEmployee } from '../model/simple-employee';
+import { SimpleUser } from '../model/simple-user';
 import { Task } from '../model/task';
 
 @Injectable({
@@ -31,4 +31,4 @@ export class ProjectDetailsBrokerService extends ItemDetailsBrokerService<Projec
 export class TaskDetailsBrokerService extends ItemDetailsBrokerService<Task> { }
 
 @Injectable({ providedIn: 'root' })
-export class EmployeeDetailsBrokerService extends ItemDetailsBrokerService<SimpleEmployee> { }
+export class UserDetailsBrokerService extends ItemDetailsBrokerService<SimpleUser> { }

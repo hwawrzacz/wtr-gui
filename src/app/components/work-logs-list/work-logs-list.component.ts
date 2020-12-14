@@ -10,7 +10,7 @@ import { CommonListViewComponent } from '../common-list-view/common-list-view.co
   templateUrl: './work-logs-list.component.html',
   styleUrls: ['./work-logs-list.component.scss']
 })
-export class WorkLogsListComponent extends CommonListViewComponent<WorkLog[]> implements OnInit {
+export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> implements OnInit {
   private _taskId: string;
 
   @Input('taskId')

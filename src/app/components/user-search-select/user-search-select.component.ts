@@ -1,12 +1,12 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { stringifyEmployee } from 'src/app/helpers/parsers';
-import { Employee } from 'src/app/model/employee';
+import { stringifyUser } from 'src/app/helpers/parsers';
+import { User } from 'src/app/model/user';
 import { Position } from 'src/app/model/enums/position';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
-import { SimpleEmployee } from 'src/app/model/simple-employee';
-import { EmployeesRestService } from 'src/app/services/employees-rest.service';
+import { SimpleUser } from 'src/app/model/simple-user';
+import { UsersRestService } from 'src/app/services/users-rest.service';
 
 @Component({
   selector: 'app-user-search-select',
@@ -15,10 +15,10 @@ import { EmployeesRestService } from 'src/app/services/employees-rest.service';
 })
 export class UserSearchSelectComponent implements OnInit {
   private _loadingCounter: number;
-  private _initialValue: Employee;
+  private _initialValue: User;
   private _singleSelection: boolean;
-  private _employees: Employee[];
-  private _filteredEmployees: Employee[];
+  private _users: User[];
+  private _filteredUsers: User[];
   private _onlyManagers: boolean;
   @ViewChild('input') inputItem: ElementRef;
 
@@ -33,11 +33,11 @@ export class UserSearchSelectComponent implements OnInit {
   }
 
   @Input('initialValue')
-  set initialValue(value: Employee) {
+  set initialValue(value: User) {
     this._initialValue = value;
   }
 
-  @Output('selectionChange') selectionChangeEmitter: EventEmitter<Employee>;
+  @Output('selectionChange') selectionChangeEmitter: EventEmitter<User>;
 
   get isLoading(): boolean {
     return this._loadingCounter !== 0;
@@ -47,17 +47,17 @@ export class UserSearchSelectComponent implements OnInit {
     return this._singleSelection;
   }
 
-  get initialValue(): Employee {
+  get initialValue(): User {
     return this._initialValue;
   }
 
-  get filteredEmployees(): Employee[] {
-    return this._filteredEmployees;
+  get filteredUsers(): User[] {
+    return this._filteredUsers;
   }
 
-  constructor(private _restService: EmployeesRestService) {
+  constructor(private _restService: UsersRestService) {
     this._loadingCounter = 0;
-    this.selectionChangeEmitter = new EventEmitter<Employee>()
+    this.selectionChangeEmitter = new EventEmitter<User>()
   }
 
   ngOnInit(): void {
@@ -69,11 +69,11 @@ export class UserSearchSelectComponent implements OnInit {
     this._loadingCounter++;
     const filter = { name: 'position', values: [Position.MANAGER] } as Filter;
     const query = { searchString: '', filters: this._onlyManagers ? [filter] : [] } as Query;
-    this._restService.get(query).pipe(
+    this._restService.find(query).pipe(
       tap(items => {
         this._loadingCounter--;
-        this._employees = items;
-        this._filteredEmployees = this._employees;
+        this._users = items;
+        this._filteredUsers = this._users;
       })
     ).subscribe();
   }
@@ -85,9 +85,9 @@ export class UserSearchSelectComponent implements OnInit {
     this.filterData(searchString);
   }
 
-  public onSelectionChange(employee: Employee): void {
-    console.log(`${employee.firstName} emit`);
-    this.selectionChangeEmitter.emit(employee);
+  public onSelectionChange(user: User): void {
+    console.log(`${user.firstName} emit`);
+    this.selectionChangeEmitter.emit(user);
 
     if (!this._singleSelection) {
       this.inputItem.nativeElement.blur();
@@ -97,12 +97,12 @@ export class UserSearchSelectComponent implements OnInit {
   //#endregion
 
   private filterData(query: string): void {
-    this._filteredEmployees = this._employees.filter(employee => `${employee.login} ${employee.firstName} ${employee.lastName}`.includes(query));
+    this._filteredUsers = this._users.filter(user => `${user.login} ${user.firstName} ${user.lastName}`.includes(query));
   }
 
   //#region Helpers
-  stringifyEmployee(employee: SimpleEmployee): string {
-    return stringifyEmployee(employee);
+  stringifyUser(user: SimpleUser): string {
+    return stringifyUser(user);
   }
   //#endregion
 }

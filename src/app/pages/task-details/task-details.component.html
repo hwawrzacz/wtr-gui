@@ -4,34 +4,36 @@
     <form [formGroup]="form" *ngIf="!isLoading && !error">
       <header>
         <h1>{{ stringId }}
-          <div class="editable-input-wrapper title-wrapper">
-            <mat-form-field appearance="outline" [attr.readonly]="!isEditable('title')">
-              <input matInput type="text" formControlName="title" [readonly]="!isEditable('title')" />
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="title" />
             </mat-form-field>
-
-            <button mat-icon-button *ngIf="!isEditable('title')" (click)="enableEdition('title')">
-              <mat-icon>edit</mat-icon>
-            </button>
-
-            <button mat-icon-button color="primary" *ngIf="isEditable('title')" (click)="onSaveField('title')">
-              <mat-icon>save</mat-icon>
-            </button>
-
-            <button mat-icon-button color="warn" *ngIf="isEditable('title')" (click)="onDiscardFieldChange('title')">
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </div>
         </h1>
 
-        <div class="header__button-wrapper">
-          <button mat-stroked-button color="primary">
-            <mat-icon>add</mat-icon>
-            <span>Add task</span>
-          </button>
 
-          <button mat-stroked-button color="primary">
+        <div class="header__button-wrapper">
+          <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enableEditMode()">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+      
+          <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onSaveChanges()">
+            <mat-icon>save</mat-icon>
+            <span>Save changes</span>
+          </button>
+      
+          <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onDiscardChanges()">
+            <mat-icon>close</mat-icon>
+            <span>Discard changes</span>
+          </button>
+      
+          <button mat-stroked-button color="primary" *ngIf="!editMode">
             <mat-icon>pie_chart</mat-icon>
             <span>Show staistics</span>
+          </button>
+      
+          <button mat-stroked-button color="warn" *ngIf="!editMode">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
           </button>
         </div>
       </header>
@@ -42,26 +44,10 @@
 
       <section>
         <h3>Description</h3>
-        <div class="editable-input-wrapper description-wrapper">
-          <mat-form-field appearance="outline" [attr.readonly]="!isEditable('description')">
-            <textarea matInput formControlName="description" [readonly]="!isEditable('description')"
+          <mat-form-field appearance="outline" >
+            <textarea matInput formControlName="description"
               cdkTextareaAutosize></textarea>
           </mat-form-field>
-
-          <button mat-icon-button *ngIf="!isEditable('description')" (click)="enableEdition('description')">
-            <mat-icon>edit</mat-icon>
-          </button>
-
-          <button mat-icon-button color="primary" *ngIf="isEditable('description')"
-            (click)="onSaveField('description')">
-            <mat-icon>save</mat-icon>
-          </button>
-
-          <button mat-icon-button color="warn" *ngIf="isEditable('description')"
-            (click)="onDiscardFieldChange('description')">
-            <mat-icon>cancel</mat-icon>
-          </button>
-        </div>
       </section>
     </form>
 
@@ -86,8 +72,8 @@
       </mat-list-item>
 
       <mat-list-item *ngFor="let worker of workers">
-        <span>{{ stringifyEmployee(worker) }}</span>
-        <button mat-icon-button (click)="removeWorker(worker.id)">
+        <span>{{ stringifyUser(worker) }}</span>
+        <button mat-icon-button (click)="removeWorker(worker._id)">
           <mat-icon>close</mat-icon>
         </button>
       </mat-list-item>

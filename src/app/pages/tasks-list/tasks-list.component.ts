@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
 import { Task } from 'src/app/model/task';
 import { TasksListService } from 'src/app/services/tasks-list.service';
@@ -9,7 +9,7 @@ import { TasksListService } from 'src/app/services/tasks-list.service';
   templateUrl: './tasks-list.component.html',
   styleUrls: ['../../components/common-list-view/common-list-view.component.scss', './tasks-list.component.scss',]
 })
-export class TasksListComponent extends CommonListViewComponent<Task> implements OnInit {
+export class TasksListComponent extends CommonListViewComponent<Task> {
   constructor(http: HttpClient) {
     super();
     this._pageTitle = 'Tasks';

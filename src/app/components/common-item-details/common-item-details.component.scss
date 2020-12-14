@@ -63,19 +63,6 @@ form {
     .mat-form-field-infix {
       padding: 0 0 .5em 0 !important;
     }
-
-    .mat-form-field-appearance-outline { 
-      .mat-select-arrow-wrapper {
-        transform: translateY(0);
-      }
-    }
-
-    .mat-form-field-appearance-outline[readonly='true'] {
-      .mat-form-field-outline,
-      .mat-form-field-outline-thick {
-        color: transparent !important;
-      }
-    }
   }
 }
 
