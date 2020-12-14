@@ -47,6 +47,7 @@ import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
 import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
+import { UserCreationDialogComponent } from './components/dialogs/user-creation-dialog/user-creation-dialog.component';
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import { PasswordChangeDialogComponent } from './components/password-change-dial
     ImageCaptureDialogComponent,
     ImageUploaderComponent,
     PasswordChangeDialogComponent,
+    UserCreationDialogComponent,
   ],
   imports: [
     BrowserModule,
