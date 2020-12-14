@@ -1,7 +1,7 @@
 import { AbstractControl, ValidatorFn } from "@angular/forms";
 
 export const phoneNumberValidator = (): ValidatorFn => {
-  return (control: AbstractControl): { [key: string]: any | null } => control.value.toString().match(/[0-9]{9}/) == control.value ? { phoneNumber: true } : null;
+  return (control: AbstractControl): { [key: string]: any | null } => control.value.toString().match(/[0-9]{9}/) == control.value ? null : { phoneNumber: true };
 }
 
 export const matchOtherControlValidator = (otherControlName: string): ValidatorFn => {
