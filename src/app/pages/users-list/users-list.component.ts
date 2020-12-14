@@ -19,7 +19,6 @@ export class UsersListComponent extends CommonListViewComponent<User> {
     this._pageTitle = 'Users'
     this._themeItemNameSingle = 'user';
     this._restService = new UsersRestService(http);
-    this.openUserCreationDialog();
   }
 
   /** Common abstract */

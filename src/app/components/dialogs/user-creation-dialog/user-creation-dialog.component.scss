@@ -23,8 +23,11 @@
       max-width: 100%;
       min-width: 100px;
       height: 200px;
+
+      display: flex;
+      align-items: center;
       
-      border: 1px solid black;
+      border: 1px dashed $text-black;
 
       img {
         display: block;

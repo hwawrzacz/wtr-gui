@@ -1,6 +1,6 @@
 <header>
   <h1>{{ pageTitle }}</h1>
-  <button mat-stroked-button color="primary">
+  <button mat-stroked-button color="primary" (click)="openUserCreationDialog()">
     <mat-icon>add</mat-icon>
     <span>Create {{ themeItemNameSingle }}</span>
   </button>
