@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { CreationResponse } from '../model/creation-response';
 import { Pagination } from '../model/pagination';
 import { Query } from '../model/query';
 import { CommonArrayResponse } from './common-array-response';
@@ -66,6 +67,11 @@ export class CommonRestService<T> {
     const url = `${environment.apiUrl}/${this.url}/${itemId}`;
     console.log('API', url);
     return this._http.get<T>(url);
+  }
+
+  public create<T>(item: T): Observable<CreationResponse | boolean> {
+    const url = `${environment.apiUrl}/${this.url}`;
+    return this._http.post<CreationResponse | boolean>(url, item);
   }
 
   public patch<T>(userId: string, name: string, value: T): Observable<any> {
