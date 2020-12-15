@@ -1,3 +1,6 @@
-export enum CreationResponse {
-  LOGIN_IS_TAKEN = "Login is taken",
+import { CreationResponseMessage } from "./enums/creation-response-message";
+
+export interface CreationResponse {
+  success: boolean;
+  message: CreationResponseMessage;
 }
