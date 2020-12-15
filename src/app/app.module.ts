@@ -49,6 +49,7 @@ import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
+import { CommonCreationDialogComponent } from './components/dialogs/common-creation-dialog/common-creation-dialog.component';
 
 
 
@@ -90,6 +91,7 @@ import { UsersTableComponent } from './pages/users-list/users-table.component';
     ImageUploaderComponent,
     PasswordChangeDialogComponent,
     UserCreationDialogComponent,
+    CommonCreationDialogComponent,
   ],
   imports: [
     BrowserModule,
