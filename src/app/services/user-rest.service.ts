@@ -11,7 +11,7 @@ import { CommonRestService } from './common-rest.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserRestService extends CommonRestService<SimpleUser> {
+export class UserRestService extends CommonRestService<User> {
   private readonly _credentialsUrl = 'users/credentials';
 
   constructor(http: HttpClient) {

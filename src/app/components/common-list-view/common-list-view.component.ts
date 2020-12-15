@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, OperatorFunction } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
-import { SimpleUser } from 'src/app/model/simple-user';
 import { CommonArrayResponse } from 'src/app/services/common-array-response';
 import { CommonArrayRestService } from 'src/app/services/common-array-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
+import { CommonCreationDialogComponent } from '../dialogs/common-creation-dialog/common-creation-dialog.component';
 
 @Component({
   selector: 'app-common-list-view',
   templateUrl: './common-list-view.component.html',
   styleUrls: ['./common-list-view.component.scss']
 })
-export class CommonListViewComponent<T> implements OnInit {
+export abstract class CommonListViewComponent<T> implements OnInit {
   // Labels
   protected _pageTitle: string;
   protected _themeItemNameSingle: string;
@@ -78,7 +79,9 @@ export class CommonListViewComponent<T> implements OnInit {
   //#endregion
   //#endregion
 
-  constructor(private _snackBar: MatSnackBar) {
+  constructor(
+    private _snackBar: MatSnackBar,
+  ) {
     this._loadingCounter = 0;
     this._pageSizeOptions = [5, 10, 25, 50];
     this._query = { searchString: '', filters: [] } as Query;
@@ -103,7 +106,7 @@ export class CommonListViewComponent<T> implements OnInit {
   private getDataFromApi(): void {
     this._restService.find(this._query, this._pagination)
       .pipe(
-        tap((result: CommonArrayResponse<SimpleUser[]>) => {
+        tap((result: CommonArrayResponse<T>) => {
           this._dataSource.refresh(result.items as any);
           this._totalResults = result.totalResults
           this._pageSize = result.limit;
@@ -111,7 +114,7 @@ export class CommonListViewComponent<T> implements OnInit {
         }),
         // TODO (HW): Handle error properly
         catchError((e) => {
-          this.openSnackBar(`Couldn't load users from API. Mock data loaded.`);
+          this.openSnackBar(`Couldn't load items from API. Mock data loaded.`);
           this.getMockData()
           return of()
         })
@@ -143,6 +146,10 @@ export class CommonListViewComponent<T> implements OnInit {
     this.loadData();
   }
 
+  /** Handles opening item creation dialog, and all actions 
+   * after it is closed, which are showing certain messages  */
+  public abstract openItemCreationDialog(): void;
+
   //#region Helpers 
   protected handleAfterClosed = (): OperatorFunction<any, unknown> => {
     return (
@@ -151,7 +158,7 @@ export class CommonListViewComponent<T> implements OnInit {
           this.openSnackBar(this.getAdditionSuccessMessage());
           this.getDataFromApi();
         }
-        else this.openSnackBar(this.getAdditionFailureMessage());
+        else this.openSnackBar(this.getAdditionCancelledMessage());
       })
     )
   }
@@ -160,12 +167,12 @@ export class CommonListViewComponent<T> implements OnInit {
     return `${(this.themeItemNameSingle[0].toUpperCase())}${this.themeItemNameSingle.substr(1, this.themeItemNameSingle.length - 1)} created`;
   }
 
-  private getAdditionFailureMessage = (): string => {
-    return `Error while creating ${this.themeItemNameSingle}`;
-  }
-
   private openSnackBar(message: string): void {
     this._snackBar.open(message, 'Ok', { duration: 2000 });
+  }
+
+  private getAdditionCancelledMessage = (): string => {
+    return `Creating ${this.themeItemNameSingle} discarded`;
   }
   //#endregion
 }

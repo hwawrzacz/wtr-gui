@@ -22,8 +22,7 @@ export class UsersListComponent extends CommonListViewComponent<User> {
     this._restService = new UsersRestService(http);
   }
 
-  /** Common abstract */
-  public openUserCreationDialog(): void {
+  public openItemCreationDialog(): void {
     this._dialogService.open(UserCreationDialogComponent)
       .afterClosed()
       .pipe(

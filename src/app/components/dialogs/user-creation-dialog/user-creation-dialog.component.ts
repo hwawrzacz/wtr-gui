@@ -2,40 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { of } from 'rxjs';
-import { catchError, filter, take, tap } from 'rxjs/operators';
+import { filter, take, tap } from 'rxjs/operators';
 import { matchOtherControlValidator, phoneNumberValidator } from 'src/app/helpers/custom-validators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
-import { CreationResponse } from 'src/app/model/creation-response';
 import { Position } from 'src/app/model/enums/position';
 import { User } from 'src/app/model/user';
+import { CommonRestService } from 'src/app/services/common-rest.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
 import { ImageCaptureDialogComponent } from '../../image-capture-dialog/image-capture-dialog.component';
+import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
 
 @Component({
   selector: 'app-user-creation-dialog',
   templateUrl: './user-creation-dialog.component.html',
   styleUrls: ['./user-creation-dialog.component.scss']
 })
-export class UserCreationDialogComponent implements OnInit {
-  /** Common */
-  private _form: FormGroup;
+export class UserCreationDialogComponent extends CommonCreationDialogComponent<User> implements OnInit {
   private _faceImageUrl: string;
-  /** Common */
-  private _isLoading: boolean;
 
   //#region Getters and setters
-  get form(): FormGroup {
-    return this._form;
-  }
-
   get faceImageUrl(): string {
     return this._faceImageUrl;
-  }
-
-  /** Common */
-  get isLoading(): boolean {
-    return this._isLoading;
   }
 
   public get positionsList(): Position[] {
@@ -44,19 +31,20 @@ export class UserCreationDialogComponent implements OnInit {
   //#endregion
 
   constructor(
-    private _dialogRef: MatDialogRef<UserCreationDialogComponent>,
+    dialogRef: MatDialogRef<CommonCreationDialogComponent<User>>,
+    restService: UserRestService,
+    snackBar: MatSnackBar,
     private _formBuilder: FormBuilder,
     private _dialogService: MatDialog,
-    private _restService: UserRestService,
-    private _snackBar: MatSnackBar,
   ) {
-    this._form = this.buildForm();
+    super(dialogRef, restService, snackBar)
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    super.ngOnInit();
+  }
 
-  /** Common abstract */
-  private buildForm(): FormGroup {
+  protected buildForm(): FormGroup {
     return this._formBuilder.group({
       login: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -69,30 +57,7 @@ export class UserCreationDialogComponent implements OnInit {
     })
   }
 
-  /** Common */
-  public onSave(): void {
-    this._isLoading = true;
-    // TODO: Call user create method
-    const user = this.parseUserFromForm();
-    console.log(user);
-    this._restService.create<User>(user).pipe(
-      tap(res => {
-        this._isLoading = false;
-        if (res === CreationResponse.LOGIN_IS_TAKEN) {
-          this.handleLoginTaken();
-        }
-        else if (!!res) this._dialogRef.close(res);
-        else this.handleItemNotAdded();
-      }),
-      catchError(err => {
-        this._isLoading = false;
-        this.handleItemNotAdded();
-        return of()
-      })
-    ).subscribe();
-  }
-
-  private parseUserFromForm(): User {
+  protected parseItemFromForm(): User {
     return {
       _id: null,
       login: this._form.get('login').value,
@@ -106,21 +71,7 @@ export class UserCreationDialogComponent implements OnInit {
     } as User
   }
 
-  //#region Response handlers
   /** Common */
-  private handleItemNotAdded(): void {
-    this.openSnackBar('Error while adding user');
-  }
-
-  private handleLoginTaken(): void {
-    this.openSnackBar('This login is already taken');
-  }
-  //#endregion
-
-  /** Common */
-  public closeDialog(): void {
-    this._dialogRef.close(null);
-  }
 
   public openImageCaptureDialog(): void {
     this._dialogService.open(ImageCaptureDialogComponent)
@@ -137,9 +88,6 @@ export class UserCreationDialogComponent implements OnInit {
   }
 
   //#region Helpers
-  private openSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok', { duration: 2000 });
-  }
 
   /** Common */
   public hasError(controlName: string): boolean {

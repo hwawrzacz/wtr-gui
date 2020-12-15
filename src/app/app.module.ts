@@ -20,7 +20,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CommonListViewComponent } from './components/common-list-view/common-list-view.component';
 import { CommonSearchBarComponent } from './components/common-search-bar/common-search-bar.component';
 import { CommonTableComponent } from './components/common-table/common-table.component';
 import { UserCreationDialogComponent } from './components/dialogs/user-creation-dialog/user-creation-dialog.component';
@@ -49,7 +48,6 @@ import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
-import { CommonCreationDialogComponent } from './components/dialogs/common-creation-dialog/common-creation-dialog.component';
 
 
 
@@ -72,7 +70,6 @@ import { CommonCreationDialogComponent } from './components/dialogs/common-creat
     WorkLogsTableComponent,
     UsersTableComponent,
 
-    CommonListViewComponent,
     ProjectsListComponent,
     TasksListComponent,
     UsersListComponent,
@@ -91,7 +88,6 @@ import { CommonCreationDialogComponent } from './components/dialogs/common-creat
     ImageUploaderComponent,
     PasswordChangeDialogComponent,
     UserCreationDialogComponent,
-    CommonCreationDialogComponent,
   ],
   imports: [
     BrowserModule,
