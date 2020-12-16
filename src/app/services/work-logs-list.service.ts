@@ -12,22 +12,21 @@ import { CommonArrayRestService } from './common-array-rest.service';
 export class WorkLogsListService extends CommonArrayRestService<WorkLog> {
 
   constructor(http: HttpClient) {
-    super(http);
-    this._mockData = mockWorkLogs;
+    super(http, 'work-logs', mockWorkLogs);
   }
 
   public startWork(): Observable<boolean> {
-    mockWorkLogs[mockWorkLogs.length - 1].type = WorkLogType.WORK;
+    mockWorkLogs.items[mockWorkLogs.items.length - 1].type = WorkLogType.WORK;
     return of(true).pipe(delay(1000));
   }
 
   public startBreak(): Observable<boolean> {
-    mockWorkLogs[mockWorkLogs.length - 1].type = WorkLogType.BREAK;
+    mockWorkLogs.items[mockWorkLogs.items.length - 1].type = WorkLogType.BREAK;
     return of(true).pipe(delay(1000));
   }
 
   public closeTask(): Observable<boolean> {
-    mockWorkLogs[mockWorkLogs.length - 1].type = WorkLogType.CLOSE;
+    mockWorkLogs.items[mockWorkLogs.items.length - 1].type = WorkLogType.CLOSE;
     return of(true).pipe(delay(1000));
   }
 }

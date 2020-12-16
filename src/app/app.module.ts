@@ -15,22 +15,25 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CommonListViewComponent } from './components/common-list-view/common-list-view.component';
 import { CommonSearchBarComponent } from './components/common-search-bar/common-search-bar.component';
 import { CommonTableComponent } from './components/common-table/common-table.component';
+import { UserCreationDialogComponent } from './components/dialogs/user-creation-dialog/user-creation-dialog.component';
 import { FilterSearchBarComponent } from './components/filter-search-bar/filter-search-bar.component';
 import { FullScreenErrorComponent } from './components/full-screen-error/full-screen-error.component';
 import { FullScreenLoaderComponent } from './components/full-screen-loader/full-screen-loader.component';
 import { AppHeaderComponent } from './components/header/header.component';
 import { ImageCaptureDialogComponent } from './components/image-capture-dialog/image-capture-dialog.component';
 import { ImageCaptureComponent } from './components/image-capture/image-capture.component';
+import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
+import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
 import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { UserSearchSelectComponent } from './components/user-search-select/user-search-select.component';
 import { WorkLoggerComponent } from './components/work-logger/work-logger.component';
 import { WorkLogsListComponent } from './components/work-logs-list/work-logs-list.component';
@@ -45,8 +48,8 @@ import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
-import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
-import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
+
+
 
 
 @NgModule({
@@ -56,7 +59,6 @@ import { PasswordChangeDialogComponent } from './components/password-change-dial
     AppHeaderComponent,
     SidenavComponent,
 
-    // CommonItemDetailsComponent,
     ProjectDetailsComponent,
     TaskDetailsComponent,
     UserDetailsComponent,
@@ -67,7 +69,6 @@ import { PasswordChangeDialogComponent } from './components/password-change-dial
     WorkLogsTableComponent,
     UsersTableComponent,
 
-    CommonListViewComponent,
     ProjectsListComponent,
     TasksListComponent,
     UsersListComponent,
@@ -85,6 +86,7 @@ import { PasswordChangeDialogComponent } from './components/password-change-dial
     ImageCaptureDialogComponent,
     ImageUploaderComponent,
     PasswordChangeDialogComponent,
+    UserCreationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,7 +108,8 @@ import { PasswordChangeDialogComponent } from './components/password-change-dial
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

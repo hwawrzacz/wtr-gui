@@ -1,8 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { CreationResponse } from '../model/creation-response';
 import { Pagination } from '../model/pagination';
 import { Query } from '../model/query';
 import { CommonArrayResponse } from './common-array-response';
@@ -11,17 +12,26 @@ import { CommonArrayResponse } from './common-array-response';
   providedIn: 'root'
 })
 export class CommonRestService<T> {
-  protected url: string;
+  protected _url: string;
   protected _mockData: any;
-  constructor(protected _http: HttpClient) {
-    this.url = '';
-    this._mockData = [];
+
+  constructor(
+    protected _http: HttpClient,
+    @Inject('url') url: string,
+    @Inject('mockData') mockData: T
+  ) {
+    this._url = url;
+    this._mockData = mockData;
   }
 
-  // TODO (HW): Remove any type annotation - it is just for testing purposes. Target anotation is T.
-  // TODO (HW): Add common request
-  public get(id: string): Observable<T> {
-    return this.getFromApi(id);
+  public get(itemId: string): Observable<T> {
+    return this.getFromApi(itemId);
+  }
+
+  public getFromApi(itemId: string): Observable<T> {
+    const url = `${environment.apiUrl}/${this._url}/${itemId}`;
+    console.log('API', url);
+    return this._http.get<T>(url);
   }
 
   public find(query: Query, pagination?: Pagination): Observable<any> {
@@ -57,19 +67,18 @@ export class CommonRestService<T> {
 
   public findInApi(query: Query, pagination?: Pagination): Observable<CommonArrayResponse<T>> {
     const params = new HttpParams().append('query', JSON.stringify(query)).append('pagination', JSON.stringify(pagination));
-    const url = `${environment.apiUrl}/${this.url}`;
+    const url = `${environment.apiUrl}/${this._url}`;
     console.log('API', url);
     return this._http.get<CommonArrayResponse<T>>(url, { params: params });
   }
 
-  public getFromApi(itemId: string): Observable<T> {
-    const url = `${environment.apiUrl}/${this.url}/${itemId}`;
-    console.log('API', url);
-    return this._http.get<T>(url);
+  public create<T>(item: T): Observable<CreationResponse | boolean> {
+    const url = `${environment.apiUrl}/${this._url}`;
+    return this._http.post<CreationResponse | boolean>(url, item);
   }
 
   public patch<T>(userId: string, name: string, value: T): Observable<any> {
-    const url = `${environment.apiUrl}/${this.url}/${userId}`;
+    const url = `${environment.apiUrl}/${this._url}/${userId}`;
     return this._http.patch(url, { [name]: value });
   }
 }

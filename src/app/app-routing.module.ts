@@ -6,7 +6,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
-import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { UserDetailsComponent } from './pages/user-details/user-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/projects', pathMatch: 'full' },

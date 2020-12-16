@@ -1,5 +1,5 @@
 export enum Position {
-  EMPLOYEE = 'user',
+  EMPLOYEE = 'employee',
   MANAGER = 'manager',
   ADMIN = 'admin',
 }

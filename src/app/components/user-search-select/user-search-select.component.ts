@@ -6,7 +6,7 @@ import { Position } from 'src/app/model/enums/position';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
-import { UsersRestService } from 'src/app/services/users-rest.service';
+import { UsersListService } from 'src/app/services/users-list.service';
 
 @Component({
   selector: 'app-user-search-select',
@@ -55,7 +55,7 @@ export class UserSearchSelectComponent implements OnInit {
     return this._filteredUsers;
   }
 
-  constructor(private _restService: UsersRestService) {
+  constructor(private _restService: UsersListService) {
     this._loadingCounter = 0;
     this.selectionChangeEmitter = new EventEmitter<User>()
   }

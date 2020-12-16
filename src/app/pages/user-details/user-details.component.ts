@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, take, tap } from 'rxjs/operators';
+import { phoneNumberValidator } from 'src/app/helpers/custom-validators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { Position } from 'src/app/model/enums/position';
 import { SimpleUser } from 'src/app/model/simple-user';
@@ -9,14 +10,14 @@ import { UserCredentials } from 'src/app/model/user-credentials';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
-import { CommonItemDetailsComponent } from '../common-item-details/common-item-details.component';
-import { ImageCaptureDialogComponent } from '../image-capture-dialog/image-capture-dialog.component';
-import { PasswordChangeDialogComponent } from '../password-change-dialog/password-change-dialog.component';
+import { CommonItemDetailsComponent } from '../../components/common-item-details/common-item-details.component';
+import { ImageCaptureDialogComponent } from '../../components/image-capture-dialog/image-capture-dialog.component';
+import { PasswordChangeDialogComponent } from '../../components/password-change-dialog/password-change-dialog.component';
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['../common-item-details/common-item-details.component.scss', './user-details.component.scss']
+  styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './user-details.component.scss']
 })
 export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser> implements OnInit {
   private _qrCodeUrl: string;
@@ -56,7 +57,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       login: [{ value: this._initialItem.login, disabled: true }, [Validators.required]],
       firstName: [{ value: this._initialItem.firstName, disabled: true }, [Validators.required, Validators.minLength(2)]],
       lastName: [{ value: this._initialItem.lastName, disabled: true }, [Validators.required]],
-      phoneNumber: [{ value: this._initialItem.phoneNumber, disabled: true }, [Validators.required, this.phoneNumberValidator()]],
+      phoneNumber: [{ value: this._initialItem.phoneNumber, disabled: true }, [Validators.required, phoneNumberValidator()]],
       email: [{ value: this._initialItem.email, disabled: true }, [Validators.required, Validators.email]],
       role: [{ value: this._initialItem.role, disabled: true }, [Validators.required]],
     })
@@ -80,12 +81,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
         })
       )
       .subscribe()
-  }
-  //#endregion
-
-  //#region Custom validators
-  private phoneNumberValidator(): ValidatorFn {
-    return (control: FormControl): { [key: string]: any | null } => control.value.toString().match(/[0-9]{9}/) == control.value ? { phoneNumber: true } : null;
   }
   //#endregion
 

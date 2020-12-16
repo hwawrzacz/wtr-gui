@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { WorkLog } from 'src/app/model/work-log';
@@ -18,9 +20,12 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
     this._taskId = value;
   }
 
-  constructor(restService: WorkLogsListService) {
-    super()
-    this._restService = restService;
+  constructor(
+    restService: WorkLogsListService,
+    snackBar: MatSnackBar,
+    dialogService: MatDialog
+  ) {
+    super(restService, snackBar, dialogService);
 
     const projectFilter = { name: 'taskId', values: [`${this._taskId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
@@ -29,5 +34,7 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
   ngOnInit(): void {
     super.ngOnInit();
   }
+
+  public openItemCreationDialog(): void { return }
 
 }

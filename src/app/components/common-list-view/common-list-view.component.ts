@@ -1,28 +1,26 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { fromEvent, of } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { of, OperatorFunction } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
-import { SimpleUser } from 'src/app/model/simple-user';
 import { CommonArrayResponse } from 'src/app/services/common-array-response';
 import { CommonArrayRestService } from 'src/app/services/common-array-rest.service';
-import { CommonRestService } from 'src/app/services/common-rest.service';
-import { UsersRestService } from 'src/app/services/users-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
 @Component({
   selector: 'app-common-list-view',
-  templateUrl: './common-list-view.component.html',
+  template: '',
   styleUrls: ['./common-list-view.component.scss']
 })
-export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
+export abstract class CommonListViewComponent<T> implements OnInit {
   // Labels
   protected _pageTitle: string;
   protected _themeItemNameSingle: string;
 
   // Data
-  protected _restService: CommonArrayRestService<T>
   protected _dataSource: CommonDataSource<T>;
 
   // Table
@@ -79,7 +77,11 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   //#endregion
   //#endregion
 
-  constructor() {
+  constructor(
+    protected _restService: CommonArrayRestService<T>,
+    private _snackBar: MatSnackBar,
+    protected _dialogService: MatDialog,
+  ) {
     this._loadingCounter = 0;
     this._pageSizeOptions = [5, 10, 25, 50];
     this._query = { searchString: '', filters: [] } as Query;
@@ -88,55 +90,52 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
   }
 
   public ngOnInit(): void {
-    this.loadData(this._query);
+    this.loadData();
   }
 
-  public ngAfterViewInit(): void {
-    this.subsribeToPaginationChagnge();
-  }
-
-  protected loadData(query: Query) {
+  protected loadData() {
     this._loadingCounter++;
     try {
-      this.getDataFromApi(query);
+      this.getDataFromApi();
     } catch (e) {
       console.log(e);
-      this.getMockData(query);
+      this.getMockData();
     }
   }
 
-  private getDataFromApi(query: Query) {
-    this._restService.find(query, this._pagination)
+  private getDataFromApi(): void {
+    this._restService.find(this._query, this._pagination)
       .pipe(
-        tap((result: CommonArrayResponse<SimpleUser[]>) => {
+        tap((result: CommonArrayResponse<T>) => {
           this._dataSource.refresh(result.items as any);
           this._totalResults = result.totalResults
           this._pageSize = result.limit;
           this._loadingCounter--;
         }),
         // TODO (HW): Handle error properly
-        catchError((e) => of(this.getMockData(query)))
+        catchError((e) => {
+          this.openSnackBar(`Couldn't load items from API. Mock data loaded.`);
+          this.getMockData()
+          return of()
+        })
       ).subscribe();
   }
 
-  private getMockData(query: Query) {
-    this._restService.find(query)
+  private getMockData(): void {
+    this._restService.find(this._query, this._pagination)
       .pipe(
         tap((result) => {
           this._dataSource.refresh(result);
           this._loadingCounter--;
         }),
         // TODO (HW): Handle error properly
-        catchError(() => of(console.error(`Couldn't load data`)))
+        catchError(() => of(console.error(`Couldn't load data.`)))
       ).subscribe();
-  }
-
-  private subsribeToPaginationChagnge(): void {
   }
 
   public onQueryChanged(query: Query): void {
     this._query = query;
-    this.loadData(this._query);
+    this.loadData();
   }
 
   public onPaginationChange(pagination: PageEvent): void {
@@ -144,7 +143,36 @@ export class CommonListViewComponent<T> implements OnInit, AfterViewInit {
       currentPage: pagination.pageIndex + 1,
       itemsPerPage: pagination.pageSize
     }
-    console.log(this._pagination);
-    this.loadData(this._query);
+    this.loadData();
   }
+
+  /** Handles opening item creation dialog, and all actions 
+   * after it is closed, which are showing certain messages  */
+  public abstract openItemCreationDialog(): void;
+
+  //#region Helpers 
+  protected handleAfterClosed = (): OperatorFunction<any, unknown> => {
+    return (
+      tap(res => {
+        if (!!res) {
+          this.openSnackBar(this.getAdditionSuccessMessage());
+          this.getDataFromApi();
+        }
+        else this.openSnackBar(this.getAdditionCancelledMessage());
+      })
+    )
+  }
+
+  private getAdditionSuccessMessage = (): string => {
+    return `${(this.themeItemNameSingle[0].toUpperCase())}${this.themeItemNameSingle.substr(1, this.themeItemNameSingle.length - 1)} created`;
+  }
+
+  private openSnackBar(message: string): void {
+    this._snackBar.open(message, 'Ok', { duration: 2000 });
+  }
+
+  private getAdditionCancelledMessage = (): string => {
+    return `Creating ${this.themeItemNameSingle} discarded`;
+  }
+  //#endregion
 }

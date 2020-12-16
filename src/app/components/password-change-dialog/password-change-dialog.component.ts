@@ -2,6 +2,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { take, tap } from 'rxjs/operators';
+import { matchOtherControlValidator } from 'src/app/helpers/custom-validators';
 import { UserRestService } from 'src/app/services/user-rest.service';
 
 @Component({
@@ -43,7 +44,7 @@ export class PasswordChangeDialogComponent implements OnInit {
   private buildPasswordForm(): FormGroup {
     return this._formBuilder.group({
       password: [{ value: null, disabled: !this._userId }, [Validators.required]],
-      repeatPassword: [{ value: null, disabled: !this._userId }, [Validators.required, this.matchPasswordValidator()]]
+      repeatPassword: [{ value: null, disabled: !this._userId }, [Validators.required, matchOtherControlValidator('password')]]
     })
   }
 
@@ -63,18 +64,6 @@ export class PasswordChangeDialogComponent implements OnInit {
   }
   //#endregion
 
-  private matchPasswordValidator = (): ValidatorFn => {
-    return (control: AbstractControl): { [key: string]: any | null } => {
-      const otherControl = control.root.get('password');
-      let errorValue = false;
-      if (!!otherControl && !!otherControl.value) {
-        errorValue = otherControl.value !== control.value;
-        return errorValue ? { passwordMatches: errorValue } : null;
-      } else {
-        return null
-      }
-    }
-  }
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Password is required';

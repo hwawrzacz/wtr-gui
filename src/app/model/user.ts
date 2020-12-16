@@ -9,6 +9,6 @@ export interface User {
   role: Position
   login: string;
   password: string;
-  faceImage: string;
+  facePhoto: string;
   qrImage: string;
 }

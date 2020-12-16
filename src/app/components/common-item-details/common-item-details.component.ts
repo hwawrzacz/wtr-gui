@@ -20,7 +20,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected _query: Query;
   protected _initialItem: T;
   protected _form: FormGroup;
-  protected _editables: Map<string, boolean>;
   private _editMode: boolean;
 
   //#region Getters and setters
@@ -168,12 +167,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
         tap(response => console.log(response)),
         catchError(e => of(console.error(e)))
       ).subscribe();
-  }
-  //#endregion
-
-  //#region Editable handling
-  public isEditable(controlName: string): boolean {
-    return this._editables.get(controlName);
   }
   //#endregion
 

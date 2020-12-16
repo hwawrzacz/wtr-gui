@@ -1,23 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { UserCredentials } from '../model/user-credentials';
-import { mockUsers, mockCredentials } from '../model/mock-data';
-import { SimpleUser } from '../model/simple-user';
-import { CommonRestService } from './common-rest.service';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { mockUsers } from '../model/mock-data';
+import { SimpleUser } from '../model/simple-user';
 import { User } from '../model/user';
+import { UserCredentials } from '../model/user-credentials';
+import { CommonRestService } from './common-rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserRestService extends CommonRestService<SimpleUser> {
+export class UserRestService extends CommonRestService<User> {
   private readonly _credentialsUrl = 'users/credentials';
 
   constructor(http: HttpClient) {
-    super(http)
-    this.url = 'users';
-    this._mockData = mockUsers[0];
+    super(http, 'users', mockUsers.items[0]);
   }
 
   public getCredentials(userId: string): Observable<UserCredentials> {
@@ -25,6 +23,6 @@ export class UserRestService extends CommonRestService<SimpleUser> {
   }
 
   public updatePhoto(user: User): Observable<any> {
-    return this._http.post(this.url, user);
+    return this._http.post(this._url, user);
   }
 }
