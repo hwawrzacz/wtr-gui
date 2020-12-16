@@ -2,8 +2,8 @@
   <form [formGroup]="form" *ngIf="!isLoading && !error">
     <header>
       <h1>{{ stringId }}
-        <mat-form-field appearance="outline" [attr.readonly]="!isEditable('title')">
-          <input matInput type="text" formControlName="title" [readonly]="!isEditable('title')" />
+        <mat-form-field appearance="outline">
+          <input matInput type="text" formControlName="title" />
         </mat-form-field>
       </h1>
 
@@ -12,22 +12,22 @@
           <mat-icon>edit</mat-icon>
           <span>Edit</span>
         </button>
-    
+
         <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onSaveChanges()">
           <mat-icon>save</mat-icon>
           <span>Save changes</span>
         </button>
-    
+
         <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onDiscardChanges()">
           <mat-icon>close</mat-icon>
           <span>Discard changes</span>
         </button>
-    
+
         <button mat-stroked-button color="primary" *ngIf="!editMode">
           <mat-icon>pie_chart</mat-icon>
           <span>Show staistics</span>
         </button>
-    
+
         <button mat-stroked-button color="warn" *ngIf="!editMode">
           <mat-icon>delete</mat-icon>
           <span>Delete</span>
@@ -38,10 +38,10 @@
     <section>
       <h3>Manager</h3>
       <div class="editable-input-wrapper manager-wrapper">
-        <!-- <input matInput *ngIf="!isEditable('manager')" readonly
-          [value]="project && project.manager ? stringifyManager(project.manager) : ''" /> -->
+        <input matInput *ngIf="!editMode" readonly
+          [value]="project && project.manager ? stringifyManager(project.manager) : ''" />
 
-        <app-user-search-select [onlyManagers]="true" [singleSelection]="true"
+        <app-user-search-select *ngIf="editMode" [onlyManagers]="true" [singleSelection]="true"
           [initialValue]="project.manager" (selectionChange)="updateTempManager($event)">
         </app-user-search-select>
       </div>
@@ -51,8 +51,7 @@
       <h3>Description</h3>
       <div class="editable-input-wrapper description-wrapper">
         <mat-form-field appearance="outline">
-          <textarea matInput formControlName="description"
-            cdkTextareaAutosize></textarea>
+          <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
         </mat-form-field>
       </div>
     </section>
