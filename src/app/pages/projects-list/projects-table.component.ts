@@ -27,18 +27,22 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
         displayName: 'Title',
         propertyName: 'title',
       },
-      {
-        defName: 'manager',
-        displayName: 'Manager',
-        propertyName: 'manager',
-        formatter: (user: User) => `${user.firstName} ${user.lastName}`,
-      },
-      {
-        defName: 'users',
-        displayName: 'People working on',
-        propertyName: 'workers',
-        formatter: (arr: number[]) => `${arr.length}`,
-      },
+      // {
+      //   defName: 'manager',
+      //   displayName: 'Manager',
+      //   propertyName: 'manager',
+      //   formatter: (user: User) => `${user.firstName} ${user.lastName}`,
+      // },
+      // TODO: Handle workers
+      // {
+      //   defName: 'workers',
+      //   displayName: 'People working on',
+      //   propertyName: 'workers',
+      //   formatter: (arr: number[]) => {
+      //     console.log(arr);
+      //     return `${arr.length}`;
+      //   }
+      // },
     ];
 
     this._actionsDefinitions = [

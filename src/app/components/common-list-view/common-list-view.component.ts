@@ -107,6 +107,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     this._restService.find(this._query, this._pagination)
       .pipe(
         tap((result: CommonArrayResponse<T>) => {
+          console.log(result.items);
           this._dataSource.refresh(result.items as any);
           this._totalResults = result.totalResults
           this._pageSize = result.limit;
@@ -151,7 +152,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   public abstract openItemCreationDialog(): void;
 
   //#region Helpers 
-  protected handleAfterClosed = (): OperatorFunction<any, unknown> => {
+  protected handleAfterClosed(): OperatorFunction<any, unknown> {
     return (
       tap(res => {
         if (!!res) {
@@ -168,7 +169,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   private openSnackBar(message: string): void {
-    this._snackBar.open(message, 'Ok', { duration: 2000 });
+    this._snackBar.open(message, null, { duration: 2000 });
   }
 
   private getAdditionCancelledMessage = (): string => {
