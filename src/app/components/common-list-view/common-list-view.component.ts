@@ -12,7 +12,7 @@ import { CommonDataSource } from '../../model/common-data-source';
 
 @Component({
   selector: 'app-common-list-view',
-  templateUrl: './common-list-view.component.html',
+  template: '',
   styleUrls: ['./common-list-view.component.scss']
 })
 export abstract class CommonListViewComponent<T> implements OnInit {
