@@ -9,7 +9,6 @@ import { Query } from 'src/app/model/query';
 import { CommonArrayResponse } from 'src/app/services/common-array-response';
 import { CommonArrayRestService } from 'src/app/services/common-array-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
-import { CommonCreationDialogComponent } from '../dialogs/common-creation-dialog/common-creation-dialog.component';
 
 @Component({
   selector: 'app-common-list-view',
@@ -22,7 +21,6 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   protected _themeItemNameSingle: string;
 
   // Data
-  protected _restService: CommonArrayRestService<T>
   protected _dataSource: CommonDataSource<T>;
 
   // Table
@@ -80,7 +78,9 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   //#endregion
 
   constructor(
+    protected _restService: CommonArrayRestService<T>,
     private _snackBar: MatSnackBar,
+    protected _dialogService: MatDialog,
   ) {
     this._loadingCounter = 0;
     this._pageSizeOptions = [5, 10, 25, 50];

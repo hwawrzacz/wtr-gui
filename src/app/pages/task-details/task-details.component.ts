@@ -7,7 +7,7 @@ import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { Task } from 'src/app/model/task';
-import { UsersRestService as UsersRestService } from 'src/app/services/users-rest.service';
+import { UsersListService as UsersListService } from 'src/app/services/users-list.service';
 import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { TaskService } from 'src/app/services/task.service';
@@ -44,7 +44,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     itemBrokerService: TaskDetailsBrokerService,
     taskRestService: TaskService,
     formBuilder: FormBuilder,
-    private _userRestService: UsersRestService
+    private _userRestService: UsersListService
   ) {
     super(navigator, itemBrokerService, taskRestService, formBuilder);
 

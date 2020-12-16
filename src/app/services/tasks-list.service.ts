@@ -8,7 +8,6 @@ import { CommonArrayRestService } from './common-array-rest.service';
   providedIn: 'root'
 })
 export class TasksListService extends CommonArrayRestService<Task> {
-
   constructor(http: HttpClient) {
     super(http);
     this._mockData = mockTasks;
