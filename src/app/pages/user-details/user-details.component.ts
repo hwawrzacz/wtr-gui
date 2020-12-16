@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, take, tap } from 'rxjs/operators';
 import { phoneNumberValidator } from 'src/app/helpers/custom-validators';
@@ -10,14 +10,14 @@ import { UserCredentials } from 'src/app/model/user-credentials';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
-import { CommonItemDetailsComponent } from '../common-item-details/common-item-details.component';
-import { ImageCaptureDialogComponent } from '../image-capture-dialog/image-capture-dialog.component';
-import { PasswordChangeDialogComponent } from '../password-change-dialog/password-change-dialog.component';
+import { CommonItemDetailsComponent } from '../../components/common-item-details/common-item-details.component';
+import { ImageCaptureDialogComponent } from '../../components/image-capture-dialog/image-capture-dialog.component';
+import { PasswordChangeDialogComponent } from '../../components/password-change-dialog/password-change-dialog.component';
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['../common-item-details/common-item-details.component.scss', './user-details.component.scss']
+  styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './user-details.component.scss']
 })
 export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser> implements OnInit {
   private _qrCodeUrl: string;

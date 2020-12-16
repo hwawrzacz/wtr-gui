@@ -33,7 +33,7 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
 import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
 import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { UserSearchSelectComponent } from './components/user-search-select/user-search-select.component';
 import { WorkLoggerComponent } from './components/work-logger/work-logger.component';
 import { WorkLogsListComponent } from './components/work-logs-list/work-logs-list.component';
@@ -59,7 +59,6 @@ import { UsersTableComponent } from './pages/users-list/users-table.component';
     AppHeaderComponent,
     SidenavComponent,
 
-    // CommonItemDetailsComponent,
     ProjectDetailsComponent,
     TaskDetailsComponent,
     UserDetailsComponent,
