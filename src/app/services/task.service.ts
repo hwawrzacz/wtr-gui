@@ -10,8 +10,6 @@ import { CommonRestService } from './common-rest.service';
 export class TaskService extends CommonRestService<Task> {
 
   constructor(http: HttpClient) {
-    super(http);
-    this.url = 'tasks'
-    this._mockData = mockTasks[0];
+    super(http, 'tasks', mockTasks[0]);
   }
 }

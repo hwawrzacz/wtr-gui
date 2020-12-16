@@ -15,9 +15,7 @@ export class UserRestService extends CommonRestService<User> {
   private readonly _credentialsUrl = 'users/credentials';
 
   constructor(http: HttpClient) {
-    super(http)
-    this.url = 'users';
-    this._mockData = mockUsers[0];
+    super(http, 'users', mockUsers.items[0]);
   }
 
   public getCredentials(userId: string): Observable<UserCredentials> {
@@ -25,6 +23,6 @@ export class UserRestService extends CommonRestService<User> {
   }
 
   public updatePhoto(user: User): Observable<any> {
-    return this._http.post(this.url, user);
+    return this._http.post(this._url, user);
   }
 }

@@ -9,8 +9,6 @@ import { CommonArrayRestService } from './common-array-rest.service';
 })
 export class UsersListService extends CommonArrayRestService<User> {
   constructor(http: HttpClient) {
-    super(http);
-    this._mockData = mockUsers;
-    this.url = 'users'
+    super(http, 'users', mockUsers);
   }
 }

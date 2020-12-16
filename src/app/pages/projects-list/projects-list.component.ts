@@ -14,7 +14,6 @@ import { ProjectsListService } from 'src/app/services/projects-list.service';
 export class ProjectsListComponent extends CommonListViewComponent<Project> {
   constructor(
     restService: ProjectsListService,
-    http: HttpClient,
     snackBar: MatSnackBar,
     dialogService: MatDialog,
   ) {
@@ -22,7 +21,6 @@ export class ProjectsListComponent extends CommonListViewComponent<Project> {
 
     this._pageTitle = "Projects";
     this._themeItemNameSingle = "project";
-    this._restService = new ProjectsListService(http);
   }
 
   public openItemCreationDialog(): void {

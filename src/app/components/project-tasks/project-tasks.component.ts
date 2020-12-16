@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
@@ -20,9 +20,12 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
     this._projectId = value;
   }
 
-  constructor(http: HttpClient, _snackBar: MatSnackBar) {
-    super(_snackBar);
-    this._restService = new TasksListService(http);
+  constructor(
+    restService: TasksListService,
+    snackBar: MatSnackBar,
+    dialogService: MatDialog
+  ) {
+    super(restService, snackBar, dialogService);
     const projectFilter = { name: 'projectId', values: [`${this._projectId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
   }
@@ -30,4 +33,6 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
   ngOnInit(): void {
     super.ngOnInit();
   }
+
+  public openItemCreationDialog(): void { return }
 }

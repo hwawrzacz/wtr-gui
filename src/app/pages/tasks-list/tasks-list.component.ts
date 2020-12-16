@@ -14,7 +14,6 @@ import { TasksListService } from 'src/app/services/tasks-list.service';
 export class TasksListComponent extends CommonListViewComponent<Task> {
   constructor(
     restService: TasksListService,
-    http: HttpClient,
     snackBar: MatSnackBar,
     dialogService: MatDialog
   ) {
@@ -22,7 +21,6 @@ export class TasksListComponent extends CommonListViewComponent<Task> {
 
     this._pageTitle = 'Tasks';
     this._themeItemNameSingle = 'task'
-    this._restService = new TasksListService(http);
   }
 
   public openItemCreationDialog(): void {

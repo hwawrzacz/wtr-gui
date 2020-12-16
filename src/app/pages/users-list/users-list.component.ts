@@ -15,7 +15,6 @@ import { UsersListService } from 'src/app/services/users-list.service';
 export class UsersListComponent extends CommonListViewComponent<User> {
   constructor(
     restService: UsersListService,
-    http: HttpClient,
     dialogService: MatDialog,
     snackBar: MatSnackBar,
   ) {
@@ -23,7 +22,6 @@ export class UsersListComponent extends CommonListViewComponent<User> {
 
     this._pageTitle = 'Users'
     this._themeItemNameSingle = 'user';
-    this._restService = new UsersListService(http);
   }
 
   public openItemCreationDialog(): void {

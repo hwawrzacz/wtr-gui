@@ -10,9 +10,6 @@ import { CommonRestService } from './common-rest.service';
 export class ProjectRestService extends CommonRestService<Project> {
 
   constructor(http: HttpClient) {
-    super(http);
-    this._mockData = mockProjects[0];
+    super(http, 'projects', mockProjects[0]);
   }
-
-  //TODO (HW): Will tasks be got from project endpoint, or filtered from task endpoint
 }
