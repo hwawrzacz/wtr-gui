@@ -16,8 +16,8 @@ import { Pagination } from 'src/app/model/pagination';
 })
 export class UserSearchSelectComponent implements OnInit {
   private _loadingCounter: number;
-  private _initialValue: User;
   private _singleSelection: boolean;
+  private _selectedUser: User;
   private _users: User[];
   private _filteredUsers: User[];
   private _onlyManagers: boolean;
@@ -36,7 +36,7 @@ export class UserSearchSelectComponent implements OnInit {
 
   @Input('initialValue')
   set initialValue(value: User) {
-    this._initialValue = value;
+    this._selectedUser = value;
   }
 
   @Input('label')
@@ -58,7 +58,7 @@ export class UserSearchSelectComponent implements OnInit {
   }
 
   get initialValue(): User {
-    return this._initialValue;
+    return this._selectedUser;
   }
 
   get filteredUsers(): User[] {
@@ -97,12 +97,18 @@ export class UserSearchSelectComponent implements OnInit {
   }
 
   public onSelectionChange(user: User): void {
-    console.log(`${user.firstName} emit`);
-    this.selectionChangeEmitter.emit(user);
+    this._selectedUser = user;
+    this.selectionChangeEmitter.emit(this._selectedUser);
 
     if (!this._singleSelection) {
       this.inputItem.nativeElement.blur();
       this.inputItem.nativeElement.focus();
+    }
+  }
+
+  public resetInput(): void {
+    if (this.singleSelection) {
+      this.inputItem.nativeElement.value = this._selectedUser;
     }
   }
   //#endregion

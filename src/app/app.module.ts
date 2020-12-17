@@ -51,6 +51,7 @@ import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
+import { UserPipe } from './pipes/user.pipe';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { UsersTableComponent } from './pages/users-list/users-table.component';
     PasswordChangeDialogComponent,
     UserCreationDialogComponent,
     ProjectCreationDialogComponent,
+    UserPipe,
   ],
   imports: [
     BrowserModule,
