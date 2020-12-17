@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
+import { StatusStringifier } from 'src/app/helpers/parsers';
+import { Status } from 'src/app/model/enums/status';
 import { Task } from 'src/app/model/task';
 import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -29,7 +31,10 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
       {
         defName: 'status',
         displayName: 'Status',
-        propertyName: 'status'
+        propertyName: 'progressStatus',
+        formatter: (status: Status) => {
+          return StatusStringifier.getStatusString(status);
+        }
       },
       {
         defName: 'priority',
@@ -66,11 +71,15 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
   }
 
   public getClassForProperty(propName: string, value: string): string {
+    // TODO: Remove, when 'progressStatus' is changed to 'status' in API
+    if (propName == 'progressStatus') propName = 'status';
     return `${propName}-label ${propName}-label--${value}`;
   }
 
   public isFormattableProperty(propName: string): boolean {
-    return ['status', 'priority'].includes(propName);
+    console.log(propName);
+    // TODO: Change, when 'progressStatus' is changed to 'status' in API
+    return ['progressStatus', 'priority'].includes(propName);
   }
 
 }
