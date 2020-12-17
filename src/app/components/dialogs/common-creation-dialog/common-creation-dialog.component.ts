@@ -4,8 +4,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { CreationResponse } from 'src/app/model/creation-response';
-import { CreationResponseMessage } from 'src/app/model/enums/creation-response-message';
+import { CreationResponse } from 'src/app/model/responses';
+import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
 import { CommonRestService } from 'src/app/services/common-rest.service';
 
 @Component({
