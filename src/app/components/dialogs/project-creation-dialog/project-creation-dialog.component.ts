@@ -1,6 +1,8 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ControlContainer, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDateFormats } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Project } from 'src/app/model/project';
@@ -51,13 +53,24 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
       description: this._form.get('description').value,
       manager: this._form.get('manager').value,
       creationDate: null,
-      dutyDate: this._form.get('dutyDate').value,
+      dutyDate: this.parseDateToISOFormat(this._form.get('dutyDate').value),
       workers: [],
     } as Project
   }
 
+  public getErrorMessage(controlName: string): string {
+    const control = this._form.get(controlName);
+    if (control.hasError('required')) return 'Value is required';
+    if (control.hasError('matDatepickerParse')) return 'Invalid date format';
+    return null;
+  }
+
   public reassignManager(manager: User | SimpleUser): void {
-    console.log(manager);
     this._manager = manager;
+    this._form.get('manager').patchValue(this._manager);
+  }
+
+  private parseDateToISOFormat(date: Date): string {
+    return date.toISOString();
   }
 }

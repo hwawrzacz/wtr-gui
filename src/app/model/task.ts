@@ -13,6 +13,6 @@ export interface Task {
   workers: string[];
   projectId: number;
   reporter: SimpleUser;
-  creationDate: number; // timestamp 
-  dutyDate: number; // timestamp 
+  creationDate: string;
+  dutyDate: string;
 }
