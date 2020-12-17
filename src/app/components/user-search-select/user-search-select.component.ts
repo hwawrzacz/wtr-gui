@@ -7,6 +7,7 @@ import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { UsersListService } from 'src/app/services/users-list.service';
+import { Pagination } from 'src/app/model/pagination';
 
 @Component({
   selector: 'app-user-search-select',
@@ -20,6 +21,7 @@ export class UserSearchSelectComponent implements OnInit {
   private _users: User[];
   private _filteredUsers: User[];
   private _onlyManagers: boolean;
+  private _label: string;
   @ViewChild('input') inputItem: ElementRef;
 
   @Input('onlyManagers')
@@ -35,6 +37,14 @@ export class UserSearchSelectComponent implements OnInit {
   @Input('initialValue')
   set initialValue(value: User) {
     this._initialValue = value;
+  }
+
+  @Input('label')
+  set label(value: string) {
+    this._label = value;
+  }
+  get label(): string {
+    return this._label;
   }
 
   @Output('selectionChange') selectionChangeEmitter: EventEmitter<User>;
@@ -67,12 +77,13 @@ export class UserSearchSelectComponent implements OnInit {
   //#region Initializers
   private loadData(): void {
     this._loadingCounter++;
-    const filter = { name: 'position', values: [Position.MANAGER] } as Filter;
+    const filter = { name: 'role', values: [Position.MANAGER] } as Filter;
     const query = { searchString: '', filters: this._onlyManagers ? [filter] : [] } as Query;
-    this._restService.find(query).pipe(
-      tap(items => {
+    const pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
+    this._restService.find(query, pagination).pipe(
+      tap(result => {
         this._loadingCounter--;
-        this._users = items;
+        this._users = result.items;
         this._filteredUsers = this._users;
       })
     ).subscribe();
