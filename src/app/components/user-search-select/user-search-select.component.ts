@@ -8,6 +8,7 @@ import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { UsersListService } from 'src/app/services/users-list.service';
 import { Pagination } from 'src/app/model/pagination';
+import { UserPipe } from 'src/app/pipes/user.pipe';
 
 @Component({
   selector: 'app-user-search-select',
@@ -22,6 +23,7 @@ export class UserSearchSelectComponent implements OnInit {
   private _filteredUsers: User[];
   private _onlyManagers: boolean;
   private _label: string;
+  private _error: string;
   @ViewChild('input') inputItem: ElementRef;
 
   @Input('onlyManagers')
@@ -45,6 +47,14 @@ export class UserSearchSelectComponent implements OnInit {
   }
   get label(): string {
     return this._label;
+  }
+
+  @Input('errorMessage')
+  set errorMessage(value: string) {
+    this._error = value;
+  }
+  get error(): string {
+    return this._error;
   }
 
   @Output('selectionChange') selectionChangeEmitter: EventEmitter<User>;
@@ -108,7 +118,8 @@ export class UserSearchSelectComponent implements OnInit {
 
   public resetInput(): void {
     if (this.singleSelection) {
-      this.inputItem.nativeElement.value = this._selectedUser;
+      const userPipe = new UserPipe();
+      this.inputItem.nativeElement.value = userPipe.transform(this._selectedUser);
     }
   }
   //#endregion

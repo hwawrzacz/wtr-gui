@@ -2,6 +2,7 @@
   <mat-label *ngIf="!!label">{{ label }}</mat-label>
   <input #input matInput type="text" [matAutocomplete]="auto" [value]="initialValue | user" (keyup)="onKeyUp($event)"
     (blur)="resetInput()" placeholder="{{ label }}" />
+  <mat-error *ngIf='!!error'>{{ error }}</mat-error>
 </mat-form-field>
 
 <mat-autocomplete #auto="matAutocomplete" [displayWith]="stringifyUser">
