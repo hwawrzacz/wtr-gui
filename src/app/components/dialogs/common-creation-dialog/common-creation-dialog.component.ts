@@ -88,6 +88,12 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
   }
   //#endregion
 
+  public hasError(controlName: string): boolean {
+    return !this._form.get(controlName).valid;
+  };
+
+  public abstract getErrorMessage(controlName: string): string;
+
   //#region Helpers
   public closeDialog(success = false): void {
     this._dialogRef.close(success);
