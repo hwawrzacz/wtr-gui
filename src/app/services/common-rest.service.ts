@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { CreationResponse } from '../model/creation-response';
+import { CreationResponse } from '../model/responses';
 import { Pagination } from '../model/pagination';
 import { Query } from '../model/query';
 import { CommonArrayResponse } from './common-array-response';

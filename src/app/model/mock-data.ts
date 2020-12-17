@@ -24,8 +24,8 @@ export const mockProjects: CommonArrayResponse<Project> = {
         phoneNumber: '345 534 345'
       },
       workers: ['1', '2', '3', '4'],
-      creationDate: Date.now() - 12837823,
-      dutyDate: Date.now()
+      creationDate: "2020-12-08T23:00:00.000Z",
+      dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
       id: '2',
@@ -42,8 +42,8 @@ export const mockProjects: CommonArrayResponse<Project> = {
         phoneNumber: '345 534 345'
       },
       workers: ['3', '7', '4', '6', '10', '22'],
-      creationDate: Date.now() - 12837823,
-      dutyDate: Date.now()
+      creationDate: "2020-12-08T23:00:00.000Z",
+      dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
       id: '3',
@@ -60,8 +60,8 @@ export const mockProjects: CommonArrayResponse<Project> = {
         phoneNumber: '345 534 345'
       },
       workers: ['1', '3', '7', '8', '4', '5'],
-      creationDate: Date.now() - 12123823,
-      dutyDate: Date.now()
+      creationDate: "2020-12-08T23:00:00.000Z",
+      dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
       id: '4',
@@ -78,8 +78,8 @@ export const mockProjects: CommonArrayResponse<Project> = {
         phoneNumber: '345 534 345'
       },
       workers: ['3', '4', '5', '7', '8'],
-      creationDate: Date.now() - 23422252,
-      dutyDate: Date.now()
+      creationDate: "2020-12-08T23:00:00.000Z",
+      dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
       id: '5',
@@ -96,8 +96,8 @@ export const mockProjects: CommonArrayResponse<Project> = {
         phoneNumber: '345 534 345'
       },
       workers: ['9', '8', '7', '6', '5', '4', '3', '2'],
-      creationDate: Date.now() - 23422252,
-      dutyDate: Date.now()
+      creationDate: "2020-12-08T23:00:00.000Z",
+      dutyDate: "2020-12-08T23:00:00.000Z"
     }
   ]
 } as CommonArrayResponse<Project>;
@@ -123,8 +123,8 @@ export const mockTasks: CommonArrayResponse<Task> = {
         email: 'j.wick@somecompany.com',
         phoneNumber: '345 534 345'
       },
-      creationDate: Date.now() - 12837823,
-      dutyDate: Date.now()
+      creationDate: "2020-12-08T23:00:00.000Z",
+      dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
       id: '2',
@@ -145,8 +145,8 @@ export const mockTasks: CommonArrayResponse<Task> = {
         email: 's.spielberg@somecompany.com',
         phoneNumber: '345 534 345'
       },
-      creationDate: Date.now() - 12837823,
-      dutyDate: Date.now()
+      creationDate: "2020-12-08T23:00:00.000Z",
+      dutyDate: "2020-12-08T23:00:00.000Z"
     },
   ]
 } as CommonArrayResponse<Task>;

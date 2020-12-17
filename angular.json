@@ -8,25 +8,25 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:class": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:directive": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:guard": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:module": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:pipe": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:service": {
-          "spec": false
+          "skipTests": true
         }
       },
       "root": "",
@@ -87,7 +87,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "wtr-gui:build",
-            "proxyConfig": "src/proxy.conf.json",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {

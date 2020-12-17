@@ -7,7 +7,6 @@ import { matchOtherControlValidator, phoneNumberValidator } from 'src/app/helper
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { Position } from 'src/app/model/enums/position';
 import { User } from 'src/app/model/user';
-import { CommonRestService } from 'src/app/services/common-rest.service';
 import { UserRestService } from 'src/app/services/user-rest.service';
 import { ImageCaptureDialogComponent } from '../../image-capture-dialog/image-capture-dialog.component';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
@@ -89,11 +88,6 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
 
   //#region Helpers
 
-  /** Common */
-  public hasError(controlName: string): boolean {
-    return !this._form.get(controlName).valid;
-  };
-
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Value is required';
@@ -102,6 +96,7 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
     if (control.hasError('minLength')) return 'Value is too short';
     if (control.hasError('maxLength')) return 'Value is too long';
     if (control.hasError('passwordMatches')) return 'Passwords are not the same';
+    return null;
   }
 
   public getPositionString(position: Position): string {

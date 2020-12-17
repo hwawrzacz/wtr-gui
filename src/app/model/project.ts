@@ -7,6 +7,6 @@ export interface Project {
   description: string
   manager: SimpleUser;
   workers: string[];
-  creationDate: number; // timestamp
-  dutyDate: number; // timestamp
+  creationDate: string;
+  dutyDate: string;
 }
