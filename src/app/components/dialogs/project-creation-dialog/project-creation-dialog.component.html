@@ -7,18 +7,21 @@
       <input matInput formControlName="title" />
     </mat-form-field>
 
+    <app-user-search-select [onlyManagers]="true" [singleSelection]="true" [label]="'Manager'"
+      (selectionChange)="reassignManager($event)">
+    </app-user-search-select>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Duty date</mat-label>
+      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate">
+      <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
+      <mat-datepicker #dutyDate></mat-datepicker>
+    </mat-form-field>
+
     <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
     </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Manager</mat-label>
-      <input matInput formControlName="manager" />
-    </mat-form-field>
-
-    <app-user-search-select [onlyManagers]="true" [singleSelection]="true" (selectionChange)="reassignManager($event)">
-    </app-user-search-select>
   </form>
 </mat-dialog-content>
 

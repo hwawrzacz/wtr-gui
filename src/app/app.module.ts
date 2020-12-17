@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,15 +15,16 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonSearchBarComponent } from './components/common-search-bar/common-search-bar.component';
 import { CommonTableComponent } from './components/common-table/common-table.component';
+import { ProjectCreationDialogComponent } from './components/dialogs/project-creation-dialog/project-creation-dialog.component';
 import { UserCreationDialogComponent } from './components/dialogs/user-creation-dialog/user-creation-dialog.component';
 import { FilterSearchBarComponent } from './components/filter-search-bar/filter-search-bar.component';
 import { FullScreenErrorComponent } from './components/full-screen-error/full-screen-error.component';
@@ -33,7 +36,6 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
 import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
 import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { UserSearchSelectComponent } from './components/user-search-select/user-search-select.component';
 import { WorkLoggerComponent } from './components/work-logger/work-logger.component';
 import { WorkLogsListComponent } from './components/work-logs-list/work-logs-list.component';
@@ -46,12 +48,9 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
+import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
-import { ProjectCreationDialogComponent } from './components/dialogs/project-creation-dialog/project-creation-dialog.component';
-
-
-
 
 @NgModule({
   declarations: [
@@ -112,6 +111,8 @@ import { ProjectCreationDialogComponent } from './components/dialogs/project-cre
     MatDialogModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

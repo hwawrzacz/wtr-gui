@@ -37,9 +37,9 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
       title: [null, [Validators.required]],
-      description: [null, [Validators.required]],
       manager: [null, [Validators.required]],
       dutyDate: [null, [Validators.required]],
+      description: [null, [Validators.required]],
     })
   }
 
@@ -47,11 +47,11 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
     return {
       id: null,
       stringId: null,
-      title: null,
-      description: null,
-      manager: null,
+      title: this._form.get('title').value,
+      description: this._form.get('description').value,
+      manager: this._form.get('manager').value,
       creationDate: null,
-      dutyDate: null,
+      dutyDate: this._form.get('dutyDate').value,
       workers: [],
     } as Project
   }
