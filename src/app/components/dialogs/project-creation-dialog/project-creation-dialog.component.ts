@@ -23,6 +23,10 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
     return !!this._manager;
   }
 
+  get minDate(): Date {
+    return new Date();
+  }
+
   constructor(
     dialogRef: MatDialogRef<ProjectCreationDialogComponent>,
     restService: ProjectRestService,
@@ -52,6 +56,7 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
       title: this._form.get('title').value,
       description: this._form.get('description').value,
       manager: this._form.get('manager').value,
+      idManager: this._form.get('manager').value._id,
       creationDate: null,
       dutyDate: this.parseDateToISOFormat(this._form.get('dutyDate').value),
       workers: [],

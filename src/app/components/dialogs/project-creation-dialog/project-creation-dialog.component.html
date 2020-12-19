@@ -14,7 +14,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Duty date</mat-label>
-      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly>
+      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
       <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
       <mat-datepicker #dutyDate [disabled]="false"></mat-datepicker>
       <mat-error *ngIf="hasError('dutyDate')">{{ getErrorMessage('dutyDate') }}</mat-error>
