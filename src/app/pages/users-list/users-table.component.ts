@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { PositionStringifier } from 'src/app/helpers/parsers';
+import { CommonItem } from 'src/app/model/common-item';
 import { Position } from 'src/app/model/enums/position';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -13,12 +14,8 @@ import { UserRestService } from 'src/app/services/user-rest.service';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
-  constructor(
-    navigator: NavigatorService<SimpleUser>,
-    restService: UserRestService,
-    snackBar: MatSnackBar,
-  ) {
-    super(navigator, restService, snackBar);
+  constructor(navigator: NavigatorService<SimpleUser>) {
+    super(navigator);
 
     this._detailsUrl = 'users'
 
@@ -54,24 +51,24 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
     this._actionsDefinitions = [
       {
         icon: 'pie_chart',
-        action: (id: string) => {
-          console.log(`statistics for ${id}`);
+        action: (item: CommonItem) => {
+          this.navigateToStatsWithData(item);
         },
         color: 'primary',
         tooltip: 'Show statistics'
       },
       {
         icon: 'edit',
-        action: (id: string) => {
-          console.log(`edit ${id}`);
+        action: (item: CommonItem) => {
+          this.navigateToDetailsWithData(item, true);
         },
         tooltip: 'Edit item'
       },
       {
         icon: 'delete',
-        action: (id: string) => {
-          this.delete(id);
-          console.log(`delete ${id}`);
+        action: (item: CommonItem) => {
+          this.delete(item._id);
+          console.log(`delete ${item._id}`);
         },
         color: 'warn',
         tooltip: 'Delete item'

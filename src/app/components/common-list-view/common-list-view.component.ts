@@ -3,9 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, OperatorFunction } from 'rxjs';
-import { catchError, take, tap } from 'rxjs/operators';
+import { catchError, map, take, tap } from 'rxjs/operators';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
+import { CommonResponse } from 'src/app/model/responses';
 import { CommonArrayResponse } from 'src/app/services/common-array-response';
 import { CommonArrayRestService } from 'src/app/services/common-array-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
@@ -164,17 +165,47 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     )
   }
 
-  onItemDeleted(id: string): void {
-    this._dataSource.refresh(this.dataSource.data.value.filter(item => item['_id'] !== id));
+  public onItemDeleted(id: string): void {
+    this.delete(id);
   }
+
+  private delete(itemId: string): void {
+    this._restService.delete(itemId).pipe(
+      map(res => ({ success: !!res, message: res } as CommonResponse<any>)),
+      tap((res: CommonResponse<any>) => this.handleDeleteResponse(res, itemId))
+    ).subscribe();
+  }
+
+  private handleDeleteResponse(res: CommonResponse<any>, itemId: string): void {
+    if (res.success) {
+      this.onDeleteSuccess(itemId);
+    } else {
+      this.openDeleteFailedSnackBar(res.message);
+    }
+  }
+
+  private onDeleteSuccess(itemId: string): void {
+    this._dataSource.refresh(this.dataSource.data.value.filter(item => item['_id'] !== itemId));
+    this.openDeleteSuccessSnackBar();
+  }
+
+  //#region Snackbar
+  private openDeleteSuccessSnackBar(): void {
+    this.openSnackBar('Item deleted');
+  }
+
+  private openDeleteFailedSnackBar(errorMessage: string): void {
+    this.openSnackBar(`Item was not deleted: ${errorMessage}`);
+  }
+  private openSnackBar(message: string): void {
+    this._snackBar.open(message, null, { duration: 2000 });
+  }
+
+  //#endregion
 
   //#region Helpers 
   private getAdditionSuccessMessage = (): string => {
     return `${(this.themeItemNameSingle[0].toUpperCase())}${this.themeItemNameSingle.substr(1, this.themeItemNameSingle.length - 1)} created`;
-  }
-
-  private openSnackBar(message: string): void {
-    this._snackBar.open(message, null, { duration: 2000 });
   }
 
   private getAdditionCancelledMessage = (): string => {

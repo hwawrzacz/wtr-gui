@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { map, tap } from 'rxjs/operators';
+import { CommonItem } from 'src/app/model/common-item';
 import { CommonResponse } from 'src/app/model/responses';
 import { CommonRestService } from 'src/app/services/common-rest.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -19,7 +20,7 @@ export interface ColumnDefinition {
 
 export interface ActionDefinition {
   icon: string;
-  action: (id: string) => void;
+  action: (item: CommonItem) => void;
   color?: string;
   tooltip?: string;
 }
@@ -87,8 +88,6 @@ export class CommonTableComponent<T> {
 
   constructor(
     private _navigator: NavigatorService<T>,
-    private _restService: CommonRestService<T>,
-    private _snackBar: MatSnackBar,
   ) {
     this._dataSource = new CommonDataSource<T>([]);
     this._itemDeletedEmitter = new EventEmitter<string>();
@@ -98,7 +97,7 @@ export class CommonTableComponent<T> {
     this._navigator.navigateToDetails(this._detailsUrl, itemId);
   }
 
-  public navigateToDetailsWithData(item: T, edit = false): void {
+  public navigateToDetailsWithData(item: CommonItem, edit = false): void {
     this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
   }
 
@@ -106,46 +105,15 @@ export class CommonTableComponent<T> {
     this._navigator.navigateToDetails(this._detailsUrl, itemId);
   }
 
-  public navigateToStatsWithData(item: T): void {
+  public navigateToStatsWithData(item: CommonItem): void {
     this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
   }
 
   protected delete(itemId: string): void {
-    this._restService.delete(itemId).pipe(
-      map(res => ({ success: !!res, message: res } as CommonResponse<any>)),
-      tap((res: CommonResponse<any>) => this.handleDeleteResponse(res, itemId))
-    ).subscribe();
-  }
-
-  private handleDeleteResponse(res: CommonResponse<any>, itemId: string): void {
-    if (res.success) {
-      this.onDeleteSuccess(itemId);
-    }
-    else (
-      this.openDeleteFailedSnackBar(res.message)
-    )
-  }
-
-  private onDeleteSuccess(itemId: string): void {
-    this.openDeleteSuccessSnackBar();
-    this.emitItemDeleted(itemId);
-  }
-
-  private emitItemDeleted(itemId: string): void {
     this._itemDeletedEmitter.emit(itemId);
   }
 
-  //#region Snackbar
-  private openDeleteSuccessSnackBar(): void {
-    this.openSnackBar('Item deleted');
+  public emitItemDeleted(itemId: string): void {
+    this._itemDeletedEmitter.emit(itemId);
   }
-
-  private openDeleteFailedSnackBar(errorMessage: string): void {
-    this.openSnackBar(`Item was not deleted: ${errorMessage}`);
-  }
-
-  private openSnackBar(message): void {
-    this._snackBar.open(message, 'Ok', { duration: 2000 });
-  }
-  //#endregion
 }

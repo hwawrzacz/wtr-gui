@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
+import { CommonItem } from 'src/app/model/common-item';
 import { Project } from 'src/app/model/project';
+import { User } from 'src/app/model/user';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ProjectRestService } from 'src/app/services/project-rest.service';
 
@@ -11,12 +13,8 @@ import { ProjectRestService } from 'src/app/services/project-rest.service';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class ProjectsTableComponent extends CommonTableComponent<Project> {
-  constructor(
-    navigator: NavigatorService<Project>,
-    restService: ProjectRestService,
-    snackBar: MatSnackBar,
-  ) {
-    super(navigator, restService, snackBar);
+  constructor(navigator: NavigatorService<Project>) {
+    super(navigator);
 
     this._detailsUrl = 'projects';
     this._columnsDefinitions = [
@@ -30,12 +28,12 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
         displayName: 'Title',
         propertyName: 'title',
       },
-      // {
-      //   defName: 'manager',
-      //   displayName: 'Manager',
-      //   propertyName: 'manager',
-      //   formatter: (user: User) => `${user.firstName} ${user.lastName}`,
-      // },
+      {
+        defName: 'manager',
+        displayName: 'Manager',
+        propertyName: 'manager',
+        formatter: (user: User) => `${user.firstName} ${user.lastName}`,
+      },
       // TODO: Handle workers
       // {
       //   defName: 'workers',
@@ -51,23 +49,23 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
     this._actionsDefinitions = [
       {
         icon: 'pie_chart',
-        action: (id: string) => {
-          console.log(`statistics for ${id}`);
+        action: (item: CommonItem) => {
+          this.navigateToStatsWithData(item);
         },
         color: 'primary',
         tooltip: 'Show statistics'
       },
       {
         icon: 'edit',
-        action: (id: string) => {
-          console.log(`edit ${id}`);
+        action: (item: CommonItem) => {
+          this.navigateToDetailsWithData(item, true);
         },
         tooltip: 'Edit item'
       },
       {
         icon: 'delete',
-        action: (id: string) => {
-          console.log(`delete ${id}`);
+        action: (item: CommonItem) => {
+          this.delete(item._id);
         },
         color: 'warn',
         tooltip: 'Delete item'
