@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, OperatorFunction } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, take, tap } from 'rxjs/operators';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { CommonArrayResponse } from 'src/app/services/common-array-response';
@@ -106,6 +106,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   private getDataFromApi(): void {
     this._restService.find(this._query, this._pagination)
       .pipe(
+        take(1),
         tap((result: CommonArrayResponse<T>) => {
           console.log(result.items);
           this._dataSource.refresh(result.items as any);
@@ -151,19 +152,23 @@ export abstract class CommonListViewComponent<T> implements OnInit {
    * after it is closed, which are showing certain messages  */
   public abstract openItemCreationDialog(): void;
 
-  //#region Helpers 
   protected handleAfterClosed(): OperatorFunction<any, unknown> {
     return (
       tap(res => {
         if (!!res) {
           this.openSnackBar(this.getAdditionSuccessMessage());
-          this.getDataFromApi();
+          this.loadData();
         }
         else this.openSnackBar(this.getAdditionCancelledMessage());
       })
     )
   }
 
+  onItemDeleted(id: string): void {
+    this._dataSource.refresh(this.dataSource.data.value.filter(item => item['_id'] !== id));
+  }
+
+  //#region Helpers 
   private getAdditionSuccessMessage = (): string => {
     return `${(this.themeItemNameSingle[0].toUpperCase())}${this.themeItemNameSingle.substr(1, this.themeItemNameSingle.length - 1)} created`;
   }

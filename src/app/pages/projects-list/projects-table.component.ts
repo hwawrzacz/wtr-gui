@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
-import { User } from 'src/app/model/user';
 import { Project } from 'src/app/model/project';
-import { ItemDetailsBrokerService, ProjectDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { ProjectRestService } from 'src/app/services/project-rest.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -12,8 +11,12 @@ import { NavigatorService } from 'src/app/services/navigator.service';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class ProjectsTableComponent extends CommonTableComponent<Project> {
-  constructor(navigator: NavigatorService<Project>, itemDetailsBroker: ProjectDetailsBrokerService) {
-    super(navigator, itemDetailsBroker);
+  constructor(
+    navigator: NavigatorService<Project>,
+    restService: ProjectRestService,
+    snackBar: MatSnackBar,
+  ) {
+    super(navigator, restService, snackBar);
 
     this._detailsUrl = 'projects';
     this._columnsDefinitions = [

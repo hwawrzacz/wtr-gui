@@ -11,16 +11,20 @@ export class NavigatorService<T> {
     return this.getActiveSectionFromUrl();
   }
 
-  constructor(private _router: Router, private _itemDetailsBroker: ItemDetailsBrokerService<T>) { }
+  constructor(
+    private _router: Router,
+    private _itemDetailsBroker: ItemDetailsBrokerService<T>,
+  ) { }
 
   //#region Navigation
   public navigateToDetails(baseUrl: string, itemId: string): void {
     this._router.navigate([baseUrl, itemId]);
   }
 
-  public navigateToDetailsWithData(baseUrl: string, itemId: string, item: T): void {
+  public navigateToDetailsWithData(baseUrl: string, item: T): void {
     this._itemDetailsBroker.item = item;
-    this._router.navigate([baseUrl, itemId]);
+    console.log(item);
+    this._router.navigate([baseUrl, item['_id']]);
   }
   //#endregion
 

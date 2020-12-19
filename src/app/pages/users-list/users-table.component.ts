@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { Position } from 'src/app/model/enums/position';
 import { SimpleUser } from 'src/app/model/simple-user';
-import { UserDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { UserRestService } from 'src/app/services/user-rest.service';
 
 @Component({
   selector: 'app-users-table',
@@ -12,10 +13,13 @@ import { NavigatorService } from 'src/app/services/navigator.service';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
-  constructor(navigator: NavigatorService<SimpleUser>, itemDetailsBroker: UserDetailsBrokerService) {
-    super(navigator, itemDetailsBroker);
+  constructor(
+    navigator: NavigatorService<SimpleUser>,
+    restService: UserRestService,
+    snackBar: MatSnackBar,
+  ) {
+    super(navigator, restService, snackBar);
 
-    // this._detailsUrl = 'users'
     this._detailsUrl = 'users'
 
     this._columnsDefinitions = [
@@ -42,7 +46,7 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
       {
         defName: 'position',
         displayName: 'Position',
-        propertyName: 'position',
+        propertyName: 'role',
         formatter: (value: Position) => PositionStringifier.getPositionString(value)
       },
     ];
@@ -66,6 +70,7 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
       {
         icon: 'delete',
         action: (id: string) => {
+          this.delete(id);
           console.log(`delete ${id}`);
         },
         color: 'warn',

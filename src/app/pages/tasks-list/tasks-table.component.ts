@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { StatusStringifier } from 'src/app/helpers/parsers';
 import { Status } from 'src/app/model/enums/status';
 import { Task } from 'src/app/model/task';
-import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-tasks-table',
@@ -13,8 +14,12 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 })
 export class TasksTableComponent extends CommonTableComponent<Task> {
 
-  constructor(navigator: NavigatorService<Task>, itemDetailsBroker: TaskDetailsBrokerService) {
-    super(navigator, itemDetailsBroker);
+  constructor(
+    navigator: NavigatorService<Task>,
+    restService: TaskService,
+    snackBar: MatSnackBar,
+  ) {
+    super(navigator, restService, snackBar);
 
     this._detailsUrl = 'tasks';
     this._columnsDefinitions = [
@@ -62,6 +67,7 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
       {
         icon: 'delete',
         action: (id: string) => {
+          this.delete(id);
           console.log(`delete ${id}`);
         },
         color: 'warn',

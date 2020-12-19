@@ -1,5 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { map, tap } from 'rxjs/operators';
+import { CommonResponse } from 'src/app/model/responses';
+import { CommonRestService } from 'src/app/services/common-rest.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
@@ -33,8 +36,10 @@ export class CommonTableComponent<T> {
   private _dataSource: CommonDataSource<T>;
   private _isLoading: boolean;
 
-  //#region Getters and setters
+  @Output('itemDeleted')
+  private _itemDeletedEmitter: EventEmitter<string>;
 
+  //#region Getters and setters
   get detailsUrl(): string {
     return this._detailsUrl;
   }
@@ -80,15 +85,67 @@ export class CommonTableComponent<T> {
   //#endregion
   //#endregion
 
-  constructor(private _navigator: NavigatorService<T>, private _itemDetailsBroker: ItemDetailsBrokerService<T>) {
+  constructor(
+    private _navigator: NavigatorService<T>,
+    private _restService: CommonRestService<T>,
+    private _snackBar: MatSnackBar,
+  ) {
     this._dataSource = new CommonDataSource<T>([]);
+    this._itemDeletedEmitter = new EventEmitter<string>();
   }
 
-  public navigateToDetails(itemId: string): void {
+  public navigateToDetails(itemId: string, edit = false): void {
     this._navigator.navigateToDetails(this._detailsUrl, itemId);
   }
 
-  public navigateToDetailsWithData(itemId: string, item: T): void {
-    this._navigator.navigateToDetailsWithData(this._detailsUrl, itemId, item);
+  public navigateToDetailsWithData(item: T, edit = false): void {
+    this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
   }
+
+  public navigateToStats(itemId: string): void {
+    this._navigator.navigateToDetails(this._detailsUrl, itemId);
+  }
+
+  public navigateToStatsWithData(item: T): void {
+    this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
+  }
+
+  protected delete(itemId: string): void {
+    this._restService.delete(itemId).pipe(
+      map(res => ({ success: !!res, message: res } as CommonResponse<any>)),
+      tap((res: CommonResponse<any>) => this.handleDeleteResponse(res, itemId))
+    ).subscribe();
+  }
+
+  private handleDeleteResponse(res: CommonResponse<any>, itemId: string): void {
+    if (res.success) {
+      this.onDeleteSuccess(itemId);
+    }
+    else (
+      this.openDeleteFailedSnackBar(res.message)
+    )
+  }
+
+  private onDeleteSuccess(itemId: string): void {
+    this.openDeleteSuccessSnackBar();
+    this.emitItemDeleted(itemId);
+  }
+
+  private emitItemDeleted(itemId: string): void {
+    this._itemDeletedEmitter.emit(itemId);
+  }
+
+  //#region Snackbar
+  private openDeleteSuccessSnackBar(): void {
+    this.openSnackBar('Item deleted');
+  }
+
+  private openDeleteFailedSnackBar(errorMessage: string): void {
+    this.openSnackBar(`Item was not deleted: ${errorMessage}`);
+  }
+
+  private openSnackBar(message): void {
+    this._snackBar.open(message, 'Ok', { duration: 2000 });
+  }
+  //#endregion
 }
