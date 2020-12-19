@@ -1,5 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { map, tap } from 'rxjs/operators';
+import { CommonItem } from 'src/app/model/common-item';
+import { CommonResponse } from 'src/app/model/responses';
+import { CommonRestService } from 'src/app/services/common-rest.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
@@ -16,7 +20,7 @@ export interface ColumnDefinition {
 
 export interface ActionDefinition {
   icon: string;
-  action: (id: string) => void;
+  action: (item: CommonItem) => void;
   color?: string;
   tooltip?: string;
 }
@@ -33,8 +37,10 @@ export class CommonTableComponent<T> {
   private _dataSource: CommonDataSource<T>;
   private _isLoading: boolean;
 
-  //#region Getters and setters
+  @Output('itemDeleted')
+  private _itemDeletedEmitter: EventEmitter<string>;
 
+  //#region Getters and setters
   get detailsUrl(): string {
     return this._detailsUrl;
   }
@@ -80,15 +86,34 @@ export class CommonTableComponent<T> {
   //#endregion
   //#endregion
 
-  constructor(private _navigator: NavigatorService<T>, private _itemDetailsBroker: ItemDetailsBrokerService<T>) {
+  constructor(
+    private _navigator: NavigatorService<T>,
+  ) {
     this._dataSource = new CommonDataSource<T>([]);
+    this._itemDeletedEmitter = new EventEmitter<string>();
   }
 
-  public navigateToDetails(itemId: string): void {
+  public navigateToDetails(itemId: string, edit = false): void {
     this._navigator.navigateToDetails(this._detailsUrl, itemId);
   }
 
-  public navigateToDetailsWithData(itemId: string, item: T): void {
-    this._navigator.navigateToDetailsWithData(this._detailsUrl, itemId, item);
+  public navigateToDetailsWithData(item: CommonItem, edit = false): void {
+    this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
+  }
+
+  public navigateToStats(itemId: string): void {
+    this._navigator.navigateToDetails(this._detailsUrl, itemId);
+  }
+
+  public navigateToStatsWithData(item: CommonItem): void {
+    this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
+  }
+
+  protected delete(itemId: string): void {
+    this._itemDeletedEmitter.emit(itemId);
+  }
+
+  public emitItemDeleted(itemId: string): void {
+    this._itemDeletedEmitter.emit(itemId);
   }
 }

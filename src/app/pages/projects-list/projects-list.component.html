@@ -1,6 +1,6 @@
 <header>
   <h1>{{ pageTitle }}</h1>
-  <button mat-stroked-button color="primary" (click)="openItemCreationDialog()">
+  <button mat-stroked-button color="primary" (click)="openItemCreationDialog() ">
     <mat-icon>add</mat-icon>
     <span>Create {{ themeItemNameSingle }}</span>
   </button>
@@ -8,4 +8,9 @@
 
 <app-common-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-common-search-bar>
 
-<app-projects-table [dataSource]="dataSource" [isLoading]="isLoading"></app-projects-table>
+<app-projects-table [dataSource]="dataSource" [isLoading]="isLoading" (itemDeleted)="onItemDeleted($event)">
+</app-projects-table>
+
+<mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+  (page)="onPaginationChange($event)">
+</mat-paginator>

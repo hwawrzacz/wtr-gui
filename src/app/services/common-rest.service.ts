@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { CreationResponse } from '../model/responses';
+import { CommonResponse, CreationResponse } from '../model/responses';
 import { Pagination } from '../model/pagination';
 import { Query } from '../model/query';
 import { CommonArrayResponse } from './common-array-response';
@@ -80,5 +80,9 @@ export class CommonRestService<T> {
   public patch<T>(userId: string, name: string, value: T): Observable<any> {
     const url = `${environment.apiUrl}/${this._url}/${userId}`;
     return this._http.patch(url, { [name]: value });
+  }
+
+  public delete(userId: string): Observable<CommonResponse<any>> {
+    return this.patch(userId, 'active', false);
   }
 }

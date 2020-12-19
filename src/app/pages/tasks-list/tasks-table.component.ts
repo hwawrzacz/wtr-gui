@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { StatusStringifier } from 'src/app/helpers/parsers';
+import { CommonItem } from 'src/app/model/common-item';
 import { Status } from 'src/app/model/enums/status';
 import { Task } from 'src/app/model/task';
-import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-tasks-table',
@@ -13,8 +15,8 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 })
 export class TasksTableComponent extends CommonTableComponent<Task> {
 
-  constructor(navigator: NavigatorService<Task>, itemDetailsBroker: TaskDetailsBrokerService) {
-    super(navigator, itemDetailsBroker);
+  constructor(navigator: NavigatorService<Task>) {
+    super(navigator);
 
     this._detailsUrl = 'tasks';
     this._columnsDefinitions = [
@@ -46,23 +48,24 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
     this._actionsDefinitions = [
       {
         icon: 'pie_chart',
-        action: (id: string) => {
-          console.log(`statistics for ${id}`);
+        action: (item: CommonItem) => {
+          this.navigateToStatsWithData(item);
         },
         color: 'primary',
         tooltip: 'Show statistics'
       },
       {
         icon: 'edit',
-        action: (id: string) => {
-          console.log(`edit ${id}`);
+        action: (item: CommonItem) => {
+          this.navigateToDetailsWithData(item, true);
         },
         tooltip: 'Edit item'
       },
       {
         icon: 'delete',
-        action: (id: string) => {
-          console.log(`delete ${id}`);
+        action: (item: CommonItem) => {
+          this.delete(item._id);
+          console.log(`delete ${item._id}`);
         },
         color: 'warn',
         tooltip: 'Delete item'

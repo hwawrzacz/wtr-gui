@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonItem } from '../model/common-item';
 import { Section } from '../model/enums/section';
 import { ItemDetailsBrokerService } from './item-details-broker.service';
 
@@ -11,16 +12,20 @@ export class NavigatorService<T> {
     return this.getActiveSectionFromUrl();
   }
 
-  constructor(private _router: Router, private _itemDetailsBroker: ItemDetailsBrokerService<T>) { }
+  constructor(
+    private _router: Router,
+    private _itemDetailsBroker: ItemDetailsBrokerService<CommonItem>,
+  ) { }
 
   //#region Navigation
   public navigateToDetails(baseUrl: string, itemId: string): void {
     this._router.navigate([baseUrl, itemId]);
   }
 
-  public navigateToDetailsWithData(baseUrl: string, itemId: string, item: T): void {
+  public navigateToDetailsWithData(baseUrl: string, item: CommonItem): void {
     this._itemDetailsBroker.item = item;
-    this._router.navigate([baseUrl, itemId]);
+    console.log(item);
+    this._router.navigate([baseUrl, item['_id']]);
   }
   //#endregion
 

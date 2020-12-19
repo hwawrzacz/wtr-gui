@@ -4,7 +4,7 @@
   <ng-container *ngFor="let column of columnsDefinitions" matColumnDef="{{ column.defName }}">
     <th mat-header-cell *matHeaderCellDef>{{ column.displayName }}</th>
     <!-- TODO: Add better id to pass verification -->
-    <td mat-cell *matCellDef="let item" (click)="navigateToDetailsWithData(item._id || item.id, item)">
+    <td mat-cell *matCellDef="let item" (click)="navigateToDetailsWithData(item)">
       {{ column.formatter ? column.formatter(item[column.propertyName]) : item[column.propertyName] }}
     </td>
   </ng-container>
@@ -13,7 +13,7 @@
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let item">
       <button mat-icon-button *ngFor="let action of actionsDefinitions" [color]="action.color || 'primary'"
-        (click)="action.action(item.id)">
+        (click)="action.action(item)">
         <mat-icon>{{ action.icon }}</mat-icon>
       </button>
     </td>

@@ -8,4 +8,9 @@
 
 <app-filter-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-filter-search-bar>
 
-<app-tasks-table [dataSource]="dataSource" [isLoading]="isLoading"></app-tasks-table>
+<app-tasks-table [dataSource]="dataSource" [isLoading]="isLoading" (itemDeleted)="onItemDeleted($event)">
+</app-tasks-table>
+
+<mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+  (page)="onPaginationChange($event)">
+</mat-paginator>
