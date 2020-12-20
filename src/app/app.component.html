@@ -2,7 +2,7 @@
 </app-header>
 <mat-sidenav-container>
   <mat-sidenav [mode]="sidenavMode">
-    <app-sidenav></app-sidenav>
+    <app-sidenav (navigationChanged)="closeSidenav()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>

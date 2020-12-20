@@ -8,3 +8,7 @@ mat-icon {
   background-color: $color-primary;
   color: $text-white;
 }
+
+mat-list-item {
+  cursor: pointer;
+}
