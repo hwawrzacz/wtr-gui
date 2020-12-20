@@ -9,6 +9,7 @@ import { SimpleUser } from 'src/app/model/simple-user';
 import { UsersListService } from 'src/app/services/users-list.service';
 import { Pagination } from 'src/app/model/pagination';
 import { UserPipe } from 'src/app/pipes/user.pipe';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user-search-select',
@@ -19,6 +20,7 @@ export class UserSearchSelectComponent implements OnInit {
   private _loadingCounter: number;
   private _singleSelection: boolean;
   private _selectedUser: User;
+  private _formControl: FormControl;
   private _users: User[];
   private _filteredUsers: User[];
   private _onlyManagers: boolean;
@@ -47,6 +49,14 @@ export class UserSearchSelectComponent implements OnInit {
   }
   get label(): string {
     return this._label;
+  }
+
+  @Input('formControl')
+  set formControl(value: FormControl) {
+    this._formControl = value;
+  }
+  get formControl(): FormControl {
+    return this._formControl;
   }
 
   @Input('errorMessage')
@@ -115,6 +125,7 @@ export class UserSearchSelectComponent implements OnInit {
       this.inputItem.nativeElement.focus();
     }
   }
+  //#endregion
 
   public resetInput(): void {
     if (this.singleSelection) {
@@ -122,10 +133,20 @@ export class UserSearchSelectComponent implements OnInit {
       this.inputItem.nativeElement.value = userPipe.transform(this._selectedUser);
     }
   }
-  //#endregion
+
+  public clearSelection(): void {
+    this._selectedUser = null;
+    this.selectionChangeEmitter.emit(this._selectedUser);
+  }
 
   private filterData(query: string): void {
     this._filteredUsers = this._users.filter(user => `${user.login} ${user.firstName} ${user.lastName}`.includes(query));
+  }
+
+  public getErrorMessage(): string {
+    if (this.formControl.hasError('required')) return 'Value is required';
+    else if (!this.formControl.valid) return 'Something is not yes';
+    return null;
   }
 
   //#region Helpers

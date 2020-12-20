@@ -8,13 +8,13 @@
       <mat-error *ngIf="hasError('title')">{{ getErrorMessage('title') }}</mat-error>
     </mat-form-field>
 
-    <app-user-search-select [onlyManagers]="true" [singleSelection]="true" [label]="'Manager'"
-      [errorMessage]="getErrorMessage('manager')" (selectionChange)="reassignManager($event)">
-    </app-user-search-select>
+    <app-users-autocomplete [onlyManagers]="true" [singleSelection]="true" [label]="'Manager'"
+      [formControl]="managerFormControl" (selectionChange)="reassignManager($event)">
+    </app-users-autocomplete>
 
     <mat-form-field appearance="outline">
       <mat-label>Duty date</mat-label>
-      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly>
+      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
       <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
       <mat-datepicker #dutyDate [disabled]="false"></mat-datepicker>
       <mat-error *ngIf="hasError('dutyDate')">{{ getErrorMessage('dutyDate') }}</mat-error>

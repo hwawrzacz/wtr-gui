@@ -1,8 +1,5 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { ControlContainer, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDateFormats } from '@angular/material/core';
-import { MatDatepicker } from '@angular/material/datepicker';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Project } from 'src/app/model/project';
@@ -14,13 +11,21 @@ import { CommonCreationDialogComponent } from '../common-creation-dialog/common-
 @Component({
   selector: 'app-project-creation-dialog',
   templateUrl: './project-creation-dialog.component.html',
-  styleUrls: ['./project-creation-dialog.component.scss']
+  styleUrls: ['../common-creation-dialog/common-creation-dialog.component.scss', './project-creation-dialog.component.scss']
 })
 export class ProjectCreationDialogComponent extends CommonCreationDialogComponent<Project> implements OnInit {
   private _manager: SimpleUser | User;
 
   get hasManager(): boolean {
     return !!this._manager;
+  }
+
+  get minDate(): Date {
+    return new Date();
+  }
+
+  get managerFormControl(): AbstractControl {
+    return this._form.get('manager');
   }
 
   constructor(
@@ -52,6 +57,7 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
       title: this._form.get('title').value,
       description: this._form.get('description').value,
       manager: this._form.get('manager').value,
+      idManager: this._form.get('manager').value._id,
       creationDate: null,
       dutyDate: this.parseDateToISOFormat(this._form.get('dutyDate').value),
       workers: [],

@@ -14,7 +14,7 @@ import { CommonCreationDialogComponent } from '../common-creation-dialog/common-
 @Component({
   selector: 'app-user-creation-dialog',
   templateUrl: './user-creation-dialog.component.html',
-  styleUrls: ['./user-creation-dialog.component.scss']
+  styleUrls: ['../common-creation-dialog/common-creation-dialog.component.scss', './user-creation-dialog.component.scss']
 })
 export class UserCreationDialogComponent extends CommonCreationDialogComponent<User> implements OnInit {
   private _faceImageUrl: string;

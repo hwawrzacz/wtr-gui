@@ -6,6 +6,7 @@ export interface Project {
   title: string;
   description: string
   manager: SimpleUser;
+  idManager: string;
   workers: string[];
   creationDate: string;
   dutyDate: string;

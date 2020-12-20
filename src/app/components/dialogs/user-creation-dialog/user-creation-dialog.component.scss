@@ -44,22 +44,3 @@
 mat-divider {
   margin: $spacing-small auto;
 }
-
-mat-form-field {
-  width: 100%;
-}
-
-::ng-deep {
-  .mat-raised-button {  
-    .mat-button-wrapper {  
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: center;
-      justify-content: center;
-      
-      mat-spinner {
-        margin-right: $icon-margin;
-      }
-    }
-  }  
-}
