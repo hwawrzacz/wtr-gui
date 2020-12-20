@@ -10,7 +10,7 @@ export class AppComponent {
 
   //#region Fields definitions
   private _title = 'Somecompany';
-  private _sidenavMode = 'side';
+  private _sidenavMode = 'push';
 
   @ViewChild(MatSidenav)
   private _sidenav: MatSidenav;
@@ -32,7 +32,11 @@ export class AppComponent {
   }
   //#endregion
 
-  toggleSidenav(): void {
+  public toggleSidenav(): void {
     this._sidenav.toggle();
+  }
+
+  public closeSidenav(): void {
+    this._sidenav.close();
   }
 }

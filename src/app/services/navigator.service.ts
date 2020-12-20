@@ -18,6 +18,10 @@ export class NavigatorService<T> {
   ) { }
 
   //#region Navigation
+  public navigateToMainSection(path: string): void {
+    this._router.navigate([`/${path}`]);
+  }
+
   public navigateToDetails(baseUrl: string, itemId: string): void {
     this._router.navigate([baseUrl, itemId]);
   }
