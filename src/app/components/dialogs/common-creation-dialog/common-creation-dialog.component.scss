@@ -1,0 +1,22 @@
+@import '../../../../variables';
+
+// Full width inputs
+mat-form-field {
+  width: 100%;
+}
+
+// Button spinner
+::ng-deep {
+  .mat-raised-button {  
+    .mat-button-wrapper {  
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      
+      mat-spinner {
+        margin-right: $icon-margin;
+      }
+    }
+  }  
+}
