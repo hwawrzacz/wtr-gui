@@ -115,6 +115,7 @@ export class UserSearchSelectComponent implements OnInit {
       this.inputItem.nativeElement.focus();
     }
   }
+  //#endregion
 
   public resetInput(): void {
     if (this.singleSelection) {
@@ -122,7 +123,11 @@ export class UserSearchSelectComponent implements OnInit {
       this.inputItem.nativeElement.value = userPipe.transform(this._selectedUser);
     }
   }
-  //#endregion
+
+  public clearSelection(): void {
+    this._selectedUser = null;
+    this.selectionChangeEmitter.emit(this._selectedUser);
+  }
 
   private filterData(query: string): void {
     this._filteredUsers = this._users.filter(user => `${user.login} ${user.firstName} ${user.lastName}`.includes(query));

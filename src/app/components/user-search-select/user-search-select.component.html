@@ -2,6 +2,9 @@
   <mat-label *ngIf="!!label">{{ label }}</mat-label>
   <input #input matInput type="text" [matAutocomplete]="auto" [value]="initialValue | user" (keyup)="onKeyUp($event)"
     (blur)="resetInput()" placeholder="{{ label }}" />
+  <button mat-icon-button matSuffix (click)="clearSelection()">
+    <mat-icon>close</mat-icon>
+  </button>
   <mat-error *ngIf='!!error'>{{ error }}</mat-error>
 </mat-form-field>
 
