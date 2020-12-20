@@ -9,7 +9,8 @@
     </mat-form-field>
 
     <app-user-search-select [onlyManagers]="true" [singleSelection]="true" [label]="'Manager'"
-      [errorMessage]="getErrorMessage('manager')" (selectionChange)="reassignManager($event)">
+      [formControl]="form.get('manager')" [errorMessage]="getErrorMessage('manager')"
+      (selectionChange)="reassignManager($event)">
     </app-user-search-select>
 
     <mat-form-field appearance="outline">

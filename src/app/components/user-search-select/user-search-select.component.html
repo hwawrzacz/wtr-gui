@@ -1,11 +1,11 @@
 <mat-form-field appearance="outline">
   <mat-label *ngIf="!!label">{{ label }}</mat-label>
-  <input #input matInput type="text" [matAutocomplete]="auto" [value]="initialValue | user" (keyup)="onKeyUp($event)"
-    (blur)="resetInput()" placeholder="{{ label }}" />
+  <input #input matInput type="text" [formControl]="formControl" [matAutocomplete]="auto" [value]="initialValue | user"
+    (keyup)="onKeyUp($event)" (blur)="resetInput()" placeholder="{{ label }}" />
   <button mat-icon-button matSuffix (click)="clearSelection()">
     <mat-icon>close</mat-icon>
   </button>
-  <mat-error *ngIf='!!error'>{{ error }}</mat-error>
+  <mat-error>{{ getErrorMessage() }}</mat-error>
 </mat-form-field>
 
 <mat-autocomplete #auto="matAutocomplete" [displayWith]="stringifyUser">
