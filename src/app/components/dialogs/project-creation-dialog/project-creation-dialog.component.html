@@ -8,10 +8,9 @@
       <mat-error *ngIf="hasError('title')">{{ getErrorMessage('title') }}</mat-error>
     </mat-form-field>
 
-    <app-user-search-select [onlyManagers]="true" [singleSelection]="true" [label]="'Manager'"
-      [formControl]="form.get('manager')" [errorMessage]="getErrorMessage('manager')"
-      (selectionChange)="reassignManager($event)">
-    </app-user-search-select>
+    <app-users-autocomplete [onlyManagers]="true" [singleSelection]="true" [label]="'Manager'"
+      [formControl]="managerFormControl" (selectionChange)="reassignManager($event)">
+    </app-users-autocomplete>
 
     <mat-form-field appearance="outline">
       <mat-label>Duty date</mat-label>

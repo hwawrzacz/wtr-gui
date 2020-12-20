@@ -52,6 +52,7 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { UserPipe } from './pipes/user.pipe';
+import { UsersAutocompleteComponent } from './components/users-autocomplete/users-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { UserPipe } from './pipes/user.pipe';
     UserCreationDialogComponent,
     ProjectCreationDialogComponent,
     UserPipe,
+    UsersAutocompleteComponent,
   ],
   imports: [
     BrowserModule,

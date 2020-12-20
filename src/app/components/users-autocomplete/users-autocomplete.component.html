@@ -1,0 +1,14 @@
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="stringifyUser">
+  <mat-option *ngIf="isLoading">
+    <div class="loader">
+      <mat-spinner [diameter]="32"></mat-spinner>
+    </div>
+  </mat-option>
+
+  <mat-option *ngFor="let user of filteredUsers" [value]="user" (click)="onSelectionChange(user)">
+    <span>{{ user | user }}</span>
+    <button mat-icon-button *ngIf="!singleSelection">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-option>
+</mat-autocomplete>

@@ -1,6 +1,6 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { ControlContainer, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, ControlContainer, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDateFormats } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -25,6 +25,10 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
 
   get minDate(): Date {
     return new Date();
+  }
+
+  get managerFormControl(): AbstractControl {
+    return this._form.get('manager');
   }
 
   constructor(

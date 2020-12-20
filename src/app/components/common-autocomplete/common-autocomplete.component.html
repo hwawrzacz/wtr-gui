@@ -1,0 +1,24 @@
+<mat-form-field appearance="outline">
+  <mat-label *ngIf="!!label">{{ label }}</mat-label>
+  <input #input matInput type="text" [formControl]="formControl" [matAutocomplete]="auto"
+    [value]="transformItem(initialValue)" (keyup)="onKeyUp($event)" (blur)="resetInput()" placeholder="{{ label }}" />
+  <button mat-icon-button matSuffix (click)="clearSelection()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-error>{{ getErrorMessage() }}</mat-error>
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="transformItem">
+  <mat-option *ngIf="isLoading">
+    <div class="loader">
+      <mat-spinner [diameter]="32"></mat-spinner>
+    </div>
+  </mat-option>
+
+  <mat-option *ngFor="let item of filteredItems" [value]="item" (click)="onSelectionChange(item)">
+    <span>{{ transformItem(item) }}</span>
+    <button mat-icon-button *ngIf="!singleSelection">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-option>
+</mat-autocomplete>
