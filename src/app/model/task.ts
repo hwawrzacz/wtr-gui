@@ -3,7 +3,7 @@ import { Status } from './enums/status';
 import { SimpleUser } from './simple-user';
 
 export interface Task {
-  id: string;
+  _id: string;
   stringId: string;
   projectStringId: string
   title: string;
@@ -11,7 +11,7 @@ export interface Task {
   status: Status;
   priority: Priority;
   workers: string[];
-  projectId: number;
+  idProject: number;
   reporter: SimpleUser;
   creationDate: string;
   dutyDate: string;

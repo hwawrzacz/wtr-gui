@@ -105,7 +105,7 @@ export const mockProjects: CommonArrayResponse<Project> = {
 export const mockTasks: CommonArrayResponse<Task> = {
   items: [
     {
-      id: '1',
+      _id: '1',
       stringId: 'PROJN_T1',
       projectStringId: 'PROJ_N',
       title: 'Zadanie 1',
@@ -113,7 +113,7 @@ export const mockTasks: CommonArrayResponse<Task> = {
       status: Status.IN_PROGRESS,
       priority: Priority.HIGH,
       workers: ['1', '2', '3', '4'],
-      projectId: 1,
+      idProject: 1,
       reporter: {
         _id: '1',
         login: 'jowick',
@@ -127,7 +127,7 @@ export const mockTasks: CommonArrayResponse<Task> = {
       dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
-      id: '2',
+      _id: '2',
       stringId: 'PROJN_T1',
       projectStringId: 'PROJ_N',
       title: 'Zadanie 2',
@@ -135,7 +135,7 @@ export const mockTasks: CommonArrayResponse<Task> = {
       status: Status.NEW,
       priority: Priority.MEDIUM,
       workers: ['1', '2', '3', '4'],
-      projectId: 1,
+      idProject: 1,
       reporter: {
         _id: '2',
         login: 'stespie',
