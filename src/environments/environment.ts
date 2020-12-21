@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://wtr-api.herokuapp.com/',
+  apiUrl: '/wtr-api',
 };
 
 /*
