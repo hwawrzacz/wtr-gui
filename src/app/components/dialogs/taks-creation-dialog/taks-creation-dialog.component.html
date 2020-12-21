@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Create task</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+      <mat-error *ngIf="hasError('title')">{{ getErrorMessage('title') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Duty date</mat-label>
+      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
+      <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
+      <mat-datepicker #dutyDate [disabled]="false"></mat-datepicker>
+      <mat-error *ngIf="hasError('dutyDate')">{{ getErrorMessage('dutyDate') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
+      <mat-error *ngIf="hasError('description')">{{ getErrorMessage('description') }}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [disabled]="!form.valid || isLoading" (click)="onSave()">
+    <mat-spinner [diameter]="20" *ngIf="isLoading"></mat-spinner>
+    <span>Create</span>
+  </button>
+  <button mat-button [disabled]="isLoading" (click)="closeDialog()">Cancel</button>
+</mat-dialog-actions>
