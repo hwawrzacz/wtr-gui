@@ -54,6 +54,7 @@ import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { UserPipe } from './pipes/user.pipe';
 import { UsersAutocompleteComponent } from './components/users-autocomplete/users-autocomplete.component';
 import { TaksCreationDialogComponent } from './components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
+import { ProjectAutocompleteComponent } from './components/project-autocomplete/project-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { TaksCreationDialogComponent } from './components/dialogs/taks-creation-
     UserPipe,
     UsersAutocompleteComponent,
     TaksCreationDialogComponent,
+    ProjectAutocompleteComponent,
   ],
   imports: [
     BrowserModule,
