@@ -97,7 +97,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
       this._workers.push(worker);
       this._initialItem.workers.push(worker._id);
     } else {
-      this._snackBar.open('Worker is already added');
+      this._snackBar.open('Worker is already added', null, { duration: 2000 });
     }
   }
 

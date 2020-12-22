@@ -74,7 +74,7 @@ export class WorkersPanelComponent implements OnInit {
       this._selectedWorkers.push(worker);
       this._selectedWorkersIds.push(worker._id);
     } else {
-      this._snackBar.open('Worker is already added');
+      this._snackBar.open('Worker is already added', null, { duration: 2000 });
     }
   }
 
