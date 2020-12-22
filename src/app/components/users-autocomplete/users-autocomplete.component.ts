@@ -38,8 +38,8 @@ export class UsersAutocompleteComponent extends CommonAutocompleteComponent<User
     return { searchString: '', filters: this._onlyManagers ? [filter] : [] } as Query;
   }
 
-  public filterData(query: string): void {
-    this._filteredItems = this._items.filter(user => `${user.login} ${user.firstName} ${user.lastName}`.includes(query));
+  public filterData(query: string): User[] {
+    return this._items.filter(user => `${user.login} ${user.firstName} ${user.lastName}`.toLowerCase().includes(query.toLowerCase()));
   }
 
   //#region Helpers

@@ -96,7 +96,7 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
   //#region On* functions
   public onKeyUp(event: any): void {
     const searchString = event.target.value;
-    this.filterData(searchString);
+    this._filteredItems = this.filterData(searchString);
   }
 
   public onSelectionChange(item: T): void {
@@ -110,8 +110,8 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
   }
   //#endregion
 
-  /** Apply own rules for filtering data */
-  public abstract filterData(query: string): void;
+  /** Apply own filters on `this._items` field */
+  public abstract filterData(query: string): T[];
 
   //#region  Helpers
   /** Apply 'to string' transformation in order to correctly display items */
