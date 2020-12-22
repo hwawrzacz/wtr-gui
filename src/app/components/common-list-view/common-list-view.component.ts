@@ -35,6 +35,8 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   // Boolean
   protected _loadingCounter: number;
+  // TODO: Handle error in user-friendly way
+  protected _error: boolean;
 
   //#region Getters and setters
   //#region Labels
@@ -75,6 +77,10 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   get isLoading(): boolean {
     return this._loadingCounter > 0;
   }
+
+  get hasError(): boolean {
+    return this._error;
+  }
   //#endregion
   //#endregion
 
@@ -95,7 +101,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   protected loadData() {
-    this._loadingCounter++;
+    this._error = false;
     try {
       this.getDataFromApi();
     } catch (e) {
@@ -104,17 +110,19 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   private getDataFromApi(): void {
+    this._loadingCounter++;
     this._restService.find(this._query, this._pagination)
       .pipe(
         take(1),
         tap((result: CommonArrayResponse<T>) => {
+          this._loadingCounter--;
           this._dataSource.refresh(result.items as any);
           this._totalResults = result.totalResults
           this._pageSize = result.limit;
-          this._loadingCounter--;
         }),
         // TODO (HW): Handle error properly
         catchError((e) => {
+          this._error = true;
           this.openSnackBar(`Couldn't load items from API. Mock data loaded.`);
           this.getMockData()
           return of()
@@ -123,11 +131,13 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   private getMockData(): void {
+    this._loadingCounter++;
     this._restService.find(this._query, this._pagination)
       .pipe(
+        take(1),
         tap((result) => {
-          this._dataSource.refresh(result);
           this._loadingCounter--;
+          this._dataSource.refresh(result);
         }),
         // TODO (HW): Handle error properly
         catchError(() => of(console.error(`Couldn't load data.`)))
