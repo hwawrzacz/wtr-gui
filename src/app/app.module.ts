@@ -53,6 +53,10 @@ import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { UserPipe } from './pipes/user.pipe';
 import { UsersAutocompleteComponent } from './components/users-autocomplete/users-autocomplete.component';
+import { TaksCreationDialogComponent } from './components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
+import { ProjectAutocompleteComponent } from './components/project-autocomplete/project-autocomplete.component';
+import { WorkersPanelComponent } from './components/workers-panel/workers-panel.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -92,12 +96,16 @@ import { UsersAutocompleteComponent } from './components/users-autocomplete/user
     ProjectCreationDialogComponent,
     UserPipe,
     UsersAutocompleteComponent,
+    TaksCreationDialogComponent,
+    ProjectAutocompleteComponent,
+    WorkersPanelComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
+    ScrollingModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,

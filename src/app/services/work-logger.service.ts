@@ -48,7 +48,6 @@ export class WorkLoggerService {
       .pipe(
         take(1),
         tap((result: WorkLog[]) => {
-          console.log(result);
           this._loadingCounter--;
           if (result) {
             this._lastWorkLog = result[result.length - 1];
@@ -59,10 +58,7 @@ export class WorkLoggerService {
 
   //#region Operators
   public startWork(): void {
-    console.log('start work');
-
     this._loadingCounter++;
-    console.log(this.isLoading)
     this._restService.startWork().pipe(
       take(1),
       tap(() => {

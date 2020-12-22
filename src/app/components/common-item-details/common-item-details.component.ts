@@ -100,7 +100,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
         take(1),
         tap(item => {
           this._loadingCounter--;
-          console.log(item);
           if (!!item) {
             this._initialItem = item;
             this.reinitializeForm();
@@ -156,7 +155,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   public onSaveField(name: string) {
     const field = this._form.get(name);
     this._initialItem[name] = field.value;
-    console.log(this._initialItem[name]);
     this.patch(name, field.value);
   }
 

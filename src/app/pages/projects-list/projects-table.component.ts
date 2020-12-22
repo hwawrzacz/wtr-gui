@@ -31,7 +31,8 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
       {
         defName: 'manager',
         displayName: 'Manager',
-        propertyName: 'manager',
+        // TODO: Change to manager, when supported by backend
+        propertyName: 'idManager',
         formatter: (user: User) => `${user.firstName} ${user.lastName}`,
       },
       // TODO: Handle workers
@@ -40,7 +41,6 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
       //   displayName: 'People working on',
       //   propertyName: 'workers',
       //   formatter: (arr: number[]) => {
-      //     console.log(arr);
       //     return `${arr.length}`;
       //   }
       // },

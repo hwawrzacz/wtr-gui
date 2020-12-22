@@ -11,6 +11,7 @@ import { UsersListService as UsersListService } from 'src/app/services/users-lis
 import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { TaskService } from 'src/app/services/task.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task-details',
@@ -44,7 +45,8 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     itemBrokerService: TaskDetailsBrokerService,
     taskRestService: TaskService,
     formBuilder: FormBuilder,
-    private _userRestService: UsersListService
+    private _userRestService: UsersListService,
+    private _snackBar: MatSnackBar,
   ) {
     super(navigator, itemBrokerService, taskRestService, formBuilder);
 
@@ -95,8 +97,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
       this._workers.push(worker);
       this._initialItem.workers.push(worker._id);
     } else {
-      // TODO (HW): Add appropriate logger
-      console.log('This worker is already added');
+      this._snackBar.open('Worker is already added', null, { duration: 2000 });
     }
   }
 

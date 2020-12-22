@@ -66,13 +66,13 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
     return this._formControl;
   }
 
-  @Output('selectionChange') selectionChangeEmitter: EventEmitter<T>;
+  @Output('selectionChange') protected _selectionChangeEmitter: EventEmitter<T>;
   //#endregion
 
   constructor(private _restService: CommonArrayRestService<T>) {
     this._loadingCounter = 0;
     this._query = { searchString: '', filters: [] } as Query;
-    this.selectionChangeEmitter = new EventEmitter<T>()
+    this._selectionChangeEmitter = new EventEmitter<T>()
   }
 
   ngOnInit(): void {
@@ -96,12 +96,12 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
   //#region On* functions
   public onKeyUp(event: any): void {
     const searchString = event.target.value;
-    this.filterData(searchString);
+    this._filteredItems = this.filterData(searchString);
   }
 
   public onSelectionChange(item: T): void {
     this._selectedItem = item;
-    this.selectionChangeEmitter.emit(this._selectedItem);
+    this._selectionChangeEmitter.emit(this._selectedItem);
 
     if (!this._singleSelection) {
       this.inputItem.nativeElement.blur();
@@ -110,8 +110,8 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
   }
   //#endregion
 
-  /** Apply own rules for filtering data */
-  public abstract filterData(query: string): void;
+  /** Apply own filters on `this._items` field */
+  public abstract filterData(query: string): T[];
 
   //#region  Helpers
   /** Apply 'to string' transformation in order to correctly display items */
@@ -125,12 +125,14 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
 
   public clearSelection(): void {
     this._selectedItem = null;
-    this.selectionChangeEmitter.emit(this._selectedItem);
+    this._selectionChangeEmitter.emit(this._selectedItem);
   }
 
   public getErrorMessage(): string {
-    if (this.formControl.hasError('required')) return 'Value is required';
-    else if (!this.formControl.valid) return 'Something is not yes';
+    if (!!this.formControl) {
+      if (this.formControl.hasError('required')) return 'Value is required';
+      else if (!this.formControl.valid) return 'Something is not yes';
+    }
     return null;
   }
   //#endregion

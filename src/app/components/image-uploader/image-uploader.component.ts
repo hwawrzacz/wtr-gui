@@ -45,6 +45,5 @@ export class ImageUploaderComponent {
 
   private emitImageChange(value: string): void {
     this._imageChangeEmitter.emit(value);
-    console.log(`Emitted: ${value.substr(0, 100)}`);
   }
 }

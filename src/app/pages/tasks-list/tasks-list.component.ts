@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
+import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
 import { Task } from 'src/app/model/task';
 import { TasksListService } from 'src/app/services/tasks-list.service';
 
@@ -24,6 +25,9 @@ export class TasksListComponent extends CommonListViewComponent<Task> {
   }
 
   public openItemCreationDialog(): void {
-    console.log('Project creation dialog will be added soon');
+    this._dialogService.open(TaksCreationDialogComponent)
+      .afterClosed()
+      .pipe(this.handleAfterClosed())
+      .subscribe()
   }
 }
