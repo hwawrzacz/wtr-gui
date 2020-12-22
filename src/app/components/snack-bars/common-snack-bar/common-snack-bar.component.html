@@ -1,0 +1,8 @@
+<div class="container" [ngClass]="snackClass">
+  <mat-icon>{{ icon }}</mat-icon>
+  <span> {{ message }} </span>
+  <button mat-icon-button *ngIf="!action" (click)="closeSnackBar()">
+    <mat-icon> {{ actionIcon || 'close' }} </mat-icon>
+  </button>
+  <button mat-button *ngIf="action" (click)="closeSnackBar()">{{ action }}</button>
+</div>

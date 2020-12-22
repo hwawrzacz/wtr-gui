@@ -57,6 +57,11 @@ import { TaksCreationDialogComponent } from './components/dialogs/taks-creation-
 import { ProjectAutocompleteComponent } from './components/project-autocomplete/project-autocomplete.component';
 import { WorkersPanelComponent } from './components/workers-panel/workers-panel.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { SuccessSnackBarComponent } from './components/snack-bars/success-snack-bar/success-snack-bar.component';
+import { ErrorSnackBarComponent } from './components/snack-bars/error-snack-bar/error-snack-bar.component';
+import { InfoSnackBarComponent } from './components/snack-bars/info-snack-bar/info-snack-bar.component';
+import { CommonSnackBarComponent } from './components/snack-bars/common-snack-bar/common-snack-bar.component';
+import { WarningSnackBarComponent } from './components/snack-bars/warning-snack-bar/warning-snack-bar.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +104,11 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     TaksCreationDialogComponent,
     ProjectAutocompleteComponent,
     WorkersPanelComponent,
+    SuccessSnackBarComponent,
+    ErrorSnackBarComponent,
+    InfoSnackBarComponent,
+    CommonSnackBarComponent,
+    WarningSnackBarComponent,
   ],
   imports: [
     BrowserModule,

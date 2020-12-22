@@ -3,12 +3,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
+import { ERROR_SNACKBAR_DURATION, INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION, WARNING_SNACKBAR_DURATION } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { CommonRestService } from 'src/app/services/common-rest.service';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { ErrorSnackBarComponent } from '../snack-bars/error-snack-bar/error-snack-bar.component';
+import { InfoSnackBarComponent } from '../snack-bars/info-snack-bar/info-snack-bar.component';
+import { SuccessSnackBarComponent } from '../snack-bars/success-snack-bar/success-snack-bar.component';
+import { WarningSnackBarComponent } from '../snack-bars/warning-snack-bar/warning-snack-bar.component';
 
 @Component({
   selector: 'app-common-item-details',
@@ -84,9 +88,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
    * mathching the object properties, so if they are incompatibile
    * it won't work */
   protected abstract buildForm(): FormGroup;
-
-  /** Method which updates form */
-  protected abstract updateForm(item: T): void;
   //#endregion
 
   //#region Data loaders
@@ -116,6 +117,9 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this._initialItem = this._itemDetailsBroker.item
     this.updateForm(this._initialItem);
   }
+
+  /** Method which updates form */
+  protected abstract updateForm(item: T): void;
   //#endregion
 
   //#region Saving changes
@@ -200,17 +204,34 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   // public abstract getErrorMessage(controlName: string): string;
   //#endregion
 
+  // TODO: Export snack bars to SnackBarService
   //#region Snackbar
   protected openSuccessSnackBar(message: string): void {
-    this._snackBar.open(message, 'Ok', { duration: SUCCESS_SNACKBAR_DURATION });
+    this._snackBar.openFromComponent(SuccessSnackBarComponent, {
+      data: { message: message },
+      duration: SUCCESS_SNACKBAR_DURATION,
+    });
   }
 
   protected openInfoSnackBar(message: string): void {
-    this._snackBar.open(message, 'Ok', { duration: INFO_SNACKBAR_DURATION });
+    this._snackBar.openFromComponent(InfoSnackBarComponent, {
+      data: { message: message },
+      duration: INFO_SNACKBAR_DURATION,
+    });
+  }
+
+  protected openWarningSnackBar(message: string): void {
+    this._snackBar.openFromComponent(WarningSnackBarComponent, {
+      data: { message: message },
+      duration: WARNING_SNACKBAR_DURATION,
+    });
   }
 
   protected openErrorSnackBar(message: string): void {
-    this._snackBar.open(message, 'Ok');
+    this._snackBar.openFromComponent(ErrorSnackBarComponent, {
+      data: { message: message },
+      duration: ERROR_SNACKBAR_DURATION,
+    });
   }
   //#endregion
 }

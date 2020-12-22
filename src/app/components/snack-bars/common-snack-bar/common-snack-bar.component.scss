@@ -1,0 +1,33 @@
+@import '../../../../variables';
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  mat-icon:not(:last-child) {
+    margin-right: $icon-margin;
+  }
+
+  span {
+    flex: 1 1;
+  }
+
+  &.error {
+    mat-icon:not(:last-child) {
+      color: $color-red;
+    }
+  }
+
+  &.success {
+    mat-icon:not(:last-child) {
+      color: $color-green;
+    }
+  }
+
+  &.warning {
+    mat-icon:not(:last-child) {
+      color: $color-orange;
+    }
+  }
+}
