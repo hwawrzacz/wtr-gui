@@ -32,44 +32,44 @@
   <form [formGroup]="form" *ngIf="!isLoading && !error" class="personal-details">
     <h2>Personal details</h2>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Login</mat-label>
-        <input matInput formControlName="login" />
-        <mat-error *ngIf="hasError('login')">{{ getErrorMessage('login') }}</mat-error>
-      </mat-form-field>
-      
-      <mat-form-field appearance="outline">
-        <mat-label>First name</mat-label>
-        <input matInput formControlName="firstName" />
-        <mat-error *ngIf="hasError('firstName')">{{ getErrorMessage('firstName') }}</mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Login</mat-label>
+      <input matInput formControlName="login" />
+      <mat-error>{{ getErrorMessage('login') }}</mat-error>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Last name</mat-label>
-        <input matInput formControlName="lastName" />
-        <mat-error *ngIf="hasError('lastName')">{{ getErrorMessage('lastName') }}</mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>First name</mat-label>
+      <input matInput formControlName="firstName" />
+      <mat-error>{{ getErrorMessage('firstName') }}</mat-error>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Phone number</mat-label>
-        <input matInput formControlName="phoneNumber" />
-        <mat-error *ngIf="hasError('phoneNumber')">{{ getErrorMessage('phoneNumber') }}</mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Last name</mat-label>
+      <input matInput formControlName="lastName" />
+      <mat-error>{{ getErrorMessage('lastName') }}</mat-error>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
-        <mat-error *ngIf="hasError('email')">{{ getErrorMessage('email') }}</mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Phone number</mat-label>
+      <input matInput formControlName="phoneNumber" />
+      <mat-error>{{ getErrorMessage('phoneNumber') }}</mat-error>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Position</mat-label>
-        <mat-select formControlName="role">
-          <mat-option *ngFor="let role of positionsList" [value]="role"> {{ getPositionString(role) }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="hasError('role')">{{ getErrorMessage('role') }}</mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error>{{ getErrorMessage('email') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Position</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let role of positionsList" [value]="role"> {{ getPositionString(role) }}
+        </mat-option>
+      </mat-select>
+      <mat-error>{{ getErrorMessage('role') }}</mat-error>
+    </mat-form-field>
   </form>
 
   <div *ngIf="!isLoading && !error" class="credentials-wrapper">
