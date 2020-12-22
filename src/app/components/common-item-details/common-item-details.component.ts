@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
+import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { CommonRestService } from 'src/app/services/common-rest.service';
@@ -48,7 +50,8 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     private _itemDetailsBroker: ItemDetailsBrokerService<T>,
     protected _restService: CommonRestService<T>,
     protected _formBuilder: FormBuilder,
-    private _changeDetector: ChangeDetectorRef
+    private _changeDetector: ChangeDetectorRef,
+    private _snackBar: MatSnackBar,
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;
@@ -76,7 +79,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     }
   }
 
-  /** Method which returns form group corresponding to item model map */
+  /** Method which returns form group corresponding to item model map. 
+   * Keep in mind, that update mechanism relies on form controls names 
+   * mathching the object properties, so if they are incompatibile
+   * it won't work */
   protected abstract buildForm(): FormGroup;
 
   /** Method which updates form */
@@ -95,11 +101,11 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       .pipe(
         take(1),
         tap(item => {
-          this._loadingCounter--;
           if (!!item) {
             this._initialItem = item;
             this.updateForm(item);
             this._error = false;
+            this._loadingCounter--;
           }
         }),
         catchError(() => of(this._error = true))
@@ -120,9 +126,16 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   private saveAllChanges(): void {
+    const patchObject = {} as T;
+
     Object.keys(this._form.controls).forEach(controlName => {
-      this.onSaveField(controlName);
+      const control = this._form.get(controlName);
+      if (control.value !== this._initialItem[controlName]) {
+        patchObject[controlName] = control.value;
+      }
     });
+
+    this.patchObject<T>(patchObject);
   }
 
   public onDiscardChanges(): void {
@@ -149,28 +162,51 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this._form.enable();
   }
 
-  public onSaveField(name: string) {
-    const field = this._form.get(name);
-    this._initialItem[name] = field.value;
-    this.patch(name, field.value);
-  }
-
   protected patch<T>(name: string, value: T): void {
     this._restService.patch<T>(this._itemId, name, value)
       .pipe(
         // TODO: Handle success and error SnackBar
-        tap(response => console.log(response)),
+        tap(response => {
+          if (response) this.openSuccessSnackBar('Value updated successfully');
+          else {
+            this.openErrorSnackBar('Error while updating value');
+            console.error(response);
+          }
+        }),
         catchError(e => of(console.error(e)))
+      ).subscribe();
+  }
+
+  protected patchObject<T>(object: T): void {
+    this._restService.patchObject<T>(this._itemId, object)
+      .pipe(
+        // TODO: Handle success and error SnackBar
+        tap(response => {
+          if (response) this.openSuccessSnackBar('Item updated successfully');
+          else this.openErrorSnackBar('Error while updating item. Validation failed');
+        }),
+        catchError(e => of(this.openErrorSnackBar('Error while updating item. Request failed.')))
       ).subscribe();
   }
   //#endregion
 
   //#region Form errors
-  public hasError(controlName: string): boolean {
-    return this._form.get(controlName).valid;
-  };
-
-  // /** Method which return sepcific error message */
+  // TODO: Tmplement thing below
+  // /** Method which return error message for specific form control */
   // public abstract getErrorMessage(controlName: string): string;
+  //#endregion
+
+  //#region Snackbar
+  protected openSuccessSnackBar(message: string): void {
+    this._snackBar.open(message, 'Ok', { duration: SUCCESS_SNACKBAR_DURATION });
+  }
+
+  protected openInfoSnackBar(message: string): void {
+    this._snackBar.open(message, 'Ok', { duration: INFO_SNACKBAR_DURATION });
+  }
+
+  protected openErrorSnackBar(message: string): void {
+    this._snackBar.open(message, 'Ok');
+  }
   //#endregion
 }

@@ -80,6 +80,11 @@ export class CommonRestService<T> {
     return this._http.patch(url, { [name]: value });
   }
 
+  public patchObject<T>(userId: string, object: T) {
+    const url = `${environment.apiUrl}/${this._url}/${userId}`;
+    return this._http.patch(url, object);
+  }
+
   public delete(userId: string): Observable<CommonResponse<any>> {
     return this.patch(userId, 'active', false);
   }

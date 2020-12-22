@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter, take, tap } from 'rxjs/operators';
 import { phoneNumberValidator } from 'src/app/helpers/custom-validators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
@@ -47,9 +48,10 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     restService: UserRestService,
     formBuilder: FormBuilder,
     changeDetector: ChangeDetectorRef,
-    private _dialogService: MatDialog
+    snackBar: MatSnackBar,
+    private _dialogService: MatDialog,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBar);
   }
 
   //#region Initializers

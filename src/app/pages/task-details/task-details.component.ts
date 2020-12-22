@@ -47,9 +47,9 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     formBuilder: FormBuilder,
     changeDetector: ChangeDetectorRef,
     private _userRestService: UsersListService,
-    private _snackBar: MatSnackBar,
+    snackBar: MatSnackBar,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBar);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
@@ -108,7 +108,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
       this._workers.push(worker);
       this._initialItem.workers.push(worker._id);
     } else {
-      this._snackBar.open('Worker is already added', null, { duration: 2000 });
+      this.openInfoSnackBar('Worker is already added');
     }
   }
 

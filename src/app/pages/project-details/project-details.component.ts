@@ -10,6 +10,7 @@ import { SimpleUser } from 'src/app/model/simple-user';
 import { ProjectDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ProjectRestService } from 'src/app/services/project-rest.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-project-details',
@@ -17,7 +18,7 @@ import { ProjectRestService } from 'src/app/services/project-rest.service';
   styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './project-details.component.scss']
 })
 export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project> implements OnInit {
-  private readonly _titleMaxLength = 50;
+  private readonly _titleMaxLength = 100;
   private readonly _descriptionMaxLength = 500;
 
   //#region Getters and setters
@@ -49,8 +50,9 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
     broker: ProjectDetailsBrokerService,
     restService: ProjectRestService,
     changeDetector: ChangeDetectorRef,
+    snackBar: MatSnackBar,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBar);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
