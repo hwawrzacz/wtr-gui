@@ -41,7 +41,6 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
       //   displayName: 'People working on',
       //   propertyName: 'workers',
       //   formatter: (arr: number[]) => {
-      //     console.log(arr);
       //     return `${arr.length}`;
       //   }
       // },

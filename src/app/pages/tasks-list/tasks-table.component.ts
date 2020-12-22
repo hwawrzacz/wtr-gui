@@ -65,7 +65,6 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
         icon: 'delete',
         action: (item: CommonItem) => {
           this.delete(item._id);
-          console.log(`delete ${item._id}`);
         },
         color: 'warn',
         tooltip: 'Delete item'
@@ -80,7 +79,6 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
   }
 
   public isFormattableProperty(propName: string): boolean {
-    console.log(propName);
     // TODO: Change, when 'progressStatus' is changed to 'status' in API
     return ['progressStatus', 'priority'].includes(propName);
   }

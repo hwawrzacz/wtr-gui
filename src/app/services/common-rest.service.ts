@@ -30,7 +30,6 @@ export class CommonRestService<T> {
 
   public getFromApi(itemId: string): Observable<T> {
     const url = `${environment.apiUrl}/${this._url}/${itemId}`;
-    console.log('API', url);
     return this._http.get<T>(url);
   }
 
@@ -68,7 +67,6 @@ export class CommonRestService<T> {
   public findInApi(query: Query, pagination?: Pagination): Observable<CommonArrayResponse<T>> {
     const params = new HttpParams().append('query', JSON.stringify(query)).append('pagination', JSON.stringify(pagination));
     const url = `${environment.apiUrl}/${this._url}`;
-    console.log('API', url);
     return this._http.get<CommonArrayResponse<T>>(url, { params: params });
   }
 

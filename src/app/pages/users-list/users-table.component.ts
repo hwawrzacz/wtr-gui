@@ -68,7 +68,6 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
         icon: 'delete',
         action: (item: CommonItem) => {
           this.delete(item._id);
-          console.log(`delete ${item._id}`);
         },
         color: 'warn',
         tooltip: 'Delete item'

@@ -46,7 +46,6 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
   public onSave(): void {
     this._isLoading = true;
     const item = this.parseItemFromForm();
-    console.log(item);
     this._restService.create<T>(item).pipe(
       map(res => {
         const success = res === true;

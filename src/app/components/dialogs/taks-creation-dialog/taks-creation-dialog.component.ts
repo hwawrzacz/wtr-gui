@@ -85,10 +85,6 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
   }
 
   //#region Helpers
-  public showForm(): void {
-    console.log(this._form);
-  }
-
   public getPriorityString(value: Priority): string {
     return PriorityStringifier.getPriorityString(value);
   }

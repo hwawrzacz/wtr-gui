@@ -99,7 +99,6 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     try {
       this.getDataFromApi();
     } catch (e) {
-      console.log(e);
       this.getMockData();
     }
   }
@@ -109,7 +108,6 @@ export abstract class CommonListViewComponent<T> implements OnInit {
       .pipe(
         take(1),
         tap((result: CommonArrayResponse<T>) => {
-          console.log(result.items);
           this._dataSource.refresh(result.items as any);
           this._totalResults = result.totalResults
           this._pageSize = result.limit;

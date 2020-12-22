@@ -28,7 +28,6 @@ export class NavigatorService<T> {
 
   public navigateToDetailsWithData(baseUrl: string, item: CommonItem): void {
     this._itemDetailsBroker.item = item;
-    console.log(item);
     this._router.navigate([baseUrl, item['_id']]);
   }
   //#endregion

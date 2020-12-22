@@ -75,7 +75,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
             this._faceImageUrl = credentials.facePhoto;
             this._qrCodeUrl = credentials.qrCode;
           } else {
-            console.log('error');
+            console.error('error while getting credentials');
             this._error = true;
           }
         })
