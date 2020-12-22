@@ -1,0 +1,24 @@
+<section class="workers-panel">
+  <h3>Workers</h3>
+  <div class="search-wrapper">
+    <app-users-autocomplete [singleSelection]="false" (selectionChange)="addWorker($event)"></app-users-autocomplete>
+  </div>
+  <mat-list>
+    <mat-list-item *ngIf="workersLoading">
+      <div class="fx-center">
+        <mat-spinner [diameter]="32"></mat-spinner>
+      </div>
+    </mat-list-item>
+
+    <mat-list-item *ngFor="let worker of selectedWorkers">
+      <span>{{ stringifyUser(worker) }}</span>
+      <button mat-icon-button (click)="removeWorker(worker._id)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="(!selectedWorkers || !selectedWorkers.length) && !workersLoading">
+      <span>No workers.</span>
+    </mat-list-item>
+  </mat-list>
+</section>

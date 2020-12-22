@@ -1,0 +1,19 @@
+@import '../../../variables';
+
+h3 {
+  margin-bottom: $spacing-small;
+}
+
+.search-wrapper {
+  padding: 0 $spacing-regular;
+
+  app-user-search-select {
+    width: 100%;
+  }
+}
+
+mat-list-item {
+  span {
+    width: 100%;
+  }
+}
