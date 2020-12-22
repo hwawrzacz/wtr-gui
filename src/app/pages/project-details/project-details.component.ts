@@ -17,10 +17,12 @@ import { ProjectRestService } from 'src/app/services/project-rest.service';
   styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './project-details.component.scss']
 })
 export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project> implements OnInit {
+  private readonly _titleMaxLength = 50;
+  private readonly _descriptionMaxLength = 500;
+
   //#region Getters and setters
   get stringId(): string {
     return this._initialItem ? this._initialItem.stringId : '';
-    // return this.itemId;
   }
 
   get managerFormControl(): AbstractControl {
@@ -29,6 +31,15 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
 
   get project(): Project {
     return this._initialItem;
+  }
+
+  // Form constraints
+  get titleMaxLength(): number {
+    return this._titleMaxLength;
+  }
+
+  get descriptionMaxLength(): number {
+    return this._descriptionMaxLength;
   }
   //#endregion
 
@@ -52,16 +63,17 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#region Initializers
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      title: [{ value: '', disabled: true }, [Validators.required]],
+      title: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(this._titleMaxLength)]],
       manager: [{ value: null, disabled: true }, [Validators.required]],
-      description: [{ value: '', disabled: true }]
+      description: [{ value: '', disabled: true }, [Validators.maxLength(this._descriptionMaxLength)]]
     });
   }
 
   protected updateForm(project: Project): void {
     this._form.patchValue({
       title: project.title,
-      manager: project.manager,
+      // TODO: Replace idManager with manager when ready in the API
+      manager: project.idManager,
       description: project.description,
     });
   }
@@ -77,6 +89,15 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#region Helpers
   stringifyManager(manager: User | SimpleUser): string {
     return stringifyUser(manager);
+  }
+
+  public getErrorMessage(controlName: string): string {
+    const control = this._form.get(controlName);
+    if (control.hasError('required')) return 'Value is required';
+    if (control.hasError('maxlength')) return 'Too many characters';
+    else if (control.valid) return 'Something is not yes';
+
+    return null;
   }
   //#endregion
 }
