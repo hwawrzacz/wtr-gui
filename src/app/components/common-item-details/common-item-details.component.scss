@@ -1,5 +1,17 @@
 @import '../../../variables.scss';
 
+.item-details__top-navigation {
+  font-size: 1.2em;
+
+  a {
+    color: $color-primary;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 .item-details__header {
   display: flex;
   align-items: center;
@@ -27,10 +39,6 @@ mat-form-field {
 
 section {
   margin-bottom: $spacing-regular;
-}
-
-.tasks-list-wrapper {
-  padding: 0 $spacing-regular;
 }
 
 form {

@@ -1,8 +1,8 @@
 <div class="container">
   <form [formGroup]="form" *ngIf="!isLoading && !error">
-    <p>
-      <a>Projekty</a>/
-      <a>{{ stringId }}</a>
+    <p class="item-details__top-navigation">
+      <a class="link" [routerLink]="'/projects'">Projekty</a>&nbsp;/&nbsp;<a class="link"
+        [routerLink]="'/projects/'+ itemId">{{ stringId }}</a>
     </p>
 
     <header class="item-details__header">
