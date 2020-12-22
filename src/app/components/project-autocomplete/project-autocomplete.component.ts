@@ -23,7 +23,7 @@ export class ProjectAutocompleteComponent extends CommonAutocompleteComponent<Pr
   }
 
   public transformItem = (project: Project): string => {
-    return project ? `${project.stringId} ${project.title}` : '';
+    return project ? project.stringId : '';
   }
 
 }

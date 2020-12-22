@@ -66,13 +66,13 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
     return this._formControl;
   }
 
-  @Output('selectionChange') selectionChangeEmitter: EventEmitter<T>;
+  @Output('selectionChange') protected _selectionChangeEmitter: EventEmitter<T>;
   //#endregion
 
   constructor(private _restService: CommonArrayRestService<T>) {
     this._loadingCounter = 0;
     this._query = { searchString: '', filters: [] } as Query;
-    this.selectionChangeEmitter = new EventEmitter<T>()
+    this._selectionChangeEmitter = new EventEmitter<T>()
   }
 
   ngOnInit(): void {
@@ -101,7 +101,7 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
 
   public onSelectionChange(item: T): void {
     this._selectedItem = item;
-    this.selectionChangeEmitter.emit(this._selectedItem);
+    this._selectionChangeEmitter.emit(this._selectedItem);
 
     if (!this._singleSelection) {
       this.inputItem.nativeElement.blur();
@@ -125,7 +125,7 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
 
   public clearSelection(): void {
     this._selectedItem = null;
-    this.selectionChangeEmitter.emit(this._selectedItem);
+    this._selectionChangeEmitter.emit(this._selectedItem);
   }
 
   public getErrorMessage(): string {

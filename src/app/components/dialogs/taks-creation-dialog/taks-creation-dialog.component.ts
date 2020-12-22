@@ -7,6 +7,7 @@ import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
 import { Project } from 'src/app/model/project';
 import { Task } from 'src/app/model/task';
+import { User } from 'src/app/model/user';
 import { TaskService } from 'src/app/services/task.service';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
 
@@ -55,6 +56,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
       dutyDate: ['', [Validators.required]],
       priority: [null, [Validators.required]],
       description: ['', [Validators.required]],
+      workers: [{ value: [] }],
     })
   }
 
@@ -66,7 +68,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
   }
 
   protected parseItemFromForm(): Task {
-    return {
+    const value = {
       _id: null,
       creationDate: null,
       projectStringId: null,
@@ -78,10 +80,17 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
       dutyDate: this._form.get('dutyDate').value,
       description: this._form.get('description').value,
       priority: this._form.get('priority').value,
-
+      // TODO: Pass currently logged user id
       idReporter: "5fca51ef55624130600cccfb",
-      workers: [],
+      workers: this._form.get('workers').value.map(worker => worker._id),
     } as Task;
+
+    console.log(value);
+    return value;
+  }
+
+  public updateWorkers(workers: User[]): void {
+    this._form.get('workers').patchValue(workers);
   }
 
   //#region Helpers

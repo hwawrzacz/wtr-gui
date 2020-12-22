@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { take, tap } from 'rxjs/operators';
 import { stringifyUser } from 'src/app/helpers/parsers';
@@ -13,10 +13,10 @@ import { UsersListService } from 'src/app/services/users-list.service';
   styleUrls: ['./workers-panel.component.scss']
 })
 export class WorkersPanelComponent implements OnInit {
-  private _allWorkers: User[];
   private _selectedWorkers: User[];
   private _selectedWorkersIds: string[];
   private _workersLoading: boolean;
+  @Output('workersChange') private _workersChangeEmitter: EventEmitter<User[]>;
 
   //#region Getters and setters
   get selectedWorkers(): User[] {
@@ -41,13 +41,18 @@ export class WorkersPanelComponent implements OnInit {
   constructor(
     private _userRestService: UsersListService,
     private _snackBar: MatSnackBar
-  ) { }
+  ) {
+    this._workersChangeEmitter = new EventEmitter<User[]>();
+  }
 
   ngOnInit(): void {
     this.loadWorkers();
   }
 
   //#region Data loader
+  /**This function will only be used if workers are stored as
+   * array of id's. I users are stored as objects, there is 
+   * no need to run this function. */
   private loadWorkers(): void {
     this._workersLoading = true;
     const query = { searchString: '', filters: [] } as Query;
@@ -73,6 +78,7 @@ export class WorkersPanelComponent implements OnInit {
     if (!this._selectedWorkersIds.includes(worker._id)) {
       this._selectedWorkers.push(worker);
       this._selectedWorkersIds.push(worker._id);
+      this._workersChangeEmitter.emit(this._selectedWorkers);
     } else {
       this._snackBar.open('Worker is already added', null, { duration: 2000 });
     }
@@ -81,6 +87,7 @@ export class WorkersPanelComponent implements OnInit {
   public removeWorker(id: string): void {
     this._selectedWorkers = this._selectedWorkers.filter(worker => worker._id !== id);
     this._selectedWorkers = this._selectedWorkers.filter(worker => worker._id !== id);
+    this._workersChangeEmitter.emit(this._selectedWorkers);
   }
   //#endregion
 
