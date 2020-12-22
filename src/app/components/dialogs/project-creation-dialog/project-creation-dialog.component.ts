@@ -52,7 +52,7 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
 
   protected parseItemFromForm(): Project {
     return {
-      id: null,
+      _id: null,
       stringId: null,
       title: this._form.get('title').value,
       description: this._form.get('description').value,

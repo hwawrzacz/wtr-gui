@@ -10,7 +10,7 @@ import { WorkLog, WorkLogType } from './work-log';
 export const mockProjects: CommonArrayResponse<Project> = {
   items: [
     {
-      id: '1',
+      _id: '1',
       stringId: 'PROJ_1',
       title: 'Jeden projekt',
       description: 'Taki niezwykły projekt, że to to prostu szok i niedowierzanie',
@@ -28,7 +28,7 @@ export const mockProjects: CommonArrayResponse<Project> = {
       dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
-      id: '2',
+      _id: '2',
       stringId: 'PROJ_2',
       title: 'Dwa projekt',
       description: 'Taki drugi projekt z trochę mniejszym szokiem, ale jednak nadal trochę',
@@ -46,7 +46,7 @@ export const mockProjects: CommonArrayResponse<Project> = {
       dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
-      id: '3',
+      _id: '3',
       stringId: 'PROJ_3',
       title: 'Pobieranie danych',
       description: 'Inny projekt, który służy tylko i wyłącznie temu, żeby pokazać jak są pobierane dane.',
@@ -64,7 +64,7 @@ export const mockProjects: CommonArrayResponse<Project> = {
       dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
-      id: '4',
+      _id: '4',
       stringId: 'PROJ_4',
       title: 'Zabawowe przygotowanie do pracy',
       description: 'Projekt numer cztery powstał z pomyśleniem o fantastycznym serwisie, który jest bardzo przyazny.',
@@ -82,7 +82,7 @@ export const mockProjects: CommonArrayResponse<Project> = {
       dutyDate: "2020-12-08T23:00:00.000Z"
     },
     {
-      id: '5',
+      _id: '5',
       stringId: 'PROJ_5',
       title: 'Finale grande',
       description: 'Ten projekt ma taką cechę, że jest ostatni na liście (chyba, że lista się zmieni albo zostanie posortowana)',
