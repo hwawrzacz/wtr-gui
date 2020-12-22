@@ -42,9 +42,19 @@
     </header>
 
     <!-- TODO: Replace temporarlity 'idManager' with 'manager' -->
-    <app-users-autocomplete [label]="'Manager'" [formControl]="managerFormControl" [onlyManagers]="true"
-      [singleSelection]="true" [initialValue]="project.idManager" (selectionChange)="updateTempManager($event)">
-    </app-users-autocomplete>
+    <div class="manager">
+      <app-users-autocomplete [label]="'Manager'" [formControl]="managerFormControl" [onlyManagers]="true"
+        [singleSelection]="true" [initialValue]="project.idManager" (selectionChange)="updateTempManager($event)">
+      </app-users-autocomplete>
+    </div>
+
+    <mat-form-field appearance="outline" class="date">
+      <mat-label>Duty date</mat-label>
+      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
+      <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
+      <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
+      <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
+    </mat-form-field>
 
     <div class="editable-input-wrapper description-wrapper">
       <mat-form-field appearance="outline">

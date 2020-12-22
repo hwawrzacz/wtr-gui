@@ -2,7 +2,7 @@
   <mat-label *ngIf="!!label">{{ label }}</mat-label>
   <input #input matInput type="text" [formControl]="formControl" [matAutocomplete]="auto"
     [value]="transformItem(initialValue)" (keyup)="onKeyUp($event)" (blur)="resetInput()" placeholder="{{ label }}" />
-  <button mat-icon-button matSuffix (click)="clearSelection()">
+  <button mat-icon-button matSuffix *ngIf="!formControl.disabled" (click)="clearSelection()">
     <mat-icon>close</mat-icon>
   </button>
   <mat-error>{{ getErrorMessage() }}</mat-error>

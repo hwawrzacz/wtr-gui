@@ -119,24 +119,19 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   //#endregion
 
   //#region Saving changes
-
   public onSaveChanges(): void {
     this.saveAllChanges();
     this.disableEditMode();
   }
 
   private saveAllChanges(): void {
-    const patchObject = {} as T;
-
-    Object.keys(this._form.controls).forEach(controlName => {
-      const control = this._form.get(controlName);
-      if (control.value !== this._initialItem[controlName]) {
-        patchObject[controlName] = control.value;
-      }
-    });
-
+    const patchObject = this.parseItemFromForm();
     this.patchObject<T>(patchObject);
   }
+
+  /** Allows to parse item to the form appropriate for saving, 
+   * e.g. when form holds whole object, but API requres only id.*/
+  protected abstract parseItemFromForm(): T;
 
   public onDiscardChanges(): void {
     this.updateForm(this._initialItem);
