@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { CreationResponse } from 'src/app/model/responses';
 import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
 import { CommonRestService } from 'src/app/services/common-rest.service';
+import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
 
 @Component({
   selector: 'app-common-creation-dialog',
@@ -71,17 +72,17 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
   //#region Response handlers
   /** Common */
   private handleItemNotAdded(): void {
-    this.openSnackBar('Error while adding user');
+    this.openSuccessSnackBar('Error while adding user');
   }
 
   private handleCreationFailed(message: string) {
     switch (message) {
       case CreationResponseMessage.LOGIN_IS_TAKEN: {
-        this.openSnackBar('This login is already taken');
+        this.openSuccessSnackBar('This login is already taken');
         break;
       }
       default: {
-        this.openSnackBar(message);
+        this.openSuccessSnackBar(message);
       };
     }
   }
@@ -93,13 +94,23 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
 
   public abstract getErrorMessage(controlName: string): string;
 
+  //#region Snackbar 
+  private openSuccessSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', { duration: SUCCESS_SNACKBAR_DURATION });
+  }
+
+  private openInfoSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', { duration: INFO_SNACKBAR_DURATION });
+  }
+
+  private openErrorSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok');
+  }
+  //#endregion
+
   //#region Helpers
   public closeDialog(success = false): void {
     this._dialogRef.close(success);
-  }
-
-  private openSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok', { duration: 2000 });
   }
   //#endregion
 }

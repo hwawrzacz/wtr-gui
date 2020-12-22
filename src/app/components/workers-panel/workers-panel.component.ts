@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { take, tap } from 'rxjs/operators';
 import { stringifyUser } from 'src/app/helpers/parsers';
+import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { User } from 'src/app/model/user';
@@ -80,7 +81,7 @@ export class WorkersPanelComponent implements OnInit {
       this._selectedWorkersIds.push(worker._id);
       this._workersChangeEmitter.emit(this._selectedWorkers);
     } else {
-      this._snackBar.open('Worker is already added', null, { duration: 2000 });
+      this.openInfoSnackBar('Worker is already added');
     }
   }
 
@@ -88,6 +89,20 @@ export class WorkersPanelComponent implements OnInit {
     this._selectedWorkers = this._selectedWorkers.filter(worker => worker._id !== id);
     this._selectedWorkers = this._selectedWorkers.filter(worker => worker._id !== id);
     this._workersChangeEmitter.emit(this._selectedWorkers);
+  }
+  //#endregion
+
+  //#region Snackbar
+  private openSuccessSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', { duration: SUCCESS_SNACKBAR_DURATION });
+  }
+
+  private openInfoSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', { duration: INFO_SNACKBAR_DURATION });
+  }
+
+  private openErrorSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok');
   }
   //#endregion
 
