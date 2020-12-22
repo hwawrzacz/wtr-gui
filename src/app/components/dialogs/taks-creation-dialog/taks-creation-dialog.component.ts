@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PriorityStringifier } from 'src/app/helpers/parsers';
+import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
+import { Project } from 'src/app/model/project';
 import { Task } from 'src/app/model/task';
 import { TaskService } from 'src/app/services/task.service';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
@@ -13,11 +16,26 @@ import { CommonCreationDialogComponent } from '../common-creation-dialog/common-
   styleUrls: ['../common-creation-dialog/common-creation-dialog.component.scss', './taks-creation-dialog.component.scss']
 })
 export class TaksCreationDialogComponent extends CommonCreationDialogComponent<Task> implements OnInit {
+  //#region Getters and setters
+  get initialProject(): Project {
+    return this._initialProject;
+  }
+
   get minDate(): Date {
     return new Date();
   }
 
+  get projectFormControl(): AbstractControl {
+    return this._form.get('project');
+  }
+
+  get priorities(): Priority[] {
+    return PriorityStringifier.prioritiesList;
+  }
+  //#endregion
+
   constructor(
+    @Inject(MAT_DIALOG_DATA) private _initialProject: Project,
     dialogRef: MatDialogRef<TaksCreationDialogComponent>,
     restService: TaskService,
     snackBar: MatSnackBar,
@@ -33,7 +51,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
       title: ['', [Validators.required]],
-      project: ['', [Validators.required]],
+      project: [{ value: this._initialProject || null, disabled: !!this._initialProject }, [Validators.required]],
       dutyDate: ['', [Validators.required]],
       priority: [null, [Validators.required]],
       description: ['', [Validators.required]],
@@ -56,7 +74,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
       stringId: null,
       status: Status.NEW,
       title: this._form.get('title').value,
-      idProject: this._form.get('title').value._id,
+      idProject: this._form.get('project').value._id,
       dutyDate: this._form.get('dutyDate').value,
       description: this._form.get('description').value,
       priority: this._form.get('priority').value,
@@ -66,4 +84,13 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
     } as Task;
   }
 
+  //#region Helpers
+  public showForm(): void {
+    console.log(this._form);
+  }
+
+  public getPriorityString(value: Priority): string {
+    return PriorityStringifier.getPriorityString(value);
+  }
+  //#endregion
 }

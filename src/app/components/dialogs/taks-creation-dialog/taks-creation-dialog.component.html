@@ -5,21 +5,38 @@
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" />
-      <mat-error *ngIf="hasError('title')">{{ getErrorMessage('title') }}</mat-error>
+      <mat-error>{{ getErrorMessage('title') }}</mat-error>
     </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Priority</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option *ngFor="let priority of priorities" name="priority" [value]="priority">
+          <span [attr.class]="'priority-label priority-label--' + priority">{{ getPriorityString(priority) | titlecase
+            }}</span>
+        </mat-option>
+      </mat-select>
+      <mat-error>{{ getErrorMessage('priority') }}</mat-error>
+    </mat-form-field>
+
+    <div class="project-wrapper">
+      <app-project-autocomplete [formControl]="projectFormControl" [initialValue]="initialProject" [label]="'Project'"
+        [singleSelection]="true">
+      </app-project-autocomplete>
+    </div>
 
     <mat-form-field appearance="outline">
       <mat-label>Duty date</mat-label>
       <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
       <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
       <mat-datepicker #dutyDate [disabled]="false"></mat-datepicker>
-      <mat-error *ngIf="hasError('dutyDate')">{{ getErrorMessage('dutyDate') }}</mat-error>
+      <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
-      <mat-error *ngIf="hasError('description')">{{ getErrorMessage('description') }}</mat-error>
+      <mat-error>{{ getErrorMessage('description') }}</mat-error>
     </mat-form-field>
   </form>
 </mat-dialog-content>
@@ -30,4 +47,5 @@
     <span>Create</span>
   </button>
   <button mat-button [disabled]="isLoading" (click)="closeDialog()">Cancel</button>
+  <button mat-button (click)="showForm()">ShowForm</button>
 </mat-dialog-actions>
