@@ -6,7 +6,7 @@ import { CommonAutocompleteComponent } from '../common-autocomplete/common-autoc
 @Component({
   selector: 'app-project-autocomplete',
   templateUrl: '../common-autocomplete/common-autocomplete.component.html',
-  styleUrls: ['../common-autocomplete/common-autocomplete.component.html']
+  styleUrls: ['../common-autocomplete/common-autocomplete.component.scss']
 })
 export class ProjectAutocompleteComponent extends CommonAutocompleteComponent<Project> implements OnInit {
 

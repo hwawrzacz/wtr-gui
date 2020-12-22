@@ -1,7 +1,8 @@
 <h1 mat-dialog-title>Create task</h1>
 
-<mat-dialog-content>
+<mat-dialog-content cdkScrollable>
   <form [formGroup]="form">
+    <h3>Task details</h3>
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" />
@@ -19,11 +20,9 @@
       <mat-error>{{ getErrorMessage('priority') }}</mat-error>
     </mat-form-field>
 
-    <div class="project-wrapper">
-      <app-project-autocomplete [formControl]="projectFormControl" [initialValue]="initialProject" [label]="'Project'"
-        [singleSelection]="true">
-      </app-project-autocomplete>
-    </div>
+    <app-project-autocomplete [formControl]="projectFormControl" [initialValue]="initialProject" [label]="'Project'"
+      [singleSelection]="true">
+    </app-project-autocomplete>
 
     <mat-form-field appearance="outline">
       <mat-label>Duty date</mat-label>
@@ -39,6 +38,8 @@
       <mat-error>{{ getErrorMessage('description') }}</mat-error>
     </mat-form-field>
   </form>
+
+  <app-workers-panel [selectedWorkers]="[]" [selectedWorkersIds]="[]"></app-workers-panel>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

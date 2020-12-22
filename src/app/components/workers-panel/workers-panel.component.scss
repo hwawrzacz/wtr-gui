@@ -1,19 +1,35 @@
 @import '../../../variables';
 
+.container {
+  width: 100%;
+}
+
 h3 {
   margin-bottom: $spacing-small;
 }
 
 .search-wrapper {
-  padding: 0 $spacing-regular;
-
   app-user-search-select {
     width: 100%;
   }
 }
 
-mat-list-item {
-  span {
-    width: 100%;
+::ng-deep {
+  mat-option {
+    .mat-option-text {
+      width: 100%;
+      display: flex !important;
+      
+      span {
+        flex: 1 1;
+      }
+
+      button {
+        mat-icon {
+          margin-right: 0 !important;
+        }
+      }
+    }
   }
 }
+

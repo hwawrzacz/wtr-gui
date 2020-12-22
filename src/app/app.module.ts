@@ -56,6 +56,7 @@ import { UsersAutocompleteComponent } from './components/users-autocomplete/user
 import { TaksCreationDialogComponent } from './components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
 import { ProjectAutocompleteComponent } from './components/project-autocomplete/project-autocomplete.component';
 import { WorkersPanelComponent } from './components/workers-panel/workers-panel.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { WorkersPanelComponent } from './components/workers-panel/workers-panel.
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
+    ScrollingModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
