@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, OperatorFunction } from 'rxjs';
 import { catchError, map, take, tap } from 'rxjs/operators';
+import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { CommonResponse } from 'src/app/model/responses';
@@ -123,7 +124,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
         // TODO (HW): Handle error properly
         catchError((e) => {
           this._error = true;
-          this.openSnackBar(`Couldn't load items from API. Mock data loaded.`);
+          this.openErrorSnackBar(`Couldn't load items from API. Mock data loaded.`);
           this.getMockData()
           return of()
         })
@@ -165,10 +166,10 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     return (
       tap(res => {
         if (!!res) {
-          this.openSnackBar(this.getAdditionSuccessMessage());
+          this.openSuccessSnackBar(this.getAdditionSuccessMessage());
           this.loadData();
         }
-        else this.openSnackBar(this.getAdditionCancelledMessage());
+        else this.openErrorSnackBar(this.getAdditionCancelledMessage());
       })
     )
   }
@@ -199,14 +200,23 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   //#region Snackbar
   private openDeleteSuccessSnackBar(): void {
-    this.openSnackBar('Item deleted');
+    this.openSuccessSnackBar('Item deleted');
   }
 
   private openDeleteFailedSnackBar(errorMessage: string): void {
-    this.openSnackBar(`Item was not deleted: ${errorMessage}`);
+    this.openErrorSnackBar(`Item was not deleted: ${errorMessage}`);
   }
-  private openSnackBar(message: string): void {
-    this._snackBar.open(message, null, { duration: 2000 });
+
+  private openSuccessSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', { duration: SUCCESS_SNACKBAR_DURATION });
+  }
+
+  private openInfoSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', { duration: INFO_SNACKBAR_DURATION });
+  }
+
+  private openErrorSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok');
   }
 
   //#endregion

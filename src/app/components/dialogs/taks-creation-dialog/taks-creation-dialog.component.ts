@@ -26,6 +26,11 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
     return new Date();
   }
 
+  get maxDate(): Date {
+    return new Date(this._initialProject.dutyDate);
+  }
+
+
   get projectFormControl(): AbstractControl {
     return this._form.get('project');
   }

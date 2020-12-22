@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Filter } from 'src/app/model/filter';
+import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { Task } from 'src/app/model/task';
 import { TasksListService } from 'src/app/services/tasks-list.service';
@@ -28,6 +29,7 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
     super(restService, snackBar, dialogService);
     const projectFilter = { name: 'projectId', values: [`${this._projectId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
+    this._pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
   }
 
   ngOnInit(): void {

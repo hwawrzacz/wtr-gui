@@ -1,19 +1,25 @@
 <div class="container">
   <form [formGroup]="form" *ngIf="!isLoading && !error">
-    <header>
-      <h1>{{ stringId }}
-        <mat-form-field appearance="outline">
-          <input matInput type="text" formControlName="title" />
-        </mat-form-field>
-      </h1>
+    <p class="item-details__top-navigation">
+      <a class="link" [routerLink]="'/projects'">Projekty</a>&nbsp;/&nbsp;<a class="link"
+        [routerLink]="'/projects/'+ itemId">{{ stringId }}</a>
+    </p>
 
-      <div class="header__button-wrapper">
+    <header class="item-details__header">
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput #titleInput type="text" formControlName="title" />
+        <mat-hint>{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
+        <mat-error>{{ getErrorMessage('title') }}</mat-error>
+      </mat-form-field>
+
+      <div class="item-details__header__buttons">
         <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enableEditMode()">
           <mat-icon>edit</mat-icon>
           <span>Edit</span>
         </button>
 
-        <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onSaveChanges()">
+        <button mat-stroked-button color="primary" *ngIf="editMode" [disabled]="!form.valid" (click)="onSaveChanges()">
           <mat-icon>save</mat-icon>
           <span>Save changes</span>
         </button>
@@ -35,26 +41,29 @@
       </div>
     </header>
 
-    <section>
-      <h3>Manager</h3>
-      <div class="editable-input-wrapper manager-wrapper">
-        <input matInput *ngIf="!editMode" readonly
-          [value]="project && project.manager ? stringifyManager(project.manager) : ''" />
+    <!-- TODO: Replace temporarlity 'idManager' with 'manager' -->
+    <div class="manager">
+      <app-users-autocomplete [label]="'Manager'" [formControl]="managerFormControl" [onlyManagers]="true"
+        [singleSelection]="true" [initialValue]="project.idManager" (selectionChange)="updateTempManager($event)">
+      </app-users-autocomplete>
+    </div>
 
-        <app-user-search-select *ngIf="editMode" [onlyManagers]="true" [singleSelection]="true"
-          [initialValue]="project.manager" (selectionChange)="updateTempManager($event)">
-        </app-user-search-select>
-      </div>
-    </section>
+    <mat-form-field appearance="outline" class="date">
+      <mat-label>Duty date</mat-label>
+      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
+      <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
+      <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
+      <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
+    </mat-form-field>
 
-    <section>
-      <h3>Description</h3>
-      <div class="editable-input-wrapper description-wrapper">
-        <mat-form-field appearance="outline">
-          <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
-        </mat-form-field>
-      </div>
-    </section>
+    <div class="editable-input-wrapper description-wrapper">
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput #descriptionInput formControlName="description" cdkTextareaAutosize></textarea>
+        <mat-hint>{{ descriptionInput.value.length || 0}}/{{ descriptionMaxLength }}</mat-hint>
+        <mat-error>{{ getErrorMessage('description') }}</mat-error>
+      </mat-form-field>
+    </div>
   </form>
 
   <section [ngClass]="isLoading || error ? 'hidden' : ''">
@@ -65,5 +74,5 @@
   </section>
 </div>
 
-<app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader>
-<app-full-screen-error *ngIf="error" (reloadRequest)="reloadData()"></app-full-screen-error>
+<app-full-screen-loader *ngIf="isLoading && !error"></app-full-screen-loader>
+<app-full-screen-error *ngIf="error && !isLoading" (reloadRequest)="reloadData()"></app-full-screen-error>

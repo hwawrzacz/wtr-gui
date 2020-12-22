@@ -5,7 +5,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" />
-      <mat-error *ngIf="hasError('title')">{{ getErrorMessage('title') }}</mat-error>
+      <mat-error>{{ getErrorMessage('title') }}</mat-error>
     </mat-form-field>
 
     <app-users-autocomplete [onlyManagers]="true" [singleSelection]="true" [label]="'Manager'"
@@ -17,13 +17,13 @@
       <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
       <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
       <mat-datepicker #dutyDate [disabled]="false"></mat-datepicker>
-      <mat-error *ngIf="hasError('dutyDate')">{{ getErrorMessage('dutyDate') }}</mat-error>
+      <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
-      <mat-error *ngIf="hasError('description')">{{ getErrorMessage('description') }}</mat-error>
+      <mat-error>{{ getErrorMessage('description') }}</mat-error>
     </mat-form-field>
   </form>
 </mat-dialog-content>
