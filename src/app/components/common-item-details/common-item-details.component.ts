@@ -125,37 +125,30 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   private saveAllChanges(): void {
-    const patchObject = this.parseItemFromForm();
+    let patchObject = this.parseItemFromForm();
+
+    // Remove fields that hasn't changed
+    Object.keys(patchObject).forEach(key => {
+      if (patchObject[key] === this._initialItem[key]) delete patchObject[key];
+    });
+
+    console.log(patchObject);
     this.patchObject<T>(patchObject);
   }
 
+  protected parseItemFromForm(): T {
+    return Object.keys(this._form.controls).reduce((prev, curr) => {
+      const controlValue = this._form.get(curr).value;
+      prev[curr] = controlValue;
+      return prev;
+    }, {}) as T;
+  }
+
   /** Allows to parse item to the form appropriate for saving, 
-   * e.g. when form holds whole object, but API requres only id.*/
-  protected abstract parseItemFromForm(): T;
-
-  public onDiscardChanges(): void {
-    this.updateForm(this._initialItem);
-    this.disableEditMode();
-    this._changeDetector.detectChanges();
-  }
-
-  public enableEditMode() {
-    this._editMode = true;
-    this.enableForm();
-  }
-
-  public disableEditMode() {
-    this._editMode = false;
-    this.disableForm();
-  }
-
-  public disableForm() {
-    this._form.disable();
-  }
-
-  public enableForm() {
-    this._form.enable();
-  }
+   * e.g. when form holds whole object, but API requres only id, 
+   * or form control has a different name than object. 
+   * If no special parsing is required, this function can return
+   * null, and default parsing will be applied */
 
   protected patch<T>(name: string, value: T): void {
     this._restService.patch<T>(this._itemId, name, value)
@@ -182,6 +175,22 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
         }),
         catchError(e => of(this.openErrorSnackBar('Error while updating item. Request failed.')))
       ).subscribe();
+  }
+
+  public onDiscardChanges(): void {
+    this.updateForm(this._initialItem);
+    this.disableEditMode();
+    this._changeDetector.detectChanges();
+  }
+
+  public enableEditMode() {
+    this._editMode = true;
+    this._form.enable();
+  }
+
+  public disableEditMode() {
+    this._editMode = false;
+    this._form.disable();
   }
   //#endregion
 
