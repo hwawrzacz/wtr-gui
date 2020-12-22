@@ -33,7 +33,18 @@ section {
   padding: 0 $spacing-regular;
 }
 
-// Display disabled fields with normal text
+form {
+  // Normal color border on enabled fields
+  ::ng-deep {
+    .mat-form-field:not(.mat-form-field-disabled) {
+      .mat-form-field-outline {
+        color: $text-black !important;
+      }
+    }
+  }
+}
+
+// Display disabled fields with normal color text
 .mat-input-element:disabled {
   color: $text-black !important;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { stringifyUser } from 'src/app/helpers/parsers';
@@ -35,10 +35,11 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   constructor(
     navigator: NavigatorService<Project>,
     formBuilder: FormBuilder,
-    itemDetailsBroker: ProjectDetailsBrokerService,
+    broker: ProjectDetailsBrokerService,
     restService: ProjectRestService,
+    changeDetector: ChangeDetectorRef,
   ) {
-    super(navigator, itemDetailsBroker, restService, formBuilder);
+    super(navigator, broker, restService, formBuilder, changeDetector);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
@@ -51,9 +52,17 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#region Initializers
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      title: [{ value: this._initialItem.title, disabled: true }, [Validators.required]],
-      manager: [{ value: this._initialItem.manager, disabled: true }, [Validators.required]],
-      description: [{ value: this._initialItem.description, disabled: true }]
+      title: [{ value: '', disabled: true }, [Validators.required]],
+      manager: [{ value: null, disabled: true }, [Validators.required]],
+      description: [{ value: '', disabled: true }]
+    });
+  }
+
+  protected updateForm(project: Project): void {
+    this._form.patchValue({
+      title: project.title,
+      manager: project.manager,
+      description: project.description,
     });
   }
   //#endregion

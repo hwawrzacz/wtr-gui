@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, take, tap } from 'rxjs/operators';
@@ -46,20 +46,32 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     broker: ItemDetailsBrokerService<SimpleUser>,
     restService: UserRestService,
     formBuilder: FormBuilder,
+    changeDetector: ChangeDetectorRef,
     private _dialogService: MatDialog
   ) {
-    super(navigator, broker, restService, formBuilder);
+    super(navigator, broker, restService, formBuilder, changeDetector);
   }
 
   //#region Initializers
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      login: [{ value: this._initialItem.login, disabled: true }, [Validators.required]],
-      firstName: [{ value: this._initialItem.firstName, disabled: true }, [Validators.required, Validators.minLength(2)]],
-      lastName: [{ value: this._initialItem.lastName, disabled: true }, [Validators.required]],
-      phoneNumber: [{ value: this._initialItem.phoneNumber, disabled: true }, [Validators.required, phoneNumberValidator()]],
-      email: [{ value: this._initialItem.email, disabled: true }, [Validators.required, Validators.email]],
-      role: [{ value: this._initialItem.role, disabled: true }, [Validators.required]],
+      login: [{ value: '', disabled: true }, [Validators.required]],
+      firstName: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(2)]],
+      lastName: [{ value: '', disabled: true }, [Validators.required]],
+      phoneNumber: [{ value: '', disabled: true }, [Validators.required, phoneNumberValidator()]],
+      email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
+      role: [{ value: '', disabled: true }, [Validators.required]],
+    })
+  }
+
+  protected updateForm(user: SimpleUser): void {
+    this._form.patchValue({
+      login: user.login,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+      role: user.role,
     })
   }
 

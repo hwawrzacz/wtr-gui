@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
@@ -47,7 +47,8 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   constructor(private _navigator: NavigatorService<T>,
     private _itemDetailsBroker: ItemDetailsBrokerService<T>,
     protected _restService: CommonRestService<T>,
-    protected _formBuilder: FormBuilder
+    protected _formBuilder: FormBuilder,
+    private _changeDetector: ChangeDetectorRef
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;
@@ -58,7 +59,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this._itemId = this.getIdFromUrl();
     this._error = false;
     this._editMode = false;
-    this._form = this.buildEmptyForm();
+    this._form = this.buildForm();
     this.loadItem();
   }
 
@@ -75,16 +76,11 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     }
   }
 
-  protected reinitializeForm(): void {
-    this._form = this.buildForm();
-  }
-
-  private buildEmptyForm(): FormGroup {
-    return this._formBuilder.group({});
-  }
-
   /** Method which returns form group corresponding to item model map */
   protected abstract buildForm(): FormGroup;
+
+  /** Method which updates form */
+  protected abstract updateForm(item: T): void;
   //#endregion
 
   //#region Data loaders
@@ -102,7 +98,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
           this._loadingCounter--;
           if (!!item) {
             this._initialItem = item;
-            this.reinitializeForm();
+            this.updateForm(item);
             this._error = false;
           }
         }),
@@ -112,7 +108,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
 
   private loadDataFromBroker(): void {
     this._initialItem = this._itemDetailsBroker.item
-    this.reinitializeForm();
+    this.updateForm(this._initialItem);
   }
   //#endregion
 
@@ -130,8 +126,9 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   public onDiscardChanges(): void {
-    this.reinitializeForm();
+    this.updateForm(this._initialItem);
     this.disableEditMode();
+    this._changeDetector.detectChanges();
   }
 
   public enableEditMode() {

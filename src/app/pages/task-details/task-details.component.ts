@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take, tap } from 'rxjs/operators';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
@@ -42,13 +42,14 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   constructor(
     navigator: NavigatorService<Task>,
-    itemBrokerService: TaskDetailsBrokerService,
-    taskRestService: TaskService,
+    broker: TaskDetailsBrokerService,
+    restService: TaskService,
     formBuilder: FormBuilder,
+    changeDetector: ChangeDetectorRef,
     private _userRestService: UsersListService,
     private _snackBar: MatSnackBar,
   ) {
-    super(navigator, itemBrokerService, taskRestService, formBuilder);
+    super(navigator, broker, restService, formBuilder, changeDetector);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
@@ -62,12 +63,22 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   //#region Initializers
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      title: [this._initialItem.title, [Validators.required]],
-      priority: [this._initialItem.priority, [Validators.required]],
-      status: [this._initialItem.status, [Validators.required]],
-      description: [this._initialItem.description],
-      workers: [this._initialItem.workers],
+      title: ['', [Validators.required]],
+      priority: ['', [Validators.required]],
+      status: ['', [Validators.required]],
+      description: [''],
+      workers: [[]],
     });
+  }
+
+  protected updateForm(task: Task): void {
+    this._form.patchValue({
+      title: task.title,
+      priority: task.priority,
+      status: task.status,
+      description: task.description,
+      workers: task.workers,
+    })
   }
   //#endregion
 
