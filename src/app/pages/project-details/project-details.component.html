@@ -1,13 +1,17 @@
 <div class="container">
   <form [formGroup]="form" *ngIf="!isLoading && !error">
-    <header>
-      <h1>{{ stringId }}
-        <mat-form-field appearance="outline">
-          <input matInput type="text" formControlName="title" />
-        </mat-form-field>
-      </h1>
+    <p>
+      <a>Projekty</a>/
+      <a>{{ stringId }}</a>
+    </p>
 
-      <div class="header__button-wrapper">
+    <header class="item-details__header">
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" formControlName="title" />
+      </mat-form-field>
+
+      <div class="item-details__header__buttons">
         <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enableEditMode()">
           <mat-icon>edit</mat-icon>
           <span>Edit</span>
@@ -35,26 +39,17 @@
       </div>
     </header>
 
-    <section>
-      <h3>Manager</h3>
-      <div class="editable-input-wrapper manager-wrapper">
-        <input matInput *ngIf="!editMode" readonly
-          [value]="project && project.manager ? stringifyManager(project.manager) : ''" />
+    <!-- TODO: Replace temporarlity 'idManager' with 'manager' -->
+    <app-users-autocomplete [label]="'Manager'" [formControl]="managerFormControl" [onlyManagers]="true"
+      [singleSelection]="true" [initialValue]="project.idManager" (selectionChange)="updateTempManager($event)">
+    </app-users-autocomplete>
 
-        <app-user-search-select *ngIf="editMode" [onlyManagers]="true" [singleSelection]="true"
-          [initialValue]="project.manager" (selectionChange)="updateTempManager($event)">
-        </app-user-search-select>
-      </div>
-    </section>
-
-    <section>
-      <h3>Description</h3>
-      <div class="editable-input-wrapper description-wrapper">
-        <mat-form-field appearance="outline">
-          <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
-        </mat-form-field>
-      </div>
-    </section>
+    <div class="editable-input-wrapper description-wrapper">
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
+      </mat-form-field>
+    </div>
   </form>
 
   <section [ngClass]="isLoading || error ? 'hidden' : ''">

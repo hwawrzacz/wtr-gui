@@ -1,3 +1,5 @@
+@import '../../../variables';
+
 mat-form-field {
   box-sizing: border-box;
   width: 100%;
@@ -8,4 +10,8 @@ mat-form-field {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.mat-input-element:disabled {
+  color: $text-black !important;
 }

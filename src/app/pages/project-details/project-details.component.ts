@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { stringifyUser } from 'src/app/helpers/parsers';
 import { User } from 'src/app/model/user';
@@ -19,7 +19,12 @@ import { ProjectRestService } from 'src/app/services/project-rest.service';
 export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project> implements OnInit {
   //#region Getters and setters
   get stringId(): string {
-    return this.itemId;
+    return this._initialItem ? this._initialItem.stringId : '';
+    // return this.itemId;
+  }
+
+  get managerFormControl(): AbstractControl {
+    return this._form.get('manager');
   }
 
   get project(): Project {
@@ -46,9 +51,9 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#region Initializers
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      title: [this._initialItem.title, [Validators.required]],
-      manager: [this._initialItem.manager, [Validators.required]],
-      description: [this._initialItem.description]
+      title: [{ value: this._initialItem.title, disabled: true }, [Validators.required]],
+      manager: [{ value: this._initialItem.manager, disabled: true }, [Validators.required]],
+      description: [{ value: this._initialItem.description, disabled: true }]
     });
   }
   //#endregion
