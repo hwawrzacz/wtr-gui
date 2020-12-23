@@ -9,8 +9,9 @@ export enum WorkLogType {
 
 export interface WorkLog {
   id: string;
-  taskId: number;
+  taskId: string;
+  userId: string;
+  type: WorkLogType;
   user: SimpleUser;
   dateTime: number; // timestamp  
-  type: WorkLogType;
 }

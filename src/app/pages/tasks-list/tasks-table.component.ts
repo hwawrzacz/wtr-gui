@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
-import { StatusStringifier } from 'src/app/helpers/parsers';
+import { PriorityStringifier, StatusStringifier } from 'src/app/helpers/parsers';
 import { CommonItem } from 'src/app/model/common-item';
+import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
+import { Project } from 'src/app/model/project';
 import { Task } from 'src/app/model/task';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 
 @Component({
   selector: 'app-tasks-table',
@@ -21,27 +21,46 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
     this._detailsUrl = 'tasks';
     this._columnsDefinitions = [
       {
+        defName: 'id',
+        displayName: 'ID',
+        propertyName: 'stringId'
+      },
+      {
+        defName: 'projectStringId',
+        displayName: 'ID projektu',
+        propertyName: 'project',
+        formatter: (project: Project): string => {
+          return project.stringId;
+        }
+      },
+      {
         defName: 'title',
         displayName: 'Tytuł',
         propertyName: 'title'
       },
       {
-        defName: 'description',
-        displayName: 'Opis',
-        propertyName: 'description'
+        defName: 'date',
+        displayName: 'Termin',
+        propertyName: 'dutyDate',
+        formatter: (dateStr: string): string => {
+          return new Date(dateStr).toLocaleDateString('pl-PL');
+        }
       },
       {
         defName: 'status',
         displayName: 'Status',
-        propertyName: 'progressStatus',
-        formatter: (status: Status) => {
+        propertyName: 'status',
+        formatter: (status: Status): string => {
           return StatusStringifier.getStatusString(status);
         }
       },
       {
         defName: 'priority',
         displayName: 'Priorytet',
-        propertyName: 'priority'
+        propertyName: 'priority',
+        formatter: (priority: Priority): string => {
+          return PriorityStringifier.getPriorityString(priority);
+        }
       },
     ]
 
@@ -73,14 +92,11 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
   }
 
   public getClassForProperty(propName: string, value: string): string {
-    // TODO: Remove, when 'progressStatus' is changed to 'status' in API
-    if (propName == 'progressStatus') propName = 'status';
     return `${propName}-label ${propName}-label--${value}`;
   }
 
   public isFormattableProperty(propName: string): boolean {
-    // TODO: Change, when 'progressStatus' is changed to 'status' in API
-    return ['progressStatus', 'priority'].includes(propName);
+    return ['status', 'priority'].includes(propName);
   }
 
 }

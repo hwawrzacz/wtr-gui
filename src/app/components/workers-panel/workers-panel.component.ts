@@ -74,9 +74,9 @@ export class WorkersPanelComponent implements OnInit {
           this._workersLoading = false;
 
           if (!!this._selectedWorkersIds && this._selectedWorkersIds.length > 0) {
-            this._selectedWorkers = results.filter(worker => this._selectedWorkersIds.includes(worker._id));
+            this._selectedWorkers = results.items.filter(worker => this._selectedWorkersIds.includes(worker._id));
           } else if (!!this._selectedWorkers && this._selectedWorkers.length > 0) {
-            this._selectedWorkers = results.filter(worker => this._selectedWorkers.map(selWork => selWork._id).includes(worker._id));
+            this._selectedWorkers = results.items.filter(worker => this._selectedWorkers.map(selWork => selWork._id).includes(worker._id));
           }
         })
       ).subscribe();

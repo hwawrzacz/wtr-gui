@@ -10,6 +10,9 @@
       <span *ngIf="isClosed">
         Zadanie zamknięte
       </span>
+      <span *ngIf="!anyWorkLogExists">
+        Zadanie nierozpoczęte
+      </span>
     </div>
 
     <div class="controls" *ngIf="!isClosed">

@@ -23,15 +23,15 @@ export class WorkLoggerService {
   }
 
   get isWorking(): boolean {
-    return this._lastWorkLog.type === WorkLogType.WORK;
+    return this._lastWorkLog ? this._lastWorkLog.type === WorkLogType.WORK : false;
   }
 
   get isPaused(): boolean {
-    return [WorkLogType.BREAK, WorkLogType.AUTOBREAK].includes(this._lastWorkLog.type);
+    return this._lastWorkLog ? [WorkLogType.BREAK, WorkLogType.AUTOBREAK].includes(this._lastWorkLog.type) : false;
   }
 
   get isClosed(): boolean {
-    return this._lastWorkLog.type === WorkLogType.CLOSE;
+    return this._lastWorkLog ? this._lastWorkLog.type === WorkLogType.CLOSE : false;
   }
   //#endregion
 
@@ -59,7 +59,8 @@ export class WorkLoggerService {
   //#region Operators
   public startWork(): void {
     this._loadingCounter++;
-    this._restService.startWork().pipe(
+    // TODO: Make request
+    this._restService.startWork('123', '1234').pipe(
       take(1),
       tap(() => {
         this._loadingCounter--;
