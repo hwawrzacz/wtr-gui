@@ -4,6 +4,7 @@ import { Priority } from '../model/enums/priority';
 import { Status } from '../model/enums/status';
 import { SimpleUser } from '../model/simple-user';
 import { WorkLogType } from '../model/work-log';
+import { CreationResponseMessage } from '../model/enums/response-messages';
 
 export const stringifyUser = (user: User | SimpleUser) => `${user.firstName} ${user.lastName}`;
 
@@ -63,6 +64,25 @@ export class PositionStringifier {
       case Position.MANAGER: return 'Menedżer';
       case Position.ADMIN: return 'Administrator';
       default: return value;
+    }
+  }
+}
+
+export class CreationResponseParser {
+  public static parseCreationResponseMessage(message: CreationResponseMessage) {
+    switch (message) {
+      case CreationResponseMessage.LOGIN_IS_TAKEN: {
+        return 'Login jest już zajęty';
+      }
+      case CreationResponseMessage.INVALID_DUTY_DATE: {
+        return 'Termin zakończenia jest nieprawidłowy';
+      }
+      case CreationResponseMessage.PROJECT_VALIDATION_FAILED: {
+        return 'Pola nie są poprawne';
+      }
+      default: {
+        return 'Podczas tworzenia elementu wystąpił błąd.';
+      };
     }
   }
 }

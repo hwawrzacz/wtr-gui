@@ -123,7 +123,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
         // TODO (HW): Handle error properly
         catchError((e) => {
           this._error = true;
-          this.openErrorSnackBar(`Nie można pobrać danych z API. Następuje próba pobrania danych sztucznych.`);
+          this.openErrorSnackBar(`Nie można pobrać danych z API. Pobieranie danych sztucznych.`);
           this.getMockData()
           return of()
         })
@@ -132,7 +132,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   private getMockData(): void {
     this._loadingCounter++;
-    this._restService.find(this._query, this._pagination)
+    this._restService.findMock(this._query, this._pagination)
       .pipe(
         take(1),
         tap((result) => {

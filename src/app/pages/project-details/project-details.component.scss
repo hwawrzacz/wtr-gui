@@ -1,9 +1,17 @@
 @import '../../../variables';
 
+form {
+  flex: 1 1;
+}
+
 .manager {
   width: 250px !important;
 }
 
 .date {
   width: 250px;
+}
+
+.item-details__tasks {
+  flex: 1 1 100%;
 }
