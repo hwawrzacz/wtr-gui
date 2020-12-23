@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { take, tap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { stringifyUser } from 'src/app/helpers/parsers';
 import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from 'src/app/model/constants';
@@ -11,7 +11,6 @@ import { SimpleUser } from 'src/app/model/simple-user';
 import { Task } from 'src/app/model/task';
 import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { SingleProjectRestService } from 'src/app/services/rest/single-project-rest.service';
 import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -76,9 +75,9 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     formBuilder: FormBuilder,
     changeDetector: ChangeDetectorRef,
     snackBarService: SnackBarService,
-    private _projectRestService: SingleProjectRestService,
+    dialogService: MatDialog,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;

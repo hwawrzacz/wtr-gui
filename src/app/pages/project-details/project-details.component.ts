@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { PriorityStringifier, stringifyUser } from 'src/app/helpers/parsers';
 import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from 'src/app/model/constants';
@@ -58,8 +59,9 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
     restService: SingleProjectRestService,
     changeDetector: ChangeDetectorRef,
     snackBarService: SnackBarService,
+    dialogService: MatDialog,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;

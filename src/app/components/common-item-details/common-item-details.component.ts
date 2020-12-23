@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { of } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of } from 'rxjs';
 import { catchError, map, take, tap } from 'rxjs/operators';
 import { CreationResponseParser } from 'src/app/helpers/parsers';
 import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
@@ -11,6 +12,7 @@ import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.s
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { ConfirmationDialogComponent, ConfirmationDialogData } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-common-item-details',
@@ -59,6 +61,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     protected _formBuilder: FormBuilder,
     private _changeDetector: ChangeDetectorRef,
     private _snackBarService: SnackBarService,
+    protected _dialogService: MatDialog
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;
@@ -159,22 +162,32 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected patch<T>(name: string, value: T): void {
     this._restService.patch<T>(this._itemId, name, value)
       .pipe(
-        // TODO: Handle success and error SnackBar
-        tap(response => {
-          if (response) this.openSuccessSnackBar('Zaktualizowano wartość.');
-          else {
-            this.openErrorSnackBar('Podczas zapisywania wystąpił błąd.');
-            console.error(response);
-          }
+        map(res => {
+          const success = res === true;
+          const message = res.toString();
+          return { success: success, message: message } as CreationResponse;
         }),
-        catchError(e => of(console.error(e)))
+        tap(response => this.handeResponse(response, 'Zaktualizowano wartość.', 'Podczas zapisywania wystąpił błąd.')),
+        catchError(err => this.handeRequestError(err))
+      ).subscribe();
+  }
+
+  private deleteItem(): void {
+    this._restService.patch<boolean>(this._itemId, 'active', false)
+      .pipe(
+        map(res => {
+          const success = res === true;
+          const message = res.toString();
+          return { success: success, message: message } as CreationResponse;
+        }),
+        tap(response => this.handeResponse(response, 'Usunięto element.', 'Podczas usuwania elementu wystąpił błąd')),
+        catchError(err => this.handeRequestError(err))
       ).subscribe();
   }
 
   protected patchObject<T>(object: T): void {
     this._restService.patchObject<T>(this._itemId, object)
       .pipe(
-        // TODO: Handle success and error SnackBar
         map(res => {
           const success = res === true;
           const message = res.toString();
@@ -182,10 +195,23 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
         }),
         tap(response => {
           if (response.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
-          else this.handleCreationFailed(response.message);
+          else this.handleSavingFailed(response.message);
         }),
-        catchError(e => of(this.openErrorSnackBar('Podczas wysyłania zapytania wystąpił błąd.')))
+        catchError(err => this.handeRequestError(err))
       ).subscribe();
+  }
+
+  private handeResponse(response: CreationResponse, successMessage: string, errorMessage: string): any {
+    if (response.success) this.openSuccessSnackBar(successMessage);
+    else {
+      this.openErrorSnackBar(errorMessage);
+      console.error(response.message);
+    }
+  }
+
+  private handeRequestError(err: string): any {
+    console.error(err);
+    return of(this.openErrorSnackBar('Podczas wysyłania zapytania wystąpił błąd.'))
   }
 
   public onDiscardChanges(): void {
@@ -205,7 +231,25 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
   //#endregion
 
-  private handleCreationFailed(message: CreationResponseMessage) {
+  //#region Item deletion
+  public onItemDelete(): void {
+    this._dialogService.open(ConfirmationDialogComponent, {
+      data: {
+        title: "Usuwanie elementu",
+        message: "Tej akcji nie można cofnąć. Czy jestes pewien, że chcesz usunąć element?",
+      } as ConfirmationDialogData
+    }).afterClosed()
+      .pipe(
+        take(1),
+        tap(result => {
+          if (result) this.deleteItem();
+        })
+      )
+      .subscribe()
+  }
+  //#endregion
+
+  private handleSavingFailed(message: CreationResponseMessage) {
     const messageStr = CreationResponseParser.parseCreationResponseMessage(message);
     this.openErrorSnackBar(messageStr);
     this.updateForm(this._initialItem);

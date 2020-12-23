@@ -49,9 +49,9 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     formBuilder: FormBuilder,
     changeDetector: ChangeDetectorRef,
     snackBarService: SnackBarService,
-    private _dialogService: MatDialog,
+    dialogService: MatDialog,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService);
   }
 
   //#region Initializers
