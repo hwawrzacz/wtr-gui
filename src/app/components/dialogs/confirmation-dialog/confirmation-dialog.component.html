@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<p mat-dialog-content>{{ message }}</p>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="confirm()"> {{ confirmText || 'Tak' }}</button>
+  <button mat-raised-button (click)="discard()">Anuluj</button>
+</mat-dialog-actions>

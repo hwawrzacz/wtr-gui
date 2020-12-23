@@ -62,6 +62,7 @@ import { ErrorSnackBarComponent } from './components/snack-bars/error-snack-bar/
 import { InfoSnackBarComponent } from './components/snack-bars/info-snack-bar/info-snack-bar.component';
 import { CommonSnackBarComponent } from './components/snack-bars/common-snack-bar/common-snack-bar.component';
 import { WarningSnackBarComponent } from './components/snack-bars/warning-snack-bar/warning-snack-bar.component';
+import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { WarningSnackBarComponent } from './components/snack-bars/warning-snack-
     InfoSnackBarComponent,
     CommonSnackBarComponent,
     WarningSnackBarComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
