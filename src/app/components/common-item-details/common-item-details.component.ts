@@ -232,11 +232,12 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   //#endregion
 
   //#region Item deletion
-  public onItemDelete(): void {
+  public onDeleteItem(): void {
     this._dialogService.open(ConfirmationDialogComponent, {
       data: {
         title: "Usuwanie elementu",
         message: "Tej akcji nie można cofnąć. Czy jestes pewien, że chcesz usunąć element?",
+        warn: true,
       } as ConfirmationDialogData
     }).afterClosed()
       .pipe(

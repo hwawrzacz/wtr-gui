@@ -5,6 +5,7 @@ export interface ConfirmationDialogData {
   title: string;
   message: string;
   confirmText?: string;
+  warn?: boolean;
 }
 
 @Component({
@@ -16,6 +17,7 @@ export class ConfirmationDialogComponent implements OnInit {
   private _title: string;
   private _message: string;
   private _confirmText: string;
+  private _warn: boolean;
 
   get title(): string {
     return this._title;
@@ -29,6 +31,10 @@ export class ConfirmationDialogComponent implements OnInit {
     return this._confirmText;
   }
 
+  get warn(): boolean {
+    return this._warn;
+  }
+
   constructor(
     @Inject(MAT_DIALOG_DATA) data: ConfirmationDialogData,
     private _dialogRef: MatDialogRef<ConfirmationDialogComponent>
@@ -36,6 +42,7 @@ export class ConfirmationDialogComponent implements OnInit {
     this._title = data.title;
     this._message = data.message;
     this._confirmText = data.confirmText;
+    this._warn = data.warn;
   }
 
   ngOnInit(): void {
