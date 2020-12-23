@@ -14,9 +14,9 @@ export class PriorityStringifier {
 
   public static getPriorityString(value: Priority): string {
     switch (value) {
-      case Priority.LOW: return 'Low';
-      case Priority.MEDIUM: return 'Medium';
-      case Priority.HIGH: return 'High';
+      case Priority.LOW: return 'Niski';
+      case Priority.MEDIUM: return 'Normalny';
+      case Priority.HIGH: return 'Wysoki';
       default: return value;
     }
   }
@@ -29,9 +29,9 @@ export class StatusStringifier {
 
   public static getStatusString(value: Status): string {
     switch (value) {
-      case Status.NEW: return 'New';
-      case Status.IN_PROGRESS: return 'In progress';
-      case Status.DONE: return 'Done';
+      case Status.NEW: return 'Nowe';
+      case Status.IN_PROGRESS: return 'W trakcie';
+      case Status.DONE: return 'Zakończone';
       default: return value;
     }
   }
@@ -44,9 +44,9 @@ export class WorkLogTypeStringifier {
 
   public static getTypeString(value: WorkLogType): string {
     switch (value) {
-      case WorkLogType.BREAK: return 'Break';
-      case WorkLogType.AUTOBREAK: return 'Autobreak';
-      case WorkLogType.WORK: return 'Work';
+      case WorkLogType.BREAK: return 'Przerwa';
+      case WorkLogType.AUTOBREAK: return 'Przerwa automatyczna';
+      case WorkLogType.WORK: return 'Praca';
       default: return value;
     }
   }
@@ -59,9 +59,9 @@ export class PositionStringifier {
 
   public static getPositionString(value: Position): string {
     switch (value) {
-      case Position.EMPLOYEE: return 'User';
-      case Position.MANAGER: return 'Manager';
-      case Position.ADMIN: return 'Admin';
+      case Position.EMPLOYEE: return 'Pracownik';
+      case Position.MANAGER: return 'Menedżer';
+      case Position.ADMIN: return 'Administrator';
       default: return value;
     }
   }

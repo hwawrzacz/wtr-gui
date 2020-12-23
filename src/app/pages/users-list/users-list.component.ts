@@ -19,8 +19,8 @@ export class UsersListComponent extends CommonListViewComponent<User> {
   ) {
     super(restService, snackBarService, dialogService);
 
-    this._pageTitle = 'Users'
-    this._themeItemNameSingle = 'user';
+    this._pageTitle = 'Użytkownicy'
+    this._themeItemNameSingle = 'użytkownik';
   }
 
   public openItemCreationDialog(): void {

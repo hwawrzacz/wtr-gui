@@ -5,25 +5,25 @@
         7&nbsp;h 43&nbsp;min
       </span>
       <span *ngIf="isPaused">
-        Paused
+        Przerwa
       </span>
       <span *ngIf="isClosed">
-        Closed
+        Zadanie zamknięte
       </span>
     </div>
 
     <div class="controls" *ngIf="!isClosed">
       <button mat-button color="primary" *ngIf="!isWorking" (click)="startWork()" [disabled]="isClosed">
         <mat-icon>play_arrow</mat-icon>
-        <span>Start work</span>
+        <span>Rozpocznij prację</span>
       </button>
       <button mat-button color="primary" *ngIf="!isPaused" (click)="startBreak()" [disabled]="isClosed">
         <mat-icon>pause</mat-icon>
-        <span>Start break</span>
+        <span>Rozpocznij przerwę</span>
       </button>
       <button mat-button color="primary" *ngIf="isPaused" (click)="closeTask()" [disabled]="isClosed">
         <mat-icon>stop</mat-icon>
-        <span>Close task</span>
+        <span>Zamknij zadanie</span>
       </button>
     </div>
   </div>

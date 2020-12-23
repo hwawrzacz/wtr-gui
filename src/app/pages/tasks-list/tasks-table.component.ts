@@ -22,12 +22,12 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
     this._columnsDefinitions = [
       {
         defName: 'title',
-        displayName: 'Title',
+        displayName: 'Tytuł',
         propertyName: 'title'
       },
       {
         defName: 'description',
-        displayName: 'Description',
+        displayName: 'Opis',
         propertyName: 'description'
       },
       {
@@ -40,7 +40,7 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
       },
       {
         defName: 'priority',
-        displayName: 'Priority',
+        displayName: 'Priorytet',
         propertyName: 'priority'
       },
     ]
@@ -52,14 +52,14 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
           this.navigateToStatsWithData(item);
         },
         color: 'primary',
-        tooltip: 'Show statistics'
+        tooltip: 'Pokaż statystyki'
       },
       {
         icon: 'edit',
         action: (item: CommonItem) => {
           this.navigateToDetailsWithData(item, true);
         },
-        tooltip: 'Edit item'
+        tooltip: 'Edytuj element'
       },
       {
         icon: 'delete',
@@ -67,7 +67,7 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
           this.delete(item._id);
         },
         color: 'warn',
-        tooltip: 'Delete item'
+        tooltip: 'Usuń element'
       }
     ]
   }

@@ -154,9 +154,9 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       .pipe(
         // TODO: Handle success and error SnackBar
         tap(response => {
-          if (response) this.openSuccessSnackBar('Value updated successfully');
+          if (response) this.openSuccessSnackBar('Zaktualizowano wartość.');
           else {
-            this.openErrorSnackBar('Error while updating value');
+            this.openErrorSnackBar('Podczas zapisywania wystąpił błąd.');
             console.error(response);
           }
         }),
@@ -169,10 +169,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       .pipe(
         // TODO: Handle success and error SnackBar
         tap(response => {
-          if (response) this.openSuccessSnackBar('Item updated successfully');
-          else this.openErrorSnackBar('Error while updating item. Validation failed');
+          if (response) this.openSuccessSnackBar('');
+          else this.openErrorSnackBar('Podczas zapisywania wystąpił błąd walidacji.');
         }),
-        catchError(e => of(this.openErrorSnackBar('Error while updating item. Request failed.')))
+        catchError(e => of(this.openErrorSnackBar('Podczas wysyłania zapytania wystąpił błąd.')))
       ).subscribe();
   }
 

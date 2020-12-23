@@ -12,7 +12,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-common-creation-dialog',
-  templateUrl: './common-creation-dialog.component.html',
+  template: '',
   styleUrls: ['./common-creation-dialog.component.scss']
 })
 export abstract class CommonCreationDialogComponent<T> implements OnInit {
@@ -73,26 +73,26 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
 
   //#region Response handlers
   private handleItemNotAdded(error: string): void {
-    this.openErrorSnackBar('Error while adding user');
+    this.openErrorSnackBar('Podczas tworzenia elementu wystąpił błąd.');
     console.error(error);
   }
 
   private handleCreationFailed(message: string) {
     switch (message) {
       case CreationResponseMessage.LOGIN_IS_TAKEN: {
-        this.openErrorSnackBar('This login is already taken');
+        this.openErrorSnackBar('Login jest już zajęty');
         break;
       }
       case CreationResponseMessage.INVALID_DUTY_DATE: {
-        this.openErrorSnackBar('The duty date is invalid');
+        this.openErrorSnackBar('Termin zakończenia jest nieprawidłowy');
         break;
       }
       case CreationResponseMessage.PROJECT_VALIDATION_FAILED: {
-        this.openErrorSnackBar('Some fields are not valid');
+        this.openErrorSnackBar('Pola nie są poprawne');
         break;
       }
       default: {
-        this.openErrorSnackBar('Error while creating item');
+        this.openErrorSnackBar('Podczas tworzenia elementu wystąpił błąd.');
         console.error(message)
       };
     }
@@ -102,14 +102,6 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
   public abstract getErrorMessage(controlName: string): string;
 
   //#region Snackbar 
-  private openSuccessSnackBar(message: string) {
-    this._snackBarService.openSuccessSnackBar(message);
-  }
-
-  private openInfoSnackBar(message: string) {
-    this._snackBarService.openInfoSnackBar(message);
-  }
-
   private openErrorSnackBar(message: string) {
     this._snackBarService.openErrorSnackBar(message)
   }

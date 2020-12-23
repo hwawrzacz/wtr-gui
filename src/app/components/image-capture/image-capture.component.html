@@ -12,7 +12,7 @@
 
   <div class="image-wrapper">
     <canvas #imagePlaceholder></canvas>
-    <img *ngIf="!previewMode" src="{{ imageUrl }}" alt="Photo taken" />
+    <img *ngIf="!previewMode" src="{{ imageUrl }}" alt="Wykonane zdjęcie" />
     <div class="fx-center">
       <button mat-fab color="accent" *ngIf="!previewMode" (click)="retakePhoto()">
         <mat-icon>close</mat-icon>
@@ -21,8 +21,8 @@
   </div>
 
   <mat-form-field appearance="outline">
-    <mat-label>Input device</mat-label>
-    <mat-select placeholder="Select device" [disabled]="!previewMode"
+    <mat-label>Źródło</mat-label>
+    <mat-select placeholder="Wybierz urządzenie źródłowe" [disabled]="!previewMode"
       [value]="selectedDevice ? selectedDevice.id : null" (valueChange)="onInputDeviceChange($event)">
       <mat-option *ngFor="let device of devices" [value]="device.id">{{ device.label }}</mat-option>
     </mat-select>

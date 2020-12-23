@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
 import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
 import { Task } from 'src/app/model/task';
@@ -21,8 +19,8 @@ export class TasksListComponent extends CommonListViewComponent<Task> {
   ) {
     super(restService, snackBarService, dialogService);
 
-    this._pageTitle = 'Tasks';
-    this._themeItemNameSingle = 'task'
+    this._pageTitle = 'Zadania';
+    this._themeItemNameSingle = 'zadanie'
   }
 
   public openItemCreationDialog(): void {

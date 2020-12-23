@@ -1,19 +1,19 @@
-<h1 mat-dialog-title>Create project</h1>
+<h1 mat-dialog-title>Tworzenie projektu</h1>
 
 <mat-dialog-content>
   <form [formGroup]="form">
     <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
+      <mat-label>Tytuł</mat-label>
       <input matInput formControlName="title" />
       <mat-error>{{ getErrorMessage('title') }}</mat-error>
     </mat-form-field>
 
-    <app-users-autocomplete [onlyManagers]="true" [singleSelection]="true" [label]="'Manager'"
+    <app-users-autocomplete [onlyManagers]="true" [singleSelection]="true" [label]="'Menedżer'"
       [formControl]="managerFormControl" (selectionChange)="reassignManager($event)">
     </app-users-autocomplete>
 
     <mat-form-field appearance="outline">
-      <mat-label>Duty date</mat-label>
+      <mat-label>Termin zakończenia</mat-label>
       <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
       <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
       <mat-datepicker #dutyDate [disabled]="false"></mat-datepicker>
@@ -21,7 +21,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
+      <mat-label>Opis</mat-label>
       <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
       <mat-error>{{ getErrorMessage('description') }}</mat-error>
     </mat-form-field>
@@ -31,7 +31,7 @@
 <mat-dialog-actions align="end">
   <button mat-raised-button color="primary" [disabled]="!form.valid || isLoading" (click)="onSave()">
     <mat-spinner [diameter]="20" *ngIf="isLoading"></mat-spinner>
-    <span>Create</span>
+    <span>Dodaj</span>
   </button>
-  <button mat-button [disabled]="isLoading" (click)="closeDialog()">Cancel</button>
+  <button mat-button [disabled]="isLoading" (click)="closeDialog()">Anuluj</button>
 </mat-dialog-actions>
