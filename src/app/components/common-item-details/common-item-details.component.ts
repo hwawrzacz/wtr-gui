@@ -173,7 +173,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       .pipe(
         // TODO: Handle success and error SnackBar
         tap(response => {
-          if (response) this.openSuccessSnackBar('');
+          if (response) this.openSuccessSnackBar('Zmiany zostały zapisane');
           else this.openErrorSnackBar('Podczas zapisywania wystąpił błąd walidacji.');
         }),
         catchError(e => of(this.openErrorSnackBar('Podczas wysyłania zapytania wystąpił błąd.')))

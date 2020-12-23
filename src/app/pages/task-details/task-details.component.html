@@ -29,8 +29,9 @@
     </div>
 
     <p class="item-details__header__navigation">
-      <a class="link" [routerLink]="'/projects'">Projekty</a>&nbsp;/&nbsp;
-      <a class="link" [routerLink]="'/projects/'+ initialItem._id">{{ initialItem.projectStringId }}</a>&nbsp;/&nbsp;
+      <a class="link" [routerLink]="'/projects'">Projekty</a> /
+      <a class="link" [routerLink]="'/projects/'+ initialItem.project._id">{{ initialItem.project.stringId
+        }}</a> /
       <a class="link" [routerLink]="'/tasks/'+ itemId">{{ stringId }}</a>
     </p>
   </header>
@@ -47,6 +48,14 @@
       <section class="work-logger">
         <app-work-logger></app-work-logger>
       </section>
+
+      <mat-form-field appearance="outline" class="date">
+        <mat-label>Termin zakończenia</mat-label>
+        <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate" [max]="maxDate">
+        <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
+        <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
+        <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
+      </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Opis</mat-label>

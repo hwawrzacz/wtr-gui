@@ -27,7 +27,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   //#region Getters and setters
   get stringId(): string {
-    return this.itemId;
+    return this._initialItem ? this._initialItem.stringId : '';
   }
 
   get parentProject(): Project {
@@ -84,50 +84,71 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   //#region Initializers
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      title: ['', [Validators.required]],
-      priority: ['', [Validators.required]],
-      status: ['', [Validators.required]],
-      description: [''],
-      workers: [[]],
+      title: [{ value: '', disabled: true }, [Validators.required]],
+      priority: [{ value: '', disabled: true }, [Validators.required]],
+      dutyDate: [{ value: '', disabled: true }, [Validators.required]],
+      status: [{ value: '', disabled: true }, [Validators.required]],
+      description: [{ value: '', disabled: true }],
+      workers: [{ value: [], disabled: true }],
     });
-  }
-
-  protected updateForm(task: Task): void {
-    this._form.patchValue({
-      title: task.title,
-      priority: task.priority,
-      status: task.status,
-      description: task.description,
-      workers: task.workers,
-    })
   }
 
   private loadParentProject(): void {
     this._projectRestService.get(this._initialItem.idProject).pipe(
       take(1),
       tap(project => {
+        console.log(project);
         this._parentProject = project;
       })
     ).subscribe()
   }
   //#endregion
 
+  //#region Data updates
+  protected updateForm(task: Task): void {
+    this._form.patchValue({
+      title: task.title,
+      priority: task.priority,
+      status: task.status,
+      dutyDate: task.dutyDate,
+      description: task.description,
+      workers: task.workers,
+    })
+  }
+
+  protected parseItemFromForm(): Task {
+    return {
+      title: this._form.get('title').value,
+      priority: this._form.get('priority').value,
+      status: this._form.get('status').value,
+      dutyDate: this.parseDateToISOFormat(this._form.get('dutyDate').value),
+      description: this._form.get('description').value,
+      workers: this._form.get('workers').value,
+    } as Task;
+  }
+
   public updateWorkers(workers: SimpleUser[]): void {
     this._form.get('workers').patchValue(workers);
   }
+  //#endregion
 
 
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Pole jest wymagane.';
+    if (control.hasError('matDatepickerParse')) return 'Nieprawidłowy format daty.';
     else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
 
     return null;
   }
 
-  //#region Helpers
-  stringifyUser(user: SimpleUser): string {
+  //#region Parsers
+  public stringifyUser(user: SimpleUser): string {
     return stringifyUser(user);
+  }
+
+  private parseDateToISOFormat(dateStr: string): string {
+    return new Date(dateStr).toISOString();
   }
   //#endregion
 }
