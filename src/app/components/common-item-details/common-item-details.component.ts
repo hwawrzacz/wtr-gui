@@ -243,7 +243,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       .pipe(
         take(1),
         tap(result => {
-          if (result) this.deleteItem();
+          if (result) {
+            this.deleteItem();
+            this._navigator.navigateToMainSection(this._navigator.activeSection);
+          }
         })
       )
       .subscribe()

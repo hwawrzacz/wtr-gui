@@ -22,7 +22,7 @@
         <span>Pokaż statystyki</span>
       </button>
 
-      <button mat-stroked-button color="warn" *ngIf="!editMode">
+      <button mat-stroked-button color="warn" *ngIf="!editMode" (click)="onDeleteItem()">
         <mat-icon>delete</mat-icon>
         <span>Usuń</span>
       </button>
