@@ -1,9 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
-import { catchError, take, tap } from 'rxjs/operators';
+import { catchError, map, take, tap } from 'rxjs/operators';
+import { CreationResponseParser } from 'src/app/helpers/parsers';
+import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
+import { CreationResponse } from 'src/app/model/responses';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
@@ -172,9 +175,14 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this._restService.patchObject<T>(this._itemId, object)
       .pipe(
         // TODO: Handle success and error SnackBar
+        map(res => {
+          const success = res === true;
+          const message = res.toString();
+          return { success: success, message: message } as CreationResponse;
+        }),
         tap(response => {
-          if (response) this.openSuccessSnackBar('Zmiany zostały zapisane');
-          else this.openErrorSnackBar('Podczas zapisywania wystąpił błąd walidacji.');
+          if (response.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
+          else this.handleCreationFailed(response.message);
         }),
         catchError(e => of(this.openErrorSnackBar('Podczas wysyłania zapytania wystąpił błąd.')))
       ).subscribe();
@@ -196,6 +204,12 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this._form.disable();
   }
   //#endregion
+
+  private handleCreationFailed(message: CreationResponseMessage) {
+    const messageStr = CreationResponseParser.parseCreationResponseMessage(message);
+    this.openErrorSnackBar(messageStr);
+    this.updateForm(this._initialItem);
+  }
 
   //#region Form errors
   // TODO: Tmplement thing below

@@ -9,6 +9,7 @@ import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { CreationResponseParser } from 'src/app/helpers/parsers';
 
 @Component({
   selector: 'app-common-creation-dialog',
@@ -77,25 +78,9 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
     console.error(error);
   }
 
-  private handleCreationFailed(message: string) {
-    switch (message) {
-      case CreationResponseMessage.LOGIN_IS_TAKEN: {
-        this.openErrorSnackBar('Login jest już zajęty');
-        break;
-      }
-      case CreationResponseMessage.INVALID_DUTY_DATE: {
-        this.openErrorSnackBar('Termin zakończenia jest nieprawidłowy');
-        break;
-      }
-      case CreationResponseMessage.PROJECT_VALIDATION_FAILED: {
-        this.openErrorSnackBar('Pola nie są poprawne');
-        break;
-      }
-      default: {
-        this.openErrorSnackBar('Podczas tworzenia elementu wystąpił błąd.');
-        console.error(message)
-      };
-    }
+  private handleCreationFailed(message: CreationResponseMessage) {
+    const messageStr = CreationResponseParser.parseCreationResponseMessage(message);
+    this.openErrorSnackBar(messageStr);
   }
   //#endregion
 
