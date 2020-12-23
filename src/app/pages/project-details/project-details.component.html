@@ -1,10 +1,10 @@
 <div class="container">
-  <form [formGroup]="form" *ngIf="!isLoading && !error">
-    <p class="item-details__top-navigation">
-      <a class="link" [routerLink]="'/projects'">Projekty</a>&nbsp;/&nbsp;<a class="link"
-        [routerLink]="'/projects/'+ itemId">{{ stringId }}</a>
-    </p>
+  <p class="item-details__top-navigation">
+    <a class="link" [routerLink]="'/projects'">Projekty</a>&nbsp;/&nbsp;<a class="link"
+      [routerLink]="'/projects/'+ itemId">{{ stringId }}</a>
+  </p>
 
+  <form [formGroup]="form" *ngIf="!isLoading && !error">
     <header class="item-details__header">
       <mat-form-field appearance="outline">
         <mat-label>Tytuł</mat-label>

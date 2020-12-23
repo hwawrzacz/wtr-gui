@@ -28,6 +28,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     return this._itemId;
   }
 
+  get initialItem(): T {
+    return this._initialItem;
+  }
+
   get isLoading(): boolean {
     return this._loadingCounter > 0;
   }

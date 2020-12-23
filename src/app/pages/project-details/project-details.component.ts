@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { PriorityStringifier, stringifyUser } from 'src/app/helpers/parsers';
+import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from 'src/app/model/constants';
 import { Priority } from 'src/app/model/enums/priority';
 import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
@@ -19,9 +20,6 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './project-details.component.scss']
 })
 export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project> implements OnInit {
-  private readonly _titleMaxLength = 100;
-  private readonly _descriptionMaxLength = 500;
-
   //#region Getters and setters
   get stringId(): string {
     return this._initialItem ? this._initialItem.stringId : '';
@@ -45,11 +43,11 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   }
 
   get titleMaxLength(): number {
-    return this._titleMaxLength;
+    return TITLE_MAX_LENGTH;
   }
 
   get descriptionMaxLength(): number {
-    return this._descriptionMaxLength;
+    return DESCRIPTION_MAX_LENGTH;
   }
   //#endregion
 
@@ -74,10 +72,10 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#region Initializers
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      title: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(this._titleMaxLength)]],
+      title: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(this.titleMaxLength)]],
       manager: [{ value: null, disabled: true }, [Validators.required]],
       dutyDate: [{ value: '', disabled: true }, [Validators.required]],
-      description: [{ value: '', disabled: true }, [Validators.maxLength(this._descriptionMaxLength)]]
+      description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionMaxLength)]]
     });
   }
 
