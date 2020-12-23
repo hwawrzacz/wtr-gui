@@ -66,8 +66,9 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
 
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
-    if (control.hasError('required')) return 'Value is required';
-    if (control.hasError('matDatepickerParse')) return 'Invalid date format';
+    // Validators
+    if (control.hasError('required')) return 'Wartośc jest wymagana.';
+    if (control.hasError('matDatepickerParse')) return 'Nieprawidłowy format daty.';
     return null;
   }
 

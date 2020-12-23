@@ -89,12 +89,13 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
 
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
-    if (control.hasError('required')) return 'Value is required';
-    if (control.hasError('email')) return 'Value must be a valid email';
-    if (control.hasError('phoneNumber')) return 'Value must contain only digits';
-    if (control.hasError('minLength')) return 'Value is too short';
-    if (control.hasError('maxLength')) return 'Value is too long';
-    if (control.hasError('passwordMatches')) return 'Passwords are not the same';
+    // Validators
+    if (control.hasError('required')) return 'Wartośc jest wymagana.';
+    if (control.hasError('email')) return 'Nieprawidłowy format adresu email.';
+    if (control.hasError('phoneNumber')) return 'Pole może zawierać tylko cyfry.';
+    if (control.hasError('minLength')) return 'Wartość jest za krótka.';
+    if (control.hasError('maxLength')) return 'Wartość jest za długa.';
+    if (control.hasError('passwordMatches')) return 'Hasła nie są takie same.';
     return null;
   }
 

@@ -27,12 +27,12 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
       },
       {
         defName: 'firstName',
-        displayName: 'First name',
+        displayName: 'Imię',
         propertyName: 'firstName',
       },
       {
         defName: 'lastName',
-        displayName: 'Last name',
+        displayName: 'Nazwisko',
         propertyName: 'lastName',
       },
       {
@@ -42,7 +42,7 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
       },
       {
         defName: 'position',
-        displayName: 'Position',
+        displayName: 'Stanowisko',
         propertyName: 'role',
         formatter: (value: Position) => PositionStringifier.getPositionString(value)
       },
@@ -55,14 +55,14 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
           this.navigateToStatsWithData(item);
         },
         color: 'primary',
-        tooltip: 'Show statistics'
+        tooltip: 'Pokaż statystyki'
       },
       {
         icon: 'edit',
         action: (item: CommonItem) => {
           this.navigateToDetailsWithData(item, true);
         },
-        tooltip: 'Edit item'
+        tooltip: 'Edytuj element'
       },
       {
         icon: 'delete',
@@ -70,7 +70,7 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
           this.delete(item._id);
         },
         color: 'warn',
-        tooltip: 'Delete item'
+        tooltip: 'Usuń element'
       }
     ]
   }

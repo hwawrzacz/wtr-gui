@@ -130,8 +130,8 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
 
   public getErrorMessage(): string {
     if (!!this.formControl) {
-      if (this.formControl.hasError('required')) return 'Value is required';
-      else if (!this.formControl.valid) return 'Something is not yes';
+      if (this.formControl.hasError('required')) return 'Pole jest wymagane.';
+      else if (!this.formControl.valid) return 'Pole jest nieprawidłowe 🤐';
     }
     return null;
   }

@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { CommonItem } from 'src/app/model/common-item';
 import { Project } from 'src/app/model/project';
 import { User } from 'src/app/model/user';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { SingleProjectRestService } from 'src/app/services/rest/single-project-rest.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -25,12 +23,12 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
       },
       {
         defName: 'title',
-        displayName: 'Title',
+        displayName: 'Tytuł',
         propertyName: 'title',
       },
       {
         defName: 'manager',
-        displayName: 'Manager',
+        displayName: 'Menedżer',
         // TODO: Change to manager, when supported by backend
         propertyName: 'idManager',
         formatter: (user: User) => `${user.firstName} ${user.lastName}`,
@@ -53,14 +51,14 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
           this.navigateToStatsWithData(item);
         },
         color: 'primary',
-        tooltip: 'Show statistics'
+        tooltip: 'Pokaż statystyki'
       },
       {
         icon: 'edit',
         action: (item: CommonItem) => {
           this.navigateToDetailsWithData(item, true);
         },
-        tooltip: 'Edit item'
+        tooltip: 'Edytuj element'
       },
       {
         icon: 'delete',
@@ -68,7 +66,7 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
           this.delete(item._id);
         },
         color: 'warn',
-        tooltip: 'Delete item'
+        tooltip: 'Usuń element'
       }
     ]
   }

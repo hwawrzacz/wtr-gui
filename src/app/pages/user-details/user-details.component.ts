@@ -89,7 +89,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
             this._faceImageUrl = credentials.facePhoto;
             this._qrCodeUrl = credentials.qrCode;
           } else {
-            console.error('error while getting credentials');
+            console.error('Error while getting credentials');
             this._error = true;
           }
         })
@@ -117,10 +117,14 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   public openPasswordChangeDialog(): void {
     this._dialogService.open(PasswordChangeDialogComponent, {
       data: this._itemId
-    }).afterClosed().pipe(
-      take(1),
-      tap(res => console.log(`Password ${res ? '' : 'not '}changed`))
-    ).subscribe();
+    }).afterClosed()
+      .pipe(
+        take(1),
+        tap(res => res
+          ? this.openSuccessSnackBar("Hasło zostało zmienione.")
+          : this.openErrorSnackBar("Wystąpił błąd podczas zmiany hasła."))
+      )
+      .subscribe();
   }
   //#endregion
 
@@ -138,11 +142,12 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   //#region Helpers
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
-    if (control.hasError('required')) return 'Value is required';
-    if (control.hasError('email')) return 'Value must be a valid email';
-    if (control.hasError('phoneNumber')) return 'Value must contain only digits';
-    if (control.hasError('minLength')) return 'Value is too short';
-    if (control.hasError('maxLength')) return 'Value is too long';
+    if (control.hasError('required')) return 'Wartośc jest wymagana.';
+    if (control.hasError('email')) return 'Nieprawidłowy format adresu email.';
+    if (control.hasError('phoneNumber')) return 'Pole może zawierać tylko cyfry.';
+    if (control.hasError('minLength')) return 'Wartość jest za krótka.';
+    if (control.hasError('maxLength')) return 'Wartość jest za długa.';
+    if (control.hasError('passwordMatches')) return 'Hasła nie są takie same.';
   }
 
   public getPositionString(position: Position): string {

@@ -20,18 +20,18 @@ export class WorkLogsTableComponent extends CommonTableComponent<WorkLog> implem
       {
         defName: 'user',
         propertyName: 'user',
-        displayName: 'User',
+        displayName: 'Pracownik',
         formatter: (item: SimpleUser) => stringifyUser(item),
       },
       {
         defName: 'logDate',
         propertyName: 'dateTime',
-        displayName: 'Log time',
+        displayName: 'Data',
       },
       {
         defName: 'logType',
         propertyName: 'type',
-        displayName: 'Type',
+        displayName: 'Typ',
         formatter: (item: WorkLogType) => WorkLogTypeStringifier.getTypeString(item),
       },
     ];

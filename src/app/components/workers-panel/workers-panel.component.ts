@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { take, tap } from 'rxjs/operators';
 import { stringifyUser } from 'src/app/helpers/parsers';
-import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { User } from 'src/app/model/user';
@@ -82,7 +80,7 @@ export class WorkersPanelComponent implements OnInit {
       this._selectedWorkersIds.push(worker._id);
       this._workersChangeEmitter.emit(this._selectedWorkers);
     } else {
-      this.openInfoSnackBar('Worker is already added');
+      this.openInfoSnackBar('Pracownik jest już dodany.');
     }
   }
 

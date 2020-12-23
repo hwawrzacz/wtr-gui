@@ -119,9 +119,8 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
 
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
-    if (control.hasError('required')) return 'Value is required';
-    if (control.hasError('maxlength')) return 'Too many characters';
-    else if (control.valid) return 'Something is not yes';
+    if (control.hasError('required')) return 'Pole jest wymagane.';
+    else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
 
     return null;
   }

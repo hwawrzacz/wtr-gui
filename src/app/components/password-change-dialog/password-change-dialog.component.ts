@@ -66,12 +66,7 @@ export class PasswordChangeDialogComponent implements OnInit {
 
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
-    if (control.hasError('required')) return 'Password is required';
-    if (control.hasError('passwordMatches')) return 'Passwords are not the same';
-  }
-
-  public getPasswordErrorMessage(controlName: string): string {
-    const control = this._form.get(controlName);
-    if (control.hasError('passwordMatches')) return 'Passwords are not the same';
+    if (control.hasError('required')) return 'Hasło jest wymagane.';
+    if (control.hasError('passwordMatches')) return 'Hasła nie są takie same.';
   }
 }

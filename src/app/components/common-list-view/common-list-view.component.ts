@@ -123,7 +123,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
         // TODO (HW): Handle error properly
         catchError((e) => {
           this._error = true;
-          this.openErrorSnackBar(`Couldn't load items from API. Mock data loaded.`);
+          this.openErrorSnackBar(`Nie można pobrać danych z API. Następuje próba pobrania danych sztucznych.`);
           this.getMockData()
           return of()
         })
@@ -140,7 +140,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
           this._dataSource.refresh(result);
         }),
         // TODO (HW): Handle error properly
-        catchError(() => of(console.error(`Couldn't load data.`)))
+        catchError(() => of(console.error(`Nie można załadować danych.`)))
       ).subscribe();
   }
 
@@ -165,10 +165,10 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     return (
       tap(res => {
         if (!!res) {
-          this.openSuccessSnackBar(this.getAdditionSuccessMessage());
+          this.openSuccessSnackBar('Dodano element.');
           this.loadData();
         }
-        else this.openInfoSnackBar(this.getAdditionCancelledMessage());
+        else this.openInfoSnackBar('Anulowano dodawanie elementu.');
       })
     )
   }
@@ -199,11 +199,11 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   //#region Snackbar
   private openDeleteSuccessSnackBar(): void {
-    this.openSuccessSnackBar('Item deleted');
+    this.openSuccessSnackBar('Usunięto element.');
   }
 
   private openDeleteFailedSnackBar(errorMessage: string): void {
-    this.openErrorSnackBar(`Item was not deleted: ${errorMessage}`);
+    this.openErrorSnackBar(`Element nie został usunięty: ${errorMessage}.`);
   }
 
   private openSuccessSnackBar(message: string) {
@@ -218,15 +218,5 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     this._snackBarService.openErrorSnackBar(message);
   }
 
-  //#endregion
-
-  //#region Helpers 
-  private getAdditionSuccessMessage = (): string => {
-    return `${(this.themeItemNameSingle[0].toUpperCase())}${this.themeItemNameSingle.substr(1, this.themeItemNameSingle.length - 1)} created`;
-  }
-
-  private getAdditionCancelledMessage = (): string => {
-    return `Creating ${this.themeItemNameSingle} discarded`;
-  }
   //#endregion
 }
