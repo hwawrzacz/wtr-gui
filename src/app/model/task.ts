@@ -11,7 +11,7 @@ export interface Task {
   status: Status;
   priority: Priority;
   workers: string[];
-  idProject: number;
+  idProject: string;
   reporter: SimpleUser;
   creationDate: string;
   dutyDate: string;
