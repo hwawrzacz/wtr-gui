@@ -8,6 +8,7 @@ import { CreationResponse } from 'src/app/model/responses';
 import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-common-creation-dialog',
@@ -31,7 +32,7 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<CommonCreationDialogComponent<T>>,
     private _restService: CommonRestService<T>,
-    private _snackBar: MatSnackBar,
+    private _snackBarService: SnackBarService,
   ) { }
 
   ngOnInit(): void {
@@ -56,14 +57,16 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
       tap(res => {
         this._isLoading = false;
 
-        if (res.success)
+        if (res.success) {
           this.closeDialog(true);
+          this.openSuccessSnackBar('Item created successfully');
+        }
         else
           this.handleCreationFailed(res.message);
       }),
       catchError(err => {
         this._isLoading = false;
-        this.handleItemNotAdded();
+        this.handleItemNotAdded(err);
         return of()
       })
     ).subscribe();
@@ -71,40 +74,46 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
 
   //#region Response handlers
   /** Common */
-  private handleItemNotAdded(): void {
-    this.openSuccessSnackBar('Error while adding user');
+  private handleItemNotAdded(error: string): void {
+    this.openErrorSnackBar('Error while adding user');
+    console.error(error);
   }
 
   private handleCreationFailed(message: string) {
     switch (message) {
       case CreationResponseMessage.LOGIN_IS_TAKEN: {
-        this.openSuccessSnackBar('This login is already taken');
+        this.openErrorSnackBar('This login is already taken');
+        break;
+      }
+      case CreationResponseMessage.INVALID_DUTY_DATE: {
+        this.openErrorSnackBar('The duty date is invalid');
+        break;
+      }
+      case CreationResponseMessage.PROJECT_VALIDATION_FAILED: {
+        this.openErrorSnackBar('Some fields are not valid');
         break;
       }
       default: {
-        this.openSuccessSnackBar(message);
+        this.openErrorSnackBar('Error while creating item');
+        console.error(message)
       };
     }
   }
   //#endregion
 
-  public hasError(controlName: string): boolean {
-    return !this._form.get(controlName).valid;
-  };
-
   public abstract getErrorMessage(controlName: string): string;
 
   //#region Snackbar 
   private openSuccessSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok', { duration: SUCCESS_SNACKBAR_DURATION });
+    this._snackBarService.openSuccessSnackBar(message);
   }
 
   private openInfoSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok', { duration: INFO_SNACKBAR_DURATION });
+    this._snackBarService.openInfoSnackBar(message);
   }
 
   private openErrorSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok');
+    this._snackBarService.openErrorSnackBar(message)
   }
   //#endregion
 

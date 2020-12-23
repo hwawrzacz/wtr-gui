@@ -7,11 +7,11 @@ import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { Task } from 'src/app/model/task';
-import { UsersListRestService as UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
 import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { UsersListRestService as UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-task-details',
@@ -47,9 +47,9 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     formBuilder: FormBuilder,
     changeDetector: ChangeDetectorRef,
     private _userRestService: UsersListRestService,
-    snackBar: MatSnackBar,
+    snackBarService: SnackBarService,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBar);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;

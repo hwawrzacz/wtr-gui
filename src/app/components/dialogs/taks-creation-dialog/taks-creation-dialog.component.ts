@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PriorityStringifier } from 'src/app/helpers/parsers';
 import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
@@ -9,6 +8,7 @@ import { Project } from 'src/app/model/project';
 import { Task } from 'src/app/model/task';
 import { User } from 'src/app/model/user';
 import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
 
 @Component({
@@ -44,10 +44,10 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
     @Inject(MAT_DIALOG_DATA) private _initialProject: Project,
     dialogRef: MatDialogRef<TaksCreationDialogComponent>,
     restService: SingleTaskRestService,
-    snackBar: MatSnackBar,
+    snackBarService: SnackBarService,
     private _formBuilder: FormBuilder
   ) {
-    super(dialogRef, restService, snackBar)
+    super(dialogRef, restService, snackBarService)
   }
 
   ngOnInit(): void {

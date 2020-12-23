@@ -6,6 +6,7 @@ import { CommonListViewComponent } from 'src/app/components/common-list-view/com
 import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
 import { Task } from 'src/app/model/task';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -15,10 +16,10 @@ import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.serv
 export class TasksListComponent extends CommonListViewComponent<Task> {
   constructor(
     restService: TasksListRestService,
-    snackBar: MatSnackBar,
+    snackBarService: SnackBarService,
     dialogService: MatDialog
   ) {
-    super(restService, snackBar, dialogService);
+    super(restService, snackBarService, dialogService);
 
     this._pageTitle = 'Tasks';
     this._themeItemNameSingle = 'task'

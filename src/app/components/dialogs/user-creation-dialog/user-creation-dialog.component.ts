@@ -8,6 +8,7 @@ import { PositionStringifier } from 'src/app/helpers/parsers';
 import { Position } from 'src/app/model/enums/position';
 import { User } from 'src/app/model/user';
 import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { ImageCaptureDialogComponent } from '../../image-capture-dialog/image-capture-dialog.component';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
 
@@ -32,11 +33,11 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
   constructor(
     dialogRef: MatDialogRef<CommonCreationDialogComponent<User>>,
     restService: SingleUserRestService,
-    snackBar: MatSnackBar,
+    snackBarService: SnackBarService,
     private _formBuilder: FormBuilder,
     private _dialogService: MatDialog,
   ) {
-    super(dialogRef, restService, snackBar)
+    super(dialogRef, restService, snackBarService)
   }
 
   ngOnInit(): void {

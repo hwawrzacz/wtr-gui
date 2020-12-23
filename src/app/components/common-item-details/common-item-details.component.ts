@@ -1,18 +1,13 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { ERROR_SNACKBAR_DURATION, INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION, WARNING_SNACKBAR_DURATION } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
-import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { ErrorSnackBarComponent } from '../snack-bars/error-snack-bar/error-snack-bar.component';
-import { InfoSnackBarComponent } from '../snack-bars/info-snack-bar/info-snack-bar.component';
-import { SuccessSnackBarComponent } from '../snack-bars/success-snack-bar/success-snack-bar.component';
-import { WarningSnackBarComponent } from '../snack-bars/warning-snack-bar/warning-snack-bar.component';
+import { CommonRestService } from 'src/app/services/rest/common-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-common-item-details',
@@ -50,12 +45,13 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
   //#endregion
 
-  constructor(private _navigator: NavigatorService<T>,
+  constructor(
+    private _navigator: NavigatorService<T>,
     private _itemDetailsBroker: ItemDetailsBrokerService<T>,
     protected _restService: CommonRestService<T>,
     protected _formBuilder: FormBuilder,
     private _changeDetector: ChangeDetectorRef,
-    private _snackBar: MatSnackBar,
+    private _snackBarService: SnackBarService,
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;
@@ -206,32 +202,12 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
 
   // TODO: Export snack bars to SnackBarService
   //#region Snackbar
-  protected openSuccessSnackBar(message: string): void {
-    this._snackBar.openFromComponent(SuccessSnackBarComponent, {
-      data: { message: message },
-      duration: SUCCESS_SNACKBAR_DURATION,
-    });
-  }
+  protected openSuccessSnackBar = (message: string): void => this._snackBarService.openSuccessSnackBar(message);
 
-  protected openInfoSnackBar(message: string): void {
-    this._snackBar.openFromComponent(InfoSnackBarComponent, {
-      data: { message: message },
-      duration: INFO_SNACKBAR_DURATION,
-    });
-  }
+  protected openInfoSnackBar = (message: string): void => this._snackBarService.openInfoSnackBar(message);
 
-  protected openWarningSnackBar(message: string): void {
-    this._snackBar.openFromComponent(WarningSnackBarComponent, {
-      data: { message: message },
-      duration: WARNING_SNACKBAR_DURATION,
-    });
-  }
+  protected openWarningSnackBar = (message: string): void => this._snackBarService.openWarningSnackBar(message);
 
-  protected openErrorSnackBar(message: string): void {
-    this._snackBar.openFromComponent(ErrorSnackBarComponent, {
-      data: { message: message },
-      duration: ERROR_SNACKBAR_DURATION,
-    });
-  }
+  protected openErrorSnackBar = (message: string): void => this._snackBarService.openErrorSnackBar(message);
   //#endregion
 }

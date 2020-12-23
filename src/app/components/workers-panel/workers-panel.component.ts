@@ -7,6 +7,7 @@ import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { User } from 'src/app/model/user';
 import { UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-workers-panel',
@@ -41,7 +42,7 @@ export class WorkersPanelComponent implements OnInit {
 
   constructor(
     private _userRestService: UsersListRestService,
-    private _snackBar: MatSnackBar
+    private _snackBarService: SnackBarService
   ) {
     this._workersChangeEmitter = new EventEmitter<User[]>();
   }
@@ -93,16 +94,8 @@ export class WorkersPanelComponent implements OnInit {
   //#endregion
 
   //#region Snackbar
-  private openSuccessSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok', { duration: SUCCESS_SNACKBAR_DURATION });
-  }
-
   private openInfoSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok', { duration: INFO_SNACKBAR_DURATION });
-  }
-
-  private openErrorSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok');
+    this._snackBarService.openInfoSnackBar(message);
   }
   //#endregion
 

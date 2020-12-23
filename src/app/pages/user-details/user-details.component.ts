@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter, take, tap } from 'rxjs/operators';
 import { phoneNumberValidator } from 'src/app/helpers/custom-validators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
@@ -11,6 +10,7 @@ import { UserCredentials } from 'src/app/model/user-credentials';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonItemDetailsComponent } from '../../components/common-item-details/common-item-details.component';
 import { ImageCaptureDialogComponent } from '../../components/image-capture-dialog/image-capture-dialog.component';
 import { PasswordChangeDialogComponent } from '../../components/password-change-dialog/password-change-dialog.component';
@@ -48,10 +48,10 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     restService: SingleUserRestService,
     formBuilder: FormBuilder,
     changeDetector: ChangeDetectorRef,
-    snackBar: MatSnackBar,
+    snackBarService: SnackBarService,
     private _dialogService: MatDialog,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBar);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService);
   }
 
   //#region Initializers

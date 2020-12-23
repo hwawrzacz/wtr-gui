@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, OperatorFunction } from 'rxjs';
 import { catchError, map, take, tap } from 'rxjs/operators';
-import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
+import { CommonArrayResponse } from 'src/app/model/common-array-response';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { CommonResponse } from 'src/app/model/responses';
-import { CommonArrayResponse } from 'src/app/model/common-array-response';
 import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
 @Component({
@@ -87,7 +86,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   constructor(
     protected _restService: CommonListRestService<T>,
-    private _snackBar: MatSnackBar,
+    private _snackBarService: SnackBarService,
     protected _dialogService: MatDialog,
   ) {
     this._loadingCounter = 0;
@@ -208,15 +207,11 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   private openSuccessSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok', { duration: SUCCESS_SNACKBAR_DURATION });
-  }
-
-  private openInfoSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok', { duration: INFO_SNACKBAR_DURATION });
+    this._snackBarService.openSuccessSnackBar(message);
   }
 
   private openErrorSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok');
+    this._snackBarService.openErrorSnackBar(message);
   }
 
   //#endregion

@@ -2,16 +2,16 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { PriorityStringifier, stringifyUser } from 'src/app/helpers/parsers';
-import { User } from 'src/app/model/user';
+import { Priority } from 'src/app/model/enums/priority';
 import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
 import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
+import { User } from 'src/app/model/user';
 import { ProjectDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleProjectRestService } from 'src/app/services/rest/single-project-rest.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Priority } from 'src/app/model/enums/priority';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-project-details',
@@ -59,9 +59,9 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
     broker: ProjectDetailsBrokerService,
     restService: SingleProjectRestService,
     changeDetector: ChangeDetectorRef,
-    snackBar: MatSnackBar,
+    snackBarService: SnackBarService,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBar);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;

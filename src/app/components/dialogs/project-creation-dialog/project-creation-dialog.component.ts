@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Project } from 'src/app/model/project';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { User } from 'src/app/model/user';
 import { SingleProjectRestService } from 'src/app/services/rest/single-project-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
 
 @Component({
@@ -31,10 +31,10 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
   constructor(
     dialogRef: MatDialogRef<ProjectCreationDialogComponent>,
     restService: SingleProjectRestService,
-    snackBar: MatSnackBar,
+    snackBarService: SnackBarService,
     private _formBuilder: FormBuilder,
   ) {
-    super(dialogRef, restService, snackBar);
+    super(dialogRef, restService, snackBarService);
   }
 
   ngOnInit(): void {

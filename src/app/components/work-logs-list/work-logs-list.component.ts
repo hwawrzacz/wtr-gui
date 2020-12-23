@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { WorkLog } from 'src/app/model/work-log';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
 
 @Component({
@@ -22,10 +22,10 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
 
   constructor(
     restService: WorkLogsListRestService,
-    snackBar: MatSnackBar,
+    snackBarService: SnackBarService,
     dialogService: MatDialog
   ) {
-    super(restService, snackBar, dialogService);
+    super(restService, snackBarService, dialogService);
 
     const projectFilter = { name: 'taskId', values: [`${this._taskId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;

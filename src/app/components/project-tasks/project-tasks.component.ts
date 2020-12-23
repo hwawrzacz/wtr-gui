@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { Task } from 'src/app/model/task';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
 
 @Component({
@@ -23,10 +23,10 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
 
   constructor(
     restService: TasksListRestService,
-    snackBar: MatSnackBar,
+    snackBarService: SnackBarService,
     dialogService: MatDialog
   ) {
-    super(restService, snackBar, dialogService);
+    super(restService, snackBarService, dialogService);
     const projectFilter = { name: 'projectId', values: [`${this._projectId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
     this._pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
