@@ -6,7 +6,7 @@ import { Position } from 'src/app/model/enums/position';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
-import { UsersListService } from 'src/app/services/users-list.service';
+import { UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
 import { Pagination } from 'src/app/model/pagination';
 import { UserPipe } from 'src/app/pipes/user.pipe';
 import { FormControl } from '@angular/forms';
@@ -85,7 +85,7 @@ export class UserSearchSelectComponent implements OnInit {
     return this._filteredUsers;
   }
 
-  constructor(private _restService: UsersListService) {
+  constructor(private _restService: UsersListRestService) {
     this._loadingCounter = 0;
     this.selectionChangeEmitter = new EventEmitter<User>()
   }

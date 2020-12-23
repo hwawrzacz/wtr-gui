@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
 import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
 import { Task } from 'src/app/model/task';
-import { TasksListService } from 'src/app/services/tasks-list.service';
+import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -14,7 +14,7 @@ import { TasksListService } from 'src/app/services/tasks-list.service';
 })
 export class TasksListComponent extends CommonListViewComponent<Task> {
   constructor(
-    restService: TasksListService,
+    restService: TasksListRestService,
     snackBar: MatSnackBar,
     dialogService: MatDialog
   ) {

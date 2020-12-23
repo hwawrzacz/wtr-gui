@@ -6,7 +6,7 @@ import { CommonItem } from 'src/app/model/common-item';
 import { Position } from 'src/app/model/enums/position';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { UserRestService } from 'src/app/services/user-rest.service';
+import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
 
 @Component({
   selector: 'app-users-table',

@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Project } from 'src/app/model/project';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { User } from 'src/app/model/user';
-import { ProjectRestService } from 'src/app/services/project-rest.service';
+import { SingleProjectRestService } from 'src/app/services/rest/single-project-rest.service';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
 
 @Component({
@@ -30,7 +30,7 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
 
   constructor(
     dialogRef: MatDialogRef<ProjectCreationDialogComponent>,
-    restService: ProjectRestService,
+    restService: SingleProjectRestService,
     snackBar: MatSnackBar,
     private _formBuilder: FormBuilder,
   ) {

@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { CreationResponse } from 'src/app/model/responses';
 import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
-import { CommonRestService } from 'src/app/services/common-rest.service';
+import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
 
 @Component({

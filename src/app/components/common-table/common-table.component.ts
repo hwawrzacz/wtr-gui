@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { map, tap } from 'rxjs/operators';
 import { CommonItem } from 'src/app/model/common-item';
-import { CommonResponse } from 'src/app/model/responses';
-import { CommonRestService } from 'src/app/services/common-rest.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonDataSource } from '../../model/common-data-source';
 

@@ -7,7 +7,7 @@ import { matchOtherControlValidator, phoneNumberValidator } from 'src/app/helper
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { Position } from 'src/app/model/enums/position';
 import { User } from 'src/app/model/user';
-import { UserRestService } from 'src/app/services/user-rest.service';
+import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
 import { ImageCaptureDialogComponent } from '../../image-capture-dialog/image-capture-dialog.component';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
 
@@ -31,7 +31,7 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
 
   constructor(
     dialogRef: MatDialogRef<CommonCreationDialogComponent<User>>,
-    restService: UserRestService,
+    restService: SingleUserRestService,
     snackBar: MatSnackBar,
     private _formBuilder: FormBuilder,
     private _dialogService: MatDialog,

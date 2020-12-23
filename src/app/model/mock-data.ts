@@ -1,4 +1,4 @@
-import { CommonArrayResponse } from "../services/common-array-response";
+import { CommonArrayResponse } from "./common-array-response";
 import { Position } from "./enums/position";
 import { Priority } from './enums/priority';
 import { Status } from "./enums/status";

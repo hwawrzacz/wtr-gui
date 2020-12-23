@@ -10,7 +10,7 @@ import { SimpleUser } from 'src/app/model/simple-user';
 import { UserCredentials } from 'src/app/model/user-credentials';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { UserRestService } from 'src/app/services/user-rest.service';
+import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
 import { CommonItemDetailsComponent } from '../../components/common-item-details/common-item-details.component';
 import { ImageCaptureDialogComponent } from '../../components/image-capture-dialog/image-capture-dialog.component';
 import { PasswordChangeDialogComponent } from '../../components/password-change-dialog/password-change-dialog.component';
@@ -45,7 +45,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   constructor(
     navigator: NavigatorService<SimpleUser>,
     broker: ItemDetailsBrokerService<SimpleUser>,
-    restService: UserRestService,
+    restService: SingleUserRestService,
     formBuilder: FormBuilder,
     changeDetector: ChangeDetectorRef,
     snackBar: MatSnackBar,
@@ -80,7 +80,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   private loadCredentials() {
     this._loadingCounter++;
     this._error = false;
-    (this._restService as UserRestService).getCredentials(this._itemId)
+    (this._restService as SingleUserRestService).getCredentials(this._itemId)
       .pipe(
         take(1),
         tap((credentials: UserCredentials) => {

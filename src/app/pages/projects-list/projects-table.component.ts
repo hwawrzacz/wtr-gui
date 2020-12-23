@@ -5,7 +5,7 @@ import { CommonItem } from 'src/app/model/common-item';
 import { Project } from 'src/app/model/project';
 import { User } from 'src/app/model/user';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { ProjectRestService } from 'src/app/services/project-rest.service';
+import { SingleProjectRestService } from 'src/app/services/rest/single-project-rest.service';
 
 @Component({
   selector: 'app-projects-table',

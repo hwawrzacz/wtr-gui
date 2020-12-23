@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { take, tap } from 'rxjs/operators';
 import { matchOtherControlValidator } from 'src/app/helpers/custom-validators';
-import { UserRestService } from 'src/app/services/user-rest.service';
+import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
 
 @Component({
   selector: 'app-password-change-dialog',
@@ -29,7 +29,7 @@ export class PasswordChangeDialogComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _restService: UserRestService,
+    private _restService: SingleUserRestService,
     private _dialog: MatDialogRef<PasswordChangeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) userId: string
   ) {

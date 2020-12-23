@@ -4,7 +4,7 @@ import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { User } from 'src/app/model/user';
 import { UserPipe } from 'src/app/pipes/user.pipe';
-import { UsersListService } from 'src/app/services/users-list.service';
+import { UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
 import { CommonAutocompleteComponent } from '../common-autocomplete/common-autocomplete.component';
 
 
@@ -21,7 +21,7 @@ export class UsersAutocompleteComponent extends CommonAutocompleteComponent<User
     this._onlyManagers = value;
   }
 
-  constructor(restService: UsersListService) {
+  constructor(restService: UsersListRestService) {
     super(restService);
   }
 

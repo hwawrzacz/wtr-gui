@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
 import { UserCreationDialogComponent } from 'src/app/components/dialogs/user-creation-dialog/user-creation-dialog.component';
 import { User } from 'src/app/model/user';
-import { UsersListService } from 'src/app/services/users-list.service';
+import { UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
 
 @Component({
   selector: 'app-users-list',
@@ -14,7 +13,7 @@ import { UsersListService } from 'src/app/services/users-list.service';
 })
 export class UsersListComponent extends CommonListViewComponent<User> {
   constructor(
-    restService: UsersListService,
+    restService: UsersListRestService,
     dialogService: MatDialog,
     snackBar: MatSnackBar,
   ) {

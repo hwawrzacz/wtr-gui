@@ -5,7 +5,7 @@ import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { Task } from 'src/app/model/task';
-import { TasksListService } from 'src/app/services/tasks-list.service';
+import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
   }
 
   constructor(
-    restService: TasksListService,
+    restService: TasksListRestService,
     snackBar: MatSnackBar,
     dialogService: MatDialog
   ) {

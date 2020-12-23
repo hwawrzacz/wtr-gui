@@ -8,7 +8,7 @@ import { Status } from 'src/app/model/enums/status';
 import { Project } from 'src/app/model/project';
 import { Task } from 'src/app/model/task';
 import { User } from 'src/app/model/user';
-import { TaskService } from 'src/app/services/task.service';
+import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
 
 @Component({
@@ -43,7 +43,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
   constructor(
     @Inject(MAT_DIALOG_DATA) private _initialProject: Project,
     dialogRef: MatDialogRef<TaksCreationDialogComponent>,
-    restService: TaskService,
+    restService: SingleTaskRestService,
     snackBar: MatSnackBar,
     private _formBuilder: FormBuilder
   ) {

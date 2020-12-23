@@ -8,8 +8,8 @@ import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { CommonResponse } from 'src/app/model/responses';
-import { CommonArrayResponse } from 'src/app/services/common-array-response';
-import { CommonArrayRestService } from 'src/app/services/common-array-rest.service';
+import { CommonArrayResponse } from 'src/app/model/common-array-response';
+import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
 @Component({
@@ -86,7 +86,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   //#endregion
 
   constructor(
-    protected _restService: CommonArrayRestService<T>,
+    protected _restService: CommonListRestService<T>,
     private _snackBar: MatSnackBar,
     protected _dialogService: MatDialog,
   ) {

@@ -6,7 +6,7 @@ import { catchError, take, tap } from 'rxjs/operators';
 import { ERROR_SNACKBAR_DURATION, INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION, WARNING_SNACKBAR_DURATION } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
-import { CommonRestService } from 'src/app/services/common-rest.service';
+import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ErrorSnackBarComponent } from '../snack-bars/error-snack-bar/error-snack-bar.component';

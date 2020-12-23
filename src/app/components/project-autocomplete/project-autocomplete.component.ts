@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/model/project';
-import { ProjectsListService } from 'src/app/services/projects-list.service';
+import { ProjectsListRestService } from 'src/app/services/rest/projects-list-rest.service';
 import { CommonAutocompleteComponent } from '../common-autocomplete/common-autocomplete.component';
 
 @Component({
@@ -10,7 +10,7 @@ import { CommonAutocompleteComponent } from '../common-autocomplete/common-autoc
 })
 export class ProjectAutocompleteComponent extends CommonAutocompleteComponent<Project> implements OnInit {
 
-  constructor(restService: ProjectsListService) {
+  constructor(restService: ProjectsListRestService) {
     super(restService);
   }
 

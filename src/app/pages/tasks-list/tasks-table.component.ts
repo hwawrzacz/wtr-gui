@@ -6,7 +6,7 @@ import { CommonItem } from 'src/app/model/common-item';
 import { Status } from 'src/app/model/enums/status';
 import { Task } from 'src/app/model/task';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { TaskService } from 'src/app/services/task.service';
+import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 
 @Component({
   selector: 'app-tasks-table',

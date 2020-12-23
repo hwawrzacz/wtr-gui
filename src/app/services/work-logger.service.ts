@@ -3,7 +3,7 @@ import { take, tap } from 'rxjs/operators';
 import { Filter } from '../model/filter';
 import { Query } from '../model/query';
 import { WorkLog, WorkLogType } from '../model/work-log';
-import { WorkLogsListService } from './work-logs-list.service';
+import { WorkLogsListRestService } from './rest/work-logs-list-rest.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class WorkLoggerService {
   }
   //#endregion
 
-  constructor(private _restService: WorkLogsListService) {
+  constructor(private _restService: WorkLogsListRestService) {
     this._loadingCounter = 0;
     this.getLastWorkLog();
   }

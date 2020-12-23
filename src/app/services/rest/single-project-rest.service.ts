@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { mockTasks } from '../model/mock-data';
-import { Task } from '../model/task';
+import { mockProjects } from '../../model/mock-data';
+import { Project } from '../../model/project';
 import { CommonRestService } from './common-rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskService extends CommonRestService<Task> {
+export class SingleProjectRestService extends CommonRestService<Project> {
 
   constructor(http: HttpClient) {
-    super(http, 'tasks', mockTasks[0]);
+    super(http, 'projects', mockProjects[0]);
   }
 }

@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { WorkLog } from 'src/app/model/work-log';
-import { WorkLogsListService } from 'src/app/services/work-logs-list.service';
+import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
 
 @Component({
@@ -21,7 +21,7 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
   }
 
   constructor(
-    restService: WorkLogsListService,
+    restService: WorkLogsListRestService,
     snackBar: MatSnackBar,
     dialogService: MatDialog
   ) {

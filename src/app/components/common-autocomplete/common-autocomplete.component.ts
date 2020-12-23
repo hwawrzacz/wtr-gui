@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { tap } from 'rxjs/operators';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
-import { CommonArrayRestService } from 'src/app/services/common-array-rest.service';
+import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
 
 @Component({
   selector: 'app-common-autocomplete',
@@ -69,7 +69,7 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
   @Output('selectionChange') protected _selectionChangeEmitter: EventEmitter<T>;
   //#endregion
 
-  constructor(private _restService: CommonArrayRestService<T>) {
+  constructor(private _restService: CommonListRestService<T>) {
     this._loadingCounter = 0;
     this._query = { searchString: '', filters: [] } as Query;
     this._selectionChangeEmitter = new EventEmitter<T>()

@@ -6,7 +6,7 @@ import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { User } from 'src/app/model/user';
-import { UsersListService } from 'src/app/services/users-list.service';
+import { UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
 
 @Component({
   selector: 'app-workers-panel',
@@ -40,7 +40,7 @@ export class WorkersPanelComponent implements OnInit {
   //#endregion
 
   constructor(
-    private _userRestService: UsersListService,
+    private _userRestService: UsersListRestService,
     private _snackBar: MatSnackBar
   ) {
     this._workersChangeEmitter = new EventEmitter<User[]>();

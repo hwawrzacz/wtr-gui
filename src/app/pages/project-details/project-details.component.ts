@@ -9,7 +9,7 @@ import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { ProjectDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { ProjectRestService } from 'src/app/services/project-rest.service';
+import { SingleProjectRestService } from 'src/app/services/rest/single-project-rest.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Priority } from 'src/app/model/enums/priority';
 
@@ -57,7 +57,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
     navigator: NavigatorService<Project>,
     formBuilder: FormBuilder,
     broker: ProjectDetailsBrokerService,
-    restService: ProjectRestService,
+    restService: SingleProjectRestService,
     changeDetector: ChangeDetectorRef,
     snackBar: MatSnackBar,
   ) {
