@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { stringifyUser, WorkLogTypeStringifier } from 'src/app/helpers/parsers';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
-import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonTableComponent } from '../common-table/common-table.component';
 

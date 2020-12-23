@@ -84,7 +84,7 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
         break;
       }
       case CreationResponseMessage.INVALID_DUTY_DATE: {
-        this.openErrorSnackBar('Data jest nieprawidłowa');
+        this.openErrorSnackBar('Termin zakończenia jest nieprawidłowy');
         break;
       }
       case CreationResponseMessage.PROJECT_VALIDATION_FAILED: {
