@@ -30,6 +30,14 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     return this._initialItem ? this._initialItem.stringId : '';
   }
 
+  get projectStringId(): string {
+    return this._initialItem ? this._initialItem.project.stringId : '';
+  }
+
+  get projectId(): string {
+    return this._initialItem ? this._initialItem.project._id : '';
+  }
+
   get parentProject(): Project {
     return this._parentProject;
   }

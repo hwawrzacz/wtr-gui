@@ -85,13 +85,15 @@ export class WorkersPanelComponent implements OnInit {
 
   //#region Worker list manipulation
   public addWorker(worker: User) {
-    if (!this._selectedWorkersIds.includes(worker._id)) {
-      this._selectedWorkers.push(worker);
-      this._selectedWorkersIds.push(worker._id);
-      this._workersChangeEmitter.emit(this._selectedWorkers);
-      this.openInfoSnackBar('Pracownik został dodany. Pamiętaj o zapisaniu zmian.');
-    } else {
-      this.openInfoSnackBar('Pracownik jest już dodany.');
+    if (worker) {
+      if (!this._selectedWorkersIds.includes(worker._id)) {
+        this._selectedWorkers.push(worker);
+        this._selectedWorkersIds.push(worker._id);
+        this._workersChangeEmitter.emit(this._selectedWorkers);
+        this.openInfoSnackBar('Pracownik został dodany. Pamiętaj o zapisaniu zmian.');
+      } else {
+        this.openInfoSnackBar('Pracownik jest już dodany.');
+      }
     }
   }
 
