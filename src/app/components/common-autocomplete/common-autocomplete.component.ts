@@ -19,6 +19,7 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
 
   private _singleSelection: boolean;
   private _label: string;
+  private _readonly: boolean;
   private _formControl: FormControl;
 
   @ViewChild('input') inputItem: ElementRef;
@@ -40,6 +41,14 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
   }
   get label(): string {
     return this._label;
+  }
+
+  @Input('readonly')
+  set readonly(value: boolean) {
+    this._readonly = value;
+  }
+  get readonly(): boolean {
+    return this._readonly;
   }
 
   get isLoading(): boolean {

@@ -1,7 +1,8 @@
 <section class="container">
   <h3>Pracownicy</h3>
   <div class="search-wrapper">
-    <app-users-autocomplete [singleSelection]="false" (selectionChange)="addWorker($event)"></app-users-autocomplete>
+    <app-users-autocomplete [singleSelection]="false" [readonly]="!editMode" (selectionChange)="addWorker($event)">
+    </app-users-autocomplete>
   </div>
   <mat-list>
     <mat-list-item *ngIf="workersLoading">
@@ -12,7 +13,7 @@
 
     <mat-list-item *ngFor="let worker of selectedWorkers">
       <span>{{ stringifyUser(worker) }}</span>
-      <button mat-icon-button (click)="removeWorker(worker._id)">
+      <button mat-icon-button [disabled]="!editMode" (click)="removeWorker(worker._id)">
         <mat-icon>close</mat-icon>
       </button>
     </mat-list-item>

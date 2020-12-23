@@ -71,7 +71,8 @@
     </section>
   </section>
 
-  <app-workers-panel [selectedWorkers]="[]" [selectedWorkersIds]="[]" (workersChange)="updateWorkers($event)">
+  <app-workers-panel [selectedWorkers]="[]" [selectedWorkersIds]="[]" (workersChange)="updateWorkers($event)"
+    [editMode]="editMode">
   </app-workers-panel>
 </div>
 

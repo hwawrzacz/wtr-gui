@@ -16,6 +16,7 @@ export class WorkersPanelComponent implements OnInit {
   private _selectedWorkers: User[];
   private _selectedWorkersIds: string[];
   private _workersLoading: boolean;
+  private _editMode: boolean;
   @Output('workersChange') private _workersChangeEmitter: EventEmitter<User[]>;
 
   //#region Getters and setters
@@ -31,6 +32,15 @@ export class WorkersPanelComponent implements OnInit {
   @Input('selectedWorkersIds')
   set selectedWorkersIds(value: string[]) {
     this._selectedWorkersIds = value;
+  }
+
+  @Input('editMode')
+  set editMode(value: boolean) {
+    if (value === undefined) value = true;
+    this._editMode = value;
+  }
+  get editMode(): boolean {
+    return this._editMode;
   }
 
   get workersLoading(): boolean {
@@ -79,6 +89,7 @@ export class WorkersPanelComponent implements OnInit {
       this._selectedWorkers.push(worker);
       this._selectedWorkersIds.push(worker._id);
       this._workersChangeEmitter.emit(this._selectedWorkers);
+      this.openInfoSnackBar('Pracownik został dodany. Pamiętaj o zapisaniu zmian.');
     } else {
       this.openInfoSnackBar('Pracownik jest już dodany.');
     }
@@ -88,6 +99,7 @@ export class WorkersPanelComponent implements OnInit {
     this._selectedWorkers = this._selectedWorkers.filter(worker => worker._id !== id);
     this._selectedWorkers = this._selectedWorkers.filter(worker => worker._id !== id);
     this._workersChangeEmitter.emit(this._selectedWorkers);
+    this.openInfoSnackBar('Pracownik został usunięty. Pamiętaj o zapisaniu zmian.');
   }
   //#endregion
 

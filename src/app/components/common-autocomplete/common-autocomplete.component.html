@@ -1,8 +1,10 @@
 <mat-form-field appearance="outline">
   <mat-label *ngIf="!!label">{{ label }}</mat-label>
   <input #input matInput type="text" [formControl]="formControl" [matAutocomplete]="auto"
-    [value]="transformItem(initialValue)" (keyup)="onKeyUp($event)" (blur)="resetInput()" placeholder="{{ label }}" />
-  <button mat-icon-button matSuffix *ngIf="!!formControl && !formControl.disabled" (click)="clearSelection()">
+    [value]="transformItem(initialValue)" (keyup)="onKeyUp($event)" (blur)="resetInput()" placeholder="{{ label }}"
+    [readonly]="readonly" />
+  <button mat-icon-button matSuffix *ngIf="(!!formControl && !formControl.disabled) || (!formControl && !readonly)"
+    (click)="clearSelection()">
     <mat-icon>close</mat-icon>
   </button>
   <mat-error>{{ getErrorMessage() }}</mat-error>
