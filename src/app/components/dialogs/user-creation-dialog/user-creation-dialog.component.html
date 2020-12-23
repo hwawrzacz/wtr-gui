@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Create user</h1>
+<h1 mat-dialog-title>Stwórz użytkownika</h1>
 
 <mat-dialog-content>
   <form [formGroup]="form" class="personal-details">
-    <h3>Credentials</h3>
+    <h3>Dane logowania</h3>
     <section class="credentials__wrapper">
       <div class="credentials__inputs">
         <mat-form-field appearance="outline">
@@ -12,13 +12,13 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>New password</mat-label>
+          <mat-label>Nowe hasło</mat-label>
           <input matInput type="password" formControlName="password" />
           <mat-error>{{ getErrorMessage('password') }}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Repeat passwrod</mat-label>
+          <mat-label>Powtórz hasło</mat-label>
           <input matInput type="password" formControlName="repeatPassword" />
           <mat-error>{{ getErrorMessage('repeatPassword') }}
           </mat-error>
@@ -33,7 +33,7 @@
         <div class="fx-center">
           <button mat-button color="primary" (click)="openImageCaptureDialog()">
             <mat-icon>add_a_photo</mat-icon>
-            <span>Update face image</span>
+            <span>Zrób zdjęcie</span>
           </button>
         </div>
 
@@ -41,22 +41,22 @@
       </div>
     </section>
 
-    <h3>Personal details</h3>
+    <h3>Dane osobowe</h3>
     <section>
       <mat-form-field appearance="outline">
-        <mat-label>First name</mat-label>
+        <mat-label>Imię</mat-label>
         <input matInput formControlName="firstName" />
         <mat-error>{{ getErrorMessage('firstName') }}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Last name</mat-label>
+        <mat-label>Nazwisko</mat-label>
         <input matInput formControlName="lastName" />
         <mat-error>{{ getErrorMessage('lastName') }}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Phone number</mat-label>
+        <mat-label>Numer telefonu</mat-label>
         <input matInput formControlName="phoneNumber" />
         <mat-error>{{ getErrorMessage('phoneNumber') }}</mat-error>
       </mat-form-field>
@@ -68,7 +68,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Position</mat-label>
+        <mat-label>Stanowisko</mat-label>
         <mat-select formControlName="role">
           <mat-option *ngFor="let role of positionsList" [value]="role"> {{ getPositionString(role) }}
           </mat-option>
@@ -82,7 +82,7 @@
 <mat-dialog-actions align="end">
   <button mat-raised-button color="primary" [disabled]="!form.valid || isLoading" (click)="onSave()">
     <mat-spinner [diameter]="20" *ngIf="isLoading"></mat-spinner>
-    <span>Create</span>
+    <span>Zapisz</span>
   </button>
-  <button mat-button [disabled]="isLoading" (click)="closeDialog()">Cancel</button>
+  <button mat-button [disabled]="isLoading" (click)="closeDialog()">Anuluj</button>
 </mat-dialog-actions>

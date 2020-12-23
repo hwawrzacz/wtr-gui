@@ -4,36 +4,36 @@
     <form [formGroup]="form" *ngIf="!isLoading && !error">
       <header>
         <h1>{{ stringId }}
-            <mat-form-field appearance="outline">
-              <input matInput type="text" formControlName="title" />
-            </mat-form-field>
+          <mat-form-field appearance="outline">
+            <input matInput type="text" formControlName="title" />
+          </mat-form-field>
         </h1>
 
 
         <div class="header__button-wrapper">
           <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enableEditMode()">
             <mat-icon>edit</mat-icon>
-            <span>Edit</span>
+            <span>Edytuj</span>
           </button>
-      
+
           <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onSaveChanges()">
             <mat-icon>save</mat-icon>
-            <span>Save changes</span>
+            <span>Zapisz zmiany</span>
           </button>
-      
+
           <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onDiscardChanges()">
             <mat-icon>close</mat-icon>
-            <span>Discard changes</span>
+            <span>Odrzuć zmiany</span>
           </button>
-      
+
           <button mat-stroked-button color="primary" *ngIf="!editMode">
             <mat-icon>pie_chart</mat-icon>
-            <span>Show staistics</span>
+            <span>Pokaż statystyki</span>
           </button>
-      
+
           <button mat-stroked-button color="warn" *ngIf="!editMode">
             <mat-icon>delete</mat-icon>
-            <span>Delete</span>
+            <span>Usuń</span>
           </button>
         </div>
       </header>
@@ -43,16 +43,15 @@
       </section>
 
       <section>
-        <h3>Description</h3>
-          <mat-form-field appearance="outline" >
-            <textarea matInput formControlName="description"
-              cdkTextareaAutosize></textarea>
-          </mat-form-field>
+        <h3>Opis</h3>
+        <mat-form-field appearance="outline">
+          <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
+        </mat-form-field>
       </section>
     </form>
 
     <section [ngClass]="isLoading || error ? 'hidden' : ''">
-      <h3>History</h3>
+      <h3>Historia</h3>
       <div class="task-history-wrapper">
         <app-work-logs-list [taskId]="this.itemId"></app-work-logs-list>
       </div>
@@ -60,7 +59,7 @@
   </section>
 
   <section class="workers-panel">
-    <h3>Workers</h3>
+    <h3>Pracownicy</h3>
     <div class="search-wrapper">
       <app-user-search-select [singleSelection]="false" (selectionChange)="addWorker($event)"></app-user-search-select>
     </div>
@@ -79,7 +78,7 @@
       </mat-list-item>
 
       <mat-list-item *ngIf="(!workers || !workers.length) && !workersLoading">
-        <span>No workers.</span>
+        <span>Brak pracowników.</span>
       </mat-list-item>
     </mat-list>
   </section>

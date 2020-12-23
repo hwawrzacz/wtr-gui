@@ -7,7 +7,7 @@
 
     <header class="item-details__header">
       <mat-form-field appearance="outline">
-        <mat-label>Title</mat-label>
+        <mat-label>Tytuł</mat-label>
         <input matInput #titleInput type="text" formControlName="title" />
         <mat-hint>{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
         <mat-error>{{ getErrorMessage('title') }}</mat-error>
@@ -16,40 +16,40 @@
       <div class="item-details__header__buttons">
         <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enableEditMode()">
           <mat-icon>edit</mat-icon>
-          <span>Edit</span>
+          <span>Edytuj</span>
         </button>
 
         <button mat-stroked-button color="primary" *ngIf="editMode" [disabled]="!form.valid" (click)="onSaveChanges()">
           <mat-icon>save</mat-icon>
-          <span>Save changes</span>
+          <span>Zapisz zmiany</span>
         </button>
 
         <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onDiscardChanges()">
           <mat-icon>close</mat-icon>
-          <span>Discard changes</span>
+          <span>odrzuć zmiany</span>
         </button>
 
         <button mat-stroked-button color="primary" *ngIf="!editMode">
           <mat-icon>pie_chart</mat-icon>
-          <span>Show staistics</span>
+          <span>Pokaż satystyki</span>
         </button>
 
         <button mat-stroked-button color="warn" *ngIf="!editMode">
           <mat-icon>delete</mat-icon>
-          <span>Delete</span>
+          <span>Usuń</span>
         </button>
       </div>
     </header>
 
     <!-- TODO: Replace temporarlity 'idManager' with 'manager' -->
     <div class="manager">
-      <app-users-autocomplete [label]="'Manager'" [formControl]="managerFormControl" [onlyManagers]="true"
+      <app-users-autocomplete [label]="'Menedżer'" [formControl]="managerFormControl" [onlyManagers]="true"
         [singleSelection]="true" [initialValue]="project.idManager" (selectionChange)="updateTempManager($event)">
       </app-users-autocomplete>
     </div>
 
     <mat-form-field appearance="outline" class="date">
-      <mat-label>Duty date</mat-label>
+      <mat-label>Termin zakończenia</mat-label>
       <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
       <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
       <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
@@ -58,7 +58,7 @@
 
     <div class="editable-input-wrapper description-wrapper">
       <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
+        <mat-label>Opis</mat-label>
         <textarea matInput #descriptionInput formControlName="description" cdkTextareaAutosize></textarea>
         <mat-hint>{{ descriptionInput.value.length || 0}}/{{ descriptionMaxLength }}</mat-hint>
         <mat-error>{{ getErrorMessage('description') }}</mat-error>
@@ -67,7 +67,7 @@
   </form>
 
   <section [ngClass]="isLoading || error ? 'hidden' : ''">
-    <h3>Tasks</h3>
+    <h3>Zadania</h3>
     <div class="tasks-list-wrapper">
       <app-project-tasks [projectId]="stringId"></app-project-tasks>
     </div>

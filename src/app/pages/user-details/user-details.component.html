@@ -1,36 +1,36 @@
 <header>
-  <h1>User details</h1>
+  <h1>Szczegóły użytkownika</h1>
   <div class="header__button-wrapper">
     <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enableEditMode()">
       <mat-icon>edit</mat-icon>
-      <span>Edit</span>
+      <span>Edytuj</span>
     </button>
 
     <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onSaveChanges()">
       <mat-icon>save</mat-icon>
-      <span>Save changes</span>
+      <span>Zapisz zmiany</span>
     </button>
 
     <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onDiscardChanges()">
       <mat-icon>close</mat-icon>
-      <span>Discard changes</span>
+      <span>Odrzuć zmiany</span>
     </button>
 
     <button mat-stroked-button color="primary" *ngIf="!editMode">
       <mat-icon>pie_chart</mat-icon>
-      <span>Show staistics</span>
+      <span>Pokaż statystyki</span>
     </button>
 
     <button mat-stroked-button color="warn" *ngIf="!editMode">
       <mat-icon>delete</mat-icon>
-      <span>Delete</span>
+      <span>Usuń</span>
     </button>
   </div>
 </header>
 
 <div class="container">
   <form [formGroup]="form" *ngIf="!isLoading && !error" class="personal-details">
-    <h2>Personal details</h2>
+    <h2>Dane osobowe</h2>
 
     <mat-form-field appearance="outline">
       <mat-label>Login</mat-label>
@@ -39,19 +39,19 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>First name</mat-label>
+      <mat-label>Imię</mat-label>
       <input matInput formControlName="firstName" />
       <mat-error>{{ getErrorMessage('firstName') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Last name</mat-label>
+      <mat-label>Nazwisko</mat-label>
       <input matInput formControlName="lastName" />
       <mat-error>{{ getErrorMessage('lastName') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Phone number</mat-label>
+      <mat-label>Numer telefonu</mat-label>
       <input matInput formControlName="phoneNumber" />
       <mat-error>{{ getErrorMessage('phoneNumber') }}</mat-error>
     </mat-form-field>
@@ -63,7 +63,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Position</mat-label>
+      <mat-label>Stanowisko</mat-label>
       <mat-select formControlName="role">
         <mat-option *ngFor="let role of positionsList" [value]="role"> {{ getPositionString(role) }}
         </mat-option>
@@ -73,7 +73,7 @@
   </form>
 
   <div *ngIf="!isLoading && !error" class="credentials-wrapper">
-    <h2>Credentials</h2>
+    <h2>Dane logowania</h2>
 
     <div class="button-wrapper">
       <button mat-raised-button color="primary" (click)="openPasswordChangeDialog()">Change password</button>
@@ -86,7 +86,7 @@
         </figure>
         <button mat-button color="primary" (click)="openImageCaptureDialog()">
           <mat-icon>add_a_photo</mat-icon>
-          <span>Update face image</span>
+          <span>Zrób zdjęcie</span>
         </button>
         <app-image-uploader (imageChanged)="setPreviewAndUpdateImage($event)"></app-image-uploader>
       </div>
@@ -97,7 +97,7 @@
         </figure>
         <button mat-button color="primary">
           <mat-icon>download</mat-icon>
-          <a download="{{ login }}qrcode.jpg" href="{{ qrCodeUrl }}">Download QR code</a>
+          <a download="{{ login }}qrcode.jpg" href="{{ qrCodeUrl }}">Pobierz kod QR</a>
         </button>
       </div>
     </div>

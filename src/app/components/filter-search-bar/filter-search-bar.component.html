@@ -1,7 +1,7 @@
 <div class="search-wrapper">
   <mat-form-field appearance="outline">
     <mat-icon matPrefix>search</mat-icon>
-    <input matInput type="text" placeholder="Search" (keyup)="onSeachChange($event)" />
+    <input matInput type="text" placeholder="Szukaj" (keyup)="onSeachChange($event)" />
   </mat-form-field>
 
   <div class=" filters-wrapper">
@@ -15,11 +15,11 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Priority</mat-label>
+      <mat-label>Priorytet</mat-label>
       <mat-select multiple (selectionChange)="onPriorityFilterChange($event)">
         <mat-option *ngFor="let priority of priorities" name="priority" [value]="priority">
-          <span
-            [attr.class]="'priority-label priority-label--' + priority">{{ getPriorityString(priority) | titlecase }}</span>
+          <span [attr.class]="'priority-label priority-label--' + priority">{{ getPriorityString(priority) | titlecase
+            }}</span>
         </mat-option>
       </mat-select>
     </mat-form-field>

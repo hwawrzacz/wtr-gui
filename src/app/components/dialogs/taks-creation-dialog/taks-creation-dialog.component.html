@@ -1,16 +1,16 @@
-<h1 mat-dialog-title>Create task</h1>
+<h1 mat-dialog-title>Stwórz zadanie</h1>
 
 <mat-dialog-content cdkScrollable>
   <form [formGroup]="form">
-    <h3>Task details</h3>
+    <h3>Szczegóły zadania</h3>
     <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
+      <mat-label>Tytuł</mat-label>
       <input matInput formControlName="title" />
       <mat-error>{{ getErrorMessage('title') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Priority</mat-label>
+      <mat-label>Priorytet</mat-label>
       <mat-select formControlName="priority">
         <mat-option *ngFor="let priority of priorities" name="priority" [value]="priority">
           <span [attr.class]="'priority-label priority-label--' + priority">{{ getPriorityString(priority) | titlecase
@@ -20,12 +20,12 @@
       <mat-error>{{ getErrorMessage('priority') }}</mat-error>
     </mat-form-field>
 
-    <app-project-autocomplete [formControl]="projectFormControl" [initialValue]="initialProject" [label]="'Project'"
+    <app-project-autocomplete [formControl]="projectFormControl" [initialValue]="initialProject" [label]="'Projekt'"
       [singleSelection]="true">
     </app-project-autocomplete>
 
     <mat-form-field appearance="outline">
-      <mat-label>Duty date</mat-label>
+      <mat-label>Termin zakończenia</mat-label>
       <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
       <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
       <mat-datepicker #dutyDate [disabled]="false"></mat-datepicker>
@@ -33,7 +33,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
+      <mat-label>Opis</mat-label>
       <textarea matInput formControlName="description" cdkTextareaAutosize></textarea>
       <mat-error>{{ getErrorMessage('description') }}</mat-error>
     </mat-form-field>
@@ -46,7 +46,7 @@
 <mat-dialog-actions align="end">
   <button mat-raised-button color="primary" [disabled]="!form.valid || isLoading" (click)="onSave()">
     <mat-spinner [diameter]="20" *ngIf="isLoading"></mat-spinner>
-    <span>Create</span>
+    <span>Zapisz</span>
   </button>
-  <button mat-button [disabled]="isLoading" (click)="closeDialog()">Cancel</button>
+  <button mat-button [disabled]="isLoading" (click)="closeDialog()">Anuluj</button>
 </mat-dialog-actions>

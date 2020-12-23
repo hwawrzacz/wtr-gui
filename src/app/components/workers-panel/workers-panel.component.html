@@ -1,5 +1,5 @@
 <section class="container">
-  <h3>Workers</h3>
+  <h3>Pracownicy</h3>
   <div class="search-wrapper">
     <app-users-autocomplete [singleSelection]="false" (selectionChange)="addWorker($event)"></app-users-autocomplete>
   </div>
@@ -18,7 +18,7 @@
     </mat-list-item>
 
     <mat-list-item *ngIf="(!selectedWorkers || !selectedWorkers.length) && !workersLoading">
-      <span>No workers.</span>
+      <span>Brak pracowników.</span>
     </mat-list-item>
   </mat-list>
 </section>

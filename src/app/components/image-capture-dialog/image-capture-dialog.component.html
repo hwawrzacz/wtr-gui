@@ -1,8 +1,8 @@
-<h1>Take a picture of you</h1>
+<h1>Zrób zdjęcie</h1>
 <mat-dialog-content>
   <app-image-capture (photoChange)="onPhotoChange($event)"></app-image-capture>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button color="primary" [disabled]="!imageExists" (click)="onSave()">Save</button>
-  <button mat-button color="primary" (click)="onClose()">Close</button>
+  <button mat-raised-button color="primary" [disabled]="!imageExists" (click)="onSave()">Zapisz</button>
+  <button mat-button color="primary" (click)="onClose()">Zamknij</button>
 </mat-dialog-actions>
