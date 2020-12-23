@@ -46,7 +46,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   }
 
   get workers(): SimpleUser[] {
-    return this._workers;
+    return this._initialItem ? this.initialItem.workers : [];
   }
 
   // Form constraints
