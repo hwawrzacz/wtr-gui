@@ -4,6 +4,7 @@ import { PriorityStringifier, StatusStringifier } from 'src/app/helpers/parsers'
 import { CommonItem } from 'src/app/model/common-item';
 import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
+import { Project } from 'src/app/model/project';
 import { Task } from 'src/app/model/task';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
@@ -24,15 +25,14 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
         displayName: 'ID',
         propertyName: 'stringId'
       },
-      // TODO: Add parent project string id when available
-      // {
-      //   defName: 'projectStringId',
-      //   displayName: 'ID projektu',
-      //   propertyName: 'project',
-      //   formatter: (project: Project): string => {
-      //     return project.stringId;
-      //   }
-      // },
+      {
+        defName: 'projectStringId',
+        displayName: 'ID projektu',
+        propertyName: 'project',
+        formatter: (project: Project): string => {
+          return project.stringId;
+        }
+      },
       {
         defName: 'title',
         displayName: 'Tytuł',
