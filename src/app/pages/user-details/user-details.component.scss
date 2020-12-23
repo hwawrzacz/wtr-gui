@@ -1,38 +1,15 @@
 @import '../../../variables';
 
-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  
-  h1 {
-    margin-bottom: 0;
-  }
-  margin-bottom: $spacing-regular;
-}
-
 .container {
+  flex: 100%;
   display: flex;
   justify-content: center;
-}
-
-.editable-input-wrapper {
-  display: flex;
-  align-items: center;
 }
 
 .personal-details {
   display: flex;
   flex: 2 2;
   flex-direction: column;
-  // max-width: 300px;
-
-  mat-form-field {
-    width: 100%;
-    margin-bottom: $spacing-regular;
-    padding: 0 1em;
-  }
 
   .mat-select-value-text,
   .mat-input-element {

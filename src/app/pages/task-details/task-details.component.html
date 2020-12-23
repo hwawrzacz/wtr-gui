@@ -1,4 +1,4 @@
-<div class="container">
+<div class="item-details">
   <header class="item-details__header">
     <h1>Szczegóły zadania</h1>
     <div class="item-details__header__buttons">
@@ -7,7 +7,7 @@
         <span>Edytuj</span>
       </button>
 
-      <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onSaveChanges()">
+      <button mat-stroked-button color="primary" *ngIf="editMode" [disabled]="!form.valid" (click)="onSaveChanges()">
         <mat-icon>save</mat-icon>
         <span>Zapisz zmiany</span>
       </button>

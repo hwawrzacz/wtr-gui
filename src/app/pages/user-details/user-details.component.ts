@@ -38,7 +38,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   }
 
   public get login(): string {
-    return this._initialItem.login;
+    return this._initialItem ? this._initialItem.login : '';
   }
   //#endregion
 

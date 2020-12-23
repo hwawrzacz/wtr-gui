@@ -1,45 +1,46 @@
-<div class="container">
-  <p class="item-details__top-navigation">
-    <a class="link" [routerLink]="'/projects'">Projekty</a>&nbsp;/&nbsp;<a class="link"
-      [routerLink]="'/projects/'+ itemId">{{ stringId }}</a>
-  </p>
+<div class="item-details">
+  <header class="item-details__header">
+    <h1>Szczegóły projektu</h1>
+    <div class="item-details__header__buttons">
+      <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enableEditMode()">
+        <mat-icon>edit</mat-icon>
+        <span>Edytuj</span>
+      </button>
+
+      <button mat-stroked-button color="primary" *ngIf="editMode" [disabled]="!form.valid" (click)="onSaveChanges()">
+        <mat-icon>save</mat-icon>
+        <span>Zapisz zmiany</span>
+      </button>
+
+      <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onDiscardChanges()">
+        <mat-icon>close</mat-icon>
+        <span>Odrzuć zmiany</span>
+      </button>
+
+      <button mat-stroked-button color="primary" *ngIf="!editMode">
+        <mat-icon>pie_chart</mat-icon>
+        <span>Pokaż satystyki</span>
+      </button>
+
+      <button mat-stroked-button color="warn" *ngIf="!editMode">
+        <mat-icon>delete</mat-icon>
+        <span>Usuń</span>
+      </button>
+    </div>
+
+    <p class="item-details__header__navigation">
+      <a class="link" [routerLink]="'/projects'">Projekty</a> /
+      <a class="link" [routerLink]="'/projects/'+ itemId">{{ stringId }}</a>
+    </p>
+  </header>
 
   <form [formGroup]="form" *ngIf="!isLoading && !error">
-    <header class="item-details__header">
-      <mat-form-field appearance="outline">
-        <mat-label>Tytuł</mat-label>
-        <input matInput #titleInput type="text" formControlName="title" />
-        <mat-hint>{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
-        <mat-error>{{ getErrorMessage('title') }}</mat-error>
-      </mat-form-field>
-
-      <div class="item-details__header__buttons">
-        <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enableEditMode()">
-          <mat-icon>edit</mat-icon>
-          <span>Edytuj</span>
-        </button>
-
-        <button mat-stroked-button color="primary" *ngIf="editMode" [disabled]="!form.valid" (click)="onSaveChanges()">
-          <mat-icon>save</mat-icon>
-          <span>Zapisz zmiany</span>
-        </button>
-
-        <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onDiscardChanges()">
-          <mat-icon>close</mat-icon>
-          <span>odrzuć zmiany</span>
-        </button>
-
-        <button mat-stroked-button color="primary" *ngIf="!editMode">
-          <mat-icon>pie_chart</mat-icon>
-          <span>Pokaż satystyki</span>
-        </button>
-
-        <button mat-stroked-button color="warn" *ngIf="!editMode">
-          <mat-icon>delete</mat-icon>
-          <span>Usuń</span>
-        </button>
-      </div>
-    </header>
+    <mat-form-field appearance="outline">
+      <mat-label>Tytuł</mat-label>
+      <input matInput #titleInput type="text" formControlName="title" />
+      <mat-hint>{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
+      <mat-error>{{ getErrorMessage('title') }}</mat-error>
+    </mat-form-field>
 
     <!-- TODO: Replace temporarlity 'idManager' with 'manager' -->
     <div class="manager">
@@ -66,11 +67,9 @@
     </div>
   </form>
 
-  <section [ngClass]="isLoading || error ? 'hidden' : ''">
+  <section class="item-details__tasks" [ngClass]="isLoading || error ? 'hidden' : ''">
     <h3>Zadania</h3>
-    <div class="tasks-list-wrapper">
-      <app-project-tasks [projectId]="stringId"></app-project-tasks>
-    </div>
+    <app-project-tasks [projectId]="stringId"></app-project-tasks>
   </section>
 </div>
 

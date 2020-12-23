@@ -1,34 +1,44 @@
 @import '../../../variables.scss';
 
-.item-details__top-navigation {
-  font-size: 1.2em;
-
-  a {
-    color: $color-primary;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.item-details__header {
+.item-details {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
 
-  &__title {
-    flex: 1 1;
-  }
-  
-  &__buttons {
+  &__header {
+    flex: 1 1 100%;
+
     display: flex;
-    flex-wrap: nowrap;
-
-    margin: 0.25em;
-    padding-bottom: 1.34375em;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: $spacing-regular;
     
-    & > button {
-      margin-left: $header-button-margin
+    h1 {
+      flex: 1 1;
+      white-space: nowrap;
+      margin-bottom: 0;
+    }
+  
+    &__navigation {
+      width: 100%;
+      font-size: 1.2em;
+      margin-top: $spacing-small;
+  
+      a {
+        color: $color-primary;
+  
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    &__buttons {
+      display: flex;
+      flex-wrap: nowrap;
+      
+      & > button:not(:first-child) {
+        margin-left: $header-button-margin
+      }
     }
   }
 }

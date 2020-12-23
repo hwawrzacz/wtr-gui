@@ -78,7 +78,6 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.loadParentProject();
   }
 
   //#region Initializers
@@ -91,16 +90,6 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
       description: [{ value: '', disabled: true }],
       workers: [{ value: [], disabled: true }],
     });
-  }
-
-  private loadParentProject(): void {
-    this._projectRestService.get(this._initialItem.idProject).pipe(
-      take(1),
-      tap(project => {
-        console.log(project);
-        this._parentProject = project;
-      })
-    ).subscribe()
   }
   //#endregion
 
