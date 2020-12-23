@@ -71,8 +71,6 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
     } as User
   }
 
-  /** Common */
-
   public openImageCaptureDialog(): void {
     this._dialogService.open(ImageCaptureDialogComponent)
       .afterClosed()

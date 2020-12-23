@@ -132,7 +132,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       if (patchObject[key] === this._initialItem[key]) delete patchObject[key];
     });
 
-    console.log(patchObject);
     this.patchObject<T>(patchObject);
   }
 

@@ -39,12 +39,10 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
     this._form = this.buildForm();
   }
 
-  /** Common abstract */
   protected abstract buildForm(): FormGroup;
 
   protected abstract parseItemFromForm(): T;
 
-  /** Common */
   public onSave(): void {
     this._isLoading = true;
     const item = this.parseItemFromForm();
@@ -58,8 +56,9 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
         this._isLoading = false;
 
         if (res.success) {
+          /** Success message unlike errors messages should be handled in component which 
+           * opens this dialog, so there is no need to handle this message from here */
           this.closeDialog(true);
-          this.openSuccessSnackBar('Item created successfully');
         }
         else
           this.handleCreationFailed(res.message);
@@ -73,7 +72,6 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
   }
 
   //#region Response handlers
-  /** Common */
   private handleItemNotAdded(error: string): void {
     this.openErrorSnackBar('Error while adding user');
     console.error(error);
