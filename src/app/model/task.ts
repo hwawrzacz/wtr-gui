@@ -1,5 +1,6 @@
 import { Priority } from './enums/priority';
 import { Status } from './enums/status';
+import { Project } from './project';
 import { SimpleUser } from './simple-user';
 
 export interface Task {
@@ -13,6 +14,7 @@ export interface Task {
   workers: string[];
   idProject: string;
   reporter: SimpleUser;
+  project: Project;
   creationDate: string;
   dutyDate: string;
 }

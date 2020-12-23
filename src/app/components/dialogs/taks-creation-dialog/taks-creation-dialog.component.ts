@@ -80,6 +80,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
       projectStringId: null,
       reporter: null,
       stringId: null,
+      project: null,
       status: Status.NEW,
       title: this._form.get('title').value,
       idProject: this._form.get('project').value._id,
