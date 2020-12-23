@@ -168,7 +168,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
           this.openSuccessSnackBar(this.getAdditionSuccessMessage());
           this.loadData();
         }
-        else this.openErrorSnackBar(this.getAdditionCancelledMessage());
+        else this.openInfoSnackBar(this.getAdditionCancelledMessage());
       })
     )
   }
@@ -208,6 +208,10 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   private openSuccessSnackBar(message: string) {
     this._snackBarService.openSuccessSnackBar(message);
+  }
+
+  private openInfoSnackBar(message: string) {
+    this._snackBarService.openInfoSnackBar(message);
   }
 
   private openErrorSnackBar(message: string) {

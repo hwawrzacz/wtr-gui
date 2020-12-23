@@ -13,6 +13,6 @@ export class InfoSnackBarComponent extends CommonSnackBarComponent {
     @Inject(MAT_SNACK_BAR_DATA) data: SnackBarData,
     snackBarRef: MatSnackBarRef<InfoSnackBarComponent>,
   ) {
-    super(data, 'info', '', snackBarRef)
+    super(data, 'info', 'info', snackBarRef)
   }
 }

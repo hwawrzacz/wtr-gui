@@ -12,10 +12,10 @@
   span {
     flex: 1 1;
   }
-
-  &.error {
+  
+  &.info {
     mat-icon:not(:last-child) {
-      color: $color-red;
+      color: $text-white;
     }
   }
 
@@ -28,6 +28,12 @@
   &.warning {
     mat-icon:not(:last-child) {
       color: $color-orange;
+    }
+  }
+
+  &.error {
+    mat-icon:not(:last-child) {
+      color: $color-red;
     }
   }
 }
