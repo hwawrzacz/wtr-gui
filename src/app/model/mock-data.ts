@@ -113,7 +113,7 @@ export const mockTasks: CommonArrayResponse<Task> = {
       description: 'Lorem ipsum dolor sit amet something else',
       status: Status.IN_PROGRESS,
       priority: Priority.HIGH,
-      workers: ['1', '2', '3', '4'],
+      workers: [],
       reporter: {
         _id: '1',
         login: 'jowick',
@@ -135,7 +135,7 @@ export const mockTasks: CommonArrayResponse<Task> = {
       description: 'Lorem ipsum dolor sit amet something else',
       status: Status.NEW,
       priority: Priority.MEDIUM,
-      workers: ['1', '2', '3', '4'],
+      workers: [],
       reporter: {
         _id: '2',
         login: 'stespie',
