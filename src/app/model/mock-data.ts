@@ -205,7 +205,7 @@ export const mockWorkLogs: CommonArrayResponse<WorkLog> = {
   items: [
     {
       id: '234',
-      taskId: 1,
+      taskId: '1',
       user: {
         id: '1',
         login: 'jowick',
@@ -220,7 +220,7 @@ export const mockWorkLogs: CommonArrayResponse<WorkLog> = {
     } as WorkLog,
     {
       id: '234',
-      taskId: 1,
+      taskId: '1',
       user: {
         id: '1',
         login: 'jowick',
@@ -235,7 +235,7 @@ export const mockWorkLogs: CommonArrayResponse<WorkLog> = {
     } as WorkLog,
     {
       id: '234',
-      taskId: 1,
+      taskId: '1',
       user: {
         id: '1',
         login: 'jowick',
