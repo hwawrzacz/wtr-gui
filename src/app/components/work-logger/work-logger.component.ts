@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkLog, WorkLogType } from 'src/app/model/work-log';
+import { WorkLog } from 'src/app/model/work-log';
 import { WorkLoggerService } from 'src/app/services/work-logger.service';
 
 @Component({
@@ -10,6 +10,10 @@ import { WorkLoggerService } from 'src/app/services/work-logger.service';
 export class WorkLoggerComponent implements OnInit {
   get isLoading(): boolean {
     return this._loggerService.isLoading;
+  }
+
+  get anyWorkLogExists(): boolean {
+    return !!this.lastWorkLog;
   }
 
   get lastWorkLog(): WorkLog {
