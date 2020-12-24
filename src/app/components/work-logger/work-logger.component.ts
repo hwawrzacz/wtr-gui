@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, take, tap } from 'rxjs/operators';
-import { CreationResponseParser } from 'src/app/helpers/parsers';
+import { USER_ID_MOCK } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
-import { Query } from 'src/app/model/query';
 import { CommonResponse, CreationResponse } from 'src/app/model/responses';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
@@ -67,7 +66,7 @@ export class WorkLoggerComponent implements OnInit {
   //#region Data loaders
   private loadLastWorkLog(): void {
     this._loadingCounter++;
-    const userId = '5fe1ca5095fd3b00045a45e8'
+    const userId = USER_ID_MOCK
     const filter = { name: 'userId', values: [`${userId}`] } as Filter;
     const pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
 

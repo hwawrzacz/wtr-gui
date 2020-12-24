@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { USER_ID_MOCK } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { WorkLog } from 'src/app/model/work-log';
@@ -27,8 +28,11 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
   ) {
     super(restService, snackBarService, dialogService);
 
-    const projectFilter = { name: 'taskId', values: [`${this._taskId}`] } as Filter;
-    this._query = { searchString: '', filters: [projectFilter] } as Query;
+    // TODO: Get user id from login service when available
+    const userId = USER_ID_MOCK;
+    const taskFilter = { name: 'idTask', values: [`${this._taskId}`] } as Filter;
+    const userFilter = { name: 'idUser', values: [`${userId}`] } as Filter;
+    this._query = { searchString: '', filters: [taskFilter, userFilter] };
   }
 
   ngOnInit(): void {

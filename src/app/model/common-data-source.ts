@@ -10,7 +10,7 @@ export class CommonDataSource<T> extends DataSource<T> {
   }
 
   public refresh(data: T[]) {
-    this.data.next(data);
+    this.data.next(data || []);
   }
 
   connect(): Observable<T[]> {
