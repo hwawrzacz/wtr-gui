@@ -4,5 +4,6 @@ export interface CreationResponse extends CommonResponse<CreationResponseMessage
 
 export interface CommonResponse<T> {
   success: boolean;
-  message: T;
+  message?: T;
+  details?: any;
 }

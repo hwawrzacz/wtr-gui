@@ -33,7 +33,8 @@ export class CommonRestService<T> {
     return this._http.get<T>(url);
   }
 
-  public find(query: Query, pagination?: Pagination): Observable<any> {
+  // TODO: Add proper response type
+  public find(query?: Query, pagination?: Pagination): Observable<any> {
     try {
       return this.findInApi(query, pagination);
     } catch {
@@ -41,8 +42,8 @@ export class CommonRestService<T> {
     }
   }
 
-  public findMock(query: Query, pagination?: Pagination): Observable<any> {
-    const searchString = query.searchString
+  public findMock(query?: Query, pagination?: Pagination): Observable<any> {
+    const searchString = !!query ? query.searchString : '';
     return of(
       this._mockData
         .filter(item => {
@@ -64,8 +65,10 @@ export class CommonRestService<T> {
     ).pipe(delay(500));
   }
 
-  public findInApi(query: Query, pagination?: Pagination): Observable<CommonArrayResponse<T>> {
-    const params = new HttpParams().append('query', JSON.stringify(query)).append('pagination', JSON.stringify(pagination));
+  public findInApi(query?: Query, pagination?: Pagination): Observable<CommonArrayResponse<T>> {
+    const params = !!query
+      ? new HttpParams().append('query', JSON.stringify(query)).append('pagination', JSON.stringify(pagination))
+      : new HttpParams().append('pagination', JSON.stringify(pagination));
     const url = `${environment.apiUrl}/${this._url}`;
     return this._http.get<CommonArrayResponse<T>>(url, { params: params });
   }

@@ -1,94 +1,48 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { take, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Filter } from '../model/filter';
+import { mockWorkLogs } from '../model/mock-data';
 import { Query } from '../model/query';
+import { CreationResponse } from '../model/responses';
 import { WorkLog, WorkLogType } from '../model/work-log';
-import { WorkLogsListRestService } from './rest/work-logs-list-rest.service';
+import { CommonRestService } from './rest/common-rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WorkLoggerService {
-  private readonly USER_ID = 2;
-  private _lastWorkLog: WorkLog;
-  private _loadingCounter: number;
+export class WorkLoggerService extends CommonRestService<WorkLog> {
 
-  //#region Getters and setters
-  get isLoading(): boolean {
-    return this._loadingCounter > 0;
-  }
-
-  get lastWorkLog(): WorkLog {
-    return this._lastWorkLog;
-  }
-
-  get isWorking(): boolean {
-    return this._lastWorkLog ? this._lastWorkLog.type === WorkLogType.WORK : false;
-  }
-
-  get isPaused(): boolean {
-    return this._lastWorkLog ? [WorkLogType.BREAK, WorkLogType.AUTOBREAK].includes(this._lastWorkLog.type) : false;
-  }
-
-  get isClosed(): boolean {
-    return this._lastWorkLog ? this._lastWorkLog.type === WorkLogType.CLOSE : false;
-  }
-  //#endregion
-
-  constructor(private _restService: WorkLogsListRestService) {
-    this._loadingCounter = 0;
-    this.getLastWorkLog();
-  }
-
-  private getLastWorkLog(): void {
-    this._loadingCounter++;
-    const filter = { name: 'userId', values: [`${this.USER_ID}`] } as Filter;
-    const query = { searchString: '', filters: [] } as Query;
-    this._restService.find(query)
-      .pipe(
-        take(1),
-        tap((result: WorkLog[]) => {
-          this._loadingCounter--;
-          if (result) {
-            this._lastWorkLog = result[result.length - 1];
-          }
-        })
-      ).subscribe();
+  constructor(http: HttpClient) {
+    super(http, 'workloger/add', mockWorkLogs[0]);
   }
 
   //#region Operators
-  public startWork(): void {
-    this._loadingCounter++;
-    // TODO: Make request
-    this._restService.startWork('123', '1234').pipe(
-      take(1),
-      tap(() => {
-        this._loadingCounter--;
-        this.getLastWorkLog()
-      })
-    ).subscribe();
+  public startWork(taskId: string): Observable<CreationResponse> {
+    const body = this.createWorkLogObject(taskId, WorkLogType.WORK);
+    return this.create<WorkLog>(body);
   }
 
-  public startBreak(): void {
-    this._loadingCounter++;
-    this._restService.startBreak().pipe(
-      take(1),
-      tap(() => {
-        this._loadingCounter--;
-        this.getLastWorkLog()
-      })
-    ).subscribe();
+  public startBreak(taskId: string): Observable<CreationResponse> {
+    const body = this.createWorkLogObject(taskId, WorkLogType.BREAK);
+    return this.create<WorkLog>(body);
   }
 
-  public closeTask(): void {
-    this._loadingCounter++;
-    this._restService.closeTask().pipe(
-      take(1),
-      tap(() => {
-        this._loadingCounter--;
-        this.getLastWorkLog()
-      })
-    ).subscribe();
+  public closeTask(taskId: string): Observable<CreationResponse> {
+    const body = this.createWorkLogObject(taskId, WorkLogType.CLOSE);
+    return this.create<WorkLog>(body);
+  }
+  //#endregion
+
+  //#region Helpers
+  private createWorkLogObject(taskId: string, workLogType: WorkLogType): WorkLog {
+    // TODO: Get userId from login service when available
+    const userId = '5fe1ca5095fd3b00045a45e8';
+    return {
+      idUser: taskId,
+      idTask: userId,
+      logType: workLogType
+    } as WorkLog
   }
   //#endregion
 }
