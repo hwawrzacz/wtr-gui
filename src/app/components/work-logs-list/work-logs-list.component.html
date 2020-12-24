@@ -1,1 +1,5 @@
 <app-work-logs-table [dataSource]="dataSource" [isLoading]="isLoading"></app-work-logs-table>
+
+<mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+  (page)="onPaginationChange($event)">
+</mat-paginator>
