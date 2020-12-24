@@ -70,9 +70,9 @@ export class CommonRestService<T> {
     return this._http.get<CommonArrayResponse<T>>(url, { params: params });
   }
 
-  public create<T>(item: T): Observable<CreationResponse | boolean> {
+  public create<T>(item: T): Observable<CreationResponse> {
     const url = `${environment.apiUrl}/${this._url}`;
-    return this._http.post<CreationResponse | boolean>(url, item);
+    return this._http.post<CreationResponse>(url, item);
   }
 
   public patch<T>(userId: string, name: string, value: T): Observable<any> {
@@ -80,7 +80,7 @@ export class CommonRestService<T> {
     return this._http.patch(url, { [name]: value });
   }
 
-  public patchObject<T>(userId: string, object: T) {
+  public patchObject<T>(userId: string, object: T): Observable<any> {
     const url = `${environment.apiUrl}/${this._url}/${userId}`;
     return this._http.patch(url, object);
   }

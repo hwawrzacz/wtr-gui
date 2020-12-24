@@ -5,6 +5,7 @@ import { Status } from '../model/enums/status';
 import { SimpleUser } from '../model/simple-user';
 import { WorkLogType } from '../model/work-log';
 import { CreationResponseMessage } from '../model/enums/response-messages';
+import { CreationResponse } from '../model/responses';
 
 export const stringifyUser = (user: User | SimpleUser) => `${user.firstName} ${user.lastName}`;
 
@@ -69,6 +70,12 @@ export class PositionStringifier {
 }
 
 export class CreationResponseParser {
+  public static mapStringResponseToCreationResponse(res: string | boolean): CreationResponse {
+    const success = res === true;
+    const message = res.toString();
+    return { success: success, message: message } as CreationResponse
+  }
+
   public static parseCreationResponseMessage(message: CreationResponseMessage) {
     switch (message) {
       case CreationResponseMessage.LOGIN_IS_TAKEN: {
