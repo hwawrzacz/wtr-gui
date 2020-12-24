@@ -47,29 +47,25 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
   public onSave(): void {
     this._isLoading = true;
     const item = this.parseItemFromForm();
-    this._restService.create<T>(item).pipe(
-      map(res => {
-        const success = res === true;
-        const message = res.toString();
-        return { success: success, message: message } as CreationResponse;
-      }),
-      tap(res => {
-        this._isLoading = false;
+    this._restService.create<T>(item)
+      .pipe(
+        tap(res => {
+          this._isLoading = false;
 
-        if (res.success) {
-          /** Success message unlike errors messages should be handled in component which 
-           * opens this dialog, so there is no need to handle this message from here */
-          this.closeDialog(true);
-        }
-        else
-          this.handleCreationFailed(res.message);
-      }),
-      catchError(err => {
-        this._isLoading = false;
-        this.handleItemNotAdded(err);
-        return of()
-      })
-    ).subscribe();
+          if (res.success) {
+            /** Success message unlike errors messages should be handled in component which 
+             * opens this dialog, so there is no need to handle this message from here */
+            this.closeDialog(true);
+          }
+          else
+            this.handleCreationFailed(res.message);
+        }),
+        catchError(err => {
+          this._isLoading = false;
+          this.handleItemNotAdded(err);
+          return of()
+        })
+      ).subscribe();
   }
 
   //#region Response handlers

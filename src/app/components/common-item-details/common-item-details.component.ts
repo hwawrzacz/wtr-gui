@@ -162,11 +162,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected patch<T>(name: string, value: T): void {
     this._restService.patch<T>(this._itemId, name, value)
       .pipe(
-        map(res => {
-          const success = res === true;
-          const message = res.toString();
-          return { success: success, message: message } as CreationResponse;
-        }),
+        map(res => CreationResponseParser.mapStringResponseToCreationResponse(res)),
         tap(response => this.handeResponse(response, 'Zaktualizowano wartość.', 'Podczas zapisywania wystąpił błąd.')),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
@@ -175,11 +171,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private deleteItem(): void {
     this._restService.patch<boolean>(this._itemId, 'active', false)
       .pipe(
-        map(res => {
-          const success = res === true;
-          const message = res.toString();
-          return { success: success, message: message } as CreationResponse;
-        }),
+        map(res => CreationResponseParser.mapStringResponseToCreationResponse(res)),
         tap(response => this.handeResponse(response, 'Usunięto element.', 'Podczas usuwania elementu wystąpił błąd')),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
@@ -188,11 +180,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected patchObject<T>(object: T): void {
     this._restService.patchObject<T>(this._itemId, object)
       .pipe(
-        map(res => {
-          const success = res === true;
-          const message = res.toString();
-          return { success: success, message: message } as CreationResponse;
-        }),
+        map(res => CreationResponseParser.mapStringResponseToCreationResponse(res)),
         tap(response => {
           if (response.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
           else this.handleSavingFailed(response.message);

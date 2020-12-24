@@ -205,7 +205,7 @@ export const mockWorkLogs: CommonArrayResponse<WorkLog> = {
   items: [
     {
       id: '234',
-      taskId: 1,
+      idUser: '1',
       user: {
         id: '1',
         login: 'jowick',
@@ -215,12 +215,12 @@ export const mockWorkLogs: CommonArrayResponse<WorkLog> = {
         email: 'j.wick@somecompany.com',
         phoneNumber: '345 534 345'
       } as any,
-      dateTime: 12341235134,
-      type: WorkLogType.BREAK,
+      dateTime: "2020-12-08T23:00:00.000Z",
+      logType: WorkLogType.BREAK,
     } as WorkLog,
     {
       id: '234',
-      taskId: 1,
+      idUser: '1',
       user: {
         id: '1',
         login: 'jowick',
@@ -230,12 +230,12 @@ export const mockWorkLogs: CommonArrayResponse<WorkLog> = {
         email: 'j.wick@somecompany.com',
         phoneNumber: '345 534 345'
       } as any,
-      dateTime: 12341235544,
-      type: WorkLogType.BREAK,
+      dateTime: "2020-12-08T23:00:00.000Z",
+      logType: WorkLogType.BREAK,
     } as WorkLog,
     {
       id: '234',
-      taskId: 1,
+      idUser: '1',
       user: {
         id: '1',
         login: 'jowick',
@@ -245,8 +245,8 @@ export const mockWorkLogs: CommonArrayResponse<WorkLog> = {
         email: 'j.wick@somecompany.com',
         phoneNumber: '345 534 345'
       } as any,
-      dateTime: 12341235874,
-      type: WorkLogType.BREAK,
+      dateTime: "2020-12-08T23:00:00.000Z",
+      logType: WorkLogType.BREAK,
     } as WorkLog,
   ]
 } as CommonArrayResponse<WorkLog>;

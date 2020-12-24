@@ -17,19 +17,22 @@ export class WorkLogsTableComponent extends CommonTableComponent<WorkLog> implem
     this._columnsDefinitions = [
       {
         defName: 'user',
-        propertyName: 'user',
+        propertyName: 'idUser',
         displayName: 'Pracownik',
         formatter: (item: SimpleUser) => stringifyUser(item),
       },
       {
         defName: 'logDate',
-        propertyName: 'dateTime',
+        propertyName: 'logDate',
         displayName: 'Data',
+        formatter: (dateStr: string): string => {
+          return `${new Date(dateStr).toLocaleDateString('pl-PL')} ${new Date(dateStr).toLocaleTimeString('pl-PL')}`;
+        }
       },
       {
         defName: 'logType',
-        propertyName: 'type',
-        displayName: 'Typ',
+        propertyName: 'logType',
+        displayName: 'Typ zdarzenia',
         formatter: (item: WorkLogType) => WorkLogTypeStringifier.getTypeString(item),
       },
     ];

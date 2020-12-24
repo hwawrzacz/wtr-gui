@@ -46,7 +46,7 @@
       </mat-form-field>
 
       <section class="work-logger">
-        <app-work-logger></app-work-logger>
+        <app-work-logger [taskId]="itemId" (workLogged)="reloadWorkLogs()"></app-work-logger>
       </section>
 
       <mat-form-field appearance="outline" class="date">
@@ -66,12 +66,12 @@
     <section [ngClass]="isLoading || error ? 'hidden' : ''">
       <h3>Historia</h3>
       <div class="task-history-wrapper">
-        <app-work-logs-list [taskId]="this.itemId"></app-work-logs-list>
+        <app-work-logs-list #workLogsList [taskId]="itemId"></app-work-logs-list>
       </div>
     </section>
   </section>
 
-  <app-workers-panel [selectedWorkers]="workers" (workersChange)="updateWorkers($event)" [editMode]="editMode">
+  <app-workers-panel [selectedWorkers]="workers" [editMode]="editMode" (workersChange)="updateWorkers($event)">
   </app-workers-panel>
 </div>
 
