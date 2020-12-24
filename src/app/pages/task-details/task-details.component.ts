@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
+import { WorkLogsListComponent } from 'src/app/components/work-logs-list/work-logs-list.component';
 import { stringifyUser } from 'src/app/helpers/parsers';
 import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
@@ -23,6 +24,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   private _workers: SimpleUser[];
   private _workersLoading: boolean;
   private _parentProject: Project;
+  @ViewChild('workLogsList') private _workLogsList: WorkLogsListComponent;
 
   //#region Getters and setters
   get stringId(): string {
@@ -125,6 +127,10 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   public updateWorkers(workers: SimpleUser[]): void {
     this._form.get('workers').patchValue(workers);
+  }
+
+  public reloadWorkLogs() {
+    this._workLogsList.loadData();
   }
   //#endregion
 

@@ -100,7 +100,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     this.loadData();
   }
 
-  protected loadData() {
+  public loadData() {
     this._error = false;
     try {
       this.getDataFromApi();

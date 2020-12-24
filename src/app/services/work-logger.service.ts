@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Filter } from '../model/filter';
+import { USER_ID_MOCK } from '../model/constants';
 import { mockWorkLogs } from '../model/mock-data';
-import { Query } from '../model/query';
 import { CreationResponse } from '../model/responses';
 import { WorkLog, WorkLogType } from '../model/work-log';
 import { CommonRestService } from './rest/common-rest.service';
@@ -37,11 +36,11 @@ export class WorkLoggerService extends CommonRestService<WorkLog> {
   //#region Helpers
   private createWorkLogObject(taskId: string, workLogType: WorkLogType): WorkLog {
     // TODO: Get userId from login service when available
-    const userId = '5fe1ca5095fd3b00045a45e8';
+    const userId = USER_ID_MOCK;
     return {
-      idUser: taskId,
-      idTask: userId,
-      logType: workLogType
+      idTask: taskId,
+      idUser: userId,
+      logType: workLogType,
     } as WorkLog
   }
   //#endregion

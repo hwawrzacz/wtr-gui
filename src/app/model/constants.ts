@@ -7,4 +7,4 @@ export const ERROR_SNACKBAR_DURATION = 0;
 export const TITLE_MAX_LENGTH = 100;
 export const DESCRIPTION_MAX_LENGTH = 500;
 
-export const USER_ID_MOCK = '5fe1fb8495fd3b00045a48d6';
+export const USER_ID_MOCK = '5fe1ca5095fd3b00045a45e8';

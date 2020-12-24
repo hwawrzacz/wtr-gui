@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, take, tap } from 'rxjs/operators';
 import { USER_ID_MOCK } from 'src/app/model/constants';
@@ -19,6 +19,7 @@ export class WorkLoggerComponent implements OnInit {
   private _taskId: string;
   private _lastWorkLog: WorkLog;
   private _loadingCounter: number;
+  @Output('workLogged') private _workLogEmitter: EventEmitter<void>;
 
   @Input('taskId')
   set taskId(value: string) {
@@ -56,7 +57,9 @@ export class WorkLoggerComponent implements OnInit {
     private _loggerService: WorkLoggerService,
     private _workLogsService: WorkLogsListRestService,
     private _snackBarService: SnackBarService
-  ) { }
+  ) {
+    this._workLogEmitter = new EventEmitter<void>();
+  }
 
   ngOnInit(): void {
     this._loadingCounter = 0;
@@ -67,10 +70,12 @@ export class WorkLoggerComponent implements OnInit {
   private loadLastWorkLog(): void {
     this._loadingCounter++;
     const userId = USER_ID_MOCK
-    const filter = { name: 'userId', values: [`${userId}`] } as Filter;
+    const taskFilter = { name: 'idTask', values: [`${this._taskId}`] } as Filter;
+    const userFilter = { name: 'idUser', values: [`${userId}`] } as Filter;
+    const query = { searchString: '', filters: [taskFilter, userFilter] };
     const pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
 
-    this._workLogsService.find(null, pagination)
+    this._workLogsService.find(query, pagination)
       .pipe(
         take(1),
         tap(res => {
@@ -136,7 +141,6 @@ export class WorkLoggerComponent implements OnInit {
 
   private handleResponse(res: CreationResponse, successMessage: string, errorMessage?: string): void {
     this._loadingCounter--;
-    console.log(res);
     // TODO: Handle proper response
     if (!!res || res.success) {
       if (res['message'] === WorkLogType.AUTOBREAK.toString()) {
@@ -144,6 +148,7 @@ export class WorkLoggerComponent implements OnInit {
       } else {
         this._snackBarService.openSuccessSnackBar(successMessage || 'Zapisano pomyślnie');
       }
+      this.emitWorkLogged();
     } else this._snackBarService.openErrorSnackBar(errorMessage || 'Podczas zapisywania wystąpił błąd');
     this.loadLastWorkLog();
   }
@@ -153,6 +158,10 @@ export class WorkLoggerComponent implements OnInit {
     this._snackBarService.openErrorSnackBar(err);
 
     return of();
+  }
+
+  private emitWorkLogged(): void {
+    this._workLogEmitter.emit();
   }
 
 }
