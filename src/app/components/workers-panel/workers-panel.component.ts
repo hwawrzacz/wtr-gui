@@ -76,16 +76,20 @@ export class WorkersPanelComponent implements OnInit {
         tap((res: ArrayResponse<User>) => {
           this._workersLoading = false;
           if (res.success) {
-            if (!!this._selectedWorkersIds && this._selectedWorkersIds.length > 0) {
-              this._selectedWorkers = res.details.items.filter(worker => this._selectedWorkersIds.includes(worker._id));
-            } else if (!!this._selectedWorkers && this._selectedWorkers.length > 0) {
-              this._selectedWorkers = res.details.items.filter(worker => this._selectedWorkers.map(selWork => selWork._id).includes(worker._id));
-            }
+            this.handleResponseSuccess(res);
           } else {
             this.handleResponseError(res);
           }
         })
       ).subscribe();
+  }
+
+  private handleResponseSuccess(res: ArrayResponse<User>) {
+    if (!!this._selectedWorkersIds && this._selectedWorkersIds.length > 0) {
+      this._selectedWorkers = res.details.items.filter(worker => this._selectedWorkersIds.includes(worker._id));
+    } else if (!!this._selectedWorkers && this._selectedWorkers.length > 0) {
+      this._selectedWorkers = res.details.items.filter(worker => this._selectedWorkers.map(selWork => selWork._id).includes(worker._id));
+    }
   }
 
   private handleResponseError(res: ArrayResponse<User>) {

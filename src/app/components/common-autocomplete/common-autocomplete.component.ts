@@ -101,16 +101,20 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
     const pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
     this._restService.find(this._query, pagination).pipe(
       tap((res: ArrayResponse<T>) => {
+        this._loadingCounter--;
         if (res.success) {
-          this._loadingCounter--;
-          this._items = res.details.items;
-          this._filteredItems = this._items;
-          this.filterData(filter);
+          this.handleResponseSuccess(res, filter);
         } else {
           this.handleResponseError(res);
         }
       })
     ).subscribe();
+  }
+
+  private handleResponseSuccess(res: ArrayResponse<T>, filter: string) {
+    this._items = res.details.items;
+    this._filteredItems = this._items;
+    this.filterData(filter);
   }
 
   private handleResponseError(res: ArrayResponse<T>) {

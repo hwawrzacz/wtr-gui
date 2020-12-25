@@ -51,7 +51,6 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
       .pipe(
         tap(res => {
           this._isLoading = false;
-
           if (res.success) {
             /** Success message unlike errors messages should be handled in component which 
              * opens this dialog, so there is no need to handle this message from here */

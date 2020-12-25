@@ -112,9 +112,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
         tap((res: ArrayResponse<T>) => {
           this._loadingCounter--;
           if (res.success) {
-            this._dataSource.refresh(res.details.items as any);
-            this._totalResults = res.details.totalResults
-            this._pageSize = res.details.limit;
+            this.handleResponseSuccess(res);
           } else {
             this.handleResponseError(res);
           }
@@ -126,6 +124,12 @@ export abstract class CommonListViewComponent<T> implements OnInit {
           return of()
         })
       ).subscribe();
+  }
+
+  private handleResponseSuccess(res: ArrayResponse<T>) {
+    this._dataSource.refresh(res.details.items as any);
+    this._totalResults = res.details.totalResults
+    this._pageSize = res.details.limit;
   }
 
   private handleResponseError(res: ArrayResponse<T>) {
