@@ -27,12 +27,12 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
     dialogService: MatDialog
   ) {
     super(restService, snackBarService, dialogService);
-    const projectFilter = { name: 'projectId', values: [`${this._projectId}`] } as Filter;
-    this._query = { searchString: '', filters: [projectFilter] } as Query;
-    this._pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
   }
 
   ngOnInit(): void {
+    const projectFilter = { name: 'idProject', values: [`${this._projectId}`] } as Filter;
+    this._query = { searchString: '', filters: [projectFilter] } as Query;
+    this._pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
     super.ngOnInit();
   }
 
