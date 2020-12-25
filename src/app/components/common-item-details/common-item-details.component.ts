@@ -170,8 +170,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected patch<T>(name: string, value: T): void {
     this._restService.patch<T>(this._itemId, name, value)
       .pipe(
-        map(res => CreationResponseParser.mapStringResponseToCreationResponse(res)),
-        tap(response => this.handeResponse(response, 'Zaktualizowano wartość.', 'Podczas zapisywania wystąpił błąd.')),
+        tap((res: CreationResponse) => {
+          if (res.success) this.openSuccessSnackBar('Zaktualizowano wartość.');
+          else this.handleResponseError(res, 'Podczas zapisywania wystąpił błąd.');
+        }),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
   }
@@ -179,9 +181,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private deleteItem(): void {
     this._restService.patch<boolean>(this._itemId, 'active', false)
       .pipe(
-        map(res => CreationResponseParser.mapStringResponseToCreationResponse(res)),
-        tap(response => this.handeResponse(response, 'Usunięto element.', 'Podczas usuwania elementu wystąpił błąd')),
-        catchError(err => this.handeRequestError(err))
+        tap((res: CreationResponse) => {
+          if (res.success) this.openSuccessSnackBar('Usunięto element.');
+          else this.handleResponseError(res, 'Podczas usuwania elementu wystąpił błąd.');
+          catchError(err => this.handeRequestError(err))
       ).subscribe();
   }
 
@@ -194,14 +197,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
         }),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
-  }
-
-  private handeResponse(response: CreationResponse, successMessage: string, errorMessage: string): any {
-    if (response.success) this.openSuccessSnackBar(successMessage);
-    else {
-      this.openErrorSnackBar(errorMessage);
-      console.error(response.message);
-    }
   }
 
   private handleSavingFailed(res: CreationResponse) {
