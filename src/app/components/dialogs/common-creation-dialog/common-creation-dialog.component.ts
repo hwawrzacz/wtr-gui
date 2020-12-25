@@ -49,7 +49,7 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
     const item = this.parseItemFromForm();
     this._restService.create<T>(item)
       .pipe(
-        tap(res => {
+        tap((res: CreationResponse) => {
           this._isLoading = false;
           if (res.success) {
             /** Success message unlike errors messages should be handled in component which 

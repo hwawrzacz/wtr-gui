@@ -147,7 +147,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
 
     // Remove fields that hasn't changed
     Object.keys(patchObject).forEach(key => {
-      if (patchObject[key] === this._initialItem[key]) delete patchObject[key];
+      if (patchObject[key] === this._initialItem[key] && typeof patchObject[key] !== 'object') delete patchObject[key];
     });
 
     this.patchObject<T>(patchObject);
@@ -188,10 +188,9 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected patchObject<T>(object: T): void {
     this._restService.patchObject<T>(this._itemId, object)
       .pipe(
-        map(res => CreationResponseParser.mapStringResponseToCreationResponse(res)),
-        tap(response => {
-          if (response.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
-          else this.handleSavingFailed(response.message);
+        tap((res: CreationResponse) => {
+          if (res.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
+          else this.handleSavingFailed(res);
         }),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
@@ -203,6 +202,12 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       this.openErrorSnackBar(errorMessage);
       console.error(response.message);
     }
+  }
+
+  private handleSavingFailed(res: CreationResponse) {
+    const messageStr = CreationResponseParser.parseCreationResponseMessage(res.message);
+    this.openErrorSnackBar(messageStr);
+    this.updateForm(this._initialItem);
   }
 
   private handeRequestError(err: string): any {
@@ -248,12 +253,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       .subscribe()
   }
   //#endregion
-
-  private handleSavingFailed(message: CreationResponseMessage) {
-    const messageStr = CreationResponseParser.parseCreationResponseMessage(message);
-    this.openErrorSnackBar(messageStr);
-    this.updateForm(this._initialItem);
-  }
 
   //#region Form errors
   // TODO: Tmplement thing below
