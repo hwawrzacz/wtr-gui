@@ -9,7 +9,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
 
 @Component({
-  selector: 'app-project-tasks',
+  selector: 'app-project-tasks-list',
   templateUrl: './project-tasks.component.html',
   styleUrls: ['./project-tasks.component.scss']
 })

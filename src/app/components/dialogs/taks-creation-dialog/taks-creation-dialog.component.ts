@@ -60,7 +60,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
       dutyDate: ['', [Validators.required]],
       priority: [null, [Validators.required]],
       description: ['', [Validators.required]],
-      workers: [{ value: [] }],
+      workers: [[]],
     })
   }
 
@@ -85,10 +85,12 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
       idProject: this._form.get('project').value._id,
       dutyDate: this._form.get('dutyDate').value,
       description: this._form.get('description').value,
+      workers: this._form.get('workers').value
+        ? this._form.get('workers').value.map(worker => worker._id)
+        : [],
       priority: this._form.get('priority').value,
       // TODO: Pass currently logged user id
       idReporter: "5fca51ef55624130600cccfb",
-      workers: this._form.get('workers').value.map(worker => worker._id),
     } as Task;
 
     console.log(value);
@@ -96,7 +98,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
   }
 
   public updateWorkers(workers: User[]): void {
-    this._form.get('workers').patchValue(workers);
+    this._form.get('workers').patchValue(workers || []);
   }
 
   //#region Helpers
