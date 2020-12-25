@@ -53,13 +53,28 @@
         <mat-error>{{ getErrorMessage('title') }}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="date">
-        <mat-label>Termin zakończenia</mat-label>
-        <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate" [max]="maxDate">
-        <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
-        <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
-        <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
-      </mat-form-field>
+
+      <div class="fifty-fifty-wrapper">
+        <mat-form-field appearance="outline" class="date">
+          <mat-label>Termin zakończenia</mat-label>
+          <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate"
+            [max]="maxDate">
+          <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
+          <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
+          <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Priorytet</mat-label>
+          <mat-select formControlName="priority">
+            <mat-option *ngFor="let priority of priorities" name="priority" [value]="priority">
+              <span [attr.class]="'priority-label priority-label--' + priority">{{ getPriorityString(priority) |
+                titlecase
+                }}</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
       <mat-form-field appearance="outline">
         <mat-label>Opis</mat-label>

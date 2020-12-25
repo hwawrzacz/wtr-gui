@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { WorkLogsListComponent } from 'src/app/components/work-logs-list/work-logs-list.component';
-import { StatusStringifier, stringifyUser } from 'src/app/helpers/parsers';
+import { PriorityStringifier, StatusStringifier, stringifyUser } from 'src/app/helpers/parsers';
 import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from 'src/app/model/constants';
+import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
 import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
@@ -50,6 +51,10 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   get workers(): SimpleUser[] {
     return this._initialItem ? this.initialItem.workers : [];
+  }
+
+  get priorities(): Priority[] {
+    return PriorityStringifier.prioritiesList;
   }
 
   // Form constraints
@@ -160,6 +165,10 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   getStatusString(status: Status): string {
     return StatusStringifier.getStatusString(status);
+  }
+
+  public getPriorityString(value: Priority): string {
+    return PriorityStringifier.getPriorityString(value);
   }
   //#endregion
 }

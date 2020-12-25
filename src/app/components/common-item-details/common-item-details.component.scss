@@ -59,6 +59,10 @@ form {
         color: $text-black !important;
       }
     }
+    
+    .mat-select-disabled .mat-select-value {
+      color: $text-black;
+    }
   }
 }
 
