@@ -23,6 +23,13 @@ a {
   padding: $status-label-padding;
   border-radius: $border-radius;
 
+  &--big {
+    width: 100%;
+    font-size: 1.2em;
+    padding: $spacing-small;
+    margin: $spacing-small 0;
+  }
+
   &--new {
     background-color: $color-green;
     color: $text-white;

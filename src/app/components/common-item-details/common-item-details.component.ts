@@ -68,9 +68,9 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   ngOnInit(): void {
-    this._itemId = this.getIdFromUrl();
     this._error = false;
     this._editMode = false;
+    this._itemId = this.getIdFromUrl();
     this._form = this.buildForm();
     this.loadItem();
   }
@@ -149,9 +149,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private saveAllChanges(): void {
     let patchObject = this.parseItemFromForm();
 
-    // Remove fields that hasn't changed
+    // Remove fields that hasn't changed, and update those that has.
     Object.keys(patchObject).forEach(key => {
       if (patchObject[key] === this._initialItem[key] && typeof patchObject[key] !== 'object') delete patchObject[key];
+      else this._initialItem[key] = patchObject[key];
     });
 
     this.patchObject<T>(patchObject);

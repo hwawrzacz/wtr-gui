@@ -177,7 +177,6 @@ export class WorkLoggerComponent implements OnInit {
   }
 
   public markTask(taskStatus: Status): Observable<PatchResponse> {
-    this._loadingCounter++;
     return this._taskService.patch<Status>(this._taskId, 'status', taskStatus)
   }
   //#endregion

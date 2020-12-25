@@ -37,19 +37,21 @@
   </header>
 
   <section class="details">
+    <span [attr.class]="'status-label status-label--big status-label--' + initialItem.status">{{
+      getStatusString(initialItem.status)
+      }}</span>
     <form [formGroup]="form" *ngIf="!isLoading && !error">
+      <section class="work-logger">
+        <app-work-logger [taskId]="itemId" [taskStatus]="initialItem.status" (workLogged)="reloadWorkLogs()"
+          (statusChanged)="updateStatus($event)">
+        </app-work-logger>
+      </section>
       <mat-form-field appearance="outline">
         <mat-label>Tytuł</mat-label>
         <input matInput #titleInput type="text" formControlName="title" />
         <mat-hint>{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
         <mat-error>{{ getErrorMessage('title') }}</mat-error>
       </mat-form-field>
-
-      <section class="work-logger">
-        <app-work-logger [taskId]="itemId" [taskStatus]="initialItem.status" (workLogged)="reloadWorkLogs()"
-          (statusChanged)="updateStatus($event)">
-        </app-work-logger>
-      </section>
 
       <mat-form-field appearance="outline" class="date">
         <mat-label>Termin zakończenia</mat-label>

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
 import { WorkLogsListComponent } from 'src/app/components/work-logs-list/work-logs-list.component';
-import { stringifyUser } from 'src/app/helpers/parsers';
+import { StatusStringifier, stringifyUser } from 'src/app/helpers/parsers';
 import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from 'src/app/model/constants';
 import { Status } from 'src/app/model/enums/status';
 import { Filter } from 'src/app/model/filter';
@@ -156,6 +156,10 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   private parseDateToISOFormat(dateStr: string): string {
     return new Date(dateStr).toISOString();
+  }
+
+  getStatusString(status: Status): string {
+    return StatusStringifier.getStatusString(status);
   }
   //#endregion
 }
