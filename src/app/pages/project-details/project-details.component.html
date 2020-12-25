@@ -68,8 +68,15 @@
   </form>
 
   <section class="item-details__tasks" [ngClass]="isLoading || error ? 'hidden' : ''">
-    <h3>Zadania</h3>
-    <app-project-tasks [projectId]="stringId"></app-project-tasks>
+    <header class="item-details__tasks__header">
+      <h3>Zadania</h3>
+
+      <button mat-stroked-button color="primary" (click)="openTaskCreationDialog()">
+        <mat-icon>add</mat-icon>
+        <span>Dodaj zadanie</span>
+      </button>
+    </header>
+    <app-project-tasks-list #taskList [projectId]="itemId"></app-project-tasks-list>
   </section>
 </div>
 

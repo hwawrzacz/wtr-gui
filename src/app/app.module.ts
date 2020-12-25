@@ -63,6 +63,7 @@ import { InfoSnackBarComponent } from './components/snack-bars/info-snack-bar/in
 import { CommonSnackBarComponent } from './components/snack-bars/common-snack-bar/common-snack-bar.component';
 import { WarningSnackBarComponent } from './components/snack-bars/warning-snack-bar/warning-snack-bar.component';
 import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { ProjectTasksTableComponent } from './components/tables/project-tasks-table.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { ConfirmationDialogComponent } from './components/dialogs/confirmation-d
 
     CommonTableComponent,
     ProjectsTableComponent,
+    ProjectTasksTableComponent,
     TasksTableComponent,
     WorkLogsTableComponent,
     UsersTableComponent,

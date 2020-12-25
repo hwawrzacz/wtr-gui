@@ -1,7 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { tap } from 'rxjs/operators';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
+import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
 import { PriorityStringifier, stringifyUser } from 'src/app/helpers/parsers';
 import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from 'src/app/model/constants';
 import { Priority } from 'src/app/model/enums/priority';
@@ -14,6 +16,7 @@ import { ProjectDetailsBrokerService } from 'src/app/services/item-details-broke
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleProjectRestService } from 'src/app/services/rest/single-project-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { TasksListComponent } from '../tasks-list/tasks-list.component';
 
 @Component({
   selector: 'app-project-details',
@@ -21,6 +24,8 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './project-details.component.scss']
 })
 export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project> implements OnInit {
+  @ViewChild('taskList') private _taskListComponent: TasksListComponent;
+
   //#region Getters and setters
   get stringId(): string {
     return this._initialItem ? this._initialItem.stringId : '';
@@ -107,6 +112,25 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
     } as Project;
   }
   //#endregion
+
+  public openTaskCreationDialog() {
+    this._dialogService.open(TaksCreationDialogComponent, { data: this._initialItem })
+      .afterClosed()
+      .pipe(
+        tap(res => {
+          if (!!res) {
+            this.openSuccessSnackBar('Dodano element.');
+            this.reloadData();
+          }
+          else this.openInfoSnackBar('Anulowano dodawanie elementu.');
+        })
+      )
+      .subscribe()
+  }
+
+  public reloadTasksList(): void {
+    this._taskListComponent.loadData();
+  }
 
   //#region Helpers
   stringifyManager(manager: User | SimpleUser): string {
