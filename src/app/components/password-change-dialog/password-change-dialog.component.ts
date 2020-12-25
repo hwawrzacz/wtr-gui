@@ -1,9 +1,12 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { take, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
 import { matchOtherControlValidator } from 'src/app/helpers/custom-validators';
+import { CreationResponse } from 'src/app/model/responses';
 import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-password-change-dialog',
@@ -28,10 +31,11 @@ export class PasswordChangeDialogComponent implements OnInit {
   }
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) userId: string,
     private _formBuilder: FormBuilder,
     private _restService: SingleUserRestService,
     private _dialog: MatDialogRef<PasswordChangeDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) userId: string
+    private _snackBarService: SnackBarService,
   ) {
     this._isLoading = false;
     this._userId = userId;
@@ -55,8 +59,25 @@ export class PasswordChangeDialogComponent implements OnInit {
     this._restService.patch<string>(this._userId, 'password', newPassword)
       .pipe(
         take(1),
-        tap(res => this._dialog.close(res))
+        tap((res: CreationResponse) => {
+          this._isLoading = false;
+          if (res.success) {
+            this._dialog.close(true);
+          } else {
+            this.handleResponseError(res);
+          }
+          this._dialog.close(res)
+        }),
+        catchError(() => this.handleRequestError())
       ).subscribe();
+  }
+
+  private handleResponseError(res: CreationResponse): void {
+    this._snackBarService.openErrorSnackBar(res.message);
+  }
+
+  private handleRequestError(): Observable<any> {
+    return of(this._snackBarService.openErrorSnackBar('Podczas wysyłania zapytania wystąpił błąd.'));
   }
 
   public discard(): void {
