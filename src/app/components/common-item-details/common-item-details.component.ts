@@ -1,13 +1,12 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
 import { CreationResponseParser } from 'src/app/helpers/parsers';
-import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
-import { CreationResponse } from 'src/app/model/responses';
+import { PatchResponse, SingleItemResponse } from 'src/app/model/responses';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
@@ -107,13 +106,14 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this._restService.get(this._itemId)
       .pipe(
         take(1),
-        tap(item => {
-          if (!!item) {
-            this._initialItem = item;
-            this.updateForm(item);
-            this._error = false;
-            this._loadingCounter--;
+        tap((res: SingleItemResponse<T>) => {
+          if (res.success) {
+            this._initialItem = res.details;
+            this.updateForm(this._initialItem);
+          } else {
+            this.handleResponseError(res);
           }
+          this._loadingCounter--;
         }),
         catchError(() => of(this._error = true))
       ).subscribe();
@@ -122,6 +122,18 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private loadDataFromBroker(): void {
     this._initialItem = this._itemDetailsBroker.item
     this.updateForm(this._initialItem);
+  }
+
+  private handleResponseError(res: SingleItemResponse<T>, message?: string) {
+    // TODO: Handle responses more specifically if needed, when responses list delivered from API
+    this.openErrorSnackBar(message || res.message);
+    console.error(res);
+  }
+
+  private handlePatchResponseError(res: PatchResponse, message?: string) {
+    // TODO: Handle responses more specifically if needed, when responses list delivered from API
+    this.openErrorSnackBar(message || res.message);
+    console.error(res);
   }
 
   /** Method which updates form */
@@ -139,7 +151,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
 
     // Remove fields that hasn't changed
     Object.keys(patchObject).forEach(key => {
-      if (patchObject[key] === this._initialItem[key]) delete patchObject[key];
+      if (patchObject[key] === this._initialItem[key] && typeof patchObject[key] !== 'object') delete patchObject[key];
     });
 
     this.patchObject<T>(patchObject);
@@ -162,8 +174,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected patch<T>(name: string, value: T): void {
     this._restService.patch<T>(this._itemId, name, value)
       .pipe(
-        map(res => CreationResponseParser.mapStringResponseToCreationResponse(res)),
-        tap(response => this.handeResponse(response, 'Zaktualizowano wartość.', 'Podczas zapisywania wystąpił błąd.')),
+        tap((res: PatchResponse) => {
+          if (res.success) this.openSuccessSnackBar('Zaktualizowano wartość.');
+          else this.handlePatchResponseError(res, 'Podczas zapisywania wystąpił błąd.');
+        }),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
   }
@@ -171,8 +185,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private deleteItem(): void {
     this._restService.patch<boolean>(this._itemId, 'active', false)
       .pipe(
-        map(res => CreationResponseParser.mapStringResponseToCreationResponse(res)),
-        tap(response => this.handeResponse(response, 'Usunięto element.', 'Podczas usuwania elementu wystąpił błąd')),
+        tap((res: PatchResponse) => {
+          if (res.success) this.openSuccessSnackBar('Usunięto element.');
+          else this.handlePatchResponseError(res, 'Podczas usuwania elementu wystąpił błąd.');
+        }),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
   }
@@ -180,21 +196,18 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected patchObject<T>(object: T): void {
     this._restService.patchObject<T>(this._itemId, object)
       .pipe(
-        map(res => CreationResponseParser.mapStringResponseToCreationResponse(res)),
-        tap(response => {
-          if (response.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
-          else this.handleSavingFailed(response.message);
+        tap((res: PatchResponse) => {
+          if (res.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
+          else this.handleSavingFailed(res);
         }),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
   }
 
-  private handeResponse(response: CreationResponse, successMessage: string, errorMessage: string): any {
-    if (response.success) this.openSuccessSnackBar(successMessage);
-    else {
-      this.openErrorSnackBar(errorMessage);
-      console.error(response.message);
-    }
+  private handleSavingFailed(res: PatchResponse) {
+    const messageStr = CreationResponseParser.parseCreationResponseMessage(res.message);
+    this.openErrorSnackBar(messageStr);
+    this.updateForm(this._initialItem);
   }
 
   private handeRequestError(err: string): any {
@@ -240,12 +253,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       .subscribe()
   }
   //#endregion
-
-  private handleSavingFailed(message: CreationResponseMessage) {
-    const messageStr = CreationResponseParser.parseCreationResponseMessage(message);
-    this.openErrorSnackBar(messageStr);
-    this.updateForm(this._initialItem);
-  }
 
   //#region Form errors
   // TODO: Tmplement thing below

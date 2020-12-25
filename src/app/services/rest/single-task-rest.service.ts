@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { mockTasks } from '../../model/mock-data';
 import { Task } from '../../model/task';
 import { CommonRestService } from './common-rest.service';
 
@@ -10,6 +9,6 @@ import { CommonRestService } from './common-rest.service';
 export class SingleTaskRestService extends CommonRestService<Task> {
 
   constructor(http: HttpClient) {
-    super(http, 'tasks', mockTasks[0]);
+    super(http, 'tasks');
   }
 }

@@ -1,4 +1,4 @@
-<app-work-logs-table [dataSource]="dataSource" [isLoading]="isLoading"></app-work-logs-table>
+<app-work-logs-table [readonly]="true" [dataSource]="dataSource" [isLoading]="isLoading"></app-work-logs-table>
 
 <mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
   (page)="onPaginationChange($event)">

@@ -1,8 +1,8 @@
 <mat-form-field appearance="outline">
   <mat-label *ngIf="!!label">{{ label }}</mat-label>
   <input #input matInput type="text" [formControl]="formControl" [matAutocomplete]="auto"
-    [value]="transformItem(initialValue)" (keyup)="onKeyUp($event)" (blur)="resetInput()" placeholder="{{ label }}"
-    [readonly]="readonly" />
+    [value]="transformItem(initialValue)" (keyup)="onKeyUp($event)" (mousedown)="refocus()" (blur)="resetInput()"
+    placeholder="{{ label }}" [readonly]="readonly" />
   <button mat-icon-button matSuffix *ngIf="(!!formControl && !formControl.disabled) || (!formControl && !readonly)"
     (click)="clearSelection()">
     <mat-icon>close</mat-icon>
@@ -15,6 +15,14 @@
     <div class="loader">
       <mat-spinner [diameter]="32"></mat-spinner>
     </div>
+  </mat-option>
+
+  <mat-option *ngIf="!!filteredItems && filteredItems.length === 0 && !isLoading">
+    Nie znaleziono elementów.
+  </mat-option>
+
+  <mat-option *ngIf="error && !isLoading">
+    Wystąpił błąd. <button mat-button color="primary">Ponów</button>
   </mat-option>
 
   <mat-option *ngFor="let item of filteredItems" [value]="item" (click)="onSelectionChange(item)">

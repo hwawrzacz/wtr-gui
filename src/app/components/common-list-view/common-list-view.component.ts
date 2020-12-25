@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { of, OperatorFunction } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
-import { CommonArrayResponse } from 'src/app/model/common-array-response';
+import { catchError, take, tap } from 'rxjs/operators';
+import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
-import { CommonResponse } from 'src/app/model/responses';
+import { ArrayResponse, PatchResponse } from 'src/app/model/responses';
 import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonDataSource } from '../../model/common-data-source';
@@ -97,57 +97,62 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.updateRequiredFilters();
     this.loadData();
   }
 
   public loadData() {
-    this._error = false;
-    try {
-      this.getDataFromApi();
-    } catch (e) {
-      this.getMockData();
-    }
+    this.getDataFromApi();
   }
 
   private getDataFromApi(): void {
+    this._error = false;
     this._loadingCounter++;
     this._restService.find(this._query, this._pagination)
       .pipe(
         take(1),
-        tap((result: CommonArrayResponse<T>) => {
+        tap((res: ArrayResponse<T>) => {
+          if (res.success) {
+            this.handleResponseSuccess(res);
+          } else {
+            this.handleResponseError(res);
+          }
           this._loadingCounter--;
-          this._dataSource.refresh(result.items as any);
-          this._totalResults = result.totalResults
-          this._pageSize = result.limit;
         }),
-        // TODO (HW): Handle error properly
-        catchError((e) => {
+        catchError(() => {
           this._error = true;
+          this._loadingCounter--;
           this.openErrorSnackBar(`Nie można pobrać danych z API. Pobieranie danych sztucznych.`);
-          this.getMockData()
           return of()
         })
       ).subscribe();
   }
 
-  private getMockData(): void {
-    this._loadingCounter++;
-    this._restService.findMock(this._query, this._pagination)
-      .pipe(
-        take(1),
-        tap((result) => {
-          this._loadingCounter--;
-          this._dataSource.refresh(result);
-        }),
-        // TODO (HW): Handle error properly
-        catchError(() => of(console.error(`Nie można załadować danych.`)))
-      ).subscribe();
+  private handleResponseSuccess(res: ArrayResponse<T>) {
+    this._dataSource.refresh(res.details.items as any);
+    this._totalResults = res.details.totalResults
+    this._pageSize = res.details.limit;
+  }
+
+  private handleResponseError(res: ArrayResponse<T>) {
+    this.openErrorSnackBar(res.message);
+    console.error(res);
   }
 
   public onQueryChanged(query: Query): void {
     this._query = query;
+    this.updateRequiredFilters();
     this.loadData();
   }
+
+  private updateRequiredFilters(): void {
+    const requiredFilters = this.getRequiredFilter();
+    requiredFilters.forEach(filter => {
+      if (!this._query.filters.map(f => f.name).includes(filter.name)) this._query.filters.push(filter);
+    });
+  }
+
+  public abstract getRequiredFilter(): Filter[];
 
   public onPaginationChange(pagination: PageEvent): void {
     this._pagination = {
@@ -179,12 +184,11 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   private delete(itemId: string): void {
     this._restService.delete(itemId).pipe(
-      map(res => ({ success: !!res, message: res } as CommonResponse<any>)),
-      tap((res: CommonResponse<any>) => this.handleDeleteResponse(res, itemId))
+      tap((res: PatchResponse) => this.handleDeleteResponse(res, itemId))
     ).subscribe();
   }
 
-  private handleDeleteResponse(res: CommonResponse<any>, itemId: string): void {
+  private handleDeleteResponse(res: PatchResponse, itemId: string): void {
     if (res.success) {
       this.onDeleteSuccess(itemId);
     } else {

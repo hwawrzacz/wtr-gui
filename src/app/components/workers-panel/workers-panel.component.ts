@@ -3,6 +3,7 @@ import { take, tap } from 'rxjs/operators';
 import { stringifyUser } from 'src/app/helpers/parsers';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
+import { ArrayResponse } from 'src/app/model/responses';
 import { User } from 'src/app/model/user';
 import { UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -56,7 +57,9 @@ export class WorkersPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadWorkers();
+    if (!this._selectedWorkers) {
+      this.loadWorkers();
+    }
   }
 
   //#region Data loader
@@ -70,16 +73,28 @@ export class WorkersPanelComponent implements OnInit {
     this._userRestService.find(query, pagination)
       .pipe(
         take(1),
-        tap(results => {
+        tap((res: ArrayResponse<User>) => {
           this._workersLoading = false;
-
-          if (!!this._selectedWorkersIds && this._selectedWorkersIds.length > 0) {
-            this._selectedWorkers = results.items.filter(worker => this._selectedWorkersIds.includes(worker._id));
-          } else if (!!this._selectedWorkers && this._selectedWorkers.length > 0) {
-            this._selectedWorkers = results.items.filter(worker => this._selectedWorkers.map(selWork => selWork._id).includes(worker._id));
+          if (res.success) {
+            this.handleResponseSuccess(res);
+          } else {
+            this.handleResponseError(res);
           }
         })
       ).subscribe();
+  }
+
+  private handleResponseSuccess(res: ArrayResponse<User>) {
+    if (!!this._selectedWorkersIds && this._selectedWorkersIds.length > 0) {
+      this._selectedWorkers = res.details.items.filter(worker => this._selectedWorkersIds.includes(worker._id));
+    } else if (!!this._selectedWorkers && this._selectedWorkers.length > 0) {
+      this._selectedWorkers = res.details.items.filter(worker => this._selectedWorkers.map(selWork => selWork._id).includes(worker._id));
+    }
+  }
+
+  private handleResponseError(res: ArrayResponse<User>) {
+    this.openErrorSnackBar(res.message);
+    console.error(res);
   }
   //#endregion
 
@@ -108,6 +123,10 @@ export class WorkersPanelComponent implements OnInit {
   //#region Snackbar
   private openInfoSnackBar(message: string) {
     this._snackBarService.openInfoSnackBar(message);
+  }
+
+  private openErrorSnackBar(message: string) {
+    this._snackBarService.openErrorSnackBar(message);
   }
   //#endregion
 

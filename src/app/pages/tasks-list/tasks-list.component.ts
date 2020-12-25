@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
 import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
+import { Filter } from 'src/app/model/filter';
 import { Task } from 'src/app/model/task';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -28,5 +29,9 @@ export class TasksListComponent extends CommonListViewComponent<Task> {
       .afterClosed()
       .pipe(this.handleAfterClosed())
       .subscribe()
+  }
+
+  public getRequiredFilter(): Filter[] {
+    return [] as Filter[];
   }
 }

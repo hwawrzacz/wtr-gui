@@ -12,6 +12,10 @@ mat-form-field {
   justify-content: center;
 }
 
+button {
+  margin-left: $spacing-small;
+}
+
 .mat-input-element:disabled {
   color: $text-black !important;
 }

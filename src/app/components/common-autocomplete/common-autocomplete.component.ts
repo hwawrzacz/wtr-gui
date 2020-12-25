@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { tap } from 'rxjs/operators';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
+import { ArrayResponse } from 'src/app/model/responses';
 import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { CommonListRestService } from 'src/app/services/rest/common-list-rest.se
 })
 export abstract class CommonAutocompleteComponent<T> implements OnInit {
   private _loadingCounter: number;
+  private _error: boolean;
   protected _query: Query;
   protected _items: T[];
   protected _filteredItems: T[];
@@ -52,7 +54,11 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
   }
 
   get isLoading(): boolean {
-    return this._loadingCounter !== 0;
+    return this._loadingCounter > 0;
+  }
+
+  get error(): boolean {
+    return this._error;
   }
 
   get singleSelection(): boolean {
@@ -89,23 +95,42 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
   }
 
   //#region 
-  private loadData(): void {
+  private loadData(filter = ''): void {
     this._loadingCounter++;
+    this._error = false;
     const pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
     this._restService.find(this._query, pagination).pipe(
-      tap(result => {
+      tap((res: ArrayResponse<T>) => {
+        if (res.success) {
+          this.handleResponseSuccess(res, filter);
+        } else {
+          this.handleResponseError(res);
+        }
         this._loadingCounter--;
-        this._items = result.items;
-        this._filteredItems = this._items;
       })
     ).subscribe();
+  }
+
+  private handleResponseSuccess(res: ArrayResponse<T>, filter: string) {
+    this._items = res.details.items;
+    this._filteredItems = this._items;
+    this.filterData(filter);
+  }
+
+  private handleResponseError(res: ArrayResponse<T>) {
+    this._error = true;
+    console.error(res);
   }
   //#endregion
 
   //#region On* functions
   public onKeyUp(event: any): void {
-    const searchString = event.target.value;
-    this._filteredItems = this.filterData(searchString);
+    if (this._error) {
+      this.loadData();
+    } else {
+      const searchString = event.target.value;
+      this._filteredItems = this.filterData(searchString);
+    }
   }
 
   public onSelectionChange(item: T): void {
@@ -116,6 +141,11 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
       this.inputItem.nativeElement.blur();
       this.inputItem.nativeElement.focus();
     }
+  }
+
+  public refocus() {
+    this.inputItem.nativeElement.blur();
+    this.inputItem.nativeElement.focus();
   }
   //#endregion
 
