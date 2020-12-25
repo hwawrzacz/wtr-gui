@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Pagination } from '../../model/pagination';
 import { Query } from '../../model/query';
-import { CommonResponse, CreationResponse, SingleItemResponse } from '../../model/responses';
+import { CommonResponse, PatchResponse, SingleItemResponse } from '../../model/responses';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +33,9 @@ export class CommonRestService<T> {
     return this._http.get<T>(url, { params: params });
   }
 
-  public create<T>(item: T): Observable<CreationResponse> {
+  public create<T>(item: T): Observable<PatchResponse> {
     const url = `${environment.apiUrl}/${this._url}`;
-    return this._http.post<CreationResponse>(url, item);
+    return this._http.post<PatchResponse>(url, item);
   }
 
   public patch<T>(userId: string, name: string, value: T): Observable<any> {

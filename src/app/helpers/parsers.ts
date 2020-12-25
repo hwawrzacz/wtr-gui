@@ -2,7 +2,7 @@ import { Position } from '../model/enums/position';
 import { Priority } from '../model/enums/priority';
 import { CreationResponseMessage } from '../model/enums/response-messages';
 import { Status } from '../model/enums/status';
-import { CreationResponse } from '../model/responses';
+import { PatchResponse } from '../model/responses';
 import { SimpleUser } from '../model/simple-user';
 import { User } from '../model/user';
 import { WorkLogType } from '../model/work-log';
@@ -71,10 +71,10 @@ export class PositionStringifier {
 }
 
 export class CreationResponseParser {
-  public static mapStringResponseToCreationResponse(res: string | boolean): CreationResponse {
+  public static mapStringResponseToCreationResponse(res: string | boolean): PatchResponse {
     const success = res === true;
     const message = res.toString();
-    return { success: success, message: message } as CreationResponse
+    return { success: success, message: message } as PatchResponse
   }
 
   public static parseCreationResponseMessage(message: CreationResponseMessage) {

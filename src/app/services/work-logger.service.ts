@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { USER_ID_MOCK } from '../model/constants';
-import { CreationResponse } from '../model/responses';
+import { PatchResponse } from '../model/responses';
 import { WorkLog, WorkLogType } from '../model/work-log';
 import { CommonRestService } from './rest/common-rest.service';
 
@@ -16,17 +16,17 @@ export class WorkLoggerService extends CommonRestService<WorkLog> {
   }
 
   //#region Operators
-  public startWork(taskId: string): Observable<CreationResponse> {
+  public startWork(taskId: string): Observable<PatchResponse> {
     const body = this.createWorkLogObject(taskId, WorkLogType.WORK);
     return this.create<WorkLog>(body);
   }
 
-  public startBreak(taskId: string): Observable<CreationResponse> {
+  public startBreak(taskId: string): Observable<PatchResponse> {
     const body = this.createWorkLogObject(taskId, WorkLogType.BREAK);
     return this.create<WorkLog>(body);
   }
 
-  public closeTask(taskId: string): Observable<CreationResponse> {
+  public closeTask(taskId: string): Observable<PatchResponse> {
     const body = this.createWorkLogObject(taskId, WorkLogType.CLOSE);
     return this.create<WorkLog>(body);
   }

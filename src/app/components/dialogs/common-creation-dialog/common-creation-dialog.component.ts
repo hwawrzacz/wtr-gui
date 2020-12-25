@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { CreationResponse } from 'src/app/model/responses';
+import { PatchResponse } from 'src/app/model/responses';
 import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
@@ -49,7 +49,7 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
     const item = this.parseItemFromForm();
     this._restService.create<T>(item)
       .pipe(
-        tap((res: CreationResponse) => {
+        tap((res: PatchResponse) => {
           this._isLoading = false;
           if (res.success) {
             /** Success message unlike errors messages should be handled in component which 

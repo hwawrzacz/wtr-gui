@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { matchOtherControlValidator } from 'src/app/helpers/custom-validators';
-import { CreationResponse } from 'src/app/model/responses';
+import { PatchResponse } from 'src/app/model/responses';
 import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -59,7 +59,7 @@ export class PasswordChangeDialogComponent implements OnInit {
     this._restService.patch<string>(this._userId, 'password', newPassword)
       .pipe(
         take(1),
-        tap((res: CreationResponse) => {
+        tap((res: PatchResponse) => {
           this._isLoading = false;
           if (res.success) {
             this._dialog.close(true);
@@ -72,7 +72,7 @@ export class PasswordChangeDialogComponent implements OnInit {
       ).subscribe();
   }
 
-  private handleResponseError(res: CreationResponse): void {
+  private handleResponseError(res: PatchResponse): void {
     this._snackBarService.openErrorSnackBar(res.message);
   }
 

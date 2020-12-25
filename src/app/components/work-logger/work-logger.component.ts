@@ -4,7 +4,7 @@ import { catchError, map, take, tap } from 'rxjs/operators';
 import { USER_ID_MOCK } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
-import { ArrayResponse, CommonResponse, CreationResponse } from 'src/app/model/responses';
+import { ArrayResponse, CommonResponse, PatchResponse } from 'src/app/model/responses';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -108,7 +108,7 @@ export class WorkLoggerComponent implements OnInit {
     this._loggerService.startWork(this._taskId)
       .pipe(
         take(1),
-        tap((res: CreationResponse) => {
+        tap((res: PatchResponse) => {
           if (res.success) {
             this.handleResponse(res, 'Rozpoczęto pracę')
           } else {
@@ -125,7 +125,7 @@ export class WorkLoggerComponent implements OnInit {
     this._loggerService.startBreak(this._taskId)
       .pipe(
         take(1),
-        tap((res: CreationResponse) => {
+        tap((res: PatchResponse) => {
           if (res.success) {
             this.handleResponse(res, 'Zakończono pracę')
           } else {
@@ -142,7 +142,7 @@ export class WorkLoggerComponent implements OnInit {
     this._loggerService.closeTask(this._taskId)
       .pipe(
         take(1),
-        tap((res: CreationResponse) => {
+        tap((res: PatchResponse) => {
           if (res.success) {
             this.handleResponse(res, 'Zamknięto zadanie')
           } else {
@@ -154,13 +154,13 @@ export class WorkLoggerComponent implements OnInit {
       .subscribe();
   }
 
-  private handleCreationResponseError(res: CreationResponse) {
+  private handleCreationResponseError(res: PatchResponse) {
     this._snackBarService.openErrorSnackBar(res.message)
     console.error(res);
   }
   //#endregion
 
-  private handleResponse(res: CreationResponse, successMessage: string, errorMessage?: string): void {
+  private handleResponse(res: PatchResponse, successMessage: string, errorMessage?: string): void {
     this._loadingCounter--;
     // TODO: Handle proper response
     if (!!res || res.success) {

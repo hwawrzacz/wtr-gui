@@ -5,7 +5,7 @@ import { of, OperatorFunction } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
-import { ArrayResponse, DeletionResponse } from 'src/app/model/responses';
+import { ArrayResponse, PatchResponse } from 'src/app/model/responses';
 import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonDataSource } from '../../model/common-data-source';
@@ -172,11 +172,11 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   private delete(itemId: string): void {
     this._restService.delete(itemId).pipe(
-      tap((res: DeletionResponse) => this.handleDeleteResponse(res, itemId))
+      tap((res: PatchResponse) => this.handleDeleteResponse(res, itemId))
     ).subscribe();
   }
 
-  private handleDeleteResponse(res: DeletionResponse, itemId: string): void {
+  private handleDeleteResponse(res: PatchResponse, itemId: string): void {
     if (res.success) {
       this.onDeleteSuccess(itemId);
     } else {

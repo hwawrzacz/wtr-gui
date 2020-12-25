@@ -2,12 +2,11 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
+import { catchError, take, tap } from 'rxjs/operators';
 import { CreationResponseParser } from 'src/app/helpers/parsers';
-import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
-import { CreationResponse, SingleItemResponse } from 'src/app/model/responses';
+import { PatchResponse, SingleItemResponse } from 'src/app/model/responses';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
@@ -126,9 +125,15 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this.updateForm(this._initialItem);
   }
 
-  private handleResponseError(res: SingleItemResponse<T>) {
+  private handleResponseError(res: SingleItemResponse<T>, message?: string) {
     // TODO: Handle responses more specifically if needed, when responses list delivered from API
-    this.openErrorSnackBar(res.message);
+    this.openErrorSnackBar(message || res.message);
+    console.error(res);
+  }
+
+  private handlePatchResponseError(res: PatchResponse, message?: string) {
+    // TODO: Handle responses more specifically if needed, when responses list delivered from API
+    this.openErrorSnackBar(message || res.message);
     console.error(res);
   }
 
@@ -170,9 +175,9 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   protected patch<T>(name: string, value: T): void {
     this._restService.patch<T>(this._itemId, name, value)
       .pipe(
-        tap((res: CreationResponse) => {
+        tap((res: PatchResponse) => {
           if (res.success) this.openSuccessSnackBar('Zaktualizowano wartość.');
-          else this.handleResponseError(res, 'Podczas zapisywania wystąpił błąd.');
+          else this.handlePatchResponseError(res, 'Podczas zapisywania wystąpił błąd.');
         }),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
@@ -181,17 +186,18 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private deleteItem(): void {
     this._restService.patch<boolean>(this._itemId, 'active', false)
       .pipe(
-        tap((res: CreationResponse) => {
+        tap((res: PatchResponse) => {
           if (res.success) this.openSuccessSnackBar('Usunięto element.');
-          else this.handleResponseError(res, 'Podczas usuwania elementu wystąpił błąd.');
-          catchError(err => this.handeRequestError(err))
+          else this.handlePatchResponseError(res, 'Podczas usuwania elementu wystąpił błąd.');
+        }),
+        catchError(err => this.handeRequestError(err))
       ).subscribe();
   }
 
   protected patchObject<T>(object: T): void {
     this._restService.patchObject<T>(this._itemId, object)
       .pipe(
-        tap((res: CreationResponse) => {
+        tap((res: PatchResponse) => {
           if (res.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
           else this.handleSavingFailed(res);
         }),
@@ -199,7 +205,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
       ).subscribe();
   }
 
-  private handleSavingFailed(res: CreationResponse) {
+  private handleSavingFailed(res: PatchResponse) {
     const messageStr = CreationResponseParser.parseCreationResponseMessage(res.message);
     this.openErrorSnackBar(messageStr);
     this.updateForm(this._initialItem);

@@ -1,5 +1,5 @@
 import { CommonArrayResponse } from "./common-array-response";
-import { CreationResponseMessage, DeletionResponseMessage, GetResponseMessage } from "./enums/response-messages";
+import { CreationResponseMessage as PatchResponseMessage, DeletionResponseMessage, GetResponseMessage } from "./enums/response-messages";
 
 export interface CommonResponse<M, O> {
   success: boolean;
@@ -7,9 +7,7 @@ export interface CommonResponse<M, O> {
   details?: O;
 }
 
-export interface CreationResponse extends CommonResponse<CreationResponseMessage, any> { }
-
-export interface DeletionResponse extends CommonResponse<DeletionResponseMessage, any> { }
+export interface PatchResponse extends CommonResponse<PatchResponseMessage, any> { }
 
 export interface ArrayResponse<T> extends CommonResponse<GetResponseMessage, CommonArrayResponse<T>> { }
 
