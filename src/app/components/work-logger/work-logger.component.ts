@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
+import { catchError, take, tap } from 'rxjs/operators';
 import { USER_ID_MOCK } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
-import { ArrayResponse, CommonResponse, PatchResponse } from 'src/app/model/responses';
+import { ArrayResponse, PatchResponse } from 'src/app/model/responses';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -79,12 +79,12 @@ export class WorkLoggerComponent implements OnInit {
       .pipe(
         take(1),
         tap((res: ArrayResponse<WorkLog>) => {
-          this._loadingCounter--;
           if (res.success) {
             this.handleResponseSuccess(res);
           } else {
             this.handleResponseError(res);
           }
+          this._loadingCounter--;
         })
       )
       .subscribe()
@@ -161,7 +161,6 @@ export class WorkLoggerComponent implements OnInit {
   //#endregion
 
   private handleResponse(res: PatchResponse, successMessage: string, errorMessage?: string): void {
-    this._loadingCounter--;
     // TODO: Handle proper response
     if (!!res || res.success) {
       if (res['message'] === WorkLogType.AUTOBREAK.toString()) {
@@ -172,6 +171,7 @@ export class WorkLoggerComponent implements OnInit {
       this.emitWorkLogged();
     } else this._snackBarService.openErrorSnackBar(errorMessage || 'Podczas zapisywania wystąpił błąd');
     this.loadLastWorkLog();
+    this._loadingCounter--;
   }
 
   private handleRequestError(err: string): Observable<any> {

@@ -112,12 +112,12 @@ export abstract class CommonListViewComponent<T> implements OnInit {
       .pipe(
         take(1),
         tap((res: ArrayResponse<T>) => {
-          this._loadingCounter--;
           if (res.success) {
             this.handleResponseSuccess(res);
           } else {
             this.handleResponseError(res);
           }
+          this._loadingCounter--;
         }),
         catchError(() => {
           this._error = true;

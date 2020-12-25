@@ -110,11 +110,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
           if (res.success) {
             this._initialItem = res.details;
             this.updateForm(this._initialItem);
-            this._error = false;
-            this._loadingCounter--;
           } else {
             this.handleResponseError(res);
           }
+          this._loadingCounter--;
         }),
         catchError(() => of(this._error = true))
       ).subscribe();

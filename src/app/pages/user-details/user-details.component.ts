@@ -5,6 +5,7 @@ import { filter, take, tap } from 'rxjs/operators';
 import { phoneNumberValidator } from 'src/app/helpers/custom-validators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { Position } from 'src/app/model/enums/position';
+import { SingleItemResponse } from 'src/app/model/responses';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { UserCredentials } from 'src/app/model/user-credentials';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
@@ -54,6 +55,11 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService);
   }
 
+  ngOnInit(): void {
+    super.ngOnInit();
+    this.loadCredentials();
+  }
+
   //#region Initializers
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
@@ -83,25 +89,20 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     (this._restService as SingleUserRestService).getCredentials(this._itemId)
       .pipe(
         take(1),
-        tap((credentials: UserCredentials) => {
-          this._loadingCounter--;
-          if (!!credentials) {
-            this._faceImageUrl = credentials.facePhoto;
-            this._qrCodeUrl = credentials.qrCode;
+        tap((res: SingleItemResponse<UserCredentials>) => {
+          if (res.success) {
+            this._faceImageUrl = res.details.facePhoto;
+            this._qrCodeUrl = res.details.qrCode;
           } else {
-            console.error('Error while getting credentials');
             this._error = true;
+            this.openErrorSnackBar('Podczas pobierania danych logowania wystąpił błąd.');
           }
+          this._loadingCounter--;
         })
       )
       .subscribe()
   }
   //#endregion
-
-  ngOnInit(): void {
-    super.ngOnInit();
-    this.loadCredentials();
-  }
 
   //#region Dialogs
   public openImageCaptureDialog(): void {

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SingleItemResponse } from 'src/app/model/responses';
 import { environment } from 'src/environments/environment';
 import { User } from '../../model/user';
 import { UserCredentials } from '../../model/user-credentials';
@@ -16,8 +17,8 @@ export class SingleUserRestService extends CommonRestService<User> {
     super(http, 'users');
   }
 
-  public getCredentials(userId: string): Observable<UserCredentials> {
-    return this._http.get<UserCredentials>(`${environment.apiUrl}/${this._credentialsUrl}/${userId}`);
+  public getCredentials(userId: string): Observable<SingleItemResponse<UserCredentials>> {
+    return this._http.get<SingleItemResponse<UserCredentials>>(`${environment.apiUrl}/${this._credentialsUrl}/${userId}`);
   }
 
   public updatePhoto(user: User): Observable<any> {

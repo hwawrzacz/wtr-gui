@@ -101,12 +101,12 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
     const pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
     this._restService.find(this._query, pagination).pipe(
       tap((res: ArrayResponse<T>) => {
-        this._loadingCounter--;
         if (res.success) {
           this.handleResponseSuccess(res, filter);
         } else {
           this.handleResponseError(res);
         }
+        this._loadingCounter--;
       })
     ).subscribe();
   }
