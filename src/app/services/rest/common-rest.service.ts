@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Pagination } from '../../model/pagination';
 import { Query } from '../../model/query';
-import { CommonResponse, CreationResponse } from '../../model/responses';
+import { CommonResponse, CreationResponse, SingleItemResponse } from '../../model/responses';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +19,9 @@ export class CommonRestService<T> {
     this._url = url;
   }
 
-  public get(itemId: string): Observable<T> {
+  public get(itemId: string): Observable<SingleItemResponse<T>> {
     const url = `${environment.apiUrl}/${this._url}/${itemId}`;
-    return this._http.get<T>(url);
+    return this._http.get<SingleItemResponse<T>>(url);
   }
 
   // TODO: Add proper response type

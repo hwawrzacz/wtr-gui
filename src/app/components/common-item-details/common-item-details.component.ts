@@ -1,13 +1,13 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError, map, take, tap } from 'rxjs/operators';
 import { CreationResponseParser } from 'src/app/helpers/parsers';
 import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
-import { CreationResponse } from 'src/app/model/responses';
+import { CreationResponse, SingleItemResponse } from 'src/app/model/responses';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
@@ -107,12 +107,14 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
     this._restService.get(this._itemId)
       .pipe(
         take(1),
-        tap(item => {
-          if (!!item) {
-            this._initialItem = item;
-            this.updateForm(item);
+        tap((res: SingleItemResponse<T>) => {
+          if (res.success) {
+            this._initialItem = res.details;
+            this.updateForm(this._initialItem);
             this._error = false;
             this._loadingCounter--;
+          } else {
+            this.handleResponseError(res);
           }
         }),
         catchError(() => of(this._error = true))
@@ -122,6 +124,12 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private loadDataFromBroker(): void {
     this._initialItem = this._itemDetailsBroker.item
     this.updateForm(this._initialItem);
+  }
+
+  private handleResponseError(res: SingleItemResponse<T>) {
+    // TODO: Handle responses more specifically if needed, when responses list delivered from API
+    this.openErrorSnackBar(res.message);
+    console.error(res);
   }
 
   /** Method which updates form */
