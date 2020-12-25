@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
 import { ProjectCreationDialogComponent } from 'src/app/components/dialogs/project-creation-dialog/project-creation-dialog.component';
+import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
 import { ProjectsListRestService } from 'src/app/services/rest/projects-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -30,5 +31,9 @@ export class ProjectsListComponent extends CommonListViewComponent<Project> {
         this.handleAfterClosed()
       )
       .subscribe();
+  }
+
+  public getRequiredFilter(): Filter[] {
+    return [] as Filter[];
   }
 }

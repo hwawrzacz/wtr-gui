@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Filter } from 'src/app/model/filter';
-import { Pagination } from 'src/app/model/pagination';
-import { Query } from 'src/app/model/query';
 import { Task } from 'src/app/model/task';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -30,10 +28,11 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
   }
 
   ngOnInit(): void {
-    const projectFilter = { name: 'idProject', values: [`${this._projectId}`] } as Filter;
-    this._query = { searchString: '', filters: [projectFilter] } as Query;
-    this._pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
     super.ngOnInit();
+  }
+
+  public getRequiredFilter(): Filter[] {
+    return [{ name: 'idProject', values: [`${this._projectId}`] }] as Filter[];
   }
 
   public openItemCreationDialog(): void { return }

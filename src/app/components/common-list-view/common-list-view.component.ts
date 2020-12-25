@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { of, OperatorFunction } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
+import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { ArrayResponse, PatchResponse } from 'src/app/model/responses';
@@ -96,15 +97,16 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.updateRequiredFilters();
     this.loadData();
   }
 
   public loadData() {
-    this._error = false;
     this.getDataFromApi();
   }
 
   private getDataFromApi(): void {
+    this._error = false;
     this._loadingCounter++;
     this._restService.find(this._query, this._pagination)
       .pipe(
@@ -117,9 +119,9 @@ export abstract class CommonListViewComponent<T> implements OnInit {
             this.handleResponseError(res);
           }
         }),
-        // TODO (HW): Handle error properly
-        catchError((e) => {
+        catchError(() => {
           this._error = true;
+          this._loadingCounter--;
           this.openErrorSnackBar(`Nie można pobrać danych z API. Pobieranie danych sztucznych.`);
           return of()
         })
@@ -139,8 +141,18 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   public onQueryChanged(query: Query): void {
     this._query = query;
+    this.updateRequiredFilters();
     this.loadData();
   }
+
+  private updateRequiredFilters(): void {
+    const requiredFilters = this.getRequiredFilter();
+    requiredFilters.forEach(filter => {
+      if (!this._query.filters.map(f => f.name).includes(filter.name)) this._query.filters.push(filter);
+    });
+  }
+
+  public abstract getRequiredFilter(): Filter[];
 
   public onPaginationChange(pagination: PageEvent): void {
     this._pagination = {
