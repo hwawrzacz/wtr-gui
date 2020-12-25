@@ -24,6 +24,7 @@ export class WorkLoggerComponent implements OnInit {
   private _taskStatus: Status;
 
   @Output('workLogged') private _workLogEmitter: EventEmitter<void>;
+  @Output('statusChanged') private _statusChanged: EventEmitter<Status>;
 
   @Input('taskId')
   set taskId(value: string) {
@@ -73,6 +74,7 @@ export class WorkLoggerComponent implements OnInit {
     private _snackBarService: SnackBarService
   ) {
     this._workLogEmitter = new EventEmitter<void>();
+    this._statusChanged = new EventEmitter<Status>();
   }
 
   ngOnInit(): void {
@@ -127,9 +129,10 @@ export class WorkLoggerComponent implements OnInit {
             : of(res)
         ),
         tap((res: PatchResponse) => {
-          res.success
-            ? this.handlePatchResponseSuccess(res, 'Rozpoczęto pracę')
-            : this.handlePatchResponseError(res);
+          if (res.success) {
+            this.handlePatchResponseSuccess(res, 'Rozpoczęto pracę');
+            this.emitStatusChanged(Status.IN_PROGRESS);
+          } else this.handlePatchResponseError(res);
 
           this._loadingCounter--;
         }),
@@ -163,9 +166,10 @@ export class WorkLoggerComponent implements OnInit {
           : of(res)
         ),
         tap((res: PatchResponse) => {
-          res.success
-            ? this.handlePatchResponseSuccess(res, 'Zamknięto zadanie')
-            : this.handlePatchResponseError(res);
+          if (res.success) {
+            this.handlePatchResponseSuccess(res, 'Zamknięto zadanie');
+            this.emitStatusChanged(Status.DONE);
+          } else this.handlePatchResponseError(res)
         }),
         catchError(err => this.handleRequestError(err))
       )
@@ -210,4 +214,7 @@ export class WorkLoggerComponent implements OnInit {
     this._workLogEmitter.emit();
   }
 
+  private emitStatusChanged(status: Status): void {
+    this._statusChanged.emit(status);
+  }
 }

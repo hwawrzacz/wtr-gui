@@ -5,6 +5,7 @@ import { CommonItemDetailsComponent } from 'src/app/components/common-item-detai
 import { WorkLogsListComponent } from 'src/app/components/work-logs-list/work-logs-list.component';
 import { stringifyUser } from 'src/app/helpers/parsers';
 import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from 'src/app/model/constants';
+import { Status } from 'src/app/model/enums/status';
 import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
 import { Query } from 'src/app/model/query';
@@ -131,6 +132,10 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   public reloadWorkLogs() {
     this._workLogsList.loadData();
+  }
+
+  public updateStatus(status: Status): void {
+    if (!!status) this._initialItem.status = status;
   }
   //#endregion
 

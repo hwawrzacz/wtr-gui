@@ -46,7 +46,8 @@
       </mat-form-field>
 
       <section class="work-logger">
-        <app-work-logger [taskId]="itemId" [taskStatus]="initialItem.status" (workLogged)="reloadWorkLogs()">
+        <app-work-logger [taskId]="itemId" [taskStatus]="initialItem.status" (workLogged)="reloadWorkLogs()"
+          (statusChanged)="updateStatus($event)">
         </app-work-logger>
       </section>
 
