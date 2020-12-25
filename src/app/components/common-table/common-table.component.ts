@@ -32,6 +32,7 @@ export class CommonTableComponent<T> {
   protected _actionsDefinitions: ActionDefinition[];
   private _dataSource: CommonDataSource<T>;
   private _isLoading: boolean;
+  private _readonly: boolean;
 
   @Output('itemDeleted')
   private _itemDeletedEmitter: EventEmitter<string>;
@@ -55,6 +56,11 @@ export class CommonTableComponent<T> {
 
   get isLoading(): boolean {
     return this._isLoading;
+  }
+
+  @Input('readonly')
+  set readonly(value: boolean) {
+    this._readonly = value;
   }
 
   @Input('isLoading')
@@ -90,19 +96,27 @@ export class CommonTableComponent<T> {
   }
 
   public navigateToDetails(itemId: string, edit = false): void {
-    this._navigator.navigateToDetails(this._detailsUrl, itemId);
+    if (!this._readonly) {
+      this._navigator.navigateToDetails(this._detailsUrl, itemId);
+    }
   }
 
   public navigateToDetailsWithData(item: CommonItem, edit = false): void {
-    this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
+    if (!this._readonly) {
+      this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
+    }
   }
 
   public navigateToStats(itemId: string): void {
-    this._navigator.navigateToDetails(this._detailsUrl, itemId);
+    if (!this._readonly) {
+      this._navigator.navigateToDetails(this._detailsUrl, itemId);
+    }
   }
 
   public navigateToStatsWithData(item: CommonItem): void {
-    this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
+    if (!this._readonly) {
+      this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
+    }
   }
 
   protected delete(itemId: string): void {

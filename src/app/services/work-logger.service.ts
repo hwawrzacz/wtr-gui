@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { USER_ID_MOCK } from '../model/constants';
-import { mockWorkLogs } from '../model/mock-data';
 import { CreationResponse } from '../model/responses';
 import { WorkLog, WorkLogType } from '../model/work-log';
 import { CommonRestService } from './rest/common-rest.service';
@@ -13,7 +12,7 @@ import { CommonRestService } from './rest/common-rest.service';
 export class WorkLoggerService extends CommonRestService<WorkLog> {
 
   constructor(http: HttpClient) {
-    super(http, 'workloger/add', mockWorkLogs[0]);
+    super(http, 'workloger/add');
   }
 
   //#region Operators

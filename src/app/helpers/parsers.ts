@@ -1,11 +1,11 @@
-import { User } from '../model/user';
 import { Position } from '../model/enums/position';
 import { Priority } from '../model/enums/priority';
-import { Status } from '../model/enums/status';
-import { SimpleUser } from '../model/simple-user';
-import { WorkLogType } from '../model/work-log';
 import { CreationResponseMessage } from '../model/enums/response-messages';
+import { Status } from '../model/enums/status';
 import { CreationResponse } from '../model/responses';
+import { SimpleUser } from '../model/simple-user';
+import { User } from '../model/user';
+import { WorkLogType } from '../model/work-log';
 
 export const stringifyUser = (user: User | SimpleUser) => `${user.firstName} ${user.lastName}`;
 
@@ -49,6 +49,7 @@ export class WorkLogTypeStringifier {
       case WorkLogType.BREAK: return 'Przerwa';
       case WorkLogType.AUTOBREAK: return 'Przerwa automatyczna';
       case WorkLogType.WORK: return 'Praca';
+      case WorkLogType.CLOSE: return 'Zamknięcie zadania';
       default: return value;
     }
   }
