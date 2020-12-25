@@ -21,6 +21,8 @@ export class WorkLoggerComponent implements OnInit {
   private _taskId: string;
   private _lastWorkLog: WorkLog;
   private _loadingCounter: number;
+  private _taskStatus: Status;
+
   @Output('workLogged') private _workLogEmitter: EventEmitter<void>;
 
   @Input('taskId')
@@ -31,12 +33,13 @@ export class WorkLoggerComponent implements OnInit {
     return this._taskId;
   }
 
-  get isLoading(): boolean {
-    return this._loadingCounter > 0;
+  @Input('taskStatus')
+  set taskStatus(value: Status) {
+    this._taskStatus = value;
   }
 
-  get anyWorkLogExists(): boolean {
-    return !!this.lastWorkLog;
+  get isLoading(): boolean {
+    return this._loadingCounter > 0 || !this._taskStatus;
   }
 
   get lastWorkLog(): WorkLog {
@@ -44,15 +47,23 @@ export class WorkLoggerComponent implements OnInit {
   }
 
   get isWorking(): boolean {
-    return this._lastWorkLog ? this._lastWorkLog.logType === WorkLogType.WORK : false;
+    return this._lastWorkLog
+      ? this._taskStatus === Status.IN_PROGRESS && this._lastWorkLog.logType === WorkLogType.WORK
+      : false;
   }
 
   get isPaused(): boolean {
-    return this._lastWorkLog ? [WorkLogType.BREAK, WorkLogType.AUTOBREAK].includes(this._lastWorkLog.logType) : false;
+    return this._lastWorkLog
+      ? this._taskStatus === Status.IN_PROGRESS && this._lastWorkLog.logType === WorkLogType.BREAK
+      : false;
+  }
+
+  get isNew(): boolean {
+    return this._taskStatus === Status.NEW;
   }
 
   get isClosed(): boolean {
-    return this._lastWorkLog ? this._lastWorkLog.logType === WorkLogType.CLOSE : false;
+    return this._taskStatus === Status.DONE;
   }
 
   constructor(
@@ -111,7 +122,7 @@ export class WorkLoggerComponent implements OnInit {
         take(1),
         mergeMap((res: PatchResponse) =>
           // If task has status 'NEW'
-          res.success && !this.anyWorkLogExists
+          res.success && this.isNew
             ? this.markTask(Status.IN_PROGRESS)
             : of(res)
         ),

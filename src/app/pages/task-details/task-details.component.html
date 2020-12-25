@@ -46,7 +46,8 @@
       </mat-form-field>
 
       <section class="work-logger">
-        <app-work-logger [taskId]="itemId" (workLogged)="reloadWorkLogs()"></app-work-logger>
+        <app-work-logger [taskId]="itemId" [taskStatus]="initialItem.status" (workLogged)="reloadWorkLogs()">
+        </app-work-logger>
       </section>
 
       <mat-form-field appearance="outline" class="date">
