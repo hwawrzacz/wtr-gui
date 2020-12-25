@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, take, tap } from 'rxjs/operators';
+import { catchError, mergeMap, switchMap, take, tap } from 'rxjs/operators';
 import { USER_ID_MOCK } from 'src/app/model/constants';
+import { Status } from 'src/app/model/enums/status';
 import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
 import { ArrayResponse, PatchResponse } from 'src/app/model/responses';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
+import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { WorkLoggerService } from 'src/app/services/work-logger.service';
@@ -56,6 +58,7 @@ export class WorkLoggerComponent implements OnInit {
   constructor(
     private _loggerService: WorkLoggerService,
     private _workLogsService: WorkLogsListRestService,
+    private _taskService: SingleTaskRestService,
     private _snackBarService: SnackBarService
   ) {
     this._workLogEmitter = new EventEmitter<void>();
@@ -79,11 +82,9 @@ export class WorkLoggerComponent implements OnInit {
       .pipe(
         take(1),
         tap((res: ArrayResponse<WorkLog>) => {
-          if (res.success) {
-            this.handleResponseSuccess(res);
-          } else {
-            this.handleResponseError(res);
-          }
+          res.success
+            ? this.handleResponseSuccess(res)
+            : this.handleResponseError(res)
           this._loadingCounter--;
         })
       )
@@ -108,12 +109,18 @@ export class WorkLoggerComponent implements OnInit {
     this._loggerService.startWork(this._taskId)
       .pipe(
         take(1),
+        mergeMap((res: PatchResponse) =>
+          // If task has status 'NEW'
+          res.success && !this.anyWorkLogExists
+            ? this.markTask(Status.IN_PROGRESS)
+            : of(res)
+        ),
         tap((res: PatchResponse) => {
-          if (res.success) {
-            this.handleResponse(res, 'Rozpoczęto pracę')
-          } else {
-            this.handleCreationResponseError(res);
-          }
+          res.success
+            ? this.handlePatchResponseSuccess(res, 'Rozpoczęto pracę')
+            : this.handlePatchResponseError(res);
+
+          this._loadingCounter--;
         }),
         catchError(err => this.handleRequestError(err))
       )
@@ -125,13 +132,11 @@ export class WorkLoggerComponent implements OnInit {
     this._loggerService.startBreak(this._taskId)
       .pipe(
         take(1),
-        tap((res: PatchResponse) => {
-          if (res.success) {
-            this.handleResponse(res, 'Zakończono pracę')
-          } else {
-            this.handleCreationResponseError(res);
-          }
-        }),
+        tap((res: PatchResponse) =>
+          res.success
+            ? this.handlePatchResponseSuccess(res, 'Zakończono pracę')
+            : this.handlePatchResponseError(res)
+        ),
         catchError(err => this.handleRequestError(err))
       )
       .subscribe();
@@ -142,27 +147,29 @@ export class WorkLoggerComponent implements OnInit {
     this._loggerService.closeTask(this._taskId)
       .pipe(
         take(1),
+        mergeMap(res => res.success
+          ? this.markTask(Status.DONE)
+          : of(res)
+        ),
         tap((res: PatchResponse) => {
-          if (res.success) {
-            this.handleResponse(res, 'Zamknięto zadanie')
-          } else {
-            this.handleCreationResponseError(res);
-          }
+          res.success
+            ? this.handlePatchResponseSuccess(res, 'Zamknięto zadanie')
+            : this.handlePatchResponseError(res);
         }),
         catchError(err => this.handleRequestError(err))
       )
       .subscribe();
   }
 
-  private handleCreationResponseError(res: PatchResponse) {
-    this._snackBarService.openErrorSnackBar(res.message)
-    console.error(res);
+  public markTask(taskStatus: Status): Observable<PatchResponse> {
+    this._loadingCounter++;
+    return this._taskService.patch<Status>(this._taskId, 'status', taskStatus)
   }
   //#endregion
 
-  private handleResponse(res: PatchResponse, successMessage: string, errorMessage?: string): void {
-    // TODO: Handle proper response
-    if (!!res || res.success) {
+  //#region Response handlers
+  private handlePatchResponseSuccess(res: PatchResponse, successMessage: string, errorMessage?: string): void {
+    if (res.success) {
       if (res['message'] === WorkLogType.AUTOBREAK.toString()) {
         this._snackBarService.openSuccessSnackBar('Rozpoczęto pracę. Poprzednio rozpoczęta praca została zakończona.');
       } else {
@@ -170,16 +177,23 @@ export class WorkLoggerComponent implements OnInit {
       }
       this.emitWorkLogged();
     } else this._snackBarService.openErrorSnackBar(errorMessage || 'Podczas zapisywania wystąpił błąd');
+
     this.loadLastWorkLog();
+    this._loadingCounter--;
+  }
+
+  private handlePatchResponseError(res: PatchResponse) {
+    this._snackBarService.openErrorSnackBar(res.message)
+    console.error(res);
     this._loadingCounter--;
   }
 
   private handleRequestError(err: string): Observable<any> {
     this._loadingCounter--;
     this._snackBarService.openErrorSnackBar(err);
-
     return of();
   }
+  //#endregion
 
   private emitWorkLogged(): void {
     this._workLogEmitter.emit();
