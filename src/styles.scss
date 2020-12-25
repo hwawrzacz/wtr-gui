@@ -73,6 +73,14 @@ button {
   }
 }
 
-.mat-table {
+
+// Table
+.mat-table,
+.mat-paginator-container {
   background-color: $bg-color-white;
+}
+
+.mat-cell {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
 }
