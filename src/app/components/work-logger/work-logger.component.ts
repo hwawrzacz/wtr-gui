@@ -4,7 +4,7 @@ import { catchError, map, take, tap } from 'rxjs/operators';
 import { USER_ID_MOCK } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
-import { CommonResponse, CreationResponse } from 'src/app/model/responses';
+import { ArrayResponse, CommonResponse, CreationResponse } from 'src/app/model/responses';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -73,19 +73,32 @@ export class WorkLoggerComponent implements OnInit {
     const taskFilter = { name: 'idTask', values: [`${this._taskId}`] } as Filter;
     const userFilter = { name: 'idUser', values: [`${userId}`] } as Filter;
     const query = { searchString: '', filters: [taskFilter, userFilter] };
-    const pagination = { currentPage: 1, itemsPerPage: 100 } as Pagination;
+    const pagination = { currentPage: 1, itemsPerPage: 1 } as Pagination;
 
     this._workLogsService.find(query, pagination)
       .pipe(
         take(1),
-        tap(res => {
+        tap((res: ArrayResponse<WorkLog>) => {
           this._loadingCounter--;
-          if (res.items && res.items.length > 0) {
-            this._lastWorkLog = res.items[res.items.length - 1];
+          if (res.success) {
+            this.handleResponseSuccess(res);
+          } else {
+            this.handleResponseError(res);
           }
         })
       )
       .subscribe()
+  }
+
+  private handleResponseSuccess(res: ArrayResponse<WorkLog>) {
+    if (res.details.items && res.details.items.length > 0) {
+      this._lastWorkLog = res.details.items[0];
+    }
+  }
+
+  private handleResponseError(res: ArrayResponse<WorkLog>) {
+    this._snackBarService.openErrorSnackBar(res.message)
+    console.error(res);
   }
   //#endregion
 
@@ -94,23 +107,14 @@ export class WorkLoggerComponent implements OnInit {
     this._loadingCounter++;
     this._loggerService.startWork(this._taskId)
       .pipe(
-        map(res => {
-          const success = !!res
-          const message = !!res['logType'] ? WorkLogType.AUTOBREAK : '';
-          const details = {
-            idTask: res['idTask'],
-            idUser: res['idUser'],
-            logDate: res['logDate'],
-            logType: res['logType'],
-          };
-          return {
-            success: success,
-            message: message,
-            details: details
-          } as CommonResponse<any>
-        }),
         take(1),
-        tap(res => this.handleResponse(res, 'Rozpoczęto pracę')),
+        tap((res: CreationResponse) => {
+          if (res.success) {
+            this.handleResponse(res, 'Rozpoczęto pracę')
+          } else {
+            this.handleCreationResponseError(res);
+          }
+        }),
         catchError(err => this.handleRequestError(err))
       )
       .subscribe();
@@ -121,7 +125,13 @@ export class WorkLoggerComponent implements OnInit {
     this._loggerService.startBreak(this._taskId)
       .pipe(
         take(1),
-        tap(res => this.handleResponse(res, 'Zakończono pracę')),
+        tap((res: CreationResponse) => {
+          if (res.success) {
+            this.handleResponse(res, 'Zakończono pracę')
+          } else {
+            this.handleCreationResponseError(res);
+          }
+        }),
         catchError(err => this.handleRequestError(err))
       )
       .subscribe();
@@ -132,10 +142,21 @@ export class WorkLoggerComponent implements OnInit {
     this._loggerService.closeTask(this._taskId)
       .pipe(
         take(1),
-        tap(res => this.handleResponse(res, 'Zamknięto zadanie')),
+        tap((res: CreationResponse) => {
+          if (res.success) {
+            this.handleResponse(res, 'Zamknięto zadanie')
+          } else {
+            this.handleCreationResponseError(res);
+          }
+        }),
         catchError(err => this.handleRequestError(err))
       )
       .subscribe();
+  }
+
+  private handleCreationResponseError(res: CreationResponse) {
+    this._snackBarService.openErrorSnackBar(res.message)
+    console.error(res);
   }
   //#endregion
 
