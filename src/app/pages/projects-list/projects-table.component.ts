@@ -33,15 +33,14 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
         propertyName: 'idManager',
         formatter: (user: User) => `${user.firstName} ${user.lastName}`,
       },
-      // TODO: Handle workers
-      // {
-      //   defName: 'workers',
-      //   displayName: 'People working on',
-      //   propertyName: 'workers',
-      //   formatter: (arr: number[]) => {
-      //     return `${arr.length}`;
-      //   }
-      // },
+      {
+        defName: 'workers',
+        displayName: 'Pracownicy',
+        propertyName: 'workers',
+        formatter: (workers: User[]) => {
+          return `${workers.length}`;
+        }
+      },
     ];
 
     this._actionsDefinitions = [
