@@ -1,10 +1,10 @@
 <div class="container">
 
   <div class="video-wrapper">
-    <video #video *ngIf="previewMode" [srcObject]="videoSrc" autoplay="true" #cameraPreview></video>
+    <video #video *ngIf="previewMode" [srcObject]="videoStream" autoplay="true" #cameraPreview></video>
     <app-full-screen-loader *ngIf="streamLoading"></app-full-screen-loader>
     <div class="fx-center">
-      <button mat-fab color="accent" *ngIf="previewMode" (click)="takePhoto()">
+      <button mat-fab color="accent" *ngIf="previewMode" [disabled]="!videoStream" (click)="takePhoto()">
         <mat-icon>camera_alt</mat-icon>
       </button>
     </div>
@@ -24,6 +24,7 @@
     <mat-label>Źródło</mat-label>
     <mat-select placeholder="Wybierz urządzenie źródłowe" [disabled]="!previewMode"
       [value]="selectedDevice ? selectedDevice.id : null" (valueChange)="onInputDeviceChange($event)">
+      <mat-option *ngIf="!devices || devices.length == 0">Nie znaleziono urządzeń</mat-option>
       <mat-option *ngFor="let device of devices" [value]="device.id">{{ device.label }}</mat-option>
     </mat-select>
   </mat-form-field>

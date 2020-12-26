@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 export interface MediaDevice {
   id: string;
@@ -35,7 +36,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
     this._previewMode = value;
   }
 
-  get videoSrc(): MediaStream {
+  get videoStream(): MediaStream {
     return this._videoStream;
   }
 
@@ -54,7 +55,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output('photoChange') photoChangeEventEmitter: EventEmitter<string>;
   //#endregion
 
-  constructor() {
+  constructor(private _snackBarService: SnackBarService) {
     this._previewMode = true;
     this._devices$ = new BehaviorSubject(null);
     this._selectedDevice$ = new BehaviorSubject(null);
@@ -124,7 +125,8 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       // TODO: Handle error properly
       .catch(err => {
-        console.warn(err);
+        this._snackBarService.openErrorSnackBar('Nie można uzyskać dostępu do listy urządzeń. Sprawdź uprawnienia w ustawieniach przeglądarki.');
+        console.error(err);
         this._streamLoadingCounter--;
       });
   }
