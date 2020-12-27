@@ -22,6 +22,10 @@ export class NavigatorService<T> {
     this._router.navigate([`/${path}`]);
   }
 
+  public navigateToHomeScreen(): void {
+    this._router.navigate(['/']);
+  }
+
   public navigateToDetails(baseUrl: string, itemId: string): void {
     this._router.navigate([baseUrl, itemId]);
   }

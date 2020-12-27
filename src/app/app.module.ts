@@ -52,6 +52,7 @@ import { WorkLogsListComponent } from './components/work-logs-list/work-logs-lis
 import { WorkLogsTableComponent } from './components/work-logs-table/work-logs-table.component';
 import { WorkersPanelComponent } from './components/workers-panel/workers-panel.component';
 import { LoginComponent } from './pages/login/login.component';
+import { LoginModule } from './pages/login/login.module';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
 import { ProjectsTableComponent } from './pages/projects-list/projects-table.component';
@@ -113,6 +114,7 @@ import { UserPipe } from './pipes/user.pipe';
     ConfirmationDialogComponent,
   ],
   imports: [
+    LoginModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

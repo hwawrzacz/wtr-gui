@@ -7,9 +7,11 @@ import { TaskDetailsComponent } from './pages/task-details/task-details.componen
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/projects', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   { path: 'projects', component: ProjectsListComponent },
   { path: 'tasks', component: TasksListComponent },
   { path: 'projects/:id', component: ProjectDetailsComponent },
