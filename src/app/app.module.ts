@@ -19,6 +19,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -64,6 +66,7 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { UserPipe } from './pipes/user.pipe';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @NgModule({
   declarations: [
@@ -139,6 +142,9 @@ import { UserPipe } from './pipes/user.pipe';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule,
+    MatTabsModule,
+    ZXingScannerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
