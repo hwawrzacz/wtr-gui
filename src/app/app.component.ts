@@ -1,5 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Section } from './model/enums/section';
+import { LoginService } from './services/login.service';
+import { NavigatorService } from './services/navigator.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +10,6 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
   //#region Fields definitions
   private _title = 'Somecompany';
   private _sidenavMode = 'push';
@@ -16,7 +18,13 @@ export class AppComponent {
   private _sidenav: MatSidenav;
   //#endregion
 
-  constructor() { }
+  //#region Getters and setters
+  get displayAppBar(): boolean {
+    return this._navigator.activeSection !== Section.LOGIN;
+  }
+  //#endregion
+
+  constructor(private _loginService: LoginService, private _navigator: NavigatorService<any>) { }
 
   //#region Getters and setters
   get title(): string {

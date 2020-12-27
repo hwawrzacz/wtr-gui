@@ -1,4 +1,4 @@
-<app-header [sidenavOpened]="sidenavOpened" (toggleSidenav)="toggleSidenav()">
+<app-header *ngIf="displayAppBar" [sidenavOpened]="sidenavOpened" (toggleSidenav)="toggleSidenav()">
 </app-header>
 <mat-sidenav-container>
   <mat-sidenav [mode]="sidenavMode">

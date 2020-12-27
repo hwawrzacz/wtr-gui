@@ -44,6 +44,7 @@ export class NavigatorService<T> {
     else if (url.includes(Section.TASKS)) return Section.TASKS;
     else if (url.includes(Section.USERS)) return Section.USERS;
     else if (url.includes(Section.STATISTICS)) return Section.STATISTICS;
+    else if (url.includes(Section.LOGIN)) return Section.LOGIN;
     else return Section.UNKNOWN;
   }
 
