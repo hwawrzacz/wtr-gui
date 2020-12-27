@@ -1,5 +1,12 @@
 @import '../../../variables';
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 video,
 img {
   background-color: black;
@@ -8,15 +15,21 @@ img {
 }
 
 mat-form-field {
-  width: 100%;
+  width: 400px;
 }
 
-.video-wrapper {
+.video-wrapper,
+.image-wrapper {
   position: relative;
+  
+  display: flex;
+  justify-content: center;
 }
 
 .image-wrapper {
-  position: relative;
+  // Image wrapper is always visible, so its margin can be used as a 
+  // separator for both image wrapper and video wrapper
+  margin-bottom: $spacing-small;  
 
   canvas {
     display: none;
@@ -30,5 +43,7 @@ mat-form-field {
 
 .mat-fab {
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: $spacing-medium;
 }
