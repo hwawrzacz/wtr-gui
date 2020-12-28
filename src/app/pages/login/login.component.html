@@ -1,24 +1,31 @@
 <!-- Face login -->
 
-<div class="buttons-wrapper">
-  <button mat-button (click)="openFaceLoginDialog()">
-    <div class="button-flex-wrapper">
-      <mat-icon color="primary">face</mat-icon>
-      <span>Logowanie twarzą</span>
-    </div>
-  </button>
-  <button mat-button>
-    <div class="button-flex-wrapper">
-      <mat-icon color="primary">qr_code</mat-icon>
-      <span>Logowanie kodem QR</span>
-    </div>
-  </button>
-  <button mat-button>
-    <div class="button-flex-wrapper">
-      <mat-icon color="primary">smart_button</mat-icon>
-      <span>Logowanie hasłem</span>
-    </div>
-  </button>
+<div class="container">
+  <section class='login-panel__welcome-section'>
+    <h1>Witaj!</h1>
+    <p>Wybierz metodę logowania aby uzyskać dostęp do systemu</p>
+  </section>
+
+  <section class="buttons-wrapper">
+    <button mat-button (click)="openFaceLoginDialog()">
+      <div class="button-flex-wrapper">
+        <mat-icon color="primary">face</mat-icon>
+        <span>Logowanie twarzą</span>
+      </div>
+    </button>
+    <button mat-button>
+      <div class="button-flex-wrapper">
+        <mat-icon color="primary">qr_code</mat-icon>
+        <span>Logowanie kodem QR</span>
+      </div>
+    </button>
+    <button mat-button>
+      <div class="button-flex-wrapper">
+        <mat-icon color="primary">smart_button</mat-icon>
+        <span>Logowanie hasłem</span>
+      </div>
+    </button>
+  </section>
 </div>
 
 <!-- Standard login -->
