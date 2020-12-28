@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -63,6 +64,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatNativeDateModule,
     MatCardModule,
     MatTabsModule,
+    ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class CommonMaterialModule { }

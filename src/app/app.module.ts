@@ -1,11 +1,9 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { AppCommonModule } from './app-common-module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -106,8 +104,6 @@ import { UserPipe } from './pipes/user.pipe';
     BrowserAnimationsModule,
     ScrollingModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
     ImageCaptureModule,
     LoginModule
   ],
