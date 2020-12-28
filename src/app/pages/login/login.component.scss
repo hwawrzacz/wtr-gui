@@ -1,6 +1,40 @@
-mat-tab-group {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+@import '../../../variables';
+@import '../../../mixins';
+
+.buttons-wrapper {
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+  align-items: center;
+  @include absolute-center;
+  
+  .mat-button {
+    margin: 0 $spacing-small;
+    height: 150px;
+    flex: 1 1;
+    background-color: $bg-color-hover;
+
+    &:first-child {
+      margin-left: $spacing-regular;
+    }
+
+    &:last-child {
+      margin-right: $spacing-regular;
+    }
+
+    .button-flex-wrapper {
+      height: 100%;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;  
+    }
+
+    .mat-icon {
+      width: $icon-width;
+      height: $icon-width;
+      font-size: $icon-width;
+      margin-right: 0;
+    }
+  }
 }

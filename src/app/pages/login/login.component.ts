@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   constructor(private _dialogService: MatDialog, private _snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
-    this.openFaceLoginDialog();
+    // this.openFaceLoginDialog();
   }
 
   public openFaceLoginDialog(): void {

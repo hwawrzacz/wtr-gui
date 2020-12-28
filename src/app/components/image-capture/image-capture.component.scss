@@ -1,4 +1,5 @@
 @import '../../../variables';
+@import '../../../mixins';
 
 .container {
   display: flex;
@@ -42,8 +43,6 @@ mat-form-field {
 }
 
 .mat-fab {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  @include absolute-h-center;
   bottom: $spacing-medium;
 }
