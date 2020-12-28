@@ -14,7 +14,7 @@ button {
 }
 
 h1 {
-  width: 100%;
+  flex: 1 1;
   padding-right: calc(#{$icon-width} + #{$icon-margin});
 
   text-align: center;
