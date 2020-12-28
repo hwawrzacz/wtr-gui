@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FaceLoginDialogComponent } from 'src/app/components/dialogs/face-login-dialog/face-login-dialog.component';
+import { PasswordLoginDialogComponent } from 'src/app/components/dialogs/password-login-dialog/password-login-dialog.component';
 import { QrCodeLoginDialogComponent } from 'src/app/components/dialogs/qr-code-login-dialog/qr-code-login-dialog.component';
 
 @Component({
@@ -25,6 +26,6 @@ export class LoginComponent implements OnInit {
   }
 
   public openPasswordLoginDialog(): void {
-    this._dialogService.open(QrCodeLoginDialogComponent)
+    this._dialogService.open(PasswordLoginDialogComponent)
   }
 }

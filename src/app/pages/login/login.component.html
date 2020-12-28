@@ -1,5 +1,3 @@
-<!-- Face login -->
-
 <div class="container">
   <section class='login-panel__welcome-section'>
     <h1>Witaj!</h1>
@@ -13,13 +11,15 @@
         <span>Logowanie twarzą</span>
       </div>
     </button>
+
     <button mat-button (click)="openQrCodeLoginDialog()">
       <div class="button-flex-wrapper">
         <mat-icon color="primary">qr_code</mat-icon>
         <span>Logowanie kodem QR</span>
       </div>
     </button>
-    <button mat-button>
+
+    <button mat-button (click)="openPasswordLoginDialog()">
       <div class="button-flex-wrapper">
         <mat-icon color="primary">smart_button</mat-icon>
         <span>Logowanie hasłem</span>
@@ -27,5 +27,3 @@
     </button>
   </section>
 </div>
-
-<!-- Standard login -->
