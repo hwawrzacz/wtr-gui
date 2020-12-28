@@ -8,7 +8,7 @@
     <mat-spinner [diameter]="20" *ngIf="isLogging"></mat-spinner>
     <span>Zaloguj</span>
   </button>
-  <button mat-raised-button [disabled]="isLogging" (click)="closeDialog()">
+  <button mat-button [disabled]="isLogging" (click)="closeDialog()">
     <span>Anuluj</span>
   </button>
 </mat-dialog-actions>
