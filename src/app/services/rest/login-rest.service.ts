@@ -22,7 +22,7 @@ export class LoginRestService extends CommonRestService<User> {
       password: password
     };
 
-    return this._http.post<CommonResponse<any, User>>(`${environment.apiUrl}/${this._url}`, credentials);
+    return this._http.post<CommonResponse<any, User>>(`${environment.apiUrl}/${this._url}/credentialsAuth`, credentials);
   }
 
   public faceLogIn(imageUrl: string): Observable<CommonResponse<any, User>> {
@@ -30,7 +30,7 @@ export class LoginRestService extends CommonRestService<User> {
       facePhoto: imageUrl
     } as UserCredentials;
 
-    return this._http.post<CommonResponse<any, any>>(`${environment.apiUrl}/${this._url}`, credentials);
+    return this._http.post<CommonResponse<any, any>>(`${environment.apiUrl}/${this._url}/faceAuth`, credentials);
   }
 
   public logOut(): Observable<CommonResponse<any, any>> {
