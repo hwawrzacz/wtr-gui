@@ -1,12 +1,11 @@
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Position } from '../model/enums/position';
 import { Section } from '../model/enums/section';
 import { CommonResponse } from '../model/responses';
 import { User } from '../model/user';
 import { NavigatorService } from './navigator.service';
-import { CommonRestService } from './rest/common-rest.service';
 import { LoginRestService } from './rest/login-rest.service';
 import { SnackBarService } from './snack-bar.service';
 
@@ -47,27 +46,25 @@ export class LoginService {
     this._isLoggedIn = false;
   }
 
-  public faceLogIn(imageUrl: string): void {
-    this._restService.faceLogIn(imageUrl)
+  public faceLogIn(imageUrl: string): Observable<CommonResponse<any, User>> {
+    return this._restService.faceLogIn(imageUrl)
       .pipe(
         tap((res: CommonResponse<any, User>) => {
-          res.success
-            ? this.onLoginSuccess(res.details)
-            : this.onLoginError(res.message);
+          this.handleLoginResponse(res);
         })
-      ).subscribe();
+      );
   }
 
-  public logIn(login: string, password: string): void {
-    const passwdEncr = this.encryptPassword(password);
-    this._restService.logIn(login, passwdEncr)
+  public logIn(login: string, password: string,): Observable<CommonResponse<any, User>> {
+    // TODO: Encrypt password 
+    // const passwdEncr = this.encryptPassword(password);
+    const passwdEncr = password;
+    return this._restService.logIn(login, passwdEncr)
       .pipe(
         tap((res: CommonResponse<any, User>) => {
-          res.success
-            ? this.onLoginSuccess(res.details)
-            : this.onLoginError(res.message);
+          this.handleLoginResponse(res);
         })
-      ).subscribe();
+      );
   }
 
   public logOut(): void {
@@ -84,14 +81,25 @@ export class LoginService {
     this._navigator.navigateToHomeScreen();
   }
 
+  private handleLoginResponse(res: CommonResponse<any, User>) {
+    if (res.success) {
+      this.setUserBasedOnLoginResponse(res.details);
+      this.onLoginSuccessDefault();
+    } else {
+      this.onLoginErrorDefault(res.message);
+    }
+  }
 
-  private onLoginSuccess(user: User): void {
+  private setUserBasedOnLoginResponse(user: User): void {
     this._user = user;
+  }
+
+  private onLoginSuccessDefault(): void {
     this._snackBarService.openSuccessSnackBar('Zalogowano.');
     this._navigator.navigateToMainSection(Section.PROJECTS);
   }
 
-  private onLoginError(message: string): void {
+  private onLoginErrorDefault(message: string): void {
     const parsedMessage = this.parseLoginMessage(message);
     this._snackBarService.openErrorSnackBar('Nie udało się zalogować.');
   }
@@ -107,7 +115,7 @@ export class LoginService {
   }
 
   private encryptPassword(password: string): string {
-    return atob(password);
+    return btoa(password);
   }
 
   private clearData(): void {
