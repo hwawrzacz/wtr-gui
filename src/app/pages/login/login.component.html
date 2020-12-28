@@ -1,34 +1,18 @@
 <!-- Face login -->
-<mat-card-content>
-  <mat-tab-group [dynamicHeight]="'true'">
-
-    <mat-tab label="Logowanie twarzą">
-      <!-- <app-image-capture></app-image-capture>
-      <button mat-button color="primary">Zaloguj</button> -->
-    </mat-tab>
-
-    <mat-tab label="Logowanie kodem QR">
-      <zxing-scanner [device]="selectedDevice" (scanSuccess)="handleQrScanSuccess($event)"
-        (camerasFound)="updateMediaDevices($event)"></zxing-scanner>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Źródło</mat-label>
-        <mat-select placeholder="Wybierz urządzenie źródłowe" [value]="selectedDevice ? selectedDevice.deviceId : null"
-          (valueChange)="onInputDeviceChange($event)">
-          <mat-option *ngIf="!mediaDevices || mediaDevices.length == 0">Nie znaleziono urządzeń</mat-option>
-          <mat-option *ngFor="let device of mediaDevices" [value]="device.deviceId">{{ device.label }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-tab>
-
-    <mat-tab label="Logowanie hasłem">
-    </mat-tab>
-  </mat-tab-group>
-</mat-card-content>
 
 <!-- Qr code login -->
+<!-- <mat-card-content>
+  <zxing-scanner [device]="selectedDevice" (scanSuccess)="handleQrScanSuccess($event)"
+    (camerasFound)="updateMediaDevices($event)"></zxing-scanner>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Źródło</mat-label>
+    <mat-select placeholder="Wybierz urządzenie źródłowe" [value]="selectedDevice ? selectedDevice.deviceId : null"
+      (valueChange)="onInputDeviceChange($event)">
+      <mat-option *ngIf="!mediaDevices || mediaDevices.length == 0">Nie znaleziono urządzeń</mat-option>
+      <mat-option *ngFor="let device of mediaDevices" [value]="device.deviceId">{{ device.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-card-content> -->
 
 <!-- Standard login -->
-<form>
-
-</form>

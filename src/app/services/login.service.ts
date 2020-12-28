@@ -47,6 +47,17 @@ export class LoginService {
     this._isLoggedIn = false;
   }
 
+  public faceLogIn(imageUrl: string): void {
+    this._restService.faceLogIn(imageUrl)
+      .pipe(
+        tap((res: CommonResponse<any, User>) => {
+          res.success
+            ? this.onLoginSuccess(res.details)
+            : this.onLoginError(res.message);
+        })
+      ).subscribe();
+  }
+
   public logIn(login: string, password: string): void {
     const passwdEncr = this.encryptPassword(password);
     this._restService.logIn(login, passwdEncr)

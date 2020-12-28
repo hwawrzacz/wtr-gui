@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { FaceLoginDialogComponent } from 'src/app/components/dialogs/face-login-dialog/face-login-dialog.component';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
@@ -22,9 +24,14 @@ export class LoginComponent implements OnInit {
     this._selectedDevice = value;
   }
 
-  constructor(private _snackBarService: SnackBarService) { }
+  constructor(private _dialogService: MatDialog, private _snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
+    this.openFaceLoginDialog();
+  }
+
+  public openFaceLoginDialog(): void {
+    this._dialogService.open(FaceLoginDialogComponent).afterClosed().pipe().subscribe();
   }
 
   public handleQrScanSuccess(value: string): void {

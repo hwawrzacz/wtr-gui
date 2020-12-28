@@ -4,7 +4,7 @@ import { filter, tap } from 'rxjs/operators';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 export interface MediaDevice {
-  id: string;
+  deviceId: string;
   label: string;
 }
 
@@ -90,7 +90,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
       .then(devices => {
         const filteredDevices = devices
           .filter(dvc => dvc.kind === 'videoinput')
-          .map(dvc => ({ id: dvc.deviceId, label: dvc.label }));
+          .map(dvc => ({ deviceId: dvc.deviceId, label: dvc.label }));
 
         this._devices$.next(filteredDevices);
         this._selectedDevice$.next(this._devices$.value[0]);
@@ -113,7 +113,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region Media device handlers
   private reloadCameraPreview(): void {
     const specificDeviceConstraints = {
-      video: { deviceId: { exact: this._selectedDevice$.value.id } },
+      video: { deviceId: { exact: this._selectedDevice$.value.deviceId } },
       audio: false
     } as MediaStreamConstraints;
 
@@ -132,7 +132,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public onInputDeviceChange(deviceId: string): void {
-    this._selectedDevice$.next(this.devices.find(device => device.id == deviceId) || this.devices[0]);
+    this._selectedDevice$.next(this.devices.find(device => device.deviceId == deviceId) || this.devices[0]);
   }
   //#endregion
 

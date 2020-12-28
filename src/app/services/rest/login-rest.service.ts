@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CommonResponse } from 'src/app/model/responses';
 import { User } from 'src/app/model/user';
+import { UserCredentials } from 'src/app/model/user-credentials';
 import { environment } from 'src/environments/environment';
 import { CommonRestService } from './common-rest.service';
 
@@ -22,6 +23,14 @@ export class LoginRestService extends CommonRestService<User> {
     };
 
     return this._http.post<CommonResponse<any, User>>(`${environment.apiUrl}/${this._url}`, credentials);
+  }
+
+  public faceLogIn(imageUrl: string): Observable<CommonResponse<any, User>> {
+    const credentials = {
+      facePhoto: imageUrl
+    } as UserCredentials;
+
+    return this._http.post<CommonResponse<any, any>>(`${environment.apiUrl}/${this._url}`, credentials);
   }
 
   public logOut(): Observable<CommonResponse<any, any>> {
