@@ -1,1 +1,11 @@
-<p>profile-widget works!</p>
+<span>{{ userName }}</span>
+
+<button mat-icon-button [matMenuTriggerFor]="'profileMenu'">
+  <mat-icon>account_circle</mat-icon>
+</button>
+
+<mat-menu>
+  <button mat-menu-item #profileMenu (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-menu>

@@ -107,7 +107,7 @@ import { UserPipe } from './pipes/user.pipe';
     ScrollingModule,
     HttpClientModule,
     ImageCaptureModule,
-    LoginModule
+    LoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
