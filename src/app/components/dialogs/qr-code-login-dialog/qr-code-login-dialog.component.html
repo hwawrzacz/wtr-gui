@@ -1,1 +1,11 @@
-<p>qr-code-login-dialog works!</p>
+<zxing-scanner [device]="selectedDevice" (scanSuccess)="handleQrScanSuccess($event)"
+  (camerasFound)="updateMediaDevices($event)"></zxing-scanner>
+
+<mat-form-field appearance="outline">
+  <mat-label>Źródło</mat-label>
+  <mat-select placeholder="Wybierz urządzenie źródłowe" [value]="selectedDevice ? selectedDevice.deviceId : null"
+    (valueChange)="onInputDeviceChange($event)">
+    <mat-option *ngIf="!mediaDevices || mediaDevices.length == 0">Nie znaleziono urządzeń</mat-option>
+    <mat-option *ngFor="let device of mediaDevices" [value]="device.deviceId">{{ device.label }}</mat-option>
+  </mat-select>
+</mat-form-field>

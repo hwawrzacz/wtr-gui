@@ -108,7 +108,6 @@ import { UserPipe } from './pipes/user.pipe';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    ZXingScannerModule,
     ImageCaptureModule,
     LoginModule
   ],

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FaceLoginDialogComponent } from 'src/app/components/dialogs/face-login-dialog/face-login-dialog.component';
-import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { QrCodeLoginDialogComponent } from 'src/app/components/dialogs/qr-code-login-dialog/qr-code-login-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -9,43 +9,17 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  private _devices: MediaDeviceInfo[];
-  private _selectedDevice: MediaDeviceInfo;
-
-  get mediaDevices(): MediaDeviceInfo[] {
-    return this._devices;
-  }
-
-  get selectedDevice(): MediaDeviceInfo {
-    return this._selectedDevice || null;
-  }
-  set selectedDevice(value: MediaDeviceInfo) {
-    console.log(value);
-    this._selectedDevice = value;
-  }
-
-  constructor(private _dialogService: MatDialog, private _snackBarService: SnackBarService) { }
+  constructor(private _dialogService: MatDialog) { }
 
   ngOnInit(): void {
-    // this.openFaceLoginDialog();
+    this.openFaceLoginDialog();
   }
 
   public openFaceLoginDialog(): void {
-    this._dialogService.open(FaceLoginDialogComponent).afterClosed().pipe().subscribe();
+    this._dialogService.open(FaceLoginDialogComponent)
   }
 
-  public handleQrScanSuccess(value: string): void {
-    this._snackBarService.openSuccessSnackBar(value);
-  }
-
-  public updateMediaDevices(devices: MediaDeviceInfo[]): void {
-    this._devices = devices;
-    if (!this.selectedDevice && !!devices && devices.length > 0) this._selectedDevice = devices[0];
-    console.log(devices);
-  }
-
-  public onInputDeviceChange(device: MediaDeviceInfo): void {
-    // console.log(device);
-    this.selectedDevice = device;
+  public openQrCodeLoginDialog(): void {
+    this._dialogService.open(QrCodeLoginDialogComponent)
   }
 }
