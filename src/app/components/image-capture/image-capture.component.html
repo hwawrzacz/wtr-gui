@@ -4,15 +4,16 @@
     <video #video *ngIf="previewMode" [srcObject]="videoStream" autoplay="true" #cameraPreview></video>
     <app-full-screen-loader *ngIf="streamLoading"></app-full-screen-loader>
 
-    <button mat-fab color="accent" *ngIf="previewMode" [disabled]="!videoStream" (click)="takePhoto()">
+    <button mat-fab color="accent" *ngIf="previewMode && !streamEmitterMode && !frameEmitterMode"
+      [disabled]="!videoStream" (click)="onTakePhoto()">
       <mat-icon>camera_alt</mat-icon>
     </button>
   </div>
 
   <div class="image-wrapper">
     <canvas #imagePlaceholder></canvas>
-    <img *ngIf="!previewMode" src="{{ imageUrl }}" alt="Wykonane zdjęcie" />
-    <div class="fx-center">
+    <img *ngIf="!previewMode && !streamEmitterMode && !frameEmitterMode" src="{{ imageUrl }}" alt="Wykonane zdjęcie" />
+    <div class="fx-center" *ngIf="!frameEmitterMode && !streamEmitterMode">
       <button mat-fab color="accent" *ngIf="!previewMode" (click)="retakePhoto()">
         <mat-icon>close</mat-icon>
       </button>
