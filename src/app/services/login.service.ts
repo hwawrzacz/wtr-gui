@@ -14,7 +14,6 @@ import { SnackBarService } from './snack-bar.service';
 })
 export class LoginService {
   private _user: User;
-  private _isLoggedIn: boolean;
 
   //#region Getters and setters
   get user(): User {
@@ -22,7 +21,7 @@ export class LoginService {
   }
 
   get isLoggedIn(): boolean {
-    return this._isLoggedIn;
+    return !!this._user;
   }
 
   get isAdmin(): boolean {
@@ -42,9 +41,7 @@ export class LoginService {
     private _navigator: NavigatorService<any>,
     private _restService: LoginRestService,
     private _snackBarService: SnackBarService
-  ) {
-    this._isLoggedIn = false;
-  }
+  ) { }
 
   public faceLogIn(imageUrl: string): Observable<CommonResponse<any, User>> {
     return this._restService.faceLogIn(imageUrl)
@@ -98,7 +95,7 @@ export class LoginService {
 
   private onLoginSuccessDefault(): void {
     this._snackBarService.openSuccessSnackBar('Zalogowano.');
-    this._navigator.navigateToMainSection(Section.PROJECTS);
+    this._navigator.navigateToMainSection(Section.TASKS);
   }
 
   private onLoginErrorDefault(message: string): void {

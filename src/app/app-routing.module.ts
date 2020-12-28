@@ -8,17 +8,19 @@ import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'projects', component: ProjectsListComponent },
-  { path: 'tasks', component: TasksListComponent },
-  { path: 'projects/:id', component: ProjectDetailsComponent },
-  { path: 'tasks/:id', component: TaskDetailsComponent },
-  { path: 'users', component: UsersListComponent },
-  { path: 'users/:id', component: UserDetailsComponent },
-  { path: 'statistics', component: StatisticsComponent }
+  { path: 'projects', component: ProjectsListComponent, canActivate: [AuthGuard] },
+  { path: 'tasks', component: TasksListComponent, canActivate: [AuthGuard] },
+  { path: 'projects/:id', component: ProjectDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'tasks/:id', component: TaskDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersListComponent, canActivate: [AuthGuard] },
+  { path: 'users/:id', component: UserDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({
