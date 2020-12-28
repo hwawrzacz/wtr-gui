@@ -1,5 +1,5 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button (click)="emitToggleSidenav()">
+<mat-toolbar color="primary" [ngClass]="loginAppBar ? 'login-app-bar' : ''">
+  <button *ngIf="!loginAppBar" mat-icon-button (click)="emitToggleSidenav()">
     <mat-icon>{{ iconName }}</mat-icon>
   </button>
   <h1>Somecompany</h1>

@@ -22,6 +22,10 @@ export class NavigatorService<T> {
     this._router.navigate([`/${path}`]);
   }
 
+  public navigateToHomeScreen(): void {
+    this._router.navigate(['/']);
+  }
+
   public navigateToDetails(baseUrl: string, itemId: string): void {
     this._router.navigate([baseUrl, itemId]);
   }
@@ -40,6 +44,7 @@ export class NavigatorService<T> {
     else if (url.includes(Section.TASKS)) return Section.TASKS;
     else if (url.includes(Section.USERS)) return Section.USERS;
     else if (url.includes(Section.STATISTICS)) return Section.STATISTICS;
+    else if (url.includes(Section.LOGIN)) return Section.LOGIN;
     else return Section.UNKNOWN;
   }
 

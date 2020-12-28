@@ -3,5 +3,6 @@ export enum Section {
   TASKS = 'tasks',
   USERS = 'users',
   STATISTICS = 'statistics',
+  LOGIN = 'login',
   UNKNOWN = 'unknown'
 }

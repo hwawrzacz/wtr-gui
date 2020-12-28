@@ -1,0 +1,14 @@
+<h1 matDialogTitle>Logowanie twarzą</h1>
+
+<mat-dialog-content>
+  <app-image-capture (photoChange)="updateImageUrl($event)"></app-image-capture>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [disabled]="!imageUrl || isLogging" (click)="logIn()">
+    <mat-spinner [diameter]="20" *ngIf="isLogging"></mat-spinner>
+    <span>Zaloguj</span>
+  </button>
+  <button mat-button [disabled]="isLogging" (click)="closeDialog()">
+    <span>Anuluj</span>
+  </button>
+</mat-dialog-actions>

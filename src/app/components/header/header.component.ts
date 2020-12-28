@@ -6,20 +6,35 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
-  constructor() { }
-
-  @Input()
-  sidenavOpened: boolean;
+  private _loginAppBar: boolean;
+  private _sidenavOpened: boolean;
 
   @Output()
   toggleSidenav = new EventEmitter();
 
-  get iconName(): string {
-    return this.sidenavOpened ? 'chevron_left' : 'menu';
+
+  //#region Getters and setters
+  @Input('loginAppBar')
+  set loginAppBar(value: boolean) {
+    this._loginAppBar = value;
+  }
+  get loginAppBar(): boolean {
+    return this._loginAppBar;
   }
 
-  ngOnInit(): void {
+  @Input('sidenavOpened')
+  set sidenavOpened(value: boolean) {
+    this._sidenavOpened = value;
   }
+
+  get iconName(): string {
+    return this._sidenavOpened ? 'chevron_left' : 'menu';
+  }
+  //#endregion
+
+  constructor() { }
+
+  ngOnInit(): void { }
 
   emitToggleSidenav() {
     this.toggleSidenav.emit();
