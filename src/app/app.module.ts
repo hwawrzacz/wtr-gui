@@ -21,6 +21,7 @@ import { ImageCaptureDialogComponent } from './components/image-capture-dialog/i
 import { ImageCaptureModule } from './components/image-capture/image-capture.module';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
 import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
+import { ProfileWidgetComponent } from './components/profile-widget/profile-widget.component';
 import { ProjectAutocompleteComponent } from './components/project-autocomplete/project-autocomplete.component';
 import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -94,6 +95,7 @@ import { UserPipe } from './pipes/user.pipe';
     CommonSnackBarComponent,
     WarningSnackBarComponent,
     ConfirmationDialogComponent,
+    ProfileWidgetComponent,
   ],
   imports: [
     MatDialogModule,
@@ -105,7 +107,7 @@ import { UserPipe } from './pipes/user.pipe';
     ScrollingModule,
     HttpClientModule,
     ImageCaptureModule,
-    LoginModule
+    LoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

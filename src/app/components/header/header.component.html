@@ -2,5 +2,8 @@
   <button *ngIf="!loginAppBar" mat-icon-button (click)="emitToggleSidenav()">
     <mat-icon>{{ iconName }}</mat-icon>
   </button>
+
   <h1>Somecompany</h1>
+
+  <app-profile-widget *ngIf="!loginAppBar"></app-profile-widget>
 </mat-toolbar>
