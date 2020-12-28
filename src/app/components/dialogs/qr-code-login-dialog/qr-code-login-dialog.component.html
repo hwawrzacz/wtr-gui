@@ -1,11 +1,12 @@
-<zxing-scanner [device]="selectedDevice" (scanSuccess)="handleQrScanSuccess($event)"
-  (camerasFound)="updateMediaDevices($event)"></zxing-scanner>
+<h1 mat-mat-dialog-title>Logowanie kodem QR</h1>
+<h3 mat-card-subtitle>Przyłóż Twój kod QR do kamery</h3>
 
-<mat-form-field appearance="outline">
-  <mat-label>Źródło</mat-label>
-  <mat-select placeholder="Wybierz urządzenie źródłowe" [value]="selectedDevice ? selectedDevice.deviceId : null"
-    (valueChange)="onInputDeviceChange($event)">
-    <mat-option *ngIf="!mediaDevices || mediaDevices.length == 0">Nie znaleziono urządzeń</mat-option>
-    <mat-option *ngFor="let device of mediaDevices" [value]="device.deviceId">{{ device.label }}</mat-option>
-  </mat-select>
-</mat-form-field>
+<mat-dialog-content>
+  <app-image-capture [streamEmitterMode]="true" [frameEmitionFrequency]="500"
+    (streamChange)="updateStreamToDecode($event)">
+  </app-image-capture>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()">Zamknij</button>
+</mat-dialog-actions>

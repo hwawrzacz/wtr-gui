@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { BrowserQRCodeReader } from '@zxing/browser';
+import { take, tap } from 'rxjs/operators';
+import { CommonResponse } from 'src/app/model/responses';
+import { User } from 'src/app/model/user';
+import { UserCredentials } from 'src/app/model/user-credentials';
+import { LoginService } from 'src/app/services/login.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
@@ -7,34 +14,60 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['./qr-code-login-dialog.component.scss']
 })
 export class QrCodeLoginDialogComponent implements OnInit {
-  private _devices: MediaDeviceInfo[];
-  private _selectedDevice: MediaDeviceInfo;
+  private _decoder: BrowserQRCodeReader;
+  private _loggingCounter: number;
 
-  //#region Getters and setters
-  get mediaDevices(): MediaDeviceInfo[] {
-    return this._devices;
+  get isLoggingIn(): boolean {
+    return this._loggingCounter > 0;
   }
 
-  get selectedDevice(): MediaDeviceInfo {
-    return this._selectedDevice || null;
+  get isLoggedIn(): boolean {
+    return this._loginService.isLoggedIn;
   }
-  //#endregion
 
-  constructor(private _snackBarService: SnackBarService) { }
+  constructor(
+    private _dialogRef: MatDialogRef<QrCodeLoginDialogComponent>,
+    private _snackBarService: SnackBarService,
+    private _loginService: LoginService,
+  ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this._decoder = new BrowserQRCodeReader();
+  }
 
   public handleQrScanSuccess(value: string): void {
     this._snackBarService.openSuccessSnackBar(value);
   }
 
-  public updateMediaDevices(devices: MediaDeviceInfo[]): void {
-    this._devices = devices;
-    if (!this._selectedDevice && !!devices && devices.length > 0) this._selectedDevice = devices[0];
-    console.log(devices);
+  public async updateStreamToDecode(videoStream: MediaStream): Promise<void> {
+    console.log('Stream changed');
+    this._decoder.decodeFromStream(videoStream, undefined, this.handleQREncoded);
   }
 
-  public onInputDeviceChange(device: MediaDeviceInfo): void {
-    this._selectedDevice = device;
+  private handleQREncoded = (result: any) => {
+    if (!!result) {
+      const credentials = JSON.parse(result.text) as UserCredentials;
+      console.log(credentials);
+      console.log(`${credentials.login} ${credentials.password}`);
+      if (!this.isLoggingIn && !this.isLoggingIn) {
+        this._loggingCounter++;
+        this.attemptLogin(credentials.login, credentials.password);
+      }
+    };
+  }
+
+  private attemptLogin(login: string, password: string) {
+    this._loginService.logIn(login, password)
+      .pipe(
+        take(1),
+        tap((res: CommonResponse<any, User>) => {
+          this._loggingCounter--;
+          res.success ? this.closeDialog() : {}
+        })
+      ).subscribe();
+  }
+
+  public closeDialog(): void {
+    this._dialogRef.close();
   }
 }
