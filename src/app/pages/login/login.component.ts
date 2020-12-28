@@ -12,7 +12,8 @@ export class LoginComponent implements OnInit {
   constructor(private _dialogService: MatDialog) { }
 
   ngOnInit(): void {
-    this.openFaceLoginDialog();
+    // this.openFaceLoginDialog();
+    this.openPasswordLoginDialog();
   }
 
   public openFaceLoginDialog(): void {
@@ -20,6 +21,10 @@ export class LoginComponent implements OnInit {
   }
 
   public openQrCodeLoginDialog(): void {
+    this._dialogService.open(QrCodeLoginDialogComponent)
+  }
+
+  public openPasswordLoginDialog(): void {
     this._dialogService.open(QrCodeLoginDialogComponent)
   }
 }
