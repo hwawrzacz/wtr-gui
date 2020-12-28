@@ -19,8 +19,8 @@ export class AppComponent {
   //#endregion
 
   //#region Getters and setters
-  get displayAppBar(): boolean {
-    return this._navigator.activeSection !== Section.LOGIN;
+  get loginAppBar(): boolean {
+    return this._navigator.activeSection === Section.LOGIN;
   }
   //#endregion
 
