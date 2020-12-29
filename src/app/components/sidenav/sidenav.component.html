@@ -1,18 +1,22 @@
 <div class="wrapper">
   <mat-list>
-    <mat-list-item [ngClass]="projectsSectionActive ? 'section-active' : ''" (click)="onNavigateTo('projects')">
+    <mat-list-item *ngIf="canShow('projects')" [ngClass]="projectsSectionActive ? 'section-active' : ''"
+      (click)="onNavigateTo('projects')">
       <mat-icon>ballot</mat-icon><span>Projekty</span>
     </mat-list-item>
 
-    <mat-list-item [ngClass]="tasksSectionActive ? 'section-active' : ''" (click)="onNavigateTo('tasks')">
+    <mat-list-item *ngIf="canShow('tasks')" [ngClass]="tasksSectionActive ? 'section-active' : ''"
+      (click)="onNavigateTo('tasks')">
       <mat-icon>description</mat-icon><span>Zadania</span>
     </mat-list-item>
 
-    <mat-list-item [ngClass]="usersSectionActive ? 'section-active' : ''" (click)="onNavigateTo('users')">
+    <mat-list-item *ngIf="canShow('users')" [ngClass]="usersSectionActive ? 'section-active' : ''"
+      (click)="onNavigateTo('users')">
       <mat-icon>people</mat-icon><span>Użytkownicy</span>
     </mat-list-item>
 
-    <mat-list-item [ngClass]="statisticsSectionActive ? 'section-active' : ''" (click)="onNavigateTo('statistics')">
+    <mat-list-item *ngIf="canShow('statistics')" [ngClass]="statisticsSectionActive ? 'section-active' : ''"
+      (click)="onNavigateTo('statistics')">
       <mat-icon>pie_chart</mat-icon><span>Statystyki</span>
     </mat-list-item>
   </mat-list>

@@ -1,13 +1,14 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { CreationResponseParser } from 'src/app/helpers/parsers';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { PatchResponse, SingleItemResponse } from 'src/app/model/responses';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { LoginService } from 'src/app/services/login.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -15,21 +16,21 @@ import { ConfirmationDialogComponent, ConfirmationDialogData } from '../dialogs/
 
 @Component({
   selector: 'app-common-item-details',
-  templateUrl: './common-item-details.component.html',
+  template: '',
   styleUrls: ['./common-item-details.component.scss']
 })
-export abstract class CommonItemDetailsComponent<T> implements OnInit {
+export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy {
   protected _loadingCounter: number;
   protected _error: boolean;
-  protected _itemId: string;
   protected _query: Query;
   protected _initialItem: T;
   protected _form: FormGroup;
   private _editMode: boolean;
+  protected _destroyed: Subject<void>;
 
   //#region Getters and setters
   get itemId(): string {
-    return this._itemId;
+    return this._navigator.getIdFromUrl();
   }
 
   get initialItem(): T {
@@ -54,13 +55,14 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   //#endregion
 
   constructor(
-    private _navigator: NavigatorService<T>,
+    protected _navigator: NavigatorService<T>,
     private _itemDetailsBroker: ItemDetailsBrokerService<T>,
     protected _restService: CommonRestService<T>,
     protected _formBuilder: FormBuilder,
     private _changeDetector: ChangeDetectorRef,
     private _snackBarService: SnackBarService,
-    protected _dialogService: MatDialog
+    protected _dialogService: MatDialog,
+    protected _loginService: LoginService,
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;
@@ -68,22 +70,22 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   ngOnInit(): void {
+    this._destroyed = new Subject();
     this._error = false;
     this._editMode = false;
-    this._itemId = this.getIdFromUrl();
     this._form = this.buildForm();
     this.loadItem();
   }
 
   //#region Initializers
-  private getIdFromUrl(): string {
-    return this._navigator.getIdFromUrl();
-  }
-
   private loadItem() {
-    if (this._itemDetailsBroker.hasItem) {
+    if (this._itemDetailsBroker.hasItem
+      && this._itemDetailsBroker.item['_id'] === this.itemId
+    ) {
+      this._snackBarService.openInfoSnackBar('Załadowane przez pośrednika.');
       this.loadDataFromBroker();
     } else {
+      this._snackBarService.openInfoSnackBar('Załadowane z API.');
       this.loadDataFromApi();
     }
   }
@@ -103,7 +105,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   private loadDataFromApi(): void {
     this._loadingCounter++;
     this._error = false;
-    this._restService.get(this._itemId)
+    this._restService.get(this.itemId)
       .pipe(
         take(1),
         tap((res: SingleItemResponse<T>) => {
@@ -173,7 +175,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
    * null, and default parsing will be applied */
 
   protected patch<T>(name: string, value: T): void {
-    this._restService.patch<T>(this._itemId, name, value)
+    this._restService.patch<T>(this.itemId, name, value)
       .pipe(
         tap((res: PatchResponse) => {
           if (res.success) this.openSuccessSnackBar('Zaktualizowano wartość.');
@@ -184,7 +186,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   private deleteItem(): void {
-    this._restService.patch<boolean>(this._itemId, 'active', false)
+    this._restService.patch<boolean>(this.itemId, 'active', false)
       .pipe(
         tap((res: PatchResponse) => {
           if (res.success) this.openSuccessSnackBar('Usunięto element.');
@@ -195,7 +197,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   }
 
   protected patchObject<T>(object: T): void {
-    this._restService.patchObject<T>(this._itemId, object)
+    this._restService.patchObject<T>(this.itemId, object)
       .pipe(
         tap((res: PatchResponse) => {
           if (res.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
@@ -261,6 +263,22 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   // public abstract getErrorMessage(controlName: string): string;
   //#endregion
 
+  //#region Permissions
+  public canEdit(): boolean {
+    return this._loginService.isManager || this._loginService.isAdmin;
+  }
+
+  public canDelete(): boolean {
+    return this._loginService.isManager || this._loginService.isAdmin;
+  }
+
+  public canShowStats(): boolean {
+    return this._loginService.isManager
+      || this._loginService.isAdmin
+      || this._loginService.isEmployee;
+  }
+  //#endregion
+
   // TODO: Export snack bars to SnackBarService
   //#region Snackbar
   protected openSuccessSnackBar = (message: string): void => this._snackBarService.openSuccessSnackBar(message);
@@ -271,4 +289,9 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
 
   protected openErrorSnackBar = (message: string): void => this._snackBarService.openErrorSnackBar(message);
   //#endregion
+
+  ngOnDestroy() {
+    this._destroyed.next();
+    this._destroyed.complete();
+  }
 }

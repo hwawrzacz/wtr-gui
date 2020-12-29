@@ -6,6 +6,7 @@ import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
 import { Project } from 'src/app/model/project';
 import { Task } from 'src/app/model/task';
+import { LoginService } from 'src/app/services/login.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -14,9 +15,11 @@ import { NavigatorService } from 'src/app/services/navigator.service';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class TasksTableComponent extends CommonTableComponent<Task> {
-
-  constructor(navigator: NavigatorService<Task>) {
-    super(navigator);
+  constructor(
+    navigator: NavigatorService<Task>,
+    loginService: LoginService
+  ) {
+    super(navigator, loginService);
 
     this._detailsUrl = 'tasks';
     this._columnsDefinitions = [
@@ -70,20 +73,26 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
         action: (item: CommonItem) => {
           this.navigateToStatsWithData(item);
         },
+        canDisplay: () => {
+          return this.canShowStats();
+        },
         color: 'primary',
         tooltip: 'Pokaż statystyki'
       },
-      {
-        icon: 'edit',
-        action: (item: CommonItem) => {
-          this.navigateToDetailsWithData(item, true);
-        },
-        tooltip: 'Edytuj element'
-      },
+      // {
+      //   icon: 'edit',
+      //   action: (item: CommonItem) => {
+      //     this.navigateToDetailsWithData(item, true);
+      //   },
+      //   tooltip: 'Edytuj element'
+      // },
       {
         icon: 'delete',
         action: (item: CommonItem) => {
           this.delete(item._id);
+        },
+        canDisplay: () => {
+          return this.canDelete();
         },
         color: 'warn',
         tooltip: 'Usuń element'

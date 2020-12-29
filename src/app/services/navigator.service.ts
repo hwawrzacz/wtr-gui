@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { CommonItem } from '../model/common-item';
 import { Section } from '../model/enums/section';
 import { ItemDetailsBrokerService } from './item-details-broker.service';
@@ -8,6 +9,8 @@ import { ItemDetailsBrokerService } from './item-details-broker.service';
   providedIn: 'root'
 })
 export class NavigatorService<T> {
+  public urlChanges$: Subject<any>;
+
   get activeSection(): Section {
     return this.getActiveSectionFromUrl();
   }
@@ -15,7 +18,16 @@ export class NavigatorService<T> {
   constructor(
     private _router: Router,
     private _itemDetailsBroker: ItemDetailsBrokerService<CommonItem>,
-  ) { }
+  ) {
+    this.urlChanges$ = new Subject<any>();
+    this.setupUrlChangeListener();
+  }
+
+  //#region Initialization
+  private setupUrlChangeListener(): void {
+    this._router.events.subscribe((e) => this.urlChanges$.next(e));
+  }
+  //#endregion
 
   //#region Navigation
   public navigateToMainSection(path: string): void {
@@ -37,8 +49,8 @@ export class NavigatorService<T> {
   //#endregion
 
   //#region Url operations
-  private getActiveSectionFromUrl(): Section {
-    const url = this._router.url;
+  private getActiveSectionFromUrl(url?: any): Section {
+    url = url && url.path ? url.path : this._router.url;
 
     if (url.includes(Section.PROJECTS)) return Section.PROJECTS;
     else if (url.includes(Section.TASKS)) return Section.TASKS;
@@ -48,8 +60,9 @@ export class NavigatorService<T> {
     else return Section.UNKNOWN;
   }
 
-  public getIdFromUrl(): string {
-    const params = this._router.url.split('/');
+  public getIdFromUrl(url?: any): string {
+    url = url && url.path ? url.path : this._router.url;
+    const params = url.split('/');
     return params[2];
   }
   //#endregion

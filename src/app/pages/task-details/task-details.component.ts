@@ -13,6 +13,7 @@ import { Query } from 'src/app/model/query';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { Task } from 'src/app/model/task';
 import { TaskDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { LoginService } from 'src/app/services/login.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -84,8 +85,9 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     changeDetector: ChangeDetectorRef,
     snackBarService: SnackBarService,
     dialogService: MatDialog,
+    loginService: LoginService,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, loginService);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
