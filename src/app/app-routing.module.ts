@@ -9,6 +9,8 @@ import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth/auth.guard';
+import { StatisticsGuard } from './auth/statistics.guard';
+import { UsersGuard } from './auth/users.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,9 +19,9 @@ const routes: Routes = [
   { path: 'tasks', component: TasksListComponent, canActivate: [AuthGuard] },
   { path: 'projects/:id', component: ProjectDetailsComponent, canActivate: [AuthGuard] },
   { path: 'tasks/:id', component: TaskDetailsComponent, canActivate: [AuthGuard] },
-  { path: 'users', component: UsersListComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersListComponent, canActivate: [AuthGuard, UsersGuard] },
   { path: 'users/:id', component: UserDetailsComponent, canActivate: [AuthGuard] },
-  { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
+  { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard, StatisticsGuard] },
   { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
 
