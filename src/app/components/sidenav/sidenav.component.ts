@@ -1,4 +1,3 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Section } from 'src/app/model/enums/section';
 import { LoginService } from 'src/app/services/login.service';
@@ -41,7 +40,7 @@ export class SidenavComponent implements OnInit {
     this._navigationChangeEmitter.emit();
   }
 
-  public canShow(section: Section): boolean {
+  public canShow(section: string): boolean {
     switch (section) {
       case Section.USERS:
         return this._loginService.isManager || this._loginService.isAdmin;
