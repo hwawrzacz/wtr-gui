@@ -5,6 +5,7 @@ import { PositionStringifier } from 'src/app/helpers/parsers';
 import { CommonItem } from 'src/app/model/common-item';
 import { Position } from 'src/app/model/enums/position';
 import { SimpleUser } from 'src/app/model/simple-user';
+import { LoginService } from 'src/app/services/login.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
 
@@ -14,8 +15,11 @@ import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.se
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
-  constructor(navigator: NavigatorService<SimpleUser>) {
-    super(navigator);
+  constructor(
+    navigator: NavigatorService<SimpleUser>,
+    loginService: LoginService,
+  ) {
+    super(navigator, loginService);
 
     this._detailsUrl = 'users'
 
@@ -54,20 +58,26 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
         action: (item: CommonItem) => {
           this.navigateToStatsWithData(item);
         },
+        canDisplay: (): boolean => {
+          return this.canShowStats();
+        },
         color: 'primary',
         tooltip: 'Pokaż statystyki'
       },
-      {
-        icon: 'edit',
-        action: (item: CommonItem) => {
-          this.navigateToDetailsWithData(item, true);
-        },
-        tooltip: 'Edytuj element'
-      },
+      // {
+      //   icon: 'edit',
+      //   action: (item: CommonItem) => {
+      //     this.navigateToDetailsWithData(item, true);
+      //   },
+      //   tooltip: 'Edytuj element'
+      // },
       {
         icon: 'delete',
         action: (item: CommonItem) => {
           this.delete(item._id);
+        },
+        canDisplay: (): boolean => {
+          return this.canDelete();
         },
         color: 'warn',
         tooltip: 'Usuń element'

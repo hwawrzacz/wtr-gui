@@ -8,6 +8,7 @@ import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { PatchResponse, SingleItemResponse } from 'src/app/model/responses';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { LoginService } from 'src/app/services/login.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -15,7 +16,7 @@ import { ConfirmationDialogComponent, ConfirmationDialogData } from '../dialogs/
 
 @Component({
   selector: 'app-common-item-details',
-  templateUrl: './common-item-details.component.html',
+  template: '',
   styleUrls: ['./common-item-details.component.scss']
 })
 export abstract class CommonItemDetailsComponent<T> implements OnInit {
@@ -54,13 +55,14 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   //#endregion
 
   constructor(
-    private _navigator: NavigatorService<T>,
+    protected _navigator: NavigatorService<T>,
     private _itemDetailsBroker: ItemDetailsBrokerService<T>,
     protected _restService: CommonRestService<T>,
     protected _formBuilder: FormBuilder,
     private _changeDetector: ChangeDetectorRef,
     private _snackBarService: SnackBarService,
-    protected _dialogService: MatDialog
+    protected _dialogService: MatDialog,
+    protected _loginService: LoginService,
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;
@@ -259,6 +261,22 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit {
   // TODO: Tmplement thing below
   // /** Method which return error message for specific form control */
   // public abstract getErrorMessage(controlName: string): string;
+  //#endregion
+
+  //#region Permissions
+  public canEdit(): boolean {
+    return this._loginService.isManager || this._loginService.isAdmin;
+  }
+
+  public canDelete(): boolean {
+    return this._loginService.isManager || this._loginService.isAdmin;
+  }
+
+  public canShowStats(): boolean {
+    return this._loginService.isManager
+      || this._loginService.isAdmin
+      || this._loginService.isEmployee;
+  }
   //#endregion
 
   // TODO: Export snack bars to SnackBarService

@@ -2,27 +2,28 @@
   <header class="item-details__header">
     <h1>Szczegóły użytkownika</h1>
     <div class="item-details__header__buttons">
-      <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enableEditMode()">
+      <button mat-stroked-button color="primary" *ngIf="!editMode && canEdit()" (click)="enableEditMode()">
         <mat-icon>edit</mat-icon>
         <span>Edytuj</span>
       </button>
 
-      <button mat-stroked-button color="primary" *ngIf="editMode" [disabled]="!form.valid" (click)="onSaveChanges()">
+      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" [disabled]="!form.valid"
+        (click)="onSaveChanges()">
         <mat-icon>save</mat-icon>
         <span>Zapisz zmiany</span>
       </button>
 
-      <button mat-stroked-button color="primary" *ngIf="editMode" (click)="onDiscardChanges()">
+      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" (click)="onDiscardChanges()">
         <mat-icon>close</mat-icon>
         <span>Odrzuć zmiany</span>
       </button>
 
-      <button mat-stroked-button color="primary" *ngIf="!editMode">
+      <button mat-stroked-button color="primary" *ngIf="!editMode && canShowStats()">
         <mat-icon>pie_chart</mat-icon>
         <span>Pokaż statystyki</span>
       </button>
 
-      <button mat-stroked-button color="warn" *ngIf="!editMode" (click)="onDeleteItem()">
+      <button mat-stroked-button color="warn" *ngIf="!editMode  && canDelete()" (click)="onDeleteItem()">
         <mat-icon>delete</mat-icon>
         <span>Usuń</span>
       </button>

@@ -1,6 +1,7 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Section } from 'src/app/model/enums/section';
+import { LoginService } from 'src/app/services/login.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -29,7 +30,7 @@ export class SidenavComponent implements OnInit {
   }
   //#endregion
 
-  constructor(private _navigator: NavigatorService<any>) {
+  constructor(private _navigator: NavigatorService<any>, private _loginService: LoginService) {
     this._navigationChangeEmitter = new EventEmitter();
   }
 
@@ -38,5 +39,18 @@ export class SidenavComponent implements OnInit {
   public onNavigateTo(path: string): void {
     this._navigator.navigateToMainSection(path);
     this._navigationChangeEmitter.emit();
+  }
+
+  public canShow(section: Section): boolean {
+    switch (section) {
+      case Section.USERS:
+        return this._loginService.isManager || this._loginService.isAdmin;
+      case Section.STATISTICS:
+        return this._loginService.isManager;
+      case Section.TASKS:
+        return this._loginService.isEmployee || this._loginService.isManager || this._loginService.isAdmin;
+      case Section.PROJECTS:
+        return this._loginService.isEmployee || this._loginService.isManager || this._loginService.isAdmin;
+    }
   }
 }

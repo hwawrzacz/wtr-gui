@@ -3,6 +3,7 @@ import { CommonTableComponent } from 'src/app/components/common-table/common-tab
 import { CommonItem } from 'src/app/model/common-item';
 import { Project } from 'src/app/model/project';
 import { User } from 'src/app/model/user';
+import { LoginService } from 'src/app/services/login.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -11,8 +12,11 @@ import { NavigatorService } from 'src/app/services/navigator.service';
   styleUrls: ['../../components/common-table/common-table.component.scss']
 })
 export class ProjectsTableComponent extends CommonTableComponent<Project> {
-  constructor(navigator: NavigatorService<Project>) {
-    super(navigator);
+  constructor(
+    navigator: NavigatorService<Project>,
+    loginService: LoginService
+  ) {
+    super(navigator, loginService);
 
     this._detailsUrl = 'projects';
     this._columnsDefinitions = [
@@ -49,20 +53,26 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
         action: (item: CommonItem) => {
           this.navigateToStatsWithData(item);
         },
+        canDisplay: () => {
+          return this.canShowStats();
+        },
         color: 'primary',
         tooltip: 'Pokaż statystyki'
       },
-      {
-        icon: 'edit',
-        action: (item: CommonItem) => {
-          this.navigateToDetailsWithData(item, true);
-        },
-        tooltip: 'Edytuj element'
-      },
+      // {
+      //   icon: 'edit',
+      //   action: (item: CommonItem) => {
+      //     this.navigateToDetailsWithData(item, true);
+      //   },
+      //   tooltip: 'Edytuj element'
+      // },
       {
         icon: 'delete',
         action: (item: CommonItem) => {
           this.delete(item._id);
+        },
+        canDisplay: () => {
+          return this.canDelete();
         },
         color: 'warn',
         tooltip: 'Usuń element'

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonItem } from 'src/app/model/common-item';
+import { LoginService } from 'src/app/services/login.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
@@ -16,7 +17,11 @@ export interface ColumnDefinition {
 
 export interface ActionDefinition {
   icon: string;
+  /** Action which should be performed when button clicked */
   action: (item: CommonItem) => void;
+  /** Rule which determines whether this action can be displayed or not.
+   * If no function is set, action will be displayed */
+  canDisplay?: () => boolean;
   color?: string;
   tooltip?: string;
 }
@@ -54,6 +59,10 @@ export class CommonTableComponent<T> {
     return this._actionsDefinitions;
   }
 
+  get availableActions(): ActionDefinition[] {
+    return this._actionsDefinitions.filter(action => !action || !!action && action.canDisplay());
+  }
+
   get isLoading(): boolean {
     return this._isLoading;
   }
@@ -79,7 +88,7 @@ export class CommonTableComponent<T> {
 
   //#region Boolean calculated
   get actionsDefined(): boolean {
-    return !!this._actionsDefinitions && this._actionsDefinitions.length > 0;
+    return !!this.availableActions && this.availableActions.length > 0;
   }
 
   get anyItemExists(): boolean {
@@ -90,9 +99,18 @@ export class CommonTableComponent<T> {
 
   constructor(
     private _navigator: NavigatorService<T>,
+    private _loginService: LoginService,
   ) {
     this._dataSource = new CommonDataSource<T>([]);
     this._itemDeletedEmitter = new EventEmitter<string>();
+  }
+
+  public canShowStats(): boolean {
+    return this._loginService.isManager
+  }
+
+  public canDelete(): boolean {
+    return this._loginService.isManager || this._loginService.isAdmin;
   }
 
   public navigateToDetails(itemId: string, edit = false): void {
