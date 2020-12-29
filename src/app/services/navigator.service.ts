@@ -48,8 +48,9 @@ export class NavigatorService<T> {
     else return Section.UNKNOWN;
   }
 
-  public getIdFromUrl(): string {
-    const params = this._router.url.split('/');
+  public getIdFromUrl(url?: any): string {
+    url = url && url.path ? url.path : this._router.url;
+    const params = url.split('/');
     return params[2];
   }
   //#endregion

@@ -25,15 +25,15 @@ export class LoginService {
   }
 
   get isAdmin(): boolean {
-    return this._user.role === Position.ADMIN;
+    return !!this._user && this._user.role === Position.ADMIN;
   }
 
   get isManager(): boolean {
-    return this._user.role === Position.MANAGER;
+    return !!this._user && this._user.role === Position.MANAGER;
   }
 
   get isEmployee(): boolean {
-    return this._user.role === Position.EMPLOYEE;
+    return !!this._user && this._user.role === Position.EMPLOYEE;
   }
   //#endregion
 
