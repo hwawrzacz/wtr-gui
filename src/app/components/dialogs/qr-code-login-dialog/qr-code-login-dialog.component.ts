@@ -40,16 +40,13 @@ export class QrCodeLoginDialogComponent implements OnInit {
   }
 
   public async updateStreamToDecode(videoStream: MediaStream): Promise<void> {
-    console.log('Stream changed');
     this._decoder.decodeFromStream(videoStream, undefined, this.handleQREncoded);
   }
 
   private handleQREncoded = (result: any) => {
     if (!!result) {
       const credentials = JSON.parse(result.text) as UserCredentials;
-      console.log(credentials);
-      console.log(`${credentials.login} ${credentials.password}`);
-      if (!this.isLoggingIn && !this.isLoggingIn) {
+      if (!this.isLoggingIn && !this.isLoggedIn) {
         this._loggingCounter++;
         this.attemptLogin(credentials.login, credentials.password);
       }

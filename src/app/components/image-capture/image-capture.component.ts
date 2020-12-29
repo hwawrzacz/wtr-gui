@@ -166,8 +166,6 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
         this._videoStream = stream;
         this._streamLoadingCounter--;
 
-        console.log(this._streamEmitterMode);
-
         if (this._streamEmitterMode) {
           this.emitStreamChange();
         }
