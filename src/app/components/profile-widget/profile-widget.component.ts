@@ -29,9 +29,12 @@ export class ProfileWidgetComponent implements OnInit {
   }
 
   public openProfileDetails() {
-    this.userId
-      ? this._navigator.navigateToDetails(Section.USERS, this.userId)
-      : this._snackBarService.openErrorSnackBar('Nie można załadować profilu');
+    if (this.userId) {
+      this._navigator.navigateToDetails(Section.USERS, this.userId);
+    }
+    else {
+      this._snackBarService.openErrorSnackBar('Nie można załadować profilu');
+    }
   }
 
   public logout(): void {

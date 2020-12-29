@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, take, tap } from 'rxjs/operators';
+import { NavigationEnd } from '@angular/router';
+import { filter, take, takeUntil, tap } from 'rxjs/operators';
 import { phoneNumberValidator } from 'src/app/helpers/custom-validators';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { Position } from 'src/app/model/enums/position';
@@ -59,10 +60,26 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.subscribeToUrlChange();
     this.loadCredentials();
   }
 
   //#region Initializers
+
+  private subscribeToUrlChange(): void {
+    this._navigator.urlChanges$.pipe(
+      filter(event => event instanceof NavigationEnd),
+      takeUntil(this._destroyed),
+      tap(() => {
+        console.log('change');
+        if (!!this.itemId) {
+          this.reloadData();
+          this.loadCredentials();
+        }
+      })
+    ).subscribe();
+  }
+
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
       login: [{ value: '', disabled: true }, [Validators.required]],
@@ -88,7 +105,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   private loadCredentials() {
     this._loadingCounter++;
     this._error = false;
-    (this._restService as SingleUserRestService).getCredentials(this._itemId)
+    (this._restService as SingleUserRestService).getCredentials(this.itemId)
       .pipe(
         take(1),
         tap((res: SingleItemResponse<UserCredentials>) => {
@@ -119,7 +136,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
 
   public openPasswordChangeDialog(): void {
     this._dialogService.open(PasswordChangeDialogComponent, {
-      data: this._itemId
+      data: this.itemId
     }).afterClosed()
       .pipe(
         take(1),
