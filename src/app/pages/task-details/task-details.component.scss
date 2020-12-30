@@ -18,9 +18,12 @@
 .fifty-fifty-wrapper {
   display: flex;
   align-items: center;
+  margin: 0 -($spacing-small);
+  flex-wrap: wrap;
   
-  * {
+  & > * {
     flex: 1 1;
+    margin: 0 $spacing-small;
   }
 
   & > :first-child {

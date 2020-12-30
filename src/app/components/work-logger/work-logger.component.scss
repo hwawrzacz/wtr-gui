@@ -16,10 +16,10 @@
   font-size: 3em;
   line-height: 1em;
   font-weight: light;
-  font-weight: $bg-color-hover;
 }
 
 .controls {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
 }

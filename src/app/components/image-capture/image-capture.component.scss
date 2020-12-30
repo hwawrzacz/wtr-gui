@@ -11,12 +11,17 @@
 video,
 img {
   background-color: black;
-  width: 400px;
-  height: 300px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
 }
 
-mat-form-field {
-  width: 400px;
+.mat-form-field {
+  width: 100%;
+
+  mat-form-field {
+    max-width: 100%;
+  }
 }
 
 .video-wrapper,
@@ -37,8 +42,9 @@ mat-form-field {
   }
 
   img {
-    width: 400px;
-    height: 300px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
   }
 }
 

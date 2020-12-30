@@ -1,28 +1,33 @@
 .search-wrapper {
   display: flex;
+  flex-wrap: wrap;
   
   & > mat-form-field {
-    width: 100%;
-    margin: 4px;
+    flex: 1 1;
+    padding: 4px;
   
-    &:first-child {
-      margin-left: 0;
-    }
-  
-    &:last-child {
-      margin-right: 0;
-    }
   }
 
   .filters-wrapper {
+    flex: 1 1;
     display: flex;
     
     mat-form-field {
-      margin: 4px;
-      
-      &:last-child {
-        margin-right: 0;
-      }
+      min-width: 100px;
+      flex: 1 1;
+      padding: 4px;
     }    
+  }
+  
+  ::ng-deep {
+    .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+  }
+}
+
+@media screen and (max-width: 467px) {
+    .filters-wrapper {
+      flex-wrap: wrap;
   }
 }

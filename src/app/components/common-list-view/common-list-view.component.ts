@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { of, OperatorFunction } from 'rxjs';
-import { catchError, take, tap } from 'rxjs/operators';
+import { catchError, filter, take, tap } from 'rxjs/operators';
 import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonDataSource } from '../../model/common-data-source';
+import { ConfirmationDialogComponent, ConfirmationDialogData } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-common-list-view',
@@ -182,7 +183,20 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   public onItemDeleted(id: string): void {
-    this.delete(id);
+    this._dialogService.open(ConfirmationDialogComponent, {
+      data: {
+        title: "Usuwanie elementu",
+        message: "Tej akcji nie można cofnąć. Czy jestes pewien, że chcesz usunąć element?",
+        warn: true,
+      } as ConfirmationDialogData
+    })
+      .afterClosed()
+      .pipe(
+        take(1),
+        filter(res => !!res),
+        tap(() => this.delete(id))
+      )
+      .subscribe()
   }
 
   private delete(itemId: string): void {
