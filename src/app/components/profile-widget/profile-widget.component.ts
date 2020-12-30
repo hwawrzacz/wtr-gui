@@ -38,6 +38,6 @@ export class ProfileWidgetComponent implements OnInit {
   }
 
   public logout(): void {
-    this._authService.logOut();
+    this._authService.logout();
   }
 }

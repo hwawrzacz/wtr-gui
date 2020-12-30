@@ -130,6 +130,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
       dutyDate: this.parseDateToISOFormat(this._form.get('dutyDate').value),
       description: this._form.get('description').value,
       workers: this._form.get('workers').value,
+      workersIds: this._form.get('workers').value.map(worker => worker._id),
     } as Task;
   }
 

@@ -6,12 +6,13 @@ import { SimpleUser } from './simple-user';
 export interface Task {
   _id: string;
   stringId: string;
-  projectStringId: string
+  projectStringId: string;
   title: string;
   description: string;
   status: Status;
   priority: Priority;
   workers: SimpleUser[];
+  workersIds?: number[];
   idProject: string;
   reporter: SimpleUser;
   project: Project;

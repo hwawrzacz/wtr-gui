@@ -1,5 +1,5 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
@@ -49,6 +49,8 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { UserPipe } from './pipes/user.pipe';
+import { AuthInterceptor } from './services/interceptors/auth.interceptor';
+import { ErrorInterceptor } from './services/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -109,7 +111,10 @@ import { UserPipe } from './pipes/user.pipe';
     ImageCaptureModule,
     LoginModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
