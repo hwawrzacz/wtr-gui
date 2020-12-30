@@ -33,19 +33,19 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    return !!this._user;
+    return !!this._user && !!this._token;
   }
 
   get isAdmin(): boolean {
-    return !!this._user && this._user.role === Position.ADMIN;
+    return this.isLoggedIn && this._user.role === Position.ADMIN;
   }
 
   get isManager(): boolean {
-    return !!this._user && this._user.role === Position.MANAGER;
+    return this.isLoggedIn && this._user.role === Position.MANAGER;
   }
 
   get isEmployee(): boolean {
-    return !!this._user && this._user.role === Position.EMPLOYEE;
+    return this.isLoggedIn && this._user.role === Position.EMPLOYEE;
   }
   //#endregion
 
@@ -116,8 +116,7 @@ export class AuthService {
 
   private setTokenBasedOnLoginResponse(headers: HttpHeaders): void {
     const token = headers.get(HEADER_TOKEN);
-    console.log(token);
-
+    this._token = token;
     this._storageService.setToken(token);
   }
 
