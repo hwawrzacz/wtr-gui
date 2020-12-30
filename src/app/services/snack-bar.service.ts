@@ -34,9 +34,12 @@ export class SnackBarService {
     });
   }
 
-  public openErrorSnackBar(message: string): void {
+  public openErrorSnackBar(message: string, details?: string): void {
     this._snackBar.openFromComponent(ErrorSnackBarComponent, {
-      data: { message: message },
+      data: {
+        message: message,
+        details: details
+      },
       duration: ERROR_SNACKBAR_DURATION,
     });
   }

@@ -93,7 +93,7 @@ export class WorkersPanelComponent implements OnInit {
   }
 
   private handleResponseError(res: ArrayResponse<User>) {
-    this.openErrorSnackBar(res.message);
+    this.openErrorSnackBar('Coś poszło nie tak.', res.message);
     console.error(res);
   }
   //#endregion
@@ -125,8 +125,8 @@ export class WorkersPanelComponent implements OnInit {
     this._snackBarService.openInfoSnackBar(message);
   }
 
-  private openErrorSnackBar(message: string) {
-    this._snackBarService.openErrorSnackBar(message);
+  private openErrorSnackBar(message: string, details?: string) {
+    this._snackBarService.openErrorSnackBar(message, details);
   }
   //#endregion
 

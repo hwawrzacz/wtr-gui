@@ -3,6 +3,7 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
 
 export interface SnackBarData {
   message: string;
+  details?: string;
   action?: string;
   actionIcon?: string;
 }
@@ -14,11 +15,20 @@ export interface SnackBarData {
 })
 export class CommonSnackBarComponent {
   private _message: string;
+  private _details: string;
   private _action: string;
   private _actionIcon: string;
 
+  get isError(): boolean {
+    return this._snackClass == 'error';
+  }
+
   get message(): string {
     return this._message;
+  }
+
+  get details(): string {
+    return this._details;
   }
 
   get icon(): string {
@@ -45,6 +55,7 @@ export class CommonSnackBarComponent {
   ) {
     this._message = data.message;
     this._action = data.action;
+    this._details = data.details;
     this._actionIcon = data.actionIcon;
   }
 

@@ -138,7 +138,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   private handleResponseError(res: ArrayResponse<T>) {
-    this.openErrorSnackBar(res.message);
+    this.openErrorSnackBar('Coś poszło nie tak.', res.message);
     console.error(res);
   }
 
@@ -210,7 +210,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   private openDeleteFailedSnackBar(errorMessage: string): void {
-    this.openErrorSnackBar(`Element nie został usunięty: ${errorMessage}.`);
+    this.openErrorSnackBar('Element nie został usunięty.', errorMessage);
   }
 
   private openSuccessSnackBar(message: string) {
@@ -221,8 +221,8 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     this._snackBarService.openInfoSnackBar(message);
   }
 
-  private openErrorSnackBar(message: string) {
-    this._snackBarService.openErrorSnackBar(message);
+  private openErrorSnackBar(message: string, details?: string) {
+    this._snackBarService.openErrorSnackBar(message, details);
   }
 
   //#endregion

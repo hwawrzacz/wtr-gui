@@ -126,13 +126,17 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
 
   private handleResponseError(res: SingleItemResponse<T>, message?: string) {
     // TODO: Handle responses more specifically if needed, when responses list delivered from API
-    this.openErrorSnackBar(message || res.message);
+    message
+      ? this.openErrorSnackBar(message)
+      : this.openErrorSnackBar('Coś poszło nie tak', res.message)
     console.error(res);
   }
 
   private handlePatchResponseError(res: PatchResponse, message?: string) {
     // TODO: Handle responses more specifically if needed, when responses list delivered from API
-    this.openErrorSnackBar(message || res.message);
+    message
+      ? this.openErrorSnackBar(message)
+      : this.openErrorSnackBar('Coś poszło nie tak', res.message)
     console.error(res);
   }
 
@@ -285,7 +289,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
 
   protected openWarningSnackBar = (message: string): void => this._snackBarService.openWarningSnackBar(message);
 
-  protected openErrorSnackBar = (message: string): void => this._snackBarService.openErrorSnackBar(message);
+  protected openErrorSnackBar = (message: string, details?: string): void => this._snackBarService.openErrorSnackBar(message, details);
   //#endregion
 
   ngOnDestroy() {

@@ -82,8 +82,8 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
   public abstract getErrorMessage(controlName: string): string;
 
   //#region Snackbar 
-  private openErrorSnackBar(message: string) {
-    this._snackBarService.openErrorSnackBar(message)
+  private openErrorSnackBar(message: string, details?: string) {
+    this._snackBarService.openErrorSnackBar(message, details);
   }
   //#endregion
 

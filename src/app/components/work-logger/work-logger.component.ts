@@ -112,7 +112,7 @@ export class WorkLoggerComponent implements OnInit {
   }
 
   private handleResponseError(res: ArrayResponse<WorkLog>) {
-    this._snackBarService.openErrorSnackBar(res.message)
+    this._snackBarService.openErrorSnackBar('Coś poszło nie tak', res.message)
     console.error(res);
   }
   //#endregion
@@ -191,21 +191,21 @@ export class WorkLoggerComponent implements OnInit {
         this._snackBarService.openSuccessSnackBar(successMessage || 'Zapisano pomyślnie');
       }
       this.emitWorkLogged();
-    } else this._snackBarService.openErrorSnackBar(errorMessage || 'Podczas zapisywania wystąpił błąd');
+    } else this._snackBarService.openErrorSnackBar('Podczas zapisywania wystąpił błąd.', errorMessage);
 
     this.loadLastWorkLog();
     this._loadingCounter--;
   }
 
   private handlePatchResponseError(res: PatchResponse) {
-    this._snackBarService.openErrorSnackBar(res.message)
+    this._snackBarService.openErrorSnackBar('Podczas zapisywania wystąpił błąd.', res.message);
     console.error(res);
     this._loadingCounter--;
   }
 
   private handleRequestError(err: string): Observable<any> {
     this._loadingCounter--;
-    this._snackBarService.openErrorSnackBar(err);
+    this._snackBarService.openErrorSnackBar('Coś poszło nie tak.', err);
     return of();
   }
   //#endregion

@@ -73,7 +73,7 @@ export class PasswordChangeDialogComponent implements OnInit {
   }
 
   private handleResponseError(res: PatchResponse): void {
-    this._snackBarService.openErrorSnackBar(res.message);
+    this._snackBarService.openErrorSnackBar('Coś poszło nie tak.', res.message);
   }
 
   private handleRequestError(): Observable<any> {
