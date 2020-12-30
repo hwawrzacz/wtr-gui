@@ -86,7 +86,7 @@ export class AuthService {
 
   /** Logs user out, show message depending the response and 
    * navigate to login page if logout was performed successfully */
-  public logOut(): void {
+  public logout(): void {
     this._restService.logOut()
       .pipe(
         tap((res: CommonResponse<any, any>) => {
