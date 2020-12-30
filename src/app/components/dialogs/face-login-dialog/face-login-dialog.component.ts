@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { take, tap } from 'rxjs/operators';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -30,7 +31,15 @@ export class FaceLoginDialogComponent implements OnInit {
   }
 
   public logIn(): void {
-    this._loginService.faceLogIn(this._imageUrl);
+    this._isLogging = true;
+    this._loginService.faceLogIn(this._imageUrl)
+      .pipe(
+        take(1),
+        tap(res => {
+          this._isLogging = false;
+          console.log(res);
+        })
+      ).subscribe();
   }
 
   public closeDialog(): void {

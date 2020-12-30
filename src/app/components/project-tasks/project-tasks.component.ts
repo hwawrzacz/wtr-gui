@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Filter } from 'src/app/model/filter';
 import { Task } from 'src/app/model/task';
+import { LoginService } from 'src/app/services/login.service';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
@@ -22,9 +23,10 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
   constructor(
     restService: TasksListRestService,
     snackBarService: SnackBarService,
-    dialogService: MatDialog
+    dialogService: MatDialog,
+    loginService: LoginService,
   ) {
-    super(restService, snackBarService, dialogService);
+    super(restService, snackBarService, dialogService, loginService);
   }
 
   ngOnInit(): void {
