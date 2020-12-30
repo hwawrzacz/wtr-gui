@@ -20,11 +20,10 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.openFaceLoginDialog();
     if (this._authService.isLoggedIn) {
       this._navigator.navigateToMainSection(Section.TASKS);
     } else {
-      this.openQrCodeLoginDialog();
+      this.openFaceLoginDialog();
     }
   }
 
