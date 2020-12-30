@@ -82,10 +82,8 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
     if (this._itemDetailsBroker.hasItem
       && this._itemDetailsBroker.item['_id'] === this.itemId
     ) {
-      this._snackBarService.openInfoSnackBar('Załadowane przez pośrednika.');
       this.loadDataFromBroker();
     } else {
-      this._snackBarService.openInfoSnackBar('Załadowane z API.');
       this.loadDataFromApi();
     }
   }

@@ -4,6 +4,7 @@ import { CommonListViewComponent } from 'src/app/components/common-list-view/com
 import { ProjectCreationDialogComponent } from 'src/app/components/dialogs/project-creation-dialog/project-creation-dialog.component';
 import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
+import { LoginService } from 'src/app/services/login.service';
 import { ProjectsListRestService } from 'src/app/services/rest/projects-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -17,8 +18,9 @@ export class ProjectsListComponent extends CommonListViewComponent<Project> {
     restService: ProjectsListRestService,
     snackBarService: SnackBarService,
     dialogService: MatDialog,
+    loginService: LoginService,
   ) {
-    super(restService, snackBarService, dialogService);
+    super(restService, snackBarService, dialogService, loginService);
 
     this._pageTitle = "Projekty";
     this._themeItemNameSingle = "projekt";

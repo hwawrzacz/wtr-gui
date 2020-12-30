@@ -7,6 +7,7 @@ import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { ArrayResponse, PatchResponse } from 'src/app/model/responses';
+import { LoginService } from 'src/app/services/login.service';
 import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonDataSource } from '../../model/common-data-source';
@@ -39,7 +40,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   protected _error: boolean;
 
   //#region Getters and setters
-  //#region Labels
+  //# Labels
   get pageTitle(): string {
     return this._pageTitle;
   }
@@ -47,9 +48,8 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   get themeItemNameSingle(): string {
     return this._themeItemNameSingle;
   }
-  //#endregion
 
-  //#region Data
+  // Data
   get dataSource(): CommonDataSource<T> {
     return this._dataSource;
   }
@@ -57,9 +57,8 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   set dataSource(value: CommonDataSource<T>) {
     this._dataSource = value;
   }
-  //#endregion
 
-  //#region Table
+  // Table
   get totalResults(): number {
     return this._totalResults
   }
@@ -71,9 +70,13 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   get pageSizeOptions(): number[] {
     return this._pageSizeOptions;
   }
-  //#endregion
 
-  //#region Boolean calculated
+  // Permissions
+  public canEdit(): boolean {
+    return this._loginService.isManager || this._loginService.isAdmin;
+  }
+
+  // Boolean calculated
   get isLoading(): boolean {
     return this._loadingCounter > 0;
   }
@@ -82,12 +85,12 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     return this._error;
   }
   //#endregion
-  //#endregion
 
   constructor(
     protected _restService: CommonListRestService<T>,
     private _snackBarService: SnackBarService,
     protected _dialogService: MatDialog,
+    protected _loginService: LoginService,
   ) {
     this._loadingCounter = 0;
     this._pageSizeOptions = [5, 10, 25, 50];
