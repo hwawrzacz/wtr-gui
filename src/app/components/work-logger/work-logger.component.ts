@@ -55,7 +55,7 @@ export class WorkLoggerComponent implements OnInit {
 
   get isPaused(): boolean {
     return this._lastWorkLog
-      ? this._taskStatus === Status.IN_PROGRESS && this._lastWorkLog.logType === WorkLogType.BREAK
+      ? this._taskStatus === Status.IN_PROGRESS && [WorkLogType.BREAK, WorkLogType.AUTOBREAK].includes(this._lastWorkLog.logType)
       : false;
   }
 
@@ -185,7 +185,7 @@ export class WorkLoggerComponent implements OnInit {
   //#region Response handlers
   private handlePatchResponseSuccess(res: PatchResponse, successMessage: string, errorMessage?: string): void {
     if (res.success) {
-      if (res['message'] === WorkLogType.AUTOBREAK.toString()) {
+      if (!!res.details && res.details.logType === WorkLogType.AUTOBREAK) {
         this._snackBarService.openSuccessSnackBar('Rozpoczęto pracę. Poprzednio rozpoczęta praca została zakończona.');
       } else {
         this._snackBarService.openSuccessSnackBar(successMessage || 'Zapisano pomyślnie');

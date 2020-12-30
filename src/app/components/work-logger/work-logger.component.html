@@ -4,8 +4,11 @@
       <span *ngIf="isNew">
         Zadanie nierozpoczęte
       </span>
+      <span *ngIf="!lastWorkLog && !isNew && !isClosed">
+        Nie rozpoczęto pracy
+      </span>
       <span *ngIf="isWorking">
-        7&nbsp;h 43&nbsp;min
+        Praca
       </span>
       <span *ngIf="isPaused">
         Przerwa
@@ -16,7 +19,7 @@
     </div>
 
     <div class="controls" *ngIf="!isClosed">
-      <button mat-button color="primary" *ngIf="isPaused || isNew" (click)="startWork()" [disabled]="isClosed">
+      <button mat-button color="primary" *ngIf="isPaused || isNew || !lastWorkLog" (click)="startWork()" [disabled]="isClosed">
         <mat-icon>play_arrow</mat-icon>
         <span>Rozpocznij prację</span>
       </button>
