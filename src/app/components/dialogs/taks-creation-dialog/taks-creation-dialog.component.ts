@@ -7,6 +7,7 @@ import { Status } from 'src/app/model/enums/status';
 import { Project } from 'src/app/model/project';
 import { Task } from 'src/app/model/task';
 import { User } from 'src/app/model/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
@@ -44,7 +45,8 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
     dialogRef: MatDialogRef<TaksCreationDialogComponent>,
     restService: SingleTaskRestService,
     snackBarService: SnackBarService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _authService: AuthService,
   ) {
     super(dialogRef, restService, snackBarService)
   }
@@ -77,7 +79,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
       _id: null,
       creationDate: null,
       projectStringId: null,
-      reporter: null,
+      reporter: this._authService.user,
       stringId: null,
       project: null,
       status: Status.NEW,
@@ -90,7 +92,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
         : [],
       priority: this._form.get('priority').value,
       // TODO: Pass currently logged user id
-      idReporter: "5fca51ef55624130600cccfb",
+      idReporter: this._authService.userId,
     } as Task;
 
     console.log(value);
