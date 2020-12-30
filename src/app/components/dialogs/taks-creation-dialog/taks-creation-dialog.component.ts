@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { takeUntil, tap } from 'rxjs/operators';
 import { PriorityStringifier } from 'src/app/helpers/parsers';
 import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
@@ -19,8 +20,8 @@ import { CommonCreationDialogComponent } from '../common-creation-dialog/common-
 })
 export class TaksCreationDialogComponent extends CommonCreationDialogComponent<Task> implements OnInit {
   //#region Getters and setters
-  get initialProject(): Project {
-    return this._initialProject;
+  get rootProject(): Project {
+    return this._rootProject;
   }
 
   get minDate(): Date {
@@ -28,7 +29,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
   }
 
   get maxDate(): Date {
-    return new Date(this._initialProject.dutyDate);
+    return this._rootProject ? new Date(this._rootProject.dutyDate) : null;
   }
 
   get projectFormControl(): AbstractControl {
@@ -41,7 +42,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
   //#endregion
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private _initialProject: Project,
+    @Inject(MAT_DIALOG_DATA) private _rootProject: Project,
     dialogRef: MatDialogRef<TaksCreationDialogComponent>,
     restService: SingleTaskRestService,
     snackBarService: SnackBarService,
@@ -53,12 +54,13 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.addProjectChangeListener();
   }
 
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
       title: ['', [Validators.required]],
-      project: [{ value: this._initialProject || null, disabled: !!this._initialProject }, [Validators.required]],
+      project: [{ value: this._rootProject || null, disabled: !!this._rootProject }, [Validators.required]],
       dutyDate: ['', [Validators.required]],
       priority: [null, [Validators.required]],
       description: ['', [Validators.required]],
@@ -66,11 +68,24 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
     })
   }
 
+  private addProjectChangeListener(): void {
+    this._form.get('project').valueChanges
+      .pipe(
+        takeUntil(this._destroyed$),
+        tap((value) => {
+          console.log(value);
+          this._rootProject = value;
+        })
+      ).subscribe();
+  }
+
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     // Validators
-    if (control.hasError('required')) return 'Wartośc jest wymagana.';
+    if (control.hasError('required')) return 'Wartość jest wymagana.';
     if (control.hasError('matDatepickerParse')) return 'Nieprawidłowy format daty.';
+    if (control.hasError('min')) return 'Wartość jest za mała.';
+    if (control.hasError('max')) return 'Wartość jest za duża.';
     return null;
   }
 

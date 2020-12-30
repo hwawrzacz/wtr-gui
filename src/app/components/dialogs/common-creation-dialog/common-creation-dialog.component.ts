@@ -1,24 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { PatchResponse } from 'src/app/model/responses';
-import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
-import { CommonRestService } from 'src/app/services/rest/common-rest.service';
-import { INFO_SNACKBAR_DURATION, SUCCESS_SNACKBAR_DURATION } from 'src/app/model/constants';
-import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { of, Subject } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { CreationResponseParser } from 'src/app/helpers/parsers';
+import { CreationResponseMessage } from 'src/app/model/enums/response-messages';
+import { PatchResponse } from 'src/app/model/responses';
+import { CommonRestService } from 'src/app/services/rest/common-rest.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-common-creation-dialog',
   template: '',
   styleUrls: ['./common-creation-dialog.component.scss']
 })
-export abstract class CommonCreationDialogComponent<T> implements OnInit {
+export abstract class CommonCreationDialogComponent<T> implements OnInit, OnDestroy {
   protected _form: FormGroup
   protected _isLoading: boolean;
+  protected _destroyed$: Subject<void>;
 
   //#region Getters and setters
   public get form(): FormGroup {
@@ -37,6 +36,7 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this._destroyed$ = new Subject();
     this._form = this.buildForm();
   }
 
@@ -92,4 +92,9 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit {
     this._dialogRef.close(success);
   }
   //#endregion
+
+  ngOnDestroy(): void {
+    this._destroyed$.next();
+    this._destroyed$.complete();
+  }
 }

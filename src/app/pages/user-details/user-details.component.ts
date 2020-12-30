@@ -173,7 +173,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   //#region Helpers
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
-    if (control.hasError('required')) return 'Wartośc jest wymagana.';
+    if (control.hasError('required')) return 'Wartość jest wymagana.';
     if (control.hasError('email')) return 'Nieprawidłowy format adresu email.';
     if (control.hasError('phoneNumber')) return 'Pole może zawierać tylko cyfry.';
     if (control.hasError('minLength')) return 'Wartość jest za krótka.';

@@ -20,13 +20,13 @@
       <mat-error>{{ getErrorMessage('priority') }}</mat-error>
     </mat-form-field>
 
-    <app-project-autocomplete [formControl]="projectFormControl" [initialValue]="initialProject" [label]="'Projekt'"
+    <app-project-autocomplete [formControl]="projectFormControl" [initialValue]="rootProject" [label]="'Projekt'"
       [singleSelection]="true">
     </app-project-autocomplete>
 
     <mat-form-field appearance="outline">
       <mat-label>Termin zakończenia</mat-label>
-      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
+      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate" [max]="maxDate">
       <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
       <mat-datepicker #dutyDate [disabled]="false"></mat-datepicker>
       <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
