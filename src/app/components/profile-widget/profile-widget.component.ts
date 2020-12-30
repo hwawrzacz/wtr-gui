@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Section } from 'src/app/model/enums/section';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -20,7 +20,7 @@ export class ProfileWidgetComponent implements OnInit {
   }
 
   constructor(
-    private _loginService: LoginService,
+    private _loginService: AuthService,
     private _navigator: NavigatorService<any>,
     private _snackBarService: SnackBarService,
   ) { }

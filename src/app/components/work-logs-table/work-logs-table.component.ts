@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { stringifyUser, WorkLogTypeStringifier } from 'src/app/helpers/parsers';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonTableComponent } from '../common-table/common-table.component';
 
@@ -14,7 +14,7 @@ import { CommonTableComponent } from '../common-table/common-table.component';
 export class WorkLogsTableComponent extends CommonTableComponent<WorkLog> implements OnInit {
   constructor(
     navigator: NavigatorService<WorkLog>,
-    loginService: LoginService,
+    loginService: AuthService,
   ) {
     super(navigator, loginService);
     this._columnsDefinitions = [

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonItem } from 'src/app/model/common-item';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonDataSource } from '../../model/common-data-source';
 
@@ -99,7 +99,7 @@ export class CommonTableComponent<T> {
 
   constructor(
     private _navigator: NavigatorService<T>,
-    private _loginService: LoginService,
+    private _loginService: AuthService,
   ) {
     this._dataSource = new CommonDataSource<T>([]);
     this._itemDeletedEmitter = new EventEmitter<string>();

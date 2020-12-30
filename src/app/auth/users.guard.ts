@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { LoginService } from '../services/login.service';
+import { AuthService } from '../services/auth.service';
 import { NavigatorService } from '../services/navigator.service';
 import { SnackBarService } from '../services/snack-bar.service';
 
@@ -11,7 +11,7 @@ import { SnackBarService } from '../services/snack-bar.service';
 export class UsersGuard implements CanActivate {
   constructor(
     private _navigator: NavigatorService<any>,
-    private _loginService: LoginService,
+    private _loginService: AuthService,
     private _snackBarService: SnackBarService,
   ) { }
 

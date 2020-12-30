@@ -8,7 +8,7 @@ import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { PatchResponse, SingleItemResponse } from 'src/app/model/responses';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -62,7 +62,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
     private _changeDetector: ChangeDetectorRef,
     private _snackBarService: SnackBarService,
     protected _dialogService: MatDialog,
-    protected _loginService: LoginService,
+    protected _loginService: AuthService,
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;

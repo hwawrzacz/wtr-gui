@@ -6,7 +6,7 @@ import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
 import { Project } from 'src/app/model/project';
 import { Task } from 'src/app/model/task';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 export class TasksTableComponent extends CommonTableComponent<Task> {
   constructor(
     navigator: NavigatorService<Task>,
-    loginService: LoginService
+    loginService: AuthService
   ) {
     super(navigator, loginService);
 

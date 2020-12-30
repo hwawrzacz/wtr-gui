@@ -4,7 +4,7 @@ import { FaceLoginDialogComponent } from 'src/app/components/dialogs/face-login-
 import { PasswordLoginDialogComponent } from 'src/app/components/dialogs/password-login-dialog/password-login-dialog.component';
 import { QrCodeLoginDialogComponent } from 'src/app/components/dialogs/qr-code-login-dialog/qr-code-login-dialog.component';
 import { Section } from 'src/app/model/enums/section';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private _dialogService: MatDialog,
     private _navigator: NavigatorService<any>,
-    private _loginService: LoginService,
+    private _loginService: AuthService,
   ) { }
 
   ngOnInit(): void {

@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { take, tap } from 'rxjs/operators';
 import { CommonResponse } from 'src/app/model/responses';
 import { User } from 'src/app/model/user';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-password-login-dialog',
@@ -26,7 +26,7 @@ export class PasswordLoginDialogComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _dialogRef: MatDialogRef<PasswordLoginDialogComponent>,
-    private _loginService: LoginService,
+    private _loginService: AuthService,
   ) { }
 
   ngOnInit(): void {

@@ -5,7 +5,7 @@ import { take, tap } from 'rxjs/operators';
 import { CommonResponse } from 'src/app/model/responses';
 import { User } from 'src/app/model/user';
 import { UserCredentials } from 'src/app/model/user-credentials';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class QrCodeLoginDialogComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<QrCodeLoginDialogComponent>,
     private _snackBarService: SnackBarService,
-    private _loginService: LoginService,
+    private _loginService: AuthService,
   ) { }
 
   ngOnInit(): void {

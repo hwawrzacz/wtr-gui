@@ -12,7 +12,7 @@ import { SnackBarService } from './snack-bar.service';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
   private _user: User;
 
   //#region Getters and setters

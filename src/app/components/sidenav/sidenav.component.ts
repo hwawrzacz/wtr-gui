@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Section } from 'src/app/model/enums/section';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class SidenavComponent implements OnInit {
   }
   //#endregion
 
-  constructor(private _navigator: NavigatorService<any>, private _loginService: LoginService) {
+  constructor(private _navigator: NavigatorService<any>, private _loginService: AuthService) {
     this._navigationChangeEmitter = new EventEmitter();
   }
 

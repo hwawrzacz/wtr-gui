@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-face-login-dialog',
@@ -19,7 +19,7 @@ export class FaceLoginDialogComponent implements OnInit {
     return this._isLogging;
   }
 
-  constructor(private _dialogRef: MatDialogRef<FaceLoginDialogComponent>, private _loginService: LoginService) { }
+  constructor(private _dialogRef: MatDialogRef<FaceLoginDialogComponent>, private _loginService: AuthService) { }
 
   ngOnInit(): void {
     this._isLogging = false;

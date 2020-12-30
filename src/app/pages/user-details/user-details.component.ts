@@ -10,7 +10,7 @@ import { SingleItemResponse } from 'src/app/model/responses';
 import { SimpleUser } from 'src/app/model/simple-user';
 import { UserCredentials } from 'src/app/model/user-credentials';
 import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -53,7 +53,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     changeDetector: ChangeDetectorRef,
     snackBarService: SnackBarService,
     dialogService: MatDialog,
-    loginService: LoginService,
+    loginService: AuthService,
   ) {
     super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, loginService);
   }

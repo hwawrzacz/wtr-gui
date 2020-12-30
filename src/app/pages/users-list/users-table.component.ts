@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { CommonItem } from 'src/app/model/common-item';
 import { Position } from 'src/app/model/enums/position';
 import { SimpleUser } from 'src/app/model/simple-user';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
 
 @Component({
   selector: 'app-users-table',
@@ -17,7 +15,7 @@ import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.se
 export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
   constructor(
     navigator: NavigatorService<SimpleUser>,
-    loginService: LoginService,
+    loginService: AuthService,
   ) {
     super(navigator, loginService);
 

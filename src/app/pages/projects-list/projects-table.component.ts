@@ -3,7 +3,7 @@ import { CommonTableComponent } from 'src/app/components/common-table/common-tab
 import { CommonItem } from 'src/app/model/common-item';
 import { Project } from 'src/app/model/project';
 import { User } from 'src/app/model/user';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 export class ProjectsTableComponent extends CommonTableComponent<Project> {
   constructor(
     navigator: NavigatorService<Project>,
-    loginService: LoginService
+    loginService: AuthService
   ) {
     super(navigator, loginService);
 
