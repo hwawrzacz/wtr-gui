@@ -37,7 +37,9 @@ export class FaceLoginDialogComponent implements OnInit {
         take(1),
         tap(res => {
           this._isLogging = false;
-          console.log(res);
+          if (res.success) {
+            this.closeDialog();
+          }
         })
       ).subscribe();
   }
