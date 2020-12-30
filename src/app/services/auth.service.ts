@@ -8,12 +8,14 @@ import { User } from '../model/user';
 import { NavigatorService } from './navigator.service';
 import { LoginRestService } from './rest/login-rest.service';
 import { SnackBarService } from './snack-bar.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private _user: User;
+  private _token: string;
 
   //#region Getters and setters
   get userId(): string {
@@ -22,6 +24,10 @@ export class AuthService {
 
   get user(): User {
     return this._user;
+  }
+
+  get token(): string {
+    return this._token;
   }
 
   get isLoggedIn(): boolean {
@@ -44,8 +50,12 @@ export class AuthService {
   constructor(
     private _navigator: NavigatorService<any>,
     private _restService: LoginRestService,
-    private _snackBarService: SnackBarService
-  ) { }
+    private _snackBarService: SnackBarService,
+    private _storageService: StorageService,
+  ) {
+    this._user = this._storageService.getUser();
+    this._token = this._storageService.getToken();
+  }
 
   public faceLogIn(imageUrl: string): Observable<CommonResponse<any, User>> {
     return this._restService.faceLogIn(imageUrl)
@@ -80,8 +90,6 @@ export class AuthService {
         })
       )
       .subscribe()
-    this._user = null;
-    this._navigator.navigateToHomeScreen();
   }
 
   private handleLoginResponse(res: CommonResponse<any, User>) {
@@ -95,6 +103,7 @@ export class AuthService {
 
   private setUserBasedOnLoginResponse(user: User): void {
     this._user = user;
+    this._storageService.setUser(user);
   }
 
   private onLoginSuccessDefault(): void {
@@ -108,8 +117,9 @@ export class AuthService {
   }
 
   private onLogoutSuccess(): void {
+    this.clearData();
     this._snackBarService.openSuccessSnackBar('Wylogowano.');
-    this._navigator.navigateToMainSection(Section.LOGIN);
+    this._navigator.navigateToHomeScreen();
   }
 
   private onLogoutError(message: string): void {
@@ -123,6 +133,7 @@ export class AuthService {
 
   private clearData(): void {
     this._user = null;
+    this._storageService.clearAuthData();
   }
 
   private parseLoginMessage(message: string): string {

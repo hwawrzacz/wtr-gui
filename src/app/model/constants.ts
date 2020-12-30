@@ -6,3 +6,7 @@ export const ERROR_SNACKBAR_DURATION = 0;
 
 export const TITLE_MAX_LENGTH = 100;
 export const DESCRIPTION_MAX_LENGTH = 500;
+
+// Storage keys
+export const USER = "wtrApp.user";
+export const TOKEN = "wtrApp.token";
