@@ -20,9 +20,8 @@ export class WorkLogsTableComponent extends CommonTableComponent<WorkLog> implem
     this._columnsDefinitions = [
       {
         defName: 'user',
-        propertyName: 'idUser',
+        propertyName: 'user',
         displayName: 'Pracownik',
-        formatter: (item: SimpleUser) => stringifyUser(item),
       },
       {
         defName: 'logDate',
