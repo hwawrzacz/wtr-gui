@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { MatInput } from '@angular/material/input';
 import { BehaviorSubject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -14,7 +15,6 @@ export interface MediaDevice {
   styleUrls: ['./image-capture.component.scss']
 })
 export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
-  private _streamLoadingCounter: number;
   private _previewMode: boolean;
   private _imageUrl: string;
   private _videoStream: MediaStream;
@@ -28,6 +28,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('video') video: ElementRef;
   @ViewChild('imagePlaceholder') canvas: ElementRef;
+  @ViewChild('sourceSelection') sourceSelection: ElementRef;
   @Output('photoChange') private _photoChangeEmitter: EventEmitter<string>;
   @Output('streamChange') private _streamChangeEmitter: EventEmitter<MediaStream>;
 
@@ -57,10 +58,6 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
     this._frameEmitionFrequency = value;
   }
 
-  get streamLoading(): boolean {
-    return this._streamLoadingCounter > 0;
-  }
-
   get previewMode(): boolean {
     return this._previewMode;
   }
@@ -85,7 +82,10 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //#endregion
 
-  constructor(private _snackBarService: SnackBarService) {
+  constructor(
+    private _snackBarService: SnackBarService,
+    private _changeDetector: ChangeDetectorRef,
+  ) {
     this._previewMode = true;
     this._devices$ = new BehaviorSubject(null);
     this._selectedDevice$ = new BehaviorSubject(null);
@@ -94,8 +94,6 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscribeToSelectedDeviceChange();
-    this.initializeDevicesList();
     this.setDefaultComponentValues();
 
     if (this._frameEmitterMode) {
@@ -104,7 +102,9 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.reinitializeCanvas()
+    this.subscribeToSelectedDeviceChange();
+    this.reinitializeCanvas();
+    this.initializeDevicesList();
   }
 
   //#region Initializers 
@@ -121,19 +121,46 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initializeDevicesList(): void {
+    navigator.permissions.query({ name: 'camera' })
+      .then(res => {
+        if (res.state == 'prompt') {
+          // Force prompt
+          navigator.mediaDevices.getUserMedia({ video: { deviceId: 'forcedTrickyRequest' } });
+        } else if (res.state == 'granted') {
+          this.enumerateDevices();
+        } else {
+          this._snackBarService.openErrorSnackBar('Nie można uzyskać dostępu do kamery.', 'Nie przyznano uprawnień');
+        }
+        res.onchange = (e: any) => {
+          if (e.target.state === 'granted') {
+            this.enumerateDevices();
+          } else {
+            this._snackBarService.openErrorSnackBar('Nie można uzyskać dostępu do kamery.');
+          }
+        }
+      })
+      .catch(err => {
+        this._snackBarService.openErrorSnackBar('Nie można uzyskać dostępu do kamery.', err);
+      });;
+  }
+
+  private enumerateDevices(): void {
     navigator.mediaDevices.enumerateDevices()
       .then(devices => {
         const filteredDevices = devices
           .filter(dvc => dvc.kind === 'videoinput')
           .map(dvc => ({ deviceId: dvc.deviceId, label: dvc.label }));
 
-        this._devices$.next(filteredDevices);
-        this._selectedDevice$.next(this._devices$.value[0]);
+        if (filteredDevices) {
+          this._devices$.next(filteredDevices);
+          this._selectedDevice$.next(this._devices$.value[0]);
+        } else {
+          this._snackBarService.openErrorSnackBar('Brak dostępnych urządzeń. Spróbuj innej metody logowania.');
+        }
       })
       // TODO: Handle error properly
       .catch(err => {
         console.warn(err);
-        this._streamLoadingCounter--;
       });
   }
 
@@ -156,25 +183,32 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region Media device handlers
   private reloadCameraPreview(): void {
     const specificDeviceConstraints = {
-      video: { deviceId: { exact: this._selectedDevice$.value.deviceId } },
+      video: { deviceId: this._selectedDevice$.value.deviceId },
       audio: false
     } as MediaStreamConstraints;
 
-    navigator.mediaDevices.getUserMedia(specificDeviceConstraints)
-      .then(stream => {
-        this.stopCurrentStream();
-        this._videoStream = stream;
-        this._streamLoadingCounter--;
+    navigator.permissions.query({ name: 'camera' })
+      .then(res => {
+        if (res.state != 'denied') {
+          navigator.mediaDevices.getUserMedia(specificDeviceConstraints)
+            .then(stream => {
+              this.stopCurrentStream();
+              this._videoStream = stream;
 
-        if (this._streamEmitterMode) {
-          this.emitStreamChange();
+              if (this._streamEmitterMode) {
+                this.emitStreamChange();
+              }
+
+              /** After fixing not showing camera permission dialog, the new problem appeared: 
+               * For some reason camera preview and input devices selection were not populated with data.
+               * The Abracadabra below somehow fixes this. The trick must be applied exactly like that. */
+              this._changeDetector.detectChanges();
+              setTimeout(() => this._changeDetector.detectChanges(), 0);
+            })
+            .catch(err => {
+              this._snackBarService.openErrorSnackBar('Nie można uzyskać dostępu do listy urządzeń. Sprawdź uprawnienia w ustawieniach przeglądarki.', err);
+            });
         }
-      })
-      // TODO: Handle error properly
-      .catch(err => {
-        this._snackBarService.openErrorSnackBar('Nie można uzyskać dostępu do listy urządzeń. Sprawdź uprawnienia w ustawieniach przeglądarki.');
-        console.error(err);
-        this._streamLoadingCounter--;
       });
   }
 
