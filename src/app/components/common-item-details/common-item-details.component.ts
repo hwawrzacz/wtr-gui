@@ -62,7 +62,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
     private _changeDetector: ChangeDetectorRef,
     private _snackBarService: SnackBarService,
     protected _dialogService: MatDialog,
-    protected _loginService: AuthService,
+    protected _authService: AuthService,
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;
@@ -263,17 +263,17 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
 
   //#region Permissions
   public canEdit(): boolean {
-    return this._loginService.isManager || this._loginService.isAdmin;
+    return this._authService.isManager || this._authService.isAdmin;
   }
 
   public canDelete(): boolean {
-    return this._loginService.isManager || this._loginService.isAdmin;
+    return this._authService.isManager || this._authService.isAdmin;
   }
 
   public canShowStats(): boolean {
-    return this._loginService.isManager
-      || this._loginService.isAdmin
-      || this._loginService.isEmployee;
+    return this._authService.isManager
+      || this._authService.isAdmin
+      || this._authService.isEmployee;
   }
   //#endregion
 

@@ -20,7 +20,7 @@ export class FaceLoginDialogComponent implements OnInit {
     return this._isLogging;
   }
 
-  constructor(private _dialogRef: MatDialogRef<FaceLoginDialogComponent>, private _loginService: AuthService) { }
+  constructor(private _dialogRef: MatDialogRef<FaceLoginDialogComponent>, private _authService: AuthService) { }
 
   ngOnInit(): void {
     this._isLogging = false;
@@ -32,7 +32,7 @@ export class FaceLoginDialogComponent implements OnInit {
 
   public logIn(): void {
     this._isLogging = true;
-    this._loginService.faceLogIn(this._imageUrl)
+    this._authService.faceLogIn(this._imageUrl)
       .pipe(
         take(1),
         tap(res => {

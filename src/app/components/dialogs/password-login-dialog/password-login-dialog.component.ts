@@ -26,7 +26,7 @@ export class PasswordLoginDialogComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _dialogRef: MatDialogRef<PasswordLoginDialogComponent>,
-    private _loginService: AuthService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +45,7 @@ export class PasswordLoginDialogComponent implements OnInit {
     const login = this._form.get('login').value;
     const password = this._form.get('password').value;
 
-    this._loginService.logIn(login, password)
+    this._authService.logIn(login, password)
       .pipe(
         take(1),
         tap((res: CommonResponse<any, User>) => {

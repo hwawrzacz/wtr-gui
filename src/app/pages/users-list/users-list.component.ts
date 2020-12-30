@@ -4,7 +4,7 @@ import { CommonListViewComponent } from 'src/app/components/common-list-view/com
 import { UserCreationDialogComponent } from 'src/app/components/dialogs/user-creation-dialog/user-creation-dialog.component';
 import { Filter } from 'src/app/model/filter';
 import { User } from 'src/app/model/user';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -18,9 +18,9 @@ export class UsersListComponent extends CommonListViewComponent<User> {
     restService: UsersListRestService,
     dialogService: MatDialog,
     snackBarService: SnackBarService,
-    loginService: LoginService,
+    authService: AuthService,
   ) {
-    super(restService, snackBarService, dialogService, loginService);
+    super(restService, snackBarService, dialogService, authService);
 
     this._pageTitle = 'Użytkownicy'
     this._themeItemNameSingle = 'użytkownik';

@@ -16,6 +16,10 @@ export class AuthService {
   private _user: User;
 
   //#region Getters and setters
+  get userId(): string {
+    return this._user ? this._user._id : null;
+  }
+
   get user(): User {
     return this._user;
   }

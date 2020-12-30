@@ -11,16 +11,16 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 })
 export class ProfileWidgetComponent implements OnInit {
   get userId(): string | null {
-    return this._loginService.user ? this._loginService.user._id : null
+    return this._authService.user ? this._authService.user._id : null
   }
 
   get userName(): string {
-    const user = this._loginService.user;
+    const user = this._authService.user;
     return user ? `${user.firstName} ${user.lastName}` : '';
   }
 
   constructor(
-    private _loginService: AuthService,
+    private _authService: AuthService,
     private _navigator: NavigatorService<any>,
     private _snackBarService: SnackBarService,
   ) { }
@@ -38,6 +38,6 @@ export class ProfileWidgetComponent implements OnInit {
   }
 
   public logout(): void {
-    this._loginService.logOut();
+    this._authService.logOut();
   }
 }

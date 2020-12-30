@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { USER_ID_MOCK } from 'src/app/model/constants';
 import { Filter } from 'src/app/model/filter';
 import { WorkLog } from 'src/app/model/work-log';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
@@ -28,9 +27,9 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
     restService: WorkLogsListRestService,
     snackBarService: SnackBarService,
     dialogService: MatDialog,
-    loginService: LoginService,
+    authService: AuthService,
   ) {
-    super(restService, snackBarService, dialogService, loginService);
+    super(restService, snackBarService, dialogService, authService);
   }
 
   ngOnInit(): void {
@@ -41,7 +40,7 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
   public openItemCreationDialog(): void { return }
 
   public getRequiredFilter(): Filter[] {
-    const userId = USER_ID_MOCK;
+    const userId = this._authService.user._id;
     const taskFilter = { name: 'idTask', values: [`${this._taskId}`] } as Filter;
     const userFilter = { name: 'idUser', values: [`${userId}`] } as Filter;
     return [taskFilter, userFilter] as Filter[];

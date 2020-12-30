@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, mergeMap, switchMap, take, tap } from 'rxjs/operators';
-import { USER_ID_MOCK } from 'src/app/model/constants';
 import { Status } from 'src/app/model/enums/status';
 import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
 import { ArrayResponse, PatchResponse } from 'src/app/model/responses';
 import { WorkLog, WorkLogType } from 'src/app/model/work-log';
+import { AuthService } from 'src/app/services/auth.service';
 import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -71,7 +71,8 @@ export class WorkLoggerComponent implements OnInit {
     private _loggerService: WorkLoggerService,
     private _workLogsService: WorkLogsListRestService,
     private _taskService: SingleTaskRestService,
-    private _snackBarService: SnackBarService
+    private _snackBarService: SnackBarService,
+    private _authService: AuthService,
   ) {
     this._workLogEmitter = new EventEmitter<void>();
     this._statusChanged = new EventEmitter<Status>();
@@ -85,7 +86,7 @@ export class WorkLoggerComponent implements OnInit {
   //#region Data loaders
   private loadLastWorkLog(): void {
     this._loadingCounter++;
-    const userId = USER_ID_MOCK
+    const userId = this._authService.user._id;
     const taskFilter = { name: 'idTask', values: [`${this._taskId}`] } as Filter;
     const userFilter = { name: 'idUser', values: [`${userId}`] } as Filter;
     const query = { searchString: '', filters: [taskFilter, userFilter] };

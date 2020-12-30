@@ -14,9 +14,9 @@ import { CommonTableComponent } from '../common-table/common-table.component';
 export class WorkLogsTableComponent extends CommonTableComponent<WorkLog> implements OnInit {
   constructor(
     navigator: NavigatorService<WorkLog>,
-    loginService: AuthService,
+    authService: AuthService,
   ) {
-    super(navigator, loginService);
+    super(navigator, authService);
     this._columnsDefinitions = [
       {
         defName: 'user',

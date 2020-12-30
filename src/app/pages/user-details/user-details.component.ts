@@ -53,9 +53,9 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     changeDetector: ChangeDetectorRef,
     snackBarService: SnackBarService,
     dialogService: MatDialog,
-    loginService: AuthService,
+    authService: AuthService,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, loginService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService);
   }
 
   ngOnInit(): void {
@@ -163,9 +163,9 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   public canEdit(): boolean {
     return (
       // If is admin or manager
-      this._loginService.isAdmin || this._loginService.isManager
+      this._authService.isAdmin || this._authService.isManager
       // If is regular employee, and trying to view its own profile
-      || this._loginService.isEmployee && this._navigator.getIdFromUrl() === this._loginService.user._id
+      || this._authService.isEmployee && this._navigator.getIdFromUrl() === this._authService.user._id
     );
   }
   //#endregion

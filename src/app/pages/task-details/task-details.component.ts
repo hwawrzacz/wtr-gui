@@ -85,9 +85,9 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     changeDetector: ChangeDetectorRef,
     snackBarService: SnackBarService,
     dialogService: MatDialog,
-    loginService: AuthService,
+    authService: AuthService,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, loginService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;

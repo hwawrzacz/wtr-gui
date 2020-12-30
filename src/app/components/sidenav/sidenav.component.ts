@@ -29,7 +29,7 @@ export class SidenavComponent implements OnInit {
   }
   //#endregion
 
-  constructor(private _navigator: NavigatorService<any>, private _loginService: AuthService) {
+  constructor(private _navigator: NavigatorService<any>, private _authService: AuthService) {
     this._navigationChangeEmitter = new EventEmitter();
   }
 
@@ -43,13 +43,13 @@ export class SidenavComponent implements OnInit {
   public canShow(section: string): boolean {
     switch (section) {
       case Section.USERS:
-        return this._loginService.isManager || this._loginService.isAdmin;
+        return this._authService.isManager || this._authService.isAdmin;
       case Section.STATISTICS:
-        return this._loginService.isManager;
+        return this._authService.isManager;
       case Section.TASKS:
-        return this._loginService.isEmployee || this._loginService.isManager || this._loginService.isAdmin;
+        return this._authService.isEmployee || this._authService.isManager || this._authService.isAdmin;
       case Section.PROJECTS:
-        return this._loginService.isEmployee || this._loginService.isManager || this._loginService.isAdmin;
+        return this._authService.isEmployee || this._authService.isManager || this._authService.isAdmin;
     }
   }
 }

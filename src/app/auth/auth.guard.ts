@@ -11,14 +11,14 @@ import { SnackBarService } from '../services/snack-bar.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private _navigator: NavigatorService<any>,
-    private _loginService: AuthService,
+    private _authService: AuthService,
     private _snackBarService: SnackBarService,
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this._loginService.isLoggedIn) {
+    if (this._authService.isLoggedIn) {
       return true;
     } else {
       this._snackBarService.openErrorSnackBar('Użytkownik nie jest zalogowany.')

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Filter } from 'src/app/model/filter';
 import { Task } from 'src/app/model/task';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
@@ -24,9 +24,9 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
     restService: TasksListRestService,
     snackBarService: SnackBarService,
     dialogService: MatDialog,
-    loginService: LoginService,
+    authService: AuthService,
   ) {
-    super(restService, snackBarService, dialogService, loginService);
+    super(restService, snackBarService, dialogService, authService);
   }
 
   ngOnInit(): void {

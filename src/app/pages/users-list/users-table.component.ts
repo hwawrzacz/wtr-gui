@@ -15,9 +15,9 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
   constructor(
     navigator: NavigatorService<SimpleUser>,
-    loginService: AuthService,
+    authService: AuthService,
   ) {
-    super(navigator, loginService);
+    super(navigator, authService);
 
     this._detailsUrl = 'users'
 

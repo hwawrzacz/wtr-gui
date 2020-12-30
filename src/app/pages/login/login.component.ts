@@ -16,12 +16,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private _dialogService: MatDialog,
     private _navigator: NavigatorService<any>,
-    private _loginService: AuthService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
     // this.openFaceLoginDialog();
-    if (this._loginService.isLoggedIn) {
+    if (this._authService.isLoggedIn) {
       this._navigator.navigateToMainSection(Section.TASKS);
     } else {
       this.openQrCodeLoginDialog();

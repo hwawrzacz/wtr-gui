@@ -11,7 +11,7 @@ import { SnackBarService } from '../services/snack-bar.service';
 export class UsersGuard implements CanActivate {
   constructor(
     private _navigator: NavigatorService<any>,
-    private _loginService: AuthService,
+    private _authService: AuthService,
     private _snackBarService: SnackBarService,
   ) { }
 
@@ -20,9 +20,9 @@ export class UsersGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (
       // If is admin or manager
-      this._loginService.isAdmin || this._loginService.isManager
+      this._authService.isAdmin || this._authService.isManager
       // If is regular employee, and trying to view its own profile
-      || this._loginService.isEmployee && this._navigator.getIdFromUrl(next.url) === this._loginService.user._id) {
+      || this._authService.isEmployee && this._navigator.getIdFromUrl(next.url) === this._authService.user._id) {
       return true;
     } else {
       this._snackBarService.openErrorSnackBar('Wymagane wyższe uprawnienia.');

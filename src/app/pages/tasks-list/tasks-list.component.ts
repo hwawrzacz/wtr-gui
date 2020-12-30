@@ -4,7 +4,7 @@ import { CommonListViewComponent } from 'src/app/components/common-list-view/com
 import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
 import { Filter } from 'src/app/model/filter';
 import { Task } from 'src/app/model/task';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -18,9 +18,9 @@ export class TasksListComponent extends CommonListViewComponent<Task> {
     restService: TasksListRestService,
     snackBarService: SnackBarService,
     dialogService: MatDialog,
-    loginService: LoginService,
+    authService: AuthService,
   ) {
-    super(restService, snackBarService, dialogService, loginService);
+    super(restService, snackBarService, dialogService, authService);
 
     this._pageTitle = 'Zadania';
     this._themeItemNameSingle = 'zadanie'

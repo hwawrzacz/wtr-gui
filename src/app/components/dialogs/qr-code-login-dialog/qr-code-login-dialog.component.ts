@@ -22,13 +22,13 @@ export class QrCodeLoginDialogComponent implements OnInit {
   }
 
   get isLoggedIn(): boolean {
-    return this._loginService.isLoggedIn;
+    return this._authService.isLoggedIn;
   }
 
   constructor(
     private _dialogRef: MatDialogRef<QrCodeLoginDialogComponent>,
     private _snackBarService: SnackBarService,
-    private _loginService: AuthService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -54,7 +54,7 @@ export class QrCodeLoginDialogComponent implements OnInit {
   }
 
   private attemptLogin(login: string, password: string) {
-    this._loginService.logIn(login, password)
+    this._authService.logIn(login, password)
       .pipe(
         take(1),
         tap((res: CommonResponse<any, User>) => {

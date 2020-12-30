@@ -11,14 +11,14 @@ import { SnackBarService } from '../services/snack-bar.service';
 export class StatisticsGuard implements CanActivate {
   constructor(
     private _navigator: NavigatorService<any>,
-    private _loginService: AuthService,
+    private _authService: AuthService,
     private _snackBarService: SnackBarService,
   ) { }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this._loginService.isManager) {
+    if (this._authService.isManager) {
       return true;
     } else {
       this._snackBarService.openErrorSnackBar('Wymagane wyższe uprawnienia.');

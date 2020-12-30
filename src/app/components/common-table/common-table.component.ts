@@ -99,18 +99,18 @@ export class CommonTableComponent<T> {
 
   constructor(
     private _navigator: NavigatorService<T>,
-    private _loginService: AuthService,
+    private _authService: AuthService,
   ) {
     this._dataSource = new CommonDataSource<T>([]);
     this._itemDeletedEmitter = new EventEmitter<string>();
   }
 
   public canShowStats(): boolean {
-    return this._loginService.isManager
+    return this._authService.isManager
   }
 
   public canDelete(): boolean {
-    return this._loginService.isManager || this._loginService.isAdmin;
+    return this._authService.isManager || this._authService.isAdmin;
   }
 
   public navigateToDetails(itemId: string, edit = false): void {

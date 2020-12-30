@@ -16,9 +16,9 @@ import { CommonTableComponent } from '../common-table/common-table.component';
 export class ProjectTasksTableComponent extends CommonTableComponent<Task> {
   constructor(
     navigator: NavigatorService<Task>,
-    loginService: AuthService,
+    authService: AuthService,
   ) {
-    super(navigator, loginService);
+    super(navigator, authService);
 
     this._detailsUrl = 'tasks';
     this._columnsDefinitions = [

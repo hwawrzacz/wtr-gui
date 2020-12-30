@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { USER_ID_MOCK } from '../model/constants';
 import { PatchResponse } from '../model/responses';
 import { WorkLog, WorkLogType } from '../model/work-log';
+import { AuthService } from './auth.service';
 import { CommonRestService } from './rest/common-rest.service';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { CommonRestService } from './rest/common-rest.service';
 })
 export class WorkLoggerService extends CommonRestService<WorkLog> {
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private _authService: AuthService) {
     super(http, 'workloger/add');
   }
 
@@ -35,7 +35,7 @@ export class WorkLoggerService extends CommonRestService<WorkLog> {
   //#region Helpers
   private createWorkLogObject(taskId: string, workLogType: WorkLogType): WorkLog {
     // TODO: Get userId from login service when available
-    const userId = USER_ID_MOCK;
+    const userId = this._authService.user._id;
     return {
       idTask: taskId,
       idUser: userId,
