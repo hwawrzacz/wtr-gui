@@ -1,6 +1,8 @@
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { HEADER_TOKEN } from '../model/constants';
 import { Position } from '../model/enums/position';
 import { Section } from '../model/enums/section';
 import { CommonResponse } from '../model/responses';
@@ -60,9 +62,11 @@ export class AuthService {
   public faceLogIn(imageUrl: string): Observable<CommonResponse<any, User>> {
     return this._restService.faceLogIn(imageUrl)
       .pipe(
-        tap((res: CommonResponse<any, User>) => {
+        tap((res: HttpResponse<CommonResponse<any, User>>) => {
           this.handleLoginResponse(res);
-        })
+        }),
+        map(res => res.body),
+        catchError(err => this.onRequestErrorDefault(err)),
       );
   }
 
@@ -72,9 +76,11 @@ export class AuthService {
     const passwdEncr = password;
     return this._restService.logIn(login, passwdEncr)
       .pipe(
-        tap((res: CommonResponse<any, User>) => {
+        tap((res: HttpResponse<CommonResponse<any, User>>) => {
           this.handleLoginResponse(res);
-        })
+        }),
+        map(res => res.body),
+        catchError(err => this.onRequestErrorDefault(err))
       );
   }
 
@@ -92,18 +98,27 @@ export class AuthService {
       .subscribe()
   }
 
-  private handleLoginResponse(res: CommonResponse<any, User>) {
-    if (res.success) {
-      this.setUserBasedOnLoginResponse(res.details);
+  private handleLoginResponse(res: HttpResponse<CommonResponse<any, User>>) {
+    const body = res.body;
+    if (body.success) {
+      this.setUserBasedOnLoginResponse(body.details);
+      this.setTokenBasedOnLoginResponse(res.headers);
       this.onLoginSuccessDefault();
     } else {
-      this.onLoginErrorDefault(res.message);
+      this.onLoginErrorDefault(body.message);
     }
   }
 
   private setUserBasedOnLoginResponse(user: User): void {
     this._user = user;
     this._storageService.setUser(user);
+  }
+
+  private setTokenBasedOnLoginResponse(headers: HttpHeaders): void {
+    const token = headers.get(HEADER_TOKEN);
+    console.log(token);
+
+    this._storageService.setToken(token);
   }
 
   private onLoginSuccessDefault(): void {
@@ -114,6 +129,12 @@ export class AuthService {
   private onLoginErrorDefault(message: string): void {
     const parsedMessage = this.parseLoginMessage(message);
     this._snackBarService.openErrorSnackBar('Nie udało się zalogować.');
+  }
+
+  private onRequestErrorDefault(res: HttpErrorResponse): Observable<CommonResponse<any, User>> {
+    const errMessage = `${res.status} ${res.statusText}.`;
+    this._snackBarService.openErrorSnackBar('Nie udało się zalogować.', errMessage);
+    return of({ success: false } as CommonResponse<any, User>);
   }
 
   private onLogoutSuccess(): void {

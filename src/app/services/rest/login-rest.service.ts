@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CommonResponse } from 'src/app/model/responses';
@@ -16,21 +16,21 @@ export class LoginRestService extends CommonRestService<User> {
     super(http, 'authentication');
   }
 
-  public logIn(login: string, password: string): Observable<CommonResponse<any, User>> {
+  public logIn(login: string, password: string): Observable<HttpResponse<CommonResponse<any, User>>> {
     const credentials = {
       login: login,
       password: password
     };
 
-    return this._http.post<CommonResponse<any, User>>(`${environment.apiUrl}/${this._url}/credentialsAuth`, credentials);
+    return this._http.post<CommonResponse<any, User>>(`${environment.apiUrl}/${this._url}/credentialsAuth`, credentials, { observe: 'response' });
   }
 
-  public faceLogIn(imageUrl: string): Observable<CommonResponse<any, User>> {
+  public faceLogIn(imageUrl: string): Observable<HttpResponse<CommonResponse<any, User>>> {
     const credentials = {
       facePhoto: imageUrl
     } as UserCredentials;
 
-    return this._http.post<CommonResponse<any, any>>(`${environment.apiUrl}/${this._url}/faceAuth`, credentials);
+    return this._http.post<CommonResponse<any, User>>(`${environment.apiUrl}/${this._url}/faceAuth`, credentials, { observe: 'response' });
   }
 
   public logOut(): Observable<CommonResponse<any, any>> {
