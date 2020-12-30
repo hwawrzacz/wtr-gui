@@ -34,6 +34,14 @@ export class TasksListComponent extends CommonListViewComponent<Task> {
   }
 
   public getRequiredFilter(): Filter[] {
+    // TODO: This will probably be handled by authorization.
+    // if (this._authService.isManager || this._authService.isAdmin) {
+    //   return [] as Filter[];
+    // } else if (this._authService.isEmployee) {
+    //   const userId = this._authService.user._id;
+    //   const userFilter = { name: 'idUser', values: [`${userId}`] } as Filter;
+    //   return [userFilter] as Filter[];
+    // }
     return [] as Filter[];
   }
 }
