@@ -38,7 +38,8 @@
   </header>
 
   <section class="details">
-    <span *ngIf="!isLoading && !error" [attr.class]="'status-label status-label--big status-label--' + initialItem.status">{{
+    <span *ngIf="!isLoading && !error"
+      [attr.class]="'status-label status-label--big status-label--' + initialItem.status">{{
       getStatusString(initialItem.status)
       }}</span>
     <form [formGroup]="form" *ngIf="!isLoading && !error">
@@ -91,7 +92,7 @@
     </section>
   </section>
 
-  <app-workers-panel [selectedWorkers]="workers" [editMode]="editMode && canEdit()"
+  <app-workers-panel *ngIf="!isMobile" [selectedWorkers]="workers" [editMode]="editMode && canEdit()"
     (workersChange)="updateWorkers($event)">
   </app-workers-panel>
 </div>

@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 
 @Component({
   selector: 'app-task-details',
@@ -86,8 +87,9 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     snackBarService: SnackBarService,
     dialogService: MatDialog,
     authService: AuthService,
+    mobileDetector: MobileDetectorService,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService, mobileDetector)
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;

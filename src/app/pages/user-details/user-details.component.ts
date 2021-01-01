@@ -17,6 +17,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonItemDetailsComponent } from '../../components/common-item-details/common-item-details.component';
 import { ImageCaptureDialogComponent } from '../../components/image-capture-dialog/image-capture-dialog.component';
 import { PasswordChangeDialogComponent } from '../../components/password-change-dialog/password-change-dialog.component';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 
 @Component({
   selector: 'app-user-details',
@@ -54,8 +55,9 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     snackBarService: SnackBarService,
     dialogService: MatDialog,
     authService: AuthService,
+    mobileDetector: MobileDetectorService,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService, mobileDetector)
   }
 
   ngOnInit(): void {
@@ -161,7 +163,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
 
   //#region Permission
   public canEdit(): boolean {
-    return (
+    return !this.isMobile && (
       // If is admin or manager
       this._authService.isAdmin || this._authService.isManager
       // If is regular employee, and trying to view its own profile

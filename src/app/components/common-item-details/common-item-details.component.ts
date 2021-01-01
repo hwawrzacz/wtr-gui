@@ -13,6 +13,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { ConfirmationDialogComponent, ConfirmationDialogData } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 
 @Component({
   selector: 'app-common-item-details',
@@ -52,6 +53,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   get editMode(): boolean {
     return this._editMode;
   }
+
+  get isMobile(): boolean {
+    return this._mobileDetector.isMobile;
+  }
   //#endregion
 
   constructor(
@@ -63,6 +68,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
     private _snackBarService: SnackBarService,
     protected _dialogService: MatDialog,
     protected _authService: AuthService,
+    private _mobileDetector: MobileDetectorService,
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;
@@ -267,17 +273,19 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
 
   //#region Permissions
   public canEdit(): boolean {
-    return this._authService.isManager || this._authService.isAdmin;
+    return this.isMobile && (this._authService.isManager || this._authService.isAdmin);
   }
 
   public canDelete(): boolean {
-    return this._authService.isManager || this._authService.isAdmin;
+    return this.isMobile && (this._authService.isManager || this._authService.isAdmin);
   }
 
   public canShowStats(): boolean {
-    return this._authService.isManager
+    return !this.isMobile && (
+      this._authService.isManager
       || this._authService.isAdmin
-      || this._authService.isEmployee;
+      || this._authService.isEmployee
+    );
   }
   //#endregion
 
