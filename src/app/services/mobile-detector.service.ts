@@ -1,0 +1,32 @@
+import { destroyPlatform, Injectable, OnDestroy, OnInit } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MobileDetectorService implements OnDestroy {
+  private _isMobile: boolean;
+  private readonly MOBILE_WIDTH_BREAKPOINT = 768;
+
+  get isMobile(): boolean {
+    return this._isMobile;
+  }
+
+  constructor() {
+    console.log('cotr');
+    this.checkMobility();
+    window.addEventListener('resize', this.checkMobility);
+  }
+
+  private checkMobility = (): void => {
+    const userAgent = navigator.userAgent;
+    const userAgentCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(userAgent);
+    const widthCheck = window.innerWidth < this.MOBILE_WIDTH_BREAKPOINT;
+    this._isMobile = userAgentCheck && widthCheck;
+  }
+
+  ngOnDestroy(): void {
+    console.log('destroy');
+
+    window.removeEventListener('resize', this.checkMobility);
+  }
+}
