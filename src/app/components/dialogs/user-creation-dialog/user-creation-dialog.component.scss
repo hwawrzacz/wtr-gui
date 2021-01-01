@@ -5,17 +5,19 @@
     margin-bottom: $spacing-regular;
 
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    margin: 0 -$spacing-small;
   }
 
   &__inputs {
     flex: 1 1;
-    margin-right: $spacing-small;
+    padding: 0 $spacing-small;
   }
-
+  
   &__image {
     flex: 1 1;
-    margin-left: $spacing-small;
+    padding: 0 $spacing-small;
 
     figure {
       margin: 0;
@@ -33,7 +35,6 @@
         display: block;
         width: auto;
         height: auto;
-        margin: 0 auto;
         max-width: 100%;
         max-height: 100%;          
       }

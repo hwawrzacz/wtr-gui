@@ -144,7 +144,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
         take(1),
         tap(res => res
           ? this.openSuccessSnackBar("Hasło zostało zmienione.")
-          : this.openErrorSnackBar("Wystąpił błąd podczas zmiany hasła."))
+          : this.openInfoSnackBar("Anulowano zmianę hasła"))
       )
       .subscribe();
   }

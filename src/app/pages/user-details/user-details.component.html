@@ -84,14 +84,15 @@
       <h2>Dane logowania</h2>
 
       <div class="button-wrapper">
-        <button mat-raised-button color="primary" (click)="openPasswordChangeDialog()">Change password</button>
+        <button mat-raised-button color="primary" (click)="openPasswordChangeDialog()">Zmień hasło</button>
       </div>
 
-      <div class="images">
-        <div class="image-wrapper">
-          <figure>
-            <img src="{{ faceImageUrl }}" />
-          </figure>
+      <div class="credentials__images">
+        <figure class="credentials__images__image credentials__images__image--face">
+          <img src="{{ faceImageUrl }}" />
+        </figure>
+
+        <div class="credentials__images__buttons credentials__images__buttons--face">
           <button mat-button color="primary" (click)="openImageCaptureDialog()">
             <mat-icon>add_a_photo</mat-icon>
             <span>Zrób zdjęcie</span>
@@ -99,10 +100,11 @@
           <app-image-uploader (imageChanged)="setPreviewAndUpdateImage($event)"></app-image-uploader>
         </div>
 
-        <div class="image-wrapper">
-          <figure>
-            <img src="{{ qrCodeUrl }}" />
-          </figure>
+        <figure class="credentials__images__image credentials__images__image--qr-code">
+          <img src="{{ qrCodeUrl }}" />
+        </figure>
+
+        <div class="credentials__images__buttons credentials__images__buttons--qr-code">
           <button mat-button color="primary">
             <mat-icon>download</mat-icon>
             <a download="{{ login }}qrcode.jpg" href="{{ qrCodeUrl }}">Pobierz kod QR</a>
@@ -111,7 +113,6 @@
       </div>
     </div>
   </div>
-</div>
 
-<app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader>
-<app-full-screen-error *ngIf="error" (reloadRequest)="reloadData()"></app-full-screen-error>
+  <app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader>
+  <app-full-screen-error *ngIf="error" (reloadRequest)="reloadData()"></app-full-screen-error>

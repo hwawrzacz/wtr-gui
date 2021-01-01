@@ -73,7 +73,7 @@ export class PasswordChangeDialogComponent implements OnInit {
   }
 
   private handleResponseError(res: PatchResponse): void {
-    this._snackBarService.openErrorSnackBar('Coś poszło nie tak.', res.message);
+    this._snackBarService.openErrorSnackBar('Podczas zmiany hasła wystąpił błąd.', res.message);
   }
 
   private handleRequestError(): Observable<any> {
