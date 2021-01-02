@@ -51,7 +51,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Tytuł</mat-label>
         <input matInput #titleInput type="text" formControlName="title" />
-        <mat-hint>{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
+        <mat-hint *ngIf="editMode">{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
         <mat-error>{{ getErrorMessage('title') }}</mat-error>
       </mat-form-field>
 
