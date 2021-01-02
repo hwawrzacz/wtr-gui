@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Filter } from 'src/app/model/filter';
 import { WorkLog } from 'src/app/model/work-log';
 import { AuthService } from 'src/app/services/auth.service';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
@@ -28,8 +29,9 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
     snackBarService: SnackBarService,
     dialogService: MatDialog,
     authService: AuthService,
+    mobileDetector: MobileDetectorService,
   ) {
-    super(restService, snackBarService, dialogService, authService);
+    super(restService, snackBarService, dialogService, authService, mobileDetector);
   }
 
   ngOnInit(): void {

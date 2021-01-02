@@ -8,6 +8,7 @@ import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { ArrayResponse, PatchResponse } from 'src/app/model/responses';
 import { AuthService } from 'src/app/services/auth.service';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonDataSource } from '../../model/common-data-source';
@@ -74,7 +75,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   // Permissions
   public canEdit(): boolean {
-    return this._authService.isManager || this._authService.isAdmin;
+    return !this._mobileDetector.isMobile && (this._authService.isManager || this._authService.isAdmin);
   }
 
   // Boolean calculated
@@ -92,6 +93,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     private _snackBarService: SnackBarService,
     protected _dialogService: MatDialog,
     protected _authService: AuthService,
+    protected _mobileDetector: MobileDetectorService,
   ) {
     this._loadingCounter = 0;
     this._pageSizeOptions = [5, 10, 25, 50];
