@@ -11,3 +11,4 @@ export const DESCRIPTION_MAX_LENGTH = 500;
 export const USER = "wtrApp.user";
 export const TOKEN = "wtrApp.token";
 export const HEADER_TOKEN = 'auth-token';
+export const AVAILABLE_PASSWORD_CHARACTERS = 'qwertyuiopasdfghjklxzcvnbmQWERTYUIOPASDFGHJKLZXCVBNM1234567890-=!@#$%^&*()_+';
