@@ -149,6 +149,9 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   }
   //#endregion
 
+  public canEdit(): boolean {
+    return super.canEdit() && this._initialItem.status !== Status.DONE;
+  }
 
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
