@@ -3,7 +3,7 @@
     <mat-icon>{{ iconName }}</mat-icon>
   </button>
 
-  <h1>Somecompany</h1>
+  <h1 *ngIf="!isMobile">Somecompany</h1>
 
   <app-profile-widget *ngIf="!loginAppBar"></app-profile-widget>
 </mat-toolbar>
