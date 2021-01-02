@@ -21,6 +21,7 @@ import { ImageCaptureDialogComponent } from './components/image-capture-dialog/i
 import { ImageCaptureModule } from './components/image-capture/image-capture.module';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
 import { ProjectCardComponent } from './components/items-cards/project-card/project-card.component';
+import { TaskCardComponent } from './components/items-cards/task-card/task-card.component';
 import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
 import { ProfileWidgetComponent } from './components/profile-widget/profile-widget.component';
 import { ProjectAutocompleteComponent } from './components/project-autocomplete/project-autocomplete.component';
@@ -75,6 +76,7 @@ import { ErrorInterceptor } from './services/interceptors/error.interceptor';
     UsersListComponent,
     WorkLogsListComponent,
     ProjectCardComponent,
+    TaskCardComponent,
 
     ProjectTasksComponent,
     WorkLoggerComponent,
