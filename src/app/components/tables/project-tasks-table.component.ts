@@ -59,17 +59,17 @@ export class ProjectTasksTableComponent extends CommonTableComponent<Task> {
     ]
 
     this._actionsDefinitions = [
-      {
-        icon: 'pie_chart',
-        action: (item: CommonItem) => {
-          this.navigateToStatsWithData(item);
-        },
-        canDisplay: () => {
-          return this.canShowStats();
-        },
-        color: 'primary',
-        tooltip: 'Pokaż statystyki'
-      },
+      // {
+      //   icon: 'pie_chart',
+      //   action: (item: CommonItem) => {
+      //     this.navigateToStatsWithData(item);
+      //   },
+      //   canDisplay: (): boolean => {
+      //     return this.canShowStats();
+      //   },
+      //   color: 'primary',
+      //   tooltip: 'Pokaż statystyki'
+      // },
       // {
       //   icon: 'edit',
       //   action: (item: CommonItem) => {
@@ -82,7 +82,7 @@ export class ProjectTasksTableComponent extends CommonTableComponent<Task> {
         action: (item: CommonItem) => {
           this.delete(item._id);
         },
-        canDisplay: () => {
+        canDisplay: (): boolean => {
           return this.canDelete();
         },
         color: 'warn',
