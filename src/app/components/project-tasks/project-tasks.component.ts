@@ -4,6 +4,7 @@ import { Filter } from 'src/app/model/filter';
 import { Task } from 'src/app/model/task';
 import { AuthService } from 'src/app/services/auth.service';
 import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
@@ -27,8 +28,11 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
     dialogService: MatDialog,
     authService: AuthService,
     mobileDetector: MobileDetectorService,
+    navigator: NavigatorService<Task>,
   ) {
-    super(restService, snackBarService, dialogService, authService, mobileDetector);
+    super(restService, snackBarService, dialogService, authService, mobileDetector, navigator);
+
+    this._detailsUrl = 'tasks';
   }
 
   ngOnInit(): void {

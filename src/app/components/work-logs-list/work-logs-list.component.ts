@@ -4,6 +4,7 @@ import { Filter } from 'src/app/model/filter';
 import { WorkLog } from 'src/app/model/work-log';
 import { AuthService } from 'src/app/services/auth.service';
 import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { WorkLogsListRestService } from 'src/app/services/rest/work-logs-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonListViewComponent } from '../common-list-view/common-list-view.component';
@@ -30,8 +31,9 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
     dialogService: MatDialog,
     authService: AuthService,
     mobileDetector: MobileDetectorService,
+    navigator: NavigatorService<WorkLog>,
   ) {
-    super(restService, snackBarService, dialogService, authService, mobileDetector);
+    super(restService, snackBarService, dialogService, authService, mobileDetector, navigator);
   }
 
   ngOnInit(): void {

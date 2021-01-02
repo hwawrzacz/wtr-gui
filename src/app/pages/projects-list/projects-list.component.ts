@@ -6,6 +6,7 @@ import { Filter } from 'src/app/model/filter';
 import { Project } from 'src/app/model/project';
 import { AuthService } from 'src/app/services/auth.service';
 import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { ProjectsListRestService } from 'src/app/services/rest/projects-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -21,11 +22,13 @@ export class ProjectsListComponent extends CommonListViewComponent<Project> {
     dialogService: MatDialog,
     authService: AuthService,
     mobileDetector: MobileDetectorService,
+    navigator: NavigatorService<Project>,
   ) {
-    super(restService, snackBarService, dialogService, authService, mobileDetector);
+    super(restService, snackBarService, dialogService, authService, mobileDetector, navigator);
 
     this._pageTitle = "Projekty";
     this._themeItemNameSingle = "projekt";
+    this._detailsUrl = 'projects';
   }
 
   public openItemCreationDialog(): void {

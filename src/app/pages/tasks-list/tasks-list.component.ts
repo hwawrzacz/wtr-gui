@@ -6,6 +6,7 @@ import { Filter } from 'src/app/model/filter';
 import { Task } from 'src/app/model/task';
 import { AuthService } from 'src/app/services/auth.service';
 import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -21,11 +22,13 @@ export class TasksListComponent extends CommonListViewComponent<Task> {
     dialogService: MatDialog,
     authService: AuthService,
     mobileDetector: MobileDetectorService,
+    navigator: NavigatorService<Task>,
   ) {
-    super(restService, snackBarService, dialogService, authService, mobileDetector);
+    super(restService, snackBarService, dialogService, authService, mobileDetector, navigator);
 
     this._pageTitle = 'Zadania';
     this._themeItemNameSingle = 'zadanie'
+    this._detailsUrl = 'tasks';
   }
 
   public openItemCreationDialog(): void {
