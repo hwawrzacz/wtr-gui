@@ -53,6 +53,8 @@ import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { UserPipe } from './pipes/user.pipe';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 import { ErrorInterceptor } from './services/interceptors/error.interceptor';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -114,6 +116,7 @@ import { ErrorInterceptor } from './services/interceptors/error.interceptor';
     HttpClientModule,
     ImageCaptureModule,
     LoginModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
