@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { stringifyUser } from 'src/app/helpers/parsers';
-import { Position } from 'src/app/model/enums/position';
 import { Project } from 'src/app/model/project';
 import { User } from 'src/app/model/user';
 
@@ -10,38 +9,27 @@ import { User } from 'src/app/model/user';
   styleUrls: ['./project-card.component.scss']
 })
 export class ProjectCardComponent implements OnInit {
-
+  private _dutyDate: Date;
   private _project: Project;
 
+  @Input('project')
+  set project(value: Project) {
+    this._project = value;
+    this._dutyDate = new Date(value.dutyDate)
+  }
   get project(): Project {
     return this._project;
   }
 
   get managerString(): string {
-    return stringifyUser(this._project.manager);
+    return stringifyUser(this._project.idManager as User);
   }
 
-  constructor() {
-    this._project = {
-      _id: '1',
-      stringId: 'PROJ_1',
-      title: 'Jeden projekt',
-      description: 'Taki niezwykły projekt, że to to prostu szok i niedowierzanie',
-      manager: {
-        _id: '1',
-        login: 'jowick',
-        firstName: 'John',
-        lastName: 'Wick',
-        role: Position.MANAGER,
-        email: 'j.wick@somecompany.com',
-        phoneNumber: '345 534 345'
-      },
-      workers: ['1', '2', '3', '4'],
-      creationDate: "2020-12-08T23:00:00.000Z",
-      dutyDate: "2020-12-08T23:00:00.000Z"
-    } as Project
+  get dutyDate(): string {
+    return this._dutyDate.toLocaleDateString('pl-PL');
   }
 
-  ngOnInit(): void {
-  }
+  constructor() { }
+
+  ngOnInit(): void { }
 }

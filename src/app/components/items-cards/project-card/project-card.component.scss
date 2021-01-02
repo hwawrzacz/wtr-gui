@@ -1,0 +1,35 @@
+@import '../../../../variables';
+
+.container {
+  margin-bottom: $spacing-regular;
+}
+
+.project__header {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: $spacing-regular;
+}
+
+.project__header__string-id {
+  flex: 1 1;
+  margin-bottom: 0;
+  font-size: .9em;
+}
+
+.project__header__workers {
+  flex: 1 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  mat-icon {
+    margin-right: $icon-margin;
+  }
+}
+
+.project__title,
+.project__manager,
+.project__duty-date {
+  display: block;
+  width: 100%;
+}
