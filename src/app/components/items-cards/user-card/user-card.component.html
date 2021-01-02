@@ -1,1 +1,19 @@
-<p>user-card works!</p>
+<mat-card class="container">
+  <mat-card-header>
+    <img mat-card-avatar *ngIf="!isLoading && !error" [src]="image" alt="" />
+    <div mat-card-avatar *ngIf="isLoading || error">
+      <mat-icon>profile</mat-icon>
+    </div>
+    <span mat-card-title class="user__header__name">{{ userString }}</span>
+    <span mat-card-subtitle class="user__header__login">{{ user.login }} | {{ position }}</span>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p class="user__content__email">
+      <mat-icon>alternate_email</mat-icon><span>{{ user.email }}</span>
+    </p>
+    <p class="user__content__phone-number">
+      <mat-icon>phone</mat-icon><span>{{ user.phoneNumber }}</span>
+    </p>
+  </mat-card-content>
+</mat-card>
