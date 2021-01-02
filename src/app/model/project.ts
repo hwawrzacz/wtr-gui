@@ -1,4 +1,5 @@
 import { SimpleUser } from './simple-user';
+import { User } from './user';
 
 export interface Project {
   _id: string;
@@ -6,7 +7,7 @@ export interface Project {
   title: string;
   description: string
   manager: SimpleUser;
-  idManager: string;
+  idManager: string | User;
   workers: string[];
   creationDate: string;
   dutyDate: string;
