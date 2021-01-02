@@ -138,7 +138,10 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
 
   public openPasswordChangeDialog(): void {
     this._dialogService.open(PasswordChangeDialogComponent, {
-      data: this.itemId
+      data: this.itemId,
+      maxWidth: '90vw',
+      minWidth: '300px',
+      width: '50%'
     }).afterClosed()
       .pipe(
         take(1),
@@ -164,8 +167,8 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   //#region Permission
   public canEdit(): boolean {
     return !this.isMobile && (
-      // If is admin or manager
-      this._authService.isManager
+      // If is admin
+      this._authService.isAdmin
       // If users is viewing ites own profile
       || this._navigator.getIdFromUrl() === this._authService.user._id
     );

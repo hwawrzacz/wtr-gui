@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { take, tap } from 'rxjs/operators';
+import { Encrypter } from 'src/app/helpers/encrypter';
 import { CommonResponse } from 'src/app/model/responses';
 import { User } from 'src/app/model/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -44,8 +45,9 @@ export class PasswordLoginDialogComponent implements OnInit {
     this._isLogging = true;
     const login = this._form.get('login').value;
     const password = this._form.get('password').value;
+    const passwdEncr = Encrypter.encrypt(password);
 
-    this._authService.logIn(login, password)
+    this._authService.logIn(login, passwdEncr)
       .pipe(
         take(1),
         tap((res: CommonResponse<any, User>) => {

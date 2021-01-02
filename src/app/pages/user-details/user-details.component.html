@@ -105,9 +105,10 @@
         </figure>
 
         <div class="credentials__images__buttons credentials__images__buttons--qr-code">
-          <button mat-button color="primary">
+          <button mat-button color="primary" (click)="downloader.click()">
             <mat-icon>download</mat-icon>
-            <a download="{{ login }}qrcode.jpg" href="{{ qrCodeUrl }}">Pobierz kod QR</a>
+            <a #downloader download="{{ login }}qrcode.jpg" href="{{ qrCodeUrl }}"
+              (click)="$event.stopPropagation()">Pobierz kod QR</a>
           </button>
         </div>
       </div>

@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { matchOtherControlValidator } from 'src/app/helpers/custom-validators';
+import { matchOtherControlValidator, passwordValidator } from 'src/app/helpers/custom-validators';
+import { Encrypter } from 'src/app/helpers/encrypter';
 import { PatchResponse } from 'src/app/model/responses';
 import { SingleUserRestService } from 'src/app/services/rest/single-user-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -47,14 +48,14 @@ export class PasswordChangeDialogComponent implements OnInit {
 
   private buildPasswordForm(): FormGroup {
     return this._formBuilder.group({
-      password: [{ value: null, disabled: !this._userId }, [Validators.required]],
+      password: [{ value: null, disabled: !this._userId }, [Validators.required, passwordValidator()]],
       repeatPassword: [{ value: null, disabled: !this._userId }, [Validators.required, matchOtherControlValidator('password')]]
     })
   }
 
   //#region Data savers 
   public changePassword(): void {
-    const newPassword = this._form.get('password').value;
+    const newPassword = Encrypter.encrypt(this._form.get('password').value);
     this._isLoading = true;
     this._restService.patch<string>(this._userId, 'password', newPassword)
       .pipe(
@@ -88,6 +89,7 @@ export class PasswordChangeDialogComponent implements OnInit {
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Hasło jest wymagane.';
+    if (control.hasError('invalidPasswordCharacter')) return 'Dozwolone znaki: a-Z 0-9 oraz !@#$%^&*()_+-=';
     if (control.hasError('passwordMatches')) return 'Hasła nie są takie same.';
   }
 }
