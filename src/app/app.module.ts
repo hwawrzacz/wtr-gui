@@ -73,6 +73,7 @@ import { ErrorInterceptor } from './services/interceptors/error.interceptor';
     TasksListComponent,
     UsersListComponent,
     WorkLogsListComponent,
+    ProjectTasksComponent,
 
     ProjectTasksComponent,
     WorkLoggerComponent,

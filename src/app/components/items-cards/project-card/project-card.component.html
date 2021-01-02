@@ -1,0 +1,15 @@
+<div class="container">
+  <div>
+    <span class="project__string-id">{{ project.stringId }}</span>
+    <span class="project__status" [attr.class]="'status-label status-label--' + status">{{ project.status }}</span>
+  </div>
+  <span class="project__priority" [attr.class]="'priority-label priority-label--' + priority">{{ project.priority
+    }}</span>
+  <h3 class="project__title">{{ project.title }}</h3>
+  <div class="project__humar-resources">
+    <span class="project__manager">Menedżer: {{ managerString }}</span>
+    <span class="project__workers">
+      <mat-icon>people</mat-icon> {{ project.workers.length }}
+    </span>
+  </div>
+</div>
