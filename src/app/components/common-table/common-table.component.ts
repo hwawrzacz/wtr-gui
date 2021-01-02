@@ -110,7 +110,7 @@ export class CommonTableComponent<T> {
   }
 
   public canDelete(): boolean {
-    return this._authService.isManager || this._authService.isAdmin;
+    return this._authService.isAdmin;
   }
 
   public navigateToDetails(itemId: string, edit = false): void {

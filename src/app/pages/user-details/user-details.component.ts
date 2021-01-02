@@ -165,9 +165,9 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
   public canEdit(): boolean {
     return !this.isMobile && (
       // If is admin or manager
-      this._authService.isAdmin || this._authService.isManager
-      // If is regular employee, and trying to view its own profile
-      || this._authService.isEmployee && this._navigator.getIdFromUrl() === this._authService.user._id
+      this._authService.isManager
+      // If users is viewing ites own profile
+      || this._navigator.getIdFromUrl() === this._authService.user._id
     );
   }
   public canDelete(): boolean {
