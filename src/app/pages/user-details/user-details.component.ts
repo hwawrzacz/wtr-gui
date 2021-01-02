@@ -170,6 +170,9 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
       || this._authService.isEmployee && this._navigator.getIdFromUrl() === this._authService.user._id
     );
   }
+  public canDelete(): boolean {
+    return !this.isMobile && this._authService.isAdmin;
+  }
   //#endregion
 
   //#region Helpers
