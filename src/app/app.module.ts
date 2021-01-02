@@ -41,7 +41,6 @@ import { LoginModule } from './pages/login/login.module';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
 import { ProjectsTableComponent } from './pages/projects-list/projects-table.component';
-import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
@@ -75,7 +74,6 @@ import { ErrorInterceptor } from './services/interceptors/error.interceptor';
     UsersListComponent,
     WorkLogsListComponent,
 
-    StatisticsComponent,
     ProjectTasksComponent,
     WorkLoggerComponent,
     CommonSearchBarComponent,
