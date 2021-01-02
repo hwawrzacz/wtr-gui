@@ -7,8 +7,8 @@
   margin-right: $spacing-regular;
 
   .work-logger {
-    height: 200px;
-    padding: 0 $spacing-regular;
+    padding: $spacing-big;
+    padding-bottom: $spacing-regular;
     
     border-top: 1px solid $bg-color-gray;
     border-bottom: 1px solid $bg-color-gray;
