@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PriorityStringifier, StatusStringifier, stringifyUser } from 'src/app/helpers/parsers';
+import { PriorityStringifier, StatusStringifier } from 'src/app/helpers/parsers';
 import { Task } from 'src/app/model/task';
-import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-task-card',

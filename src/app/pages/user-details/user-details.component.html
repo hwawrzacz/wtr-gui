@@ -1,5 +1,11 @@
 <div class="item-details">
   <header class="item-details__header">
+    <p class="item-details__header__navigation">
+      <a class="link" [routerLink]="'/users'">Użytkownicy</a> /
+      <a class="link" [routerLink]="'/users/'+ itemId">{{ login
+        }}</a>
+    </p>
+
     <h1>Szczegóły użytkownika</h1>
     <div class="item-details__header__buttons">
       <button mat-stroked-button color="primary" *ngIf="!editMode && canEdit()" (click)="enableEditMode()">
@@ -28,12 +34,6 @@
         <span>Usuń</span>
       </button>
     </div>
-
-    <p class="item-details__header__navigation">
-      <a class="link" [routerLink]="'/users'">Użytkownicy</a> /
-      <a class="link" [routerLink]="'/users/'+ itemId">{{ login
-        }}</a>
-    </p>
   </header>
 
   <div class="container">

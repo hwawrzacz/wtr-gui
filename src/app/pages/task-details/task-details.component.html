@@ -1,5 +1,12 @@
 <div class="item-details">
   <header class="item-details__header">
+    <p class="item-details__header__navigation">
+      <a class="link" [routerLink]="'/projects'">Projekty</a> /
+      <a class="link" [routerLink]="'/projects/'+ projectId">{{ projectStringId
+        }}</a> /
+      <a class="link" [routerLink]="'/tasks/'+ itemId">{{ stringId }}</a>
+    </p>
+
     <h1>Szczegóły zadania</h1>
     <div class="item-details__header__buttons">
       <button mat-stroked-button color="primary" *ngIf="!editMode && canEdit()" (click)="enableEditMode()">
@@ -28,13 +35,6 @@
         <span>Usuń</span>
       </button>
     </div>
-
-    <p class="item-details__header__navigation">
-      <a class="link" [routerLink]="'/projects'">Projekty</a> /
-      <a class="link" [routerLink]="'/projects/'+ projectId">{{ projectStringId
-        }}</a> /
-      <a class="link" [routerLink]="'/tasks/'+ itemId">{{ stringId }}</a>
-    </p>
   </header>
 
   <section class="details">
