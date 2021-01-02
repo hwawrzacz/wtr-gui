@@ -19,9 +19,9 @@ export class MobileDetectorService implements OnDestroy {
 
   private checkMobility = (): void => {
     const userAgent = navigator.userAgent;
-    const userAgentCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(userAgent);
+    // const userAgentCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(userAgent);
     const widthCheck = window.innerWidth < this.MOBILE_WIDTH_BREAKPOINT;
-    this._isMobile = userAgentCheck && widthCheck;
+    this._isMobile = widthCheck;
   }
 
   ngOnDestroy(): void {
