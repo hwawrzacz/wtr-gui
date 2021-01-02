@@ -2,15 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { of, OperatorFunction } from 'rxjs';
-import { catchError, take, tap } from 'rxjs/operators';
+import { catchError, filter, take, tap } from 'rxjs/operators';
+import { CommonItem } from 'src/app/model/common-item';
 import { Filter } from 'src/app/model/filter';
 import { Pagination } from 'src/app/model/pagination';
 import { Query } from 'src/app/model/query';
 import { ArrayResponse, PatchResponse } from 'src/app/model/responses';
 import { AuthService } from 'src/app/services/auth.service';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonListRestService } from 'src/app/services/rest/common-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonDataSource } from '../../model/common-data-source';
+import { ConfirmationDialogComponent, ConfirmationDialogData } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-common-list-view',
@@ -33,6 +37,9 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   // Search
   protected _query: Query;
   protected _pagination: Pagination
+
+  // Navigation
+  protected _detailsUrl: string;
 
   // Boolean
   protected _loadingCounter: number;
@@ -73,10 +80,14 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   // Permissions
   public canEdit(): boolean {
-    return this._authService.isManager || this._authService.isAdmin;
+    return !this.isMobile && (this._authService.isManager || this._authService.isAdmin);
   }
 
   // Boolean calculated
+  get isMobile(): boolean {
+    return this._mobileDetector.isMobile
+  }
+
   get isLoading(): boolean {
     return this._loadingCounter > 0;
   }
@@ -91,6 +102,8 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     private _snackBarService: SnackBarService,
     protected _dialogService: MatDialog,
     protected _authService: AuthService,
+    protected _mobileDetector: MobileDetectorService,
+    protected _navigator: NavigatorService<any>,
   ) {
     this._loadingCounter = 0;
     this._pageSizeOptions = [5, 10, 25, 50];
@@ -169,6 +182,10 @@ export abstract class CommonListViewComponent<T> implements OnInit {
    * after it is closed, which are showing certain messages  */
   public abstract openItemCreationDialog(): void;
 
+  public navigateToDetails(item: CommonItem, edit = false): void {
+    this._navigator.navigateToDetailsWithData(this._detailsUrl, item);
+  }
+
   protected handleAfterClosed(): OperatorFunction<any, unknown> {
     return (
       tap(res => {
@@ -182,7 +199,20 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   }
 
   public onItemDeleted(id: string): void {
-    this.delete(id);
+    this._dialogService.open(ConfirmationDialogComponent, {
+      data: {
+        title: "Usuwanie elementu",
+        message: "Tej akcji nie można cofnąć. Czy jestes pewien, że chcesz usunąć element?",
+        warn: true,
+      } as ConfirmationDialogData
+    })
+      .afterClosed()
+      .pipe(
+        take(1),
+        filter(res => !!res),
+        tap(() => this.delete(id))
+      )
+      .subscribe()
   }
 
   private delete(itemId: string): void {

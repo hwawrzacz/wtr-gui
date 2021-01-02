@@ -1,4 +1,4 @@
-@import '../../../variables';
+  @import '../../../variables';
 
 .container {
   flex: 100%;
@@ -57,46 +57,52 @@
     }
   }
 
-  .images {
-    display: flex;
-    justify-content: center;
+  .credentials__images {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 50% 50%;
+    margin-right: 0 -($spacing-small);
 
-    .image-wrapper {
+    // Figure
+    &__image {
+      flex: 1 1;
+      margin: 0;
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 100%;
+      }
+
+      &--face {
+        grid-row: 1;
+        grid-column: 1;
+      }
+
+      &--qr-code {
+        grid-row: 1;
+        grid-column: 2;
+      }
+    }
+
+    &__buttons {
       display: flex;
       flex-direction: column;
       align-items: center;
 
-      &:first-child {
-        margin-right: $spacing-small;
+      &--face {
+        grid-row: 2;
+        grid-column: 1;
       }
-
-      &:last-child {
-        margin-left: $spacing-small;
+      
+      &--qr-code {
+        grid-row: 2;
+        grid-column: 2;
       }
+    }
 
-      figure {
-        margin: 0;
-        width: 100%;
-        max-width: 100%;
-        min-width: 100px;
-        height: 200px;
-        
-        // border: 1px solid black;
-        // background-color: rgba($color-primary, .2);
-
-        img {
-          display: block;
-          width: auto;
-          height: auto;
-          margin: 0 auto;
-          max-width: 100%;
-          max-height: 100%;          
-        }
-      }
-
-      button {
-        margin-top: $spacing-small;
-      }
+    button {
+      margin-top: $spacing-small;
     }
   }
 }
@@ -122,5 +128,39 @@
       justify-content: space-evenly;
     }
   }
+}
 
+
+@media screen and (max-width: 467px) {
+  .credentials-wrapper {
+    .credentials__images {
+      grid-template-rows: repeat(4, auto);
+      grid-template-columns: 1fr;
+
+      // Figure
+      &__image {
+        &--face {
+          grid-row: 1;
+          grid-column: 1;
+        }
+
+        &--qr-code {
+          grid-row: 3;
+          grid-column: 1;
+        }
+      }
+
+      &__buttons {
+        &--face {
+          grid-row: 2;
+          grid-column: 1;
+        }
+        
+        &--qr-code {
+          grid-row: 4;
+          grid-column: 1;
+        }
+      }
+    }
+  }
 }

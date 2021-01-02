@@ -1,5 +1,10 @@
 <div class="item-details">
   <header class="item-details__header">
+    <p class="item-details__header__navigation">
+      <a class="link" [routerLink]="'/projects'">Projekty</a> /
+      <a class="link" [routerLink]="'/projects/'+ itemId">{{ stringId }}</a>
+    </p>
+
     <h1>Szczegóły projektu</h1>
     <div class="item-details__header__buttons">
       <button mat-stroked-button color="primary" *ngIf="!editMode && canEdit()" (click)="enableEditMode()">
@@ -28,18 +33,13 @@
         <span>Usuń</span>
       </button>
     </div>
-
-    <p class="item-details__header__navigation">
-      <a class="link" [routerLink]="'/projects'">Projekty</a> /
-      <a class="link" [routerLink]="'/projects/'+ itemId">{{ stringId }}</a>
-    </p>
   </header>
 
   <form [formGroup]="form" *ngIf="!isLoading && !error">
     <mat-form-field appearance="outline">
       <mat-label>Tytuł</mat-label>
       <input matInput #titleInput type="text" formControlName="title" />
-      <mat-hint>{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
+      <mat-hint *ngIf="editMode">{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
       <mat-error>{{ getErrorMessage('title') }}</mat-error>
     </mat-form-field>
 
@@ -62,7 +62,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Opis</mat-label>
         <textarea matInput #descriptionInput formControlName="description" cdkTextareaAutosize></textarea>
-        <mat-hint>{{ descriptionInput.value.length || 0}}/{{ descriptionMaxLength }}</mat-hint>
+        <mat-hint *ngIf="editMode">{{ descriptionInput.value.length || 0}}/{{ descriptionMaxLength }}</mat-hint>
         <mat-error>{{ getErrorMessage('description') }}</mat-error>
       </mat-form-field>
     </div>

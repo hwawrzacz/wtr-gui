@@ -5,6 +5,8 @@ import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-cre
 import { Filter } from 'src/app/model/filter';
 import { Task } from 'src/app/model/task';
 import { AuthService } from 'src/app/services/auth.service';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { TasksListRestService } from 'src/app/services/rest/tasks-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -19,11 +21,14 @@ export class TasksListComponent extends CommonListViewComponent<Task> {
     snackBarService: SnackBarService,
     dialogService: MatDialog,
     authService: AuthService,
+    mobileDetector: MobileDetectorService,
+    navigator: NavigatorService<Task>,
   ) {
-    super(restService, snackBarService, dialogService, authService);
+    super(restService, snackBarService, dialogService, authService, mobileDetector, navigator);
 
     this._pageTitle = 'Zadania';
     this._themeItemNameSingle = 'zadanie'
+    this._detailsUrl = 'tasks';
   }
 
   public openItemCreationDialog(): void {

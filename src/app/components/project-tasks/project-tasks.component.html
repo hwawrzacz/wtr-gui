@@ -1,2 +1,9 @@
 <app-filter-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-filter-search-bar>
-<app-project-tasks-table [dataSource]="dataSource" [isLoading]="isLoading"></app-project-tasks-table>
+
+<ng-container *ngIf="isMobile">
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  <app-task-card *ngFor="let task of dataSource.data.value" [task]="task" (click)="navigateToDetails(task)">
+  </app-task-card>
+</ng-container>
+
+<app-project-tasks-table *ngIf="!isMobile" [dataSource]="dataSource" [isLoading]="isLoading"></app-project-tasks-table>

@@ -51,17 +51,17 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
     ];
 
     this._actionsDefinitions = [
-      {
-        icon: 'pie_chart',
-        action: (item: CommonItem) => {
-          this.navigateToStatsWithData(item);
-        },
-        canDisplay: (): boolean => {
-          return this.canShowStats();
-        },
-        color: 'primary',
-        tooltip: 'Pokaż statystyki'
-      },
+      // {
+      //   icon: 'pie_chart',
+      //   action: (item: CommonItem) => {
+      //     this.navigateToStatsWithData(item);
+      //   },
+      //   canDisplay: (): boolean => {
+      //     return this.canShowStats();
+      //   },
+      //   color: 'primary',
+      //   tooltip: 'Pokaż statystyki'
+      // },
       // {
       //   icon: 'edit',
       //   action: (item: CommonItem) => {

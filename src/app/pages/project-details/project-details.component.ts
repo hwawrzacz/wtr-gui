@@ -18,6 +18,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleProjectRestService } from 'src/app/services/rest/single-project-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { TasksListComponent } from '../tasks-list/tasks-list.component';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 
 @Component({
   selector: 'app-project-details',
@@ -67,8 +68,9 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
     snackBarService: SnackBarService,
     dialogService: MatDialog,
     authService: AuthService,
+    mobileDetector: MobileDetectorService,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService, mobileDetector);
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
@@ -146,6 +148,8 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Pole jest wymagane.';
+    if (control.hasError('min')) return 'Wartość jest za mała.';
+    if (control.hasError('max')) return 'Wartość jest za duża.';
     else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
 
     return null;

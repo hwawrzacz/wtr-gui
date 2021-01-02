@@ -8,7 +8,14 @@
 
 <app-filter-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-filter-search-bar>
 
-<app-tasks-table [dataSource]="dataSource" [isLoading]="isLoading" (itemDeleted)="onItemDeleted($event)">
+<ng-container *ngIf="isMobile">
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  <app-task-card *ngFor="let task of dataSource.data.value" [task]="task" (click)="navigateToDetails(task)">
+  </app-task-card>
+</ng-container>
+
+<app-tasks-table *ngIf="!isMobile" [dataSource]="dataSource" [isLoading]="isLoading"
+  (itemDeleted)="onItemDeleted($event)">
 </app-tasks-table>
 
 <mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"

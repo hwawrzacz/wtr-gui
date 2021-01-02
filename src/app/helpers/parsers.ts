@@ -60,7 +60,7 @@ export class PositionStringifier {
     return Object.values(Position) as Position[];
   }
 
-  public static getPositionString(value: Position): string {
+  public static getPositionString(value: Position | string): string {
     switch (value) {
       case Position.EMPLOYEE: return 'Pracownik';
       case Position.MANAGER: return 'Menedżer';

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Section } from 'src/app/model/enums/section';
 import { AuthService } from 'src/app/services/auth.service';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -19,14 +20,18 @@ export class ProfileWidgetComponent implements OnInit {
     return user ? `${user.firstName} ${user.lastName}` : '';
   }
 
+  get isMobile(): boolean {
+    return this._mobileDetector.isMobile;
+  }
+
   constructor(
     private _authService: AuthService,
     private _navigator: NavigatorService<any>,
     private _snackBarService: SnackBarService,
+    private _mobileDetector: MobileDetectorService,
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   public openProfileDetails() {
     if (this.userId) {

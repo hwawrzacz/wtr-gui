@@ -5,6 +5,8 @@ import { UserCreationDialogComponent } from 'src/app/components/dialogs/user-cre
 import { Filter } from 'src/app/model/filter';
 import { User } from 'src/app/model/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { UsersListRestService } from 'src/app/services/rest/users-list-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -19,11 +21,14 @@ export class UsersListComponent extends CommonListViewComponent<User> {
     dialogService: MatDialog,
     snackBarService: SnackBarService,
     authService: AuthService,
+    mobileDetector: MobileDetectorService,
+    navigator: NavigatorService<User>,
   ) {
-    super(restService, snackBarService, dialogService, authService);
+    super(restService, snackBarService, dialogService, authService, mobileDetector, navigator);
 
     this._pageTitle = 'Użytkownicy'
     this._themeItemNameSingle = 'użytkownik';
+    this._detailsUrl = 'users';
   }
 
   public openItemCreationDialog(): void {

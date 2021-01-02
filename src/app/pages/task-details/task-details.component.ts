@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 
 @Component({
   selector: 'app-task-details',
@@ -86,8 +87,9 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     snackBarService: SnackBarService,
     dialogService: MatDialog,
     authService: AuthService,
+    mobileDetector: MobileDetectorService,
   ) {
-    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService);
+    super(navigator, broker, restService, formBuilder, changeDetector, snackBarService, dialogService, authService, mobileDetector)
 
     const projectFilter = { name: 'stringId', values: [`${this.stringId}`] } as Filter;
     this._query = { searchString: '', filters: [projectFilter] } as Query;
@@ -147,11 +149,16 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   }
   //#endregion
 
+  public canEdit(): boolean {
+    return super.canEdit() && this._initialItem.status !== Status.DONE;
+  }
 
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Pole jest wymagane.';
     if (control.hasError('matDatepickerParse')) return 'Nieprawidłowy format daty.';
+    if (control.hasError('min')) return 'Wartość jest za mała.';
+    if (control.hasError('max')) return 'Wartość jest za duża.';
     else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
 
     return null;

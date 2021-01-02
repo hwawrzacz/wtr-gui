@@ -69,6 +69,10 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
     // Validators
     if (control.hasError('required')) return 'Wartość jest wymagana.';
     if (control.hasError('matDatepickerParse')) return 'Nieprawidłowy format daty.';
+    if (control.hasError('min')) return 'Wartość jest za mała.';
+    if (control.hasError('max')) return 'Wartość jest za duża.';
+    else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
+
     return null;
   }
 

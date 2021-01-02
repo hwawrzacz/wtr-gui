@@ -11,17 +11,11 @@
     align-items: center;
     flex-wrap: wrap;
     margin-bottom: $spacing-regular;
-    
-    h1 {
-      flex: 1 1;
-      white-space: nowrap;
-      margin-bottom: 0;
-    }
   
     &__navigation {
       width: 100%;
       font-size: 1.2em;
-      margin-top: $spacing-small;
+      margin: $spacing-small auto $spacing-small auto;
   
       a {
         color: $color-primary;
@@ -32,12 +26,32 @@
       }
     }
 
+    h1 {
+      flex: 1 1;
+      white-space: nowrap;
+      margin-bottom: 0;
+      margin: $spacing-small auto $spacing-small auto;
+    }
+  
     &__buttons {
       display: flex;
       flex-wrap: nowrap;
-      
-      & > button:not(:first-child) {
-        margin-left: $header-button-margin
+      margin-top: $spacing-small;
+      margin-bottom: $spacing-small;
+
+      & > button {
+        .mat-button-wrapper {
+          display: flex !important;
+          align-items: center !important;
+        }
+
+        mat-icon {
+          margin-right: $icon-margin;
+        }
+        
+        &:not(:first-child) {
+          margin-left: $header-button-margin;
+        }
       }
     }
   }

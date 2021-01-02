@@ -2,6 +2,7 @@
 
 mat-toolbar {
   height: $app-header-height;
+  display: flex;
 
   &.login-app-bar {
     background-color: $bg-color-white !important;
@@ -15,13 +16,15 @@ button {
 
 h1 {
   flex: 1 1;
-  padding-right: calc(#{$icon-width} + #{$icon-margin});
-
-  text-align: center;
 }
 
 .login-app-bar {
   h1 {
     padding-right: 0;
+    text-align: center;
   }
+}
+
+app-profile-widget {
+  flex: 1 1;
 }

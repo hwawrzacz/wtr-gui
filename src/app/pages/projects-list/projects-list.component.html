@@ -8,7 +8,14 @@
 
 <app-common-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-common-search-bar>
 
-<app-projects-table [dataSource]="dataSource" [isLoading]="isLoading" (itemDeleted)="onItemDeleted($event)">
+<ng-container *ngIf="isMobile">
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  <app-project-card *ngFor="let project of dataSource.data.value" [project]="project"
+    (click)="navigateToDetails(project)"></app-project-card>
+</ng-container>
+
+<app-projects-table *ngIf="!isMobile" [dataSource]="dataSource" [isLoading]="isLoading"
+  (itemDeleted)="onItemDeleted($event)">
 </app-projects-table>
 
 <mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"

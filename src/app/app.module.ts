@@ -20,6 +20,9 @@ import { AppHeaderComponent } from './components/header/header.component';
 import { ImageCaptureDialogComponent } from './components/image-capture-dialog/image-capture-dialog.component';
 import { ImageCaptureModule } from './components/image-capture/image-capture.module';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
+import { ProjectCardComponent } from './components/items-cards/project-card/project-card.component';
+import { TaskCardComponent } from './components/items-cards/task-card/task-card.component';
+import { UserCardComponent } from './components/items-cards/user-card/user-card.component';
 import { PasswordChangeDialogComponent } from './components/password-change-dialog/password-change-dialog.component';
 import { ProfileWidgetComponent } from './components/profile-widget/profile-widget.component';
 import { ProjectAutocompleteComponent } from './components/project-autocomplete/project-autocomplete.component';
@@ -41,7 +44,6 @@ import { LoginModule } from './pages/login/login.module';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
 import { ProjectsTableComponent } from './pages/projects-list/projects-table.component';
-import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { TaskDetailsComponent } from './pages/task-details/task-details.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { TasksTableComponent } from './pages/tasks-list/tasks-table.component';
@@ -74,8 +76,10 @@ import { ErrorInterceptor } from './services/interceptors/error.interceptor';
     TasksListComponent,
     UsersListComponent,
     WorkLogsListComponent,
+    ProjectCardComponent,
+    TaskCardComponent,
+    UserCardComponent,
 
-    StatisticsComponent,
     ProjectTasksComponent,
     WorkLoggerComponent,
     CommonSearchBarComponent,

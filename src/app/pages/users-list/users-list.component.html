@@ -8,7 +8,14 @@
 
 <app-common-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-common-search-bar>
 
-<app-users-table [dataSource]="dataSource" [isLoading]="isLoading" (itemDeleted)="onItemDeleted($event)">
+<ng-container *ngIf="isMobile">
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  <app-user-card *ngFor="let user of dataSource.data.value" [user]="user" (click)="navigateToDetails(user)">
+  </app-user-card>
+</ng-container>
+
+<app-users-table *ngIf="!isMobile" [dataSource]="dataSource" [isLoading]="isLoading"
+  (itemDeleted)="onItemDeleted($event)">
 </app-users-table>
 
 <mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"

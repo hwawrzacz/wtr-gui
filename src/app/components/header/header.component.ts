@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 
 @Component({
   selector: 'app-header',
@@ -27,12 +28,16 @@ export class AppHeaderComponent implements OnInit {
     this._sidenavOpened = value;
   }
 
+  get isMobile(): boolean {
+    return this._mobileDetector.isMobile;
+  }
+
   get iconName(): string {
     return this._sidenavOpened ? 'chevron_left' : 'menu';
   }
   //#endregion
 
-  constructor() { }
+  constructor(private _mobileDetector: MobileDetectorService) { }
 
   ngOnInit(): void { }
 
