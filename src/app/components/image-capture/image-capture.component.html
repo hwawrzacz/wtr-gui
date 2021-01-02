@@ -1,7 +1,7 @@
 <div class="container">
 
-  <div class="video-wrapper">
-    <video #video *ngIf="previewMode" [srcObject]="videoStream" autoplay="true" #cameraPreview></video>
+  <div #videoWrapper class="video-wrapper">
+    <video #video [ngClass]="!previewMode ? 'hidden' : ''" [srcObject]="videoStream" autoplay="true"></video>
     <!-- <app-full-screen-loader *ngIf="streamLoading"></app-full-screen-loader> -->
 
     <button mat-fab color="accent" *ngIf="previewMode && !streamEmitterMode && !frameEmitterMode"
@@ -11,8 +11,8 @@
   </div>
 
   <div class="image-wrapper">
-    <canvas #imagePlaceholder></canvas>
-    <img *ngIf="!previewMode && !streamEmitterMode && !frameEmitterMode" src="{{ imageUrl }}" alt="Wykonane zdjęcie" />
+    <canvas #canvas></canvas>
+    <img #image *ngIf="!streamEmitterMode && !frameEmitterMode" src="{{ imageUrl }}" alt="Wykonane zdjęcie" />
     <div class="fx-center" *ngIf="!frameEmitterMode && !streamEmitterMode">
       <button mat-fab color="accent" *ngIf="!previewMode" (click)="retakePhoto()">
         <mat-icon>close</mat-icon>
@@ -22,7 +22,8 @@
 
   <mat-form-field #sourceSelection appearance="outline">
     <mat-label>Źródło</mat-label>
-    <mat-select placeholder="Wybierz urządzenie źródłowe" [disabled]="!previewMode || !devices || (devices && devices.length == 0)"
+    <mat-select placeholder="Wybierz urządzenie źródłowe"
+      [disabled]="!previewMode || !devices || (devices && devices.length == 0)"
       [value]="selectedDevice ? selectedDevice.deviceId : null" (valueChange)="onInputDeviceChange($event)">
       <mat-option *ngIf="!devices || devices.length == 0">Nie znaleziono urządzeń</mat-option>
       <mat-option *ngFor="let device of devices" [value]="device.deviceId">{{ device.label }}</mat-option>

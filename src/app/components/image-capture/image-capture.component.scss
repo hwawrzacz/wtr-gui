@@ -8,14 +8,6 @@
   justify-content: center;
 }
 
-video,
-img {
-  background-color: black;
-  max-width: 100%;
-  width: auto;
-  height: auto;
-}
-
 .mat-form-field {
   width: 100%;
 
@@ -32,23 +24,36 @@ img {
   justify-content: center;
 }
 
-.image-wrapper {
-  // Image wrapper is always visible, so its margin can be used as a 
-  // separator for both image wrapper and video wrapper
-  margin-bottom: $spacing-small;  
-
-  canvas {
-    display: none;
-  }
-
-  img {
+.video-wrapper {
+  video {
+    background-color: black;
     max-width: 100%;
     width: auto;
     height: auto;
   }
 }
 
+.image-wrapper {
+  // Image wrapper is always visible, so its margin can be used as a 
+  // separator for both image wrapper and video wrapper
+  margin-bottom: $spacing-small;  
+  
+  canvas {
+    display: none;
+  }
+
+  img {
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
 .mat-fab {
   @include absolute-h-center;
   bottom: $spacing-medium;
+}
+
+.hidden {
+  display: none;
 }

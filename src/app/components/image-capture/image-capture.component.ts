@@ -1,5 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { MatInput } from '@angular/material/input';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -26,9 +25,10 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   private _frameEmitionFrequency: number;
   private _frameEmitionInterval: number;
 
-  @ViewChild('video') video: ElementRef;
-  @ViewChild('imagePlaceholder') canvas: ElementRef;
-  @ViewChild('sourceSelection') sourceSelection: ElementRef;
+  @ViewChild('video') private _video: ElementRef;
+  @ViewChild('videoWrapper') private _videoWrapper: ElementRef;
+  @ViewChild('image') private _image: ElementRef;
+  @ViewChild('canvas') private _canvas: ElementRef;
   @Output('photoChange') private _photoChangeEmitter: EventEmitter<string>;
   @Output('streamChange') private _streamChangeEmitter: EventEmitter<MediaStream>;
 
@@ -85,6 +85,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private _snackBarService: SnackBarService,
     private _changeDetector: ChangeDetectorRef,
+    private _renderer: Renderer2,
   ) {
     this._previewMode = true;
     this._devices$ = new BehaviorSubject(null);
@@ -103,21 +104,22 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.subscribeToSelectedDeviceChange();
-    this.reinitializeCanvas();
+    this._video.nativeElement.addEventListener('loadedmetadata', this.updateVideoSize);
+    if (!this.streamEmitterMode && !this.frameEmitterMode) {
+      this.setImageSize(0, 0);
+    }
     this.initializeDevicesList();
   }
 
   //#region Initializers 
   public setDefaultComponentValues(): void {
-    this._imageUrl = '';
     this._previewMode = true;
+    this._imageUrl = null;
   }
 
-  public reinitializeCanvas(): void {
-    const width = 400;
-    const height = 300;
-    this.canvas.nativeElement.width = width;
-    this.canvas.nativeElement.height = height;
+  public reinitializeCanvas(width = 400, height = 300): void {
+    this._canvas.nativeElement.width = width;
+    this._canvas.nativeElement.height = height;
   }
 
   private initializeDevicesList(): void {
@@ -221,26 +223,47 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   public onTakePhoto(): void {
     this.takePhoto();
     this._previewMode = false;
-    this._imageUrl = this.canvas.nativeElement.toDataURL();
+    this._imageUrl = this._canvas.nativeElement.toDataURL();
     this.emitPhotoChange();
   }
 
   public takePhoto(): void {
-    const width = this.video.nativeElement.innerWidth || 400;
-    const height = this.video.nativeElement.innerHeight || 300;
-    this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, width, height);
+    const width = this._videoWrapper.nativeElement.offsetWidth || 400;
+    const height = this._videoWrapper.nativeElement.offsetHeight || 300;
+    this.setImageSize(width, height);
+    this.reinitializeCanvas(width, height);
+    this._canvas.nativeElement.getContext('2d').drawImage(this._video.nativeElement, 0, 0, width, height);
+  }
+
+  private setImageSize(width: number, height: number): void {
+    this._renderer.setStyle(this._image.nativeElement, 'width', `${width}px`);
+    this._renderer.setStyle(this._image.nativeElement, 'height', `${height}px`);
+  }
+
+  private updateVideoSize = (): void => {
+    console.log('video updated');
+
+    // Remove previous vide size, so video wrapper could adjust its size to video size based on its source
+    this._renderer.removeStyle(this._video.nativeElement, 'width');
+    this._renderer.removeStyle(this._video.nativeElement, 'height');
+    /** Get size of new video. As video have had removed its previously set properties 
+     * it has size of inner source now */
+    const width = this._videoWrapper.nativeElement.offsetWidth;
+    const height = this._videoWrapper.nativeElement.offsetHeight;
+    /** Apply new size to video element to avoid blinking when image is being reloaded (on retakePhoto) */
+    this._renderer.setStyle(this._video.nativeElement, 'width', `${width}px`);
+    this._renderer.setStyle(this._video.nativeElement, 'height', `${height}px`);
   }
 
   public emitNewFrame = (): void => {
     this.takePhoto();
-    this._imageUrl = this.canvas.nativeElement.toDataURL();
+    this._imageUrl = this._canvas.nativeElement.toDataURL();
     this.emitPhotoChange();
   }
 
   public retakePhoto(): void {
     this.setDefaultComponentValues();
-    this.reinitializeCanvas();
-    this._imageUrl = null;
+    this.setImageSize(0, 0);
     this.emitPhotoChange();
   }
   //#endregion
@@ -266,5 +289,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this._frameEmitterMode) {
       this.clearFrameEmitionInterval();
     }
+
+    this._video.nativeElement.removeEventListener('loadedmetadata', this.updateVideoSize);
   }
 }
