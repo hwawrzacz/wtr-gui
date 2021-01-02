@@ -71,10 +71,7 @@ export class AuthService {
   }
 
   public logIn(login: string, password: string,): Observable<CommonResponse<any, User>> {
-    // TODO: Encrypt password 
-    // const passwdEncr = this.encryptPassword(password);
-    const passwdEncr = password;
-    return this._restService.logIn(login, passwdEncr)
+    return this._restService.logIn(login, password)
       .pipe(
         tap((res: HttpResponse<CommonResponse<any, User>>) => {
           this.handleLoginResponse(res);

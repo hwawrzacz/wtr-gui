@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter, take, tap } from 'rxjs/operators';
-import { matchOtherControlValidator, phoneNumberValidator } from 'src/app/helpers/custom-validators';
+import { matchOtherControlValidator, passwordValidator, phoneNumberValidator } from 'src/app/helpers/custom-validators';
+import { Encrypter } from 'src/app/helpers/encrypter';
 import { PositionStringifier } from 'src/app/helpers/parsers';
 import { Position } from 'src/app/model/enums/position';
 import { User } from 'src/app/model/user';
@@ -47,7 +47,7 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
       login: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, passwordValidator()]],
       repeatPassword: ['', [Validators.required, matchOtherControlValidator('password')]],
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -61,7 +61,7 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
     return {
       _id: null,
       login: this._form.get('login').value,
-      password: this._form.get('password').value,
+      password: Encrypter.encrypt(this._form.get('password').value),
       facePhoto: this._faceImageUrl,
       firstName: this._form.get('firstName').value,
       lastName: this._form.get('lastName').value,
@@ -95,6 +95,7 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
     if (control.hasError('phoneNumber')) return 'Pole może zawierać tylko cyfry.';
     if (control.hasError('minLength')) return 'Wartość jest za krótka.';
     if (control.hasError('maxLength')) return 'Wartość jest za długa.';
+    if (control.hasError('invalidPasswordCharacter')) return 'Dozwolone znaki: a-Z 0-9 oraz !@#$%^&*()_+-=';
     if (control.hasError('passwordMatches')) return 'Hasła nie są takie same.';
     return null;
   }
