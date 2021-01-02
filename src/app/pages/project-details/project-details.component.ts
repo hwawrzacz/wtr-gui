@@ -148,6 +148,8 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Pole jest wymagane.';
+    if (control.hasError('min')) return 'Wartość jest za mała.';
+    if (control.hasError('max')) return 'Wartość jest za duża.';
     else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
 
     return null;
