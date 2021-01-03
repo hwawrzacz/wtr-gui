@@ -62,7 +62,6 @@ export class NavigatorService<T> {
 
   public getIdFromUrl(url = this._router.url): string {
     const params = url.split('/');
-    console.log(params);
     return params[2];
   }
   //#endregion

@@ -92,7 +92,7 @@ export class TaskCreationDialogComponent extends CommonCreationDialogComponent<T
   }
 
   protected parseItemFromForm(): Task {
-    const value = {
+    return {
       _id: null,
       creationDate: null,
       projectStringId: null,
@@ -104,15 +104,10 @@ export class TaskCreationDialogComponent extends CommonCreationDialogComponent<T
       idProject: this._form.get('project').value._id,
       dutyDate: this._form.get('dutyDate').value,
       description: this._form.get('description').value,
-      workers: this._form.get('workers').value
-        ? this._form.get('workers').value.map(worker => worker._id)
-        : [],
+      workers: this._form.get('workers').value.map(worker => worker._id),
       priority: this._form.get('priority').value,
       idReporter: this._authService.userId,
     } as Task;
-
-    console.log(value);
-    return value;
   }
 
   public updateWorkers(workers: User[]): void {

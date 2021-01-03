@@ -52,7 +52,6 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
 
   protected parseItemFromForm(): Project {
     return {
-      _id: null,
       stringId: null,
       title: this._form.get('title').value,
       description: this._form.get('description').value,
@@ -61,7 +60,7 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
       creationDate: null,
       dutyDate: this.parseDateToISOFormat(this._form.get('dutyDate').value),
       workers: [],
-    } as Project
+    } as Project;
   }
 
   public getErrorMessage(controlName: string): string {

@@ -19,7 +19,8 @@
         <span>Zapisz zmiany</span>
       </button>
 
-      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" [disabled]="isSaving" (click)="onDiscardChanges()">
+      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" [disabled]="isSaving"
+        (click)="onDiscardChanges()">
         <mat-icon>close</mat-icon>
         <span>Odrzuć zmiany</span>
       </button>
@@ -77,7 +78,8 @@
         <span>Dodaj zadanie</span>
       </button>
     </header>
-    <app-project-tasks-list #taskList [projectId]="itemId"></app-project-tasks-list>
+    <app-project-tasks-list #taskList [projectId]="itemId" (itemDeleted)="onDeleteItem($event)">
+    </app-project-tasks-list>
   </section>
 </div>
 
