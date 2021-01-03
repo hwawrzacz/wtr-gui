@@ -34,7 +34,6 @@ export class WorkLoggerService extends CommonRestService<WorkLog> {
 
   //#region Helpers
   private createWorkLogObject(taskId: string, workLogType: WorkLogType): WorkLog {
-    // TODO: Get userId from login service when available
     const userId = this._authService.user._id;
     return {
       idTask: taskId,

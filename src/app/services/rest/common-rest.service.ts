@@ -24,7 +24,6 @@ export class CommonRestService<T> {
     return this._http.get<SingleItemResponse<T>>(url);
   }
 
-  // TODO: Add proper response type
   public find(query?: Query, pagination?: Pagination): Observable<T> {
     const params = !!query
       ? new HttpParams().append('query', JSON.stringify(query)).append('pagination', JSON.stringify(pagination))

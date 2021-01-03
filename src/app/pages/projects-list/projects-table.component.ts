@@ -33,7 +33,6 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
       {
         defName: 'manager',
         displayName: 'Menedżer',
-        // TODO: Change to manager, when supported by backend
         propertyName: 'idManager',
         formatter: (user: User) => `${user.firstName} ${user.lastName}`,
       },

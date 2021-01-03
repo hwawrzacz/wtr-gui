@@ -157,12 +157,11 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
           this._devices$.next(filteredDevices);
           this._selectedDevice$.next(this._devices$.value[0]);
         } else {
-          this._snackBarService.openErrorSnackBar('Brak dostępnych urządzeń. Spróbuj innej metody logowania.');
+          this._snackBarService.openErrorSnackBar('Brak dostępnych urządzeń.');
         }
       })
-      // TODO: Handle error properly
       .catch(err => {
-        console.warn(err);
+        this._snackBarService.openErrorSnackBar('Nie udało się załadować urządzeń.', err);
       });
   }
 

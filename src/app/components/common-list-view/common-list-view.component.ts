@@ -43,7 +43,6 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   // Boolean
   protected _loadingCounter: number;
-  // TODO: Handle error in user-friendly way
   protected _error: boolean;
 
   //#region Getters and setters
@@ -168,7 +167,9 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     });
   }
 
-  public abstract getRequiredFilter(): Filter[];
+  public getRequiredFilter(): Filter[] {
+    return [] as Filter[];
+  };
 
   public onPaginationChange(pagination: PageEvent): void {
     this._pagination = {

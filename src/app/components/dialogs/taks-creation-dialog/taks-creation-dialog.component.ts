@@ -108,7 +108,6 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
         ? this._form.get('workers').value.map(worker => worker._id)
         : [],
       priority: this._form.get('priority').value,
-      // TODO: Pass currently logged user id
       idReporter: this._authService.userId,
     } as Task;
 

@@ -37,22 +37,8 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
   }
 
   ngOnInit(): void {
-    // TODO: Get user id from login service when available
     super.ngOnInit();
   }
 
   public openItemCreationDialog(): void { return }
-
-  public getRequiredFilter(): Filter[] {
-    // TODO: This can probably be removed when authorization is ready 
-    const userId = this._authService.user._id;
-    const taskFilter = { name: 'idTask', values: [`${this._taskId}`] } as Filter;
-    const userFilter = { name: 'idUser', values: [`${userId}`] } as Filter;
-
-    if (this._authService.isManager || this._authService.isAdmin) {
-      return [taskFilter] as Filter[];
-    } else if (this._authService.isEmployee) {
-      return [taskFilter, userFilter] as Filter[];
-    }
-  }
 }

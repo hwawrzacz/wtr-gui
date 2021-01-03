@@ -43,7 +43,6 @@
       <mat-error>{{ getErrorMessage('title') }}</mat-error>
     </mat-form-field>
 
-    <!-- TODO: Replace temporarlity 'idManager' with 'manager' -->
     <div class="manager">
       <app-users-autocomplete [label]="'Menedżer'" [formControl]="managerFormControl" [onlyManagers]="true"
         [singleSelection]="true" [initialValue]="project.idManager" (selectionChange)="updateTempManager($event)">

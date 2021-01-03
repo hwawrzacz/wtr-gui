@@ -39,8 +39,4 @@ export class ProjectsListComponent extends CommonListViewComponent<Project> {
       )
       .subscribe();
   }
-
-  public getRequiredFilter(): Filter[] {
-    return [] as Filter[];
-  }
 }

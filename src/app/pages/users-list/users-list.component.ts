@@ -38,8 +38,4 @@ export class UsersListComponent extends CommonListViewComponent<User> {
         this.handleAfterClosed()
       ).subscribe()
   }
-
-  public getRequiredFilter(): Filter[] {
-    return [] as Filter[];
-  }
 }

@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { filter, take, tap } from 'rxjs/operators';
+import { fromEvent, of } from 'rxjs';
+import { catchError, filter, take, tap } from 'rxjs/operators';
 import { InputImageParser } from 'src/app/helpers/input-image-parser';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-image-uploader',
@@ -12,7 +13,7 @@ export class ImageUploaderComponent {
   @ViewChild('fileInput') private _fileInput: ElementRef;
   @Output('imageChanged') private _imageChangeEmitter: EventEmitter<string>;
 
-  constructor() {
+  constructor(private _snackBarService: SnackBarService) {
     this._imageChangeEmitter = new EventEmitter<string>();
   }
 
@@ -33,11 +34,11 @@ export class ImageUploaderComponent {
               .pipe(
                 filter(res => !!res),
                 take(1),
-                tap(imageUrl => this.emitImageChange(imageUrl))
-              ).subscribe()
+                tap(imageUrl => this.emitImageChange(imageUrl)),
+                catchError(err => of(this._snackBarService.openErrorSnackBar('Nie udało się odczytać pliku.', err)))
+              ).subscribe();
           } else {
-            // TODO: Handle error
-            console.warn('cannot read file');
+            this._snackBarService.openErrorSnackBar('Nie udało się załadować pliku.');
           }
         })
       ).subscribe()

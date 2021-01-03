@@ -93,7 +93,6 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   protected updateForm(project: Project): void {
     this._form.patchValue({
       title: project.title,
-      // TODO: Replace idManager with manager when ready in the API
       manager: project.idManager,
       dutyDate: project.dutyDate,
       description: project.description,

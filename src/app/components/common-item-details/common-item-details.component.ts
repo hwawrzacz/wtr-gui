@@ -265,12 +265,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   }
   //#endregion
 
-  //#region Form errors
-  // TODO: Tmplement thing below
-  // /** Method which return error message for specific form control */
-  // public abstract getErrorMessage(controlName: string): string;
-  //#endregion
-
   //#region Permissions
   public canEdit(): boolean {
     return !this.isMobile && (this._authService.isManager || this._authService.isAdmin);
@@ -289,7 +283,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   }
   //#endregion
 
-  // TODO: Export snack bars to SnackBarService
   //#region Snackbar
   protected openSuccessSnackBar = (message: string): void => this._snackBarService.openSuccessSnackBar(message);
 
