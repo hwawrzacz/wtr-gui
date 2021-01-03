@@ -151,7 +151,6 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   private handleResponseError(res: ArrayResponse<T>) {
     this.openErrorSnackBar('Coś poszło nie tak.', res.message);
-    console.error(res);
   }
 
   public onQueryChanged(query: Query): void {

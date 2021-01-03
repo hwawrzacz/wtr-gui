@@ -69,8 +69,7 @@ export abstract class CommonCreationDialogComponent<T> implements OnInit, OnDest
 
   //#region Response handlers
   private handleItemNotAdded(error: string): void {
-    this.openErrorSnackBar('Podczas tworzenia elementu wystąpił błąd.');
-    console.error(error);
+    this.openErrorSnackBar('Podczas tworzenia elementu wystąpił błąd.', error);
   }
 
   private handleCreationFailed(message: CreationResponseMessage) {

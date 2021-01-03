@@ -113,7 +113,6 @@ export class WorkLoggerComponent implements OnInit {
 
   private handleResponseError(res: ArrayResponse<WorkLog>) {
     this._snackBarService.openErrorSnackBar('Coś poszło nie tak', res.message)
-    console.error(res);
   }
   //#endregion
 
@@ -199,7 +198,6 @@ export class WorkLoggerComponent implements OnInit {
 
   private handlePatchResponseError(res: PatchResponse) {
     this._snackBarService.openErrorSnackBar('Podczas zapisywania wystąpił błąd.', res.message);
-    console.error(res);
     this._loadingCounter--;
   }
 

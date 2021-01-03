@@ -22,6 +22,7 @@ import { MobileDetectorService } from 'src/app/services/mobile-detector.service'
 })
 export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy {
   protected _loadingCounter: number;
+  protected _isSaving: boolean;
   protected _error: boolean;
   protected _query: Query;
   protected _initialItem: T;
@@ -40,6 +41,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
 
   get isLoading(): boolean {
     return this._loadingCounter > 0;
+  }
+
+  get isSaving(): boolean {
+    return this._isSaving;
   }
 
   get error(): boolean {
@@ -72,12 +77,13 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   ) {
     const filter = { name: 'login', values: [] } as Filter;
     this._query = { searchString: '', filters: [filter] } as Query;
-    this._loadingCounter = 0;
   }
 
   ngOnInit(): void {
     this._destroyed = new Subject();
+    this._loadingCounter = 0;
     this._error = false;
+    this._isSaving = false;
     this._editMode = false;
     this._form = this.buildForm();
     this.loadItem();
@@ -136,16 +142,14 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
     // TODO: Handle responses more specifically if needed, when responses list delivered from API
     message
       ? this.openErrorSnackBar(message)
-      : this.openErrorSnackBar('Coś poszło nie tak', res.message)
-    console.error(res);
+      : this.openErrorSnackBar('Coś poszło nie tak', res.message);
   }
 
   private handlePatchResponseError(res: PatchResponse, message?: string) {
     // TODO: Handle responses more specifically if needed, when responses list delivered from API
     message
       ? this.openErrorSnackBar(message)
-      : this.openErrorSnackBar('Coś poszło nie tak', res.message)
-    console.error(res);
+      : this.openErrorSnackBar('Coś poszło nie tak', res.message);
   }
 
   /** Method which updates form */
@@ -154,8 +158,9 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
 
   //#region Saving changes
   public onSaveChanges(): void {
+    this._form.disable();
+    this._isSaving = true;
     this.saveAllChanges();
-    this.disableEditMode();
   }
 
   private saveAllChanges(): void {
@@ -210,22 +215,31 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
     this._restService.patchObject<T>(this.itemId, object)
       .pipe(
         tap((res: PatchResponse) => {
-          if (res.success) this.openSuccessSnackBar('Zmiany zostały zapisane');
-          else this.handleSavingFailed(res);
+          if (res.success) {
+            this.openSuccessSnackBar('Zmiany zostały zapisane');
+            this.disableEditMode();
+          }
+          else {
+            this.handleSavingFailed(res);
+          }
+
+          this._isSaving = false;
         }),
         catchError(err => this.handeRequestError(err))
       ).subscribe();
   }
 
   private handleSavingFailed(res: PatchResponse) {
+    this._form.enable();
     const messageStr = CreationResponseParser.parseCreationResponseMessage(res.message);
     this.openErrorSnackBar(messageStr);
     this.updateForm(this._initialItem);
   }
 
   private handeRequestError(err: string): any {
-    console.error(err);
-    return of(this.openErrorSnackBar('Podczas wysyłania zapytania wystąpił błąd.'))
+    this._isSaving = false;
+    this._form.enable();
+    return of(this.openErrorSnackBar('Podczas wysyłania zapytania wystąpił błąd.', err))
   }
 
   public onDiscardChanges(): void {

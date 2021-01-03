@@ -103,7 +103,6 @@ export class WorkersPanelComponent implements OnInit {
 
   private handleResponseError(res: ArrayResponse<User>) {
     this.openErrorSnackBar('Coś poszło nie tak.', res.message);
-    console.error(res);
   }
   //#endregion
 
