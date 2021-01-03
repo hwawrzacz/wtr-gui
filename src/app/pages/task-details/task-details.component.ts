@@ -52,7 +52,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   }
 
   get workers(): SimpleUser[] {
-    return this._initialItem ? this.initialItem.workers : [];
+    return this._form.get('workers').value;
   }
 
   get priorities(): Priority[] {
@@ -120,7 +120,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
       status: task.status,
       dutyDate: task.dutyDate,
       description: task.description,
-      workers: task.workers,
+      workers: Object.assign([], task.workers),
     })
   }
 
