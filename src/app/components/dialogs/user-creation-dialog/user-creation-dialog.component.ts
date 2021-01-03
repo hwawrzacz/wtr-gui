@@ -59,7 +59,6 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
 
   protected parseItemFromForm(): User {
     return {
-      _id: null,
       login: this._form.get('login').value,
       password: Encrypter.encrypt(this._form.get('password').value),
       facePhoto: this._faceImageUrl,

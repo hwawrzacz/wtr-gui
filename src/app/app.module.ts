@@ -12,7 +12,7 @@ import { CommonSearchBarComponent } from './components/common-search-bar/common-
 import { CommonTableComponent } from './components/common-table/common-table.component';
 import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ProjectCreationDialogComponent } from './components/dialogs/project-creation-dialog/project-creation-dialog.component';
-import { TaksCreationDialogComponent } from './components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
+import { TaskCreationDialogComponent } from './components/dialogs/task-creation-dialog/task-creation-dialog.component';
 import { UserCreationDialogComponent } from './components/dialogs/user-creation-dialog/user-creation-dialog.component';
 import { FilterSearchBarComponent } from './components/filter-search-bar/filter-search-bar.component';
 import { FullScreenErrorComponent } from './components/full-screen-error/full-screen-error.component';
@@ -94,7 +94,7 @@ import { environment } from '../environments/environment';
     ProjectCreationDialogComponent,
     UserPipe,
     UsersAutocompleteComponent,
-    TaksCreationDialogComponent,
+    TaskCreationDialogComponent,
     ProjectAutocompleteComponent,
     WorkersPanelComponent,
     SuccessSnackBarComponent,

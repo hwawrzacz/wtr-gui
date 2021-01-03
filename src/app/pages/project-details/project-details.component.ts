@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { MatDialog } from '@angular/material/dialog';
 import { tap } from 'rxjs/operators';
 import { CommonItemDetailsComponent } from 'src/app/components/common-item-details/common-item-details.component';
-import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
+import { TaskCreationDialogComponent } from 'src/app/components/dialogs/task-creation-dialog/task-creation-dialog.component';
 import { PriorityStringifier, stringifyUser } from 'src/app/helpers/parsers';
 import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from 'src/app/model/constants';
 import { Priority } from 'src/app/model/enums/priority';
@@ -117,7 +117,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   //#endregion
 
   public openTaskCreationDialog() {
-    this._dialogService.open(TaksCreationDialogComponent, { data: this._initialItem })
+    this._dialogService.open(TaskCreationDialogComponent, { data: this._initialItem })
       .afterClosed()
       .pipe(
         tap(res => {

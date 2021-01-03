@@ -14,11 +14,11 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { CommonCreationDialogComponent } from '../common-creation-dialog/common-creation-dialog.component';
 
 @Component({
-  selector: 'app-taks-creation-dialog',
-  templateUrl: './taks-creation-dialog.component.html',
-  styleUrls: ['../common-creation-dialog/common-creation-dialog.component.scss', './taks-creation-dialog.component.scss']
+  selector: 'app-task-creation-dialog',
+  templateUrl: './task-creation-dialog.component.html',
+  styleUrls: ['../common-creation-dialog/common-creation-dialog.component.scss', './task-creation-dialog.component.scss']
 })
-export class TaksCreationDialogComponent extends CommonCreationDialogComponent<Task> implements OnInit {
+export class TaskCreationDialogComponent extends CommonCreationDialogComponent<Task> implements OnInit {
   //#region Getters and setters
   get rootProject(): Project {
     return this._rootProject;
@@ -43,7 +43,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private _rootProject: Project,
-    dialogRef: MatDialogRef<TaksCreationDialogComponent>,
+    dialogRef: MatDialogRef<TaskCreationDialogComponent>,
     restService: SingleTaskRestService,
     snackBarService: SnackBarService,
     private _formBuilder: FormBuilder,

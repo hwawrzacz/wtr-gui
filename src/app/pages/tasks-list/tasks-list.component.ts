@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonListViewComponent } from 'src/app/components/common-list-view/common-list-view.component';
-import { TaksCreationDialogComponent } from 'src/app/components/dialogs/taks-creation-dialog/taks-creation-dialog.component';
+import { TaskCreationDialogComponent } from 'src/app/components/dialogs/task-creation-dialog/task-creation-dialog.component';
 import { Filter } from 'src/app/model/filter';
 import { Task } from 'src/app/model/task';
 import { AuthService } from 'src/app/services/auth.service';
@@ -32,7 +32,7 @@ export class TasksListComponent extends CommonListViewComponent<Task> {
   }
 
   public openItemCreationDialog(): void {
-    this._dialogService.open(TaksCreationDialogComponent)
+    this._dialogService.open(TaskCreationDialogComponent)
       .afterClosed()
       .pipe(this.handleAfterClosed())
       .subscribe()
