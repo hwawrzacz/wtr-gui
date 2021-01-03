@@ -23,10 +23,10 @@
         <span>Odrzuć zmiany</span>
       </button>
 
-      <button mat-stroked-button color="primary" *ngIf="!editMode && canShowStats()">
+      <!-- <button mat-stroked-button color="primary" *ngIf="!editMode && canShowStats()">
         <mat-icon>pie_chart</mat-icon>
         <span>Pokaż satystyki</span>
-      </button>
+      </button> -->
 
       <button mat-stroked-button color="warn" *ngIf="!editMode && canDelete()" (click)="onDeleteItem()">
         <mat-icon>delete</mat-icon>
