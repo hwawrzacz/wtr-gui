@@ -60,9 +60,9 @@ export class NavigatorService<T> {
     else return Section.UNKNOWN;
   }
 
-  public getIdFromUrl(url?: any): string {
-    url = url && url.path ? url.path : this._router.url;
+  public getIdFromUrl(url = this._router.url): string {
     const params = url.split('/');
+    console.log(params);
     return params[2];
   }
   //#endregion

@@ -18,11 +18,12 @@ export class UsersGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    const url = `/${next.url.map(segment => segment.path).join('/')}`;
     if (
       // If is admin or manager
-      this._authService.isAdmin || this._authService.isManager
+      (this._authService.isAdmin || this._authService.isManager)
       // If is regular employee, and trying to view its own profile
-      || this._authService.isEmployee && this._navigator.getIdFromUrl(next.url) === this._authService.user._id) {
+      || (this._authService.isEmployee && this._navigator.getIdFromUrl(url) === this._authService.user._id)) {
       return true;
     } else {
       this._snackBarService.openErrorSnackBar('Wymagane wyższe uprawnienia.');
