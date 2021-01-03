@@ -44,6 +44,7 @@ export class WorkersPanelComponent implements OnInit {
   get canEdit(): boolean {
     return this._canEdit;
   }
+
   @Input('editMode')
   set editMode(value: boolean) {
     if (value === undefined) value = true;

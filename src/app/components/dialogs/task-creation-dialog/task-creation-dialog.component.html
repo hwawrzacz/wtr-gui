@@ -39,7 +39,7 @@
     </mat-form-field>
   </form>
 
-  <app-workers-panel [selectedWorkers]="[]" [editMode]="true" (workersChange)="updateWorkers($event)">
+  <app-workers-panel [selectedWorkers]="[]" [editMode]="true" [canEdit]="true" (workersChange)="updateWorkers($event)">
   </app-workers-panel>
 </mat-dialog-content>
 

@@ -123,7 +123,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
         tap(res => {
           if (!!res) {
             this.openSuccessSnackBar('Dodano element.');
-            this.reloadData();
+            this.reloadTasksList();
           }
           else this.openInfoSnackBar('Anulowano dodawanie elementu.');
         })
