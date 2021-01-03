@@ -6,4 +6,5 @@
   </app-task-card>
 </ng-container>
 
-<app-project-tasks-table *ngIf="!isMobile" [dataSource]="dataSource" [isLoading]="isLoading"></app-project-tasks-table>
+<app-project-tasks-table *ngIf="!isMobile" [dataSource]="dataSource" [isLoading]="isLoading"
+  (itemDeleted)="onItemDeleted($event)"></app-project-tasks-table>
