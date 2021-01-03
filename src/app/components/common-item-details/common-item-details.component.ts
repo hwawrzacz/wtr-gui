@@ -85,13 +85,15 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
 
   //#region Initializers
   private loadItem() {
-    if (this._itemDetailsBroker.hasItem
-      && this._itemDetailsBroker.item['_id'] === this.itemId
-    ) {
-      this.loadDataFromBroker();
-    } else {
-      this.loadDataFromApi();
-    }
+    // Broker service does not work as expected
+    // if (this._itemDetailsBroker.hasItem
+    //   && this._itemDetailsBroker.item['_id'] === this.itemId
+    // ) {
+    //   this.loadDataFromBroker();
+    // } else {
+    //   this.loadDataFromApi();
+    // }    
+    this.loadDataFromApi();
   }
 
   /** Method which returns form group corresponding to item model map. 

@@ -164,6 +164,8 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
 
   public clearSelection(): void {
     this._selectedItem = null;
+    this.inputItem.nativeElement.value = '';
+    this._filteredItems = this.filterData('');
     this._selectionChangeEmitter.emit(this._selectedItem);
   }
 

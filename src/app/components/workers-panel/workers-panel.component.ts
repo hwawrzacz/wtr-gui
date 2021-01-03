@@ -18,6 +18,7 @@ export class WorkersPanelComponent implements OnInit {
   private _selectedWorkersIds: string[];
   private _workersLoading: boolean;
   private _editMode: boolean;
+  private _canEdit: boolean;
   @Output('workersChange') private _workersChangeEmitter: EventEmitter<User[]>;
 
   //#region Getters and setters
@@ -35,6 +36,14 @@ export class WorkersPanelComponent implements OnInit {
     this._selectedWorkersIds = value;
   }
 
+  @Input('canEdit')
+  set canEdit(value: boolean) {
+    if (value === undefined) value = true;
+    this._canEdit = value;
+  }
+  get canEdit(): boolean {
+    return this._canEdit;
+  }
   @Input('editMode')
   set editMode(value: boolean) {
     if (value === undefined) value = true;
@@ -57,7 +66,7 @@ export class WorkersPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this._selectedWorkers) {
+    if (!this._selectedWorkers && !!this._selectedWorkersIds) {
       this.loadWorkers();
     }
   }
