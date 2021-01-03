@@ -33,7 +33,7 @@ export class TasksTableComponent extends CommonTableComponent<Task> {
         displayName: 'ID projektu',
         propertyName: 'project',
         formatter: (project: Project): string => {
-          return project.stringId;
+          return project ? project.stringId : 'N/A';
         }
       },
       {

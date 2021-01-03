@@ -34,14 +34,14 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
         defName: 'manager',
         displayName: 'Menedżer',
         propertyName: 'idManager',
-        formatter: (user: User) => `${user.firstName} ${user.lastName}`,
+        formatter: (user: User) => user ? `${user.firstName} ${user.lastName}` : 'N/A',
       },
       {
         defName: 'workers',
         displayName: 'Pracownicy',
         propertyName: 'workers',
         formatter: (workers: User[]) => {
-          return `${workers.length}`;
+          return workers ? `${workers.length}` : 'N/A';
         }
       },
     ];
