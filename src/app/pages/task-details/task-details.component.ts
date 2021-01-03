@@ -150,7 +150,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   //#endregion
 
   public canEdit(): boolean {
-    return super.canEdit() && this._initialItem.status !== Status.DONE;
+    return super.canEdit() && this._initialItem && this._initialItem.status !== Status.DONE;
   }
 
   public getErrorMessage(controlName: string): string {
