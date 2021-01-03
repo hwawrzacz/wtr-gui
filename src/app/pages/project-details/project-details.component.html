@@ -12,13 +12,14 @@
         <span>Edytuj</span>
       </button>
 
-      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" [disabled]="!form.valid"
+      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" [disabled]="!form.valid || isSaving"
         (click)="onSaveChanges()">
-        <mat-icon>save</mat-icon>
+        <mat-icon *ngIf="!isSaving">save</mat-icon>
+        <mat-spinner [diameter]="20" *ngIf="isSaving"></mat-spinner>
         <span>Zapisz zmiany</span>
       </button>
 
-      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" (click)="onDiscardChanges()">
+      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" [disabled]="isSaving" (click)="onDiscardChanges()">
         <mat-icon>close</mat-icon>
         <span>Odrzuć zmiany</span>
       </button>
