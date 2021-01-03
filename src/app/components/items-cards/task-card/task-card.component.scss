@@ -16,7 +16,13 @@
   font-size: .9em;
 }
 
-.task__title,
+.task__title {
+  width: 100%;
+  margin-top: $spacing-tiny !important;
+  line-height: 1.2em;
+  margin-bottom: 0;
+}
+
 .task__priority,
 .task__duty-date {
   display: block;

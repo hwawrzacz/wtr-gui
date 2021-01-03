@@ -4,9 +4,9 @@
     <span class="task__status" [attr.class]="'status-label status-label--' + task.status">
       {{ statusString }}
     </span>
+    <h3 mat-card-title class="task__title">{{ task.title }}</h3>
   </section>
   <mat-card-content>
-    <h3 mat-card-title class="task__title">{{ task.title }}</h3>
     <span class="task__priority">Priorytet:
       <span [attr.class]="'priority-label priority-label--' + task.priority">
         {{ priorityString }}

@@ -27,7 +27,13 @@
   }
 }
 
-.project__title,
+.project__title {
+  width: 100%;
+  margin-top: $spacing-tiny !important;
+  line-height: 1.2em;
+  margin-bottom: 0;
+}
+
 .project__manager,
 .project__duty-date {
   display: block;
