@@ -57,6 +57,22 @@
   }
 }
 
+// Button spinner
+::ng-deep {
+  .mat-stroked-button {  
+    .mat-button-wrapper {  
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      
+      mat-spinner {
+        margin-right: $icon-margin;
+      }
+    }
+  }  
+}
+
 mat-form-field {
   width: 100%;
 }
