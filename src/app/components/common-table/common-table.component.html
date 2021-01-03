@@ -17,12 +17,9 @@
       </button>
     </td>
   </ng-container>
-
-  <ng-container *ngIf="!anyItemExists && !isLoading" matColumnDef="empty">
-    <td mat-footer-cell *matFooterCellDef [attr.colspan]="columnsToDisplay.length + 1">Nie znaleziono elementów.</td>
-  </ng-container>
-
+  
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-  <tr mat-footer-row *matFooterRowDef="anyItemExists || isLoading ? [] : ['empty']"></tr>
 </table>
+
+<p class="no-elements-row" *ngIf="!anyItemExists && !isLoading">Nie znaleziono elementów.</p>
