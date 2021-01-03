@@ -76,6 +76,11 @@ button {
   background-color: $bg-color-white;
 }
 
+.mat-header-cell {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
 .mat-cell {
   padding-right: 0 !important;
   padding-left: 0 !important;
