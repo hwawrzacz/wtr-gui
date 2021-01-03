@@ -19,7 +19,7 @@
   </ng-container>
 
   <ng-container *ngIf="!anyItemExists && !isLoading" matColumnDef="empty">
-    <td mat-footer-cell *matFooterCellDef [attr.colspan]="columnsToDisplay.length + 1">Nie znaleziono elementów</td>
+    <td mat-footer-cell *matFooterCellDef [attr.colspan]="columnsToDisplay.length + 1">Nie znaleziono elementów.</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>

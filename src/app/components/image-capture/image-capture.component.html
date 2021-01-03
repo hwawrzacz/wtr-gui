@@ -25,7 +25,7 @@
     <mat-select placeholder="Wybierz urządzenie źródłowe"
       [disabled]="!previewMode || !devices || (devices && devices.length == 0)"
       [value]="selectedDevice ? selectedDevice.deviceId : null" (valueChange)="onInputDeviceChange($event)">
-      <mat-option *ngIf="!devices || devices.length == 0">Nie znaleziono urządzeń</mat-option>
+      <mat-option *ngIf="!devices || devices.length == 0">Nie znaleziono urządzeń.</mat-option>
       <mat-option *ngFor="let device of devices" [value]="device.deviceId">{{ device.label }}</mat-option>
     </mat-select>
   </mat-form-field>
