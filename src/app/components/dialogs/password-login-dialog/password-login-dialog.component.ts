@@ -61,7 +61,7 @@ export class PasswordLoginDialogComponent implements OnInit {
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     // Validators
-    if (!!control && control.hasError('required')) return 'Wartość jest wymagana.';
+    if (!!control && control.hasError('required')) return 'Pole jest wymagane.';
     if (!!control && control.hasError('maxLength')) return 'Wartość jest za długa.';
     return null;
   }

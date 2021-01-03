@@ -82,7 +82,7 @@ export class TaksCreationDialogComponent extends CommonCreationDialogComponent<T
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     // Validators
-    if (control.hasError('required')) return 'Wartość jest wymagana.';
+    if (control.hasError('required')) return 'Pole jest wymagane.';
     if (control.hasError('matDatepickerParse')) return 'Nieprawidłowy format daty.';
     if (control.hasError('min')) return 'Wartość jest za mała.';
     if (control.hasError('max')) return 'Wartość jest za duża.';

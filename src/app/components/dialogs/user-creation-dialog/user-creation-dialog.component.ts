@@ -90,7 +90,7 @@ export class UserCreationDialogComponent extends CommonCreationDialogComponent<U
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     // Validators
-    if (control.hasError('required')) return 'Wartość jest wymagana.';
+    if (control.hasError('required')) return 'Pole jest wymagane.';
     if (control.hasError('email')) return 'Nieprawidłowy format adresu email.';
     if (control.hasError('phoneNumber')) return 'Pole może zawierać tylko cyfry.';
     if (control.hasError('minLength')) return 'Wartość jest za krótka.';
