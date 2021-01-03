@@ -1,4 +1,4 @@
-import { destroyPlatform, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,6 @@ export class MobileDetectorService implements OnDestroy {
   }
 
   constructor() {
-    console.log('cotr');
     this.checkMobility();
     window.addEventListener('resize', this.checkMobility);
   }
@@ -25,8 +24,6 @@ export class MobileDetectorService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('destroy');
-
     window.removeEventListener('resize', this.checkMobility);
   }
 }
