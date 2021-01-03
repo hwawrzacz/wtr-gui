@@ -22,7 +22,7 @@
       <button mat-button color="primary" *ngIf="isPaused || isNew || !lastWorkLog" (click)="startWork()"
         [disabled]="isClosed">
         <mat-icon>play_arrow</mat-icon>
-        <span>Rozpocznij prację</span>
+        <span>Rozpocznij pracę</span>
       </button>
       <button mat-button color="primary" *ngIf="isWorking" (click)="startBreak()" [disabled]="isClosed">
         <mat-icon>pause</mat-icon>
