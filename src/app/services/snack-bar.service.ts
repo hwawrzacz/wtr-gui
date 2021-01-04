@@ -13,23 +13,32 @@ export class SnackBarService {
 
   constructor(private _snackBar: MatSnackBar) { }
 
-  public openSuccessSnackBar(message: string): void {
+  public openSuccessSnackBar(message: string, details?: string): void {
     this._snackBar.openFromComponent(SuccessSnackBarComponent, {
-      data: { message: message },
+      data: {
+        message: message,
+        details: details
+      },
       duration: SUCCESS_SNACKBAR_DURATION,
     });
   }
 
-  public openInfoSnackBar(message: string): void {
+  public openInfoSnackBar(message: string, details?: string): void {
     this._snackBar.openFromComponent(InfoSnackBarComponent, {
-      data: { message: message },
+      data: {
+        message: message,
+        details: details
+      },
       duration: INFO_SNACKBAR_DURATION,
     });
   }
 
-  public openWarningSnackBar(message: string): void {
+  public openWarningSnackBar(message: string, details?: string): void {
     this._snackBar.openFromComponent(WarningSnackBarComponent, {
-      data: { message: message },
+      data: {
+        message: message,
+        details: details
+      },
       duration: WARNING_SNACKBAR_DURATION,
     });
   }
