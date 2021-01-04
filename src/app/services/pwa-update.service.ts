@@ -18,7 +18,6 @@ export class PwaUpdateService {
         take(1),
         tap(res => {
           if (!!res && res.type === 'UPDATE_AVAILABLE') {
-            console.log('update available');
             const actionReload = () => window.location.reload();
             this._snackBarService.openActionSnackBar(
               'Dostępna jest aktualizacja.',
