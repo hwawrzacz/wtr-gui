@@ -305,7 +305,7 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   }
 
   public canDelete(): boolean {
-    return !this.isMobile && (this._authService.isManager || this._authService.isAdmin);
+    return this.canEdit();
   }
 
   public canShowStats(): boolean {

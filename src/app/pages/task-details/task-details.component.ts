@@ -18,6 +18,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { SingleTaskRestService } from 'src/app/services/rest/single-task-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-task-details',
@@ -25,10 +26,10 @@ import { MobileDetectorService } from 'src/app/services/mobile-detector.service'
   styleUrls: ['../../components/common-item-details/common-item-details.component.scss', './task-details.component.scss']
 })
 export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> implements OnInit {
-  private _workers: SimpleUser[];
   private _workersLoading: boolean;
-  private _parentProject: Project;
-  @ViewChild('workLogsList') private _workLogsList: WorkLogsListComponent;
+
+  @ViewChild('workLogsList')
+  private _workLogsList: WorkLogsListComponent;
 
   //#region Getters and setters
   get stringId(): string {
@@ -44,7 +45,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   }
 
   get parentProject(): Project {
-    return this._parentProject;
+    return this._initialItem ? this._initialItem.project : null;
   }
 
   get workersLoading(): boolean {
@@ -78,7 +79,18 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   //#endregion
 
   get canLog(): boolean {
-    return this._initialItem.workers.filter(worker => worker._id === this._authService.userId).length > 0;
+    return (
+      // Current user is assigned to task
+      this._initialItem.workers.filter(worker => worker._id === this._authService.userId).length > 0
+      || (
+        // Current user is a manager of root project
+        this._authService.isManager
+        && (
+          !!this.parentProject
+          && !!this.parentProject.idManager
+          && this.parentProject.idManager as User)._id === this._authService.userId
+      )
+    );
   }
   //#endregion
 
@@ -141,7 +153,8 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   }
 
   public updateWorkers(workers: SimpleUser[]): void {
-    this._form.get('workers').patchValue(workers);
+    const newWorkers = Object.assign([], workers);
+    this._form.get('workers').patchValue(newWorkers);
   }
 
   public reloadWorkLogs() {
@@ -154,7 +167,20 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   //#endregion
 
   public canEdit(): boolean {
-    return super.canEdit() && this._initialItem && this._initialItem.status !== Status.DONE;
+    return (
+      !this.isMobile
+      && (
+        this._authService.isAdmin
+        || (
+          // Current user is a manager of root project
+          this._authService.isManager
+          && this.parentProject
+          && this.parentProject.idManager
+          && (this.parentProject.idManager as User)._id === this._authService.userId
+        )
+      )
+      && this._initialItem && this._initialItem.status !== Status.DONE
+    );
   }
 
   public getErrorMessage(controlName: string): string {
