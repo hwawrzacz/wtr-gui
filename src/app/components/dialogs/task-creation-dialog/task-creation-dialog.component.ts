@@ -83,10 +83,10 @@ export class TaskCreationDialogComponent extends CommonCreationDialogComponent<T
     const control = this._form.get(controlName);
     // Validators
     if (control.hasError('required')) return 'Pole jest wymagane.';
-    if (control.hasError('matDatepickerParse')) return 'Nieprawidłowy format daty.';
+    if (control.hasError('matdatepickerparse')) return 'Nieprawidłowy format daty.';
     if (control.hasError('min')) return 'Wartość jest za mała.';
     if (control.hasError('max')) return 'Wartość jest za duża.';
-    else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
+    if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
 
     return null;
   }
@@ -102,7 +102,7 @@ export class TaskCreationDialogComponent extends CommonCreationDialogComponent<T
       status: Status.NEW,
       title: this._form.get('title').value,
       idProject: this._form.get('project').value._id,
-      dutyDate: this._form.get('dutyDate').value,
+      dutyDate: new Date(this._form.get('dutyDate').value).toISOString(),
       description: this._form.get('description').value,
       workers: this._form.get('workers').value.map(worker => worker._id),
       priority: this._form.get('priority').value,

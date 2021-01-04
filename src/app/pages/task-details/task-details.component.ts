@@ -102,7 +102,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   //#region Initializers
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      title: [{ value: '', disabled: true }, [Validators.required]],
+      title: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(TITLE_MAX_LENGTH)]],
       priority: [{ value: '', disabled: true }, [Validators.required]],
       dutyDate: [{ value: '', disabled: true }, [Validators.required]],
       status: [{ value: '', disabled: true }, [Validators.required]],
@@ -156,10 +156,10 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Pole jest wymagane.';
-    if (control.hasError('matDatepickerParse')) return 'Nieprawidłowy format daty.';
+    if (control.hasError('maxlength')) return 'Wartość jest za długa.';
     if (control.hasError('min')) return 'Wartość jest za mała.';
     if (control.hasError('max')) return 'Wartość jest za duża.';
-    else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
+    if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
 
     return null;
   }

@@ -67,10 +67,10 @@ export class ProjectCreationDialogComponent extends CommonCreationDialogComponen
     const control = this._form.get(controlName);
     // Validators
     if (control.hasError('required')) return 'Pole jest wymagane.';
-    if (control.hasError('matDatepickerParse')) return 'Nieprawidłowy format daty.';
+    if (control.hasError('matdatepickerparse')) return 'Nieprawidłowy format daty.';
     if (control.hasError('min')) return 'Wartość jest za mała.';
     if (control.hasError('max')) return 'Wartość jest za duża.';
-    else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
+    if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
 
     return null;
   }

@@ -86,7 +86,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
       title: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(this.titleMaxLength)]],
       manager: [{ value: null, disabled: true }, [Validators.required]],
       dutyDate: [{ value: '', disabled: true }, [Validators.required]],
-      description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionMaxLength)]]
+      description: [{ value: '', disabled: true }],
     });
   }
 
@@ -147,9 +147,10 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   public getErrorMessage(controlName: string): string {
     const control = this._form.get(controlName);
     if (control.hasError('required')) return 'Pole jest wymagane.';
+    if (control.hasError('maxlength')) return 'Wartość jest za długa.';
     if (control.hasError('min')) return 'Wartość jest za mała.';
     if (control.hasError('max')) return 'Wartość jest za duża.';
-    else if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
+    if (!control.valid) return 'Pole jest nieprawidłowe 🤐';
 
     return null;
   }
