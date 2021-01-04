@@ -9,6 +9,6 @@ import { CommonRestService } from './common-rest.service';
 export class SingleTaskRestService extends CommonRestService<Task> {
 
   constructor(http: HttpClient) {
-    super(http, 'tasks');
+    super(http, 'tasks', 'tasks/deactivate');
   }
 }

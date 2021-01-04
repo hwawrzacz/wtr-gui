@@ -9,6 +9,6 @@ import { CommonRestService } from './common-rest.service';
 export class SingleProjectRestService extends CommonRestService<Project> {
 
   constructor(http: HttpClient) {
-    super(http, 'projects');
+    super(http, 'projects', 'projects/deactivate');
   }
 }

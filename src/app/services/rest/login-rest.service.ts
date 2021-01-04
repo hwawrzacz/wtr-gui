@@ -13,7 +13,7 @@ import { CommonRestService } from './common-rest.service';
 export class LoginRestService extends CommonRestService<User> {
 
   constructor(http: HttpClient) {
-    super(http, 'authentication');
+    super(http, 'authentication', '');
   }
 
   public logIn(login: string, password: string): Observable<HttpResponse<CommonResponse<any, User>>> {

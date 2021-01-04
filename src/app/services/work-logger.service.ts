@@ -12,7 +12,7 @@ import { CommonRestService } from './rest/common-rest.service';
 export class WorkLoggerService extends CommonRestService<WorkLog> {
 
   constructor(http: HttpClient, private _authService: AuthService) {
-    super(http, 'workloger/add');
+    super(http, 'workloger/add', '');
   }
 
   //#region Operators

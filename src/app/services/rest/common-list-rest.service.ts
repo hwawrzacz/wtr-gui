@@ -12,8 +12,8 @@ export class CommonListRestService<T> extends CommonRestService<ArrayResponse<T>
   constructor(
     http: HttpClient,
     @Inject('url') url: string,
-    @Inject('mockData') mockData: CommonArrayResponse<T>
+    @Inject('deleteUrl') deleteUrl: string,
   ) {
-    super(http, url);
+    super(http, url, deleteUrl);
   }
 }

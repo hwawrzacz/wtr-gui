@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { mockProjects } from '../../model/mock-data';
 import { Project } from '../../model/project';
 import { CommonListRestService } from './common-list-rest.service';
 
@@ -10,6 +9,6 @@ import { CommonListRestService } from './common-list-rest.service';
 export class ProjectsListRestService extends CommonListRestService<Project> {
 
   constructor(protected _http: HttpClient) {
-    super(_http, 'projects', mockProjects);
+    super(_http, 'projects', 'projects/deactivate');
   }
 }

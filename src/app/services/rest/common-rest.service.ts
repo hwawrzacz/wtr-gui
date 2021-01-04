@@ -11,12 +11,15 @@ import { CommonResponse, PatchResponse, SingleItemResponse } from '../../model/r
 })
 export class CommonRestService<T> {
   protected _url: string;
+  protected _deleteUrl: string;
 
   constructor(
     protected _http: HttpClient,
     @Inject('url') url: string,
+    @Inject('deleteUrl') deleteUrl: string,
   ) {
     this._url = url;
+    this._deleteUrl = deleteUrl;
   }
 
   public get(itemId: string): Observable<SingleItemResponse<T>> {
@@ -37,17 +40,17 @@ export class CommonRestService<T> {
     return this._http.post<PatchResponse>(url, item);
   }
 
-  public patch<T>(userId: string, name: string, value: T): Observable<any> {
-    const url = `${environment.apiUrl}/${this._url}/${userId}`;
+  public patch<T>(itemId: string, name: string, value: T): Observable<any> {
+    const url = `${environment.apiUrl}/${this._url}/${itemId}`;
     return this._http.patch(url, { [name]: value });
   }
 
-  public patchObject<T>(userId: string, object: T): Observable<any> {
-    const url = `${environment.apiUrl}/${this._url}/${userId}`;
+  public patchObject<T>(itemId: string, object: T): Observable<any> {
+    const url = `${environment.apiUrl}/${this._url}/${itemId}`;
     return this._http.patch(url, object);
   }
 
-  public delete(userId: string): Observable<CommonResponse<any, any>> {
-    return this.patch(userId, 'active', false);
+  public delete(itemId: string): Observable<CommonResponse<any, any>> {
+    return this._http.patch<CommonResponse<any, any>>(`${environment.apiUrl}/${this._deleteUrl}/${itemId}`, null);
   }
 }

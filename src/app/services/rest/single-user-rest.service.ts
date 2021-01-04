@@ -14,7 +14,7 @@ export class SingleUserRestService extends CommonRestService<User> {
   private readonly _credentialsUrl = 'users/credentials';
 
   constructor(http: HttpClient) {
-    super(http, 'users');
+    super(http, 'users', 'users/deactivate');
   }
 
   public getCredentials(userId: string): Observable<SingleItemResponse<UserCredentials>> {
