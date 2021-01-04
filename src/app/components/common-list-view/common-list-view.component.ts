@@ -166,7 +166,7 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     });
   }
 
-  public getRequiredFilter(): Filter[] {
+  protected getRequiredFilter(): Filter[] {
     return [] as Filter[];
   };
 

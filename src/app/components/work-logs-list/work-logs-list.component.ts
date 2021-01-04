@@ -41,4 +41,8 @@ export class WorkLogsListComponent extends CommonListViewComponent<WorkLog> impl
   }
 
   public openItemCreationDialog(): void { return }
+
+  protected getRequiredFilter(): Filter[] {
+    return [{ name: 'idTask', values: [this._taskId] }] as Filter[];
+  }
 }

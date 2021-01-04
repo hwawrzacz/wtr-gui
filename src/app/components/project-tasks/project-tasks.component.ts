@@ -39,7 +39,7 @@ export class ProjectTasksComponent extends CommonListViewComponent<Task> impleme
     super.ngOnInit();
   }
 
-  public getRequiredFilter(): Filter[] {
+  protected getRequiredFilter(): Filter[] {
     return [{ name: 'idProject', values: [`${this._projectId}`] }] as Filter[];
   }
 
