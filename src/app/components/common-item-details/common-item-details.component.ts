@@ -239,6 +239,11 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   private handeRequestError(err: string): any {
     this._isSaving = false;
     this._form.enable();
+
+    if (err === 'Payload Too Large') {
+      return of(this.openErrorSnackBar('Zdjęcie jest zbyt duże'));
+    }
+
     return of(this.openErrorSnackBar('Podczas wysyłania zapytania wystąpił błąd.', err))
   }
 
