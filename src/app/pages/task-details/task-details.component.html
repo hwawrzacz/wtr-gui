@@ -9,9 +9,22 @@
 
     <h1>Szczegóły zadania</h1>
     <div class="item-details__header__buttons">
-      <button mat-stroked-button color="primary" *ngIf="!editMode && canEdit()" (click)="enableEditMode()">
+      <button mat-stroked-button color="primary" *ngIf="!editMode && canEdit()" (click)="enableEditMode()"
+        [disabled]="isDeleting">
         <mat-icon>edit</mat-icon>
         <span>Edytuj</span>
+      </button>
+
+      <!-- <button mat-stroked-button color="primary" *ngIf="!editMode && canShowStats()" [disabled]="isDeleting">
+        <mat-icon>pie_chart</mat-icon>
+        <span>Pokaż statystyki</span>
+      </button> -->
+
+      <button mat-stroked-button color="warn" *ngIf="!editMode && canDelete()" [disabled]="isDeleting"
+        (click)="onDeleteItem()">
+        <mat-icon *ngIf="!isDeleting">delete</mat-icon>
+        <mat-spinner [diameter]="20" *ngIf="isDeleting"></mat-spinner>
+        <span>Usuń</span>
       </button>
 
       <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" [disabled]="!form.valid || isSaving"
@@ -21,19 +34,10 @@
         <span>Zapisz zmiany</span>
       </button>
 
-      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" [disabled]="isSaving" (click)="onDiscardChanges()">
+      <button mat-stroked-button color="primary" *ngIf="editMode && canEdit()" [disabled]="isSaving"
+        (click)="onDiscardChanges()">
         <mat-icon>close</mat-icon>
         <span>Odrzuć zmiany</span>
-      </button>
-
-      <!-- <button mat-stroked-button color="primary" *ngIf="!editMode && canShowStats()">
-        <mat-icon>pie_chart</mat-icon>
-        <span>Pokaż statystyki</span>
-      </button> -->
-
-      <button mat-stroked-button color="warn" *ngIf="!editMode && canDelete()" (click)="onDeleteItem()">
-        <mat-icon>delete</mat-icon>
-        <span>Usuń</span>
       </button>
     </div>
   </header>
@@ -93,8 +97,8 @@
     </section>
   </section>
 
-  <app-workers-panel *ngIf="!isMobile" [selectedWorkers]="workers" [editMode]="editMode && !isSaving" [canEdit]="canEdit()"
-    (workersChange)="updateWorkers($event)">
+  <app-workers-panel *ngIf="!isMobile" [selectedWorkers]="workers" [editMode]="editMode && !isSaving"
+    [canEdit]="canEdit()" (workersChange)="updateWorkers($event)">
   </app-workers-panel>
 </div>
 

@@ -23,6 +23,7 @@ import { MobileDetectorService } from 'src/app/services/mobile-detector.service'
 export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy {
   protected _loadingCounter: number;
   protected _isSaving: boolean;
+  protected _isDeleting: boolean;
   protected _error: boolean;
   protected _query: Query;
   protected _initialItem: T;
@@ -45,6 +46,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
 
   get isSaving(): boolean {
     return this._isSaving;
+  }
+
+  get isDeleting(): boolean {
+    return this._isDeleting;
   }
 
   get error(): boolean {
@@ -201,13 +206,22 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   }
 
   private deleteItem(): void {
-    this._restService.patch<boolean>(this.itemId, 'active', false)
+    this._isDeleting = true;
+    this._restService.delete(this.itemId)
       .pipe(
         tap((res: PatchResponse) => {
-          if (res.success) this.openSuccessSnackBar('Usunięto element.');
-          else this.handlePatchResponseError(res, 'Podczas usuwania elementu wystąpił błąd.');
+          if (res.success) {
+            this.openSuccessSnackBar('Usunięto element.')
+            this._navigator.navigateToMainSection(this._navigator.activeSection);
+          } else {
+            this.handlePatchResponseError(res, 'Podczas usuwania elementu wystąpił błąd.');
+          }
+          this._isDeleting = false;
         }),
-        catchError(err => this.handeRequestError(err))
+        catchError(err => {
+          this._isDeleting = false;
+          return this.handeRequestError(err);
+        })
       ).subscribe();
   }
 
@@ -278,7 +292,6 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
         tap(result => {
           if (result) {
             this.deleteItem();
-            this._navigator.navigateToMainSection(this._navigator.activeSection);
           }
         })
       )
