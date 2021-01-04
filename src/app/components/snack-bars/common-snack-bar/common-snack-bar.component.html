@@ -1,12 +1,13 @@
 <div class="container" [ngClass]="snackClass">
-  <mat-icon>{{ icon }}</mat-icon>
+  <mat-icon *ngIf="!!icon">{{ icon }}</mat-icon>
   <p>
     <span>{{ message }}</span>
     <span *ngIf="!!details" class="snackbar__details">{{ details }}</span>
   </p>
 
-  <button mat-icon-button *ngIf="!action" (click)="closeSnackBar()">
+  <button mat-icon-button *ngIf="!actionText" (click)="fireAction()">
     <mat-icon> {{ actionIcon || 'close' }} </mat-icon>
   </button>
-  <button mat-button *ngIf="action" (click)="closeSnackBar()">{{ action }}</button>
+  <button mat-button *ngIf="actionText" (click)="fireAction()">{{ actionText
+    }}</button>
 </div>

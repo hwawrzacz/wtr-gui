@@ -21,8 +21,11 @@
       &.snackbar__details {
         font-size: .8em;
       }
-      
     }
+  }
+
+  button {
+    margin-left: $spacing-small;
   }
   
   &.info {

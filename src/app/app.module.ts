@@ -30,6 +30,7 @@ import { ProjectTasksComponent } from './components/project-tasks/project-tasks.
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { CommonSnackBarComponent } from './components/snack-bars/common-snack-bar/common-snack-bar.component';
 import { ErrorSnackBarComponent } from './components/snack-bars/error-snack-bar/error-snack-bar.component';
+import { ActionSnackBarComponent } from './components/snack-bars/action-snack-bar/action-snack-bar.component';
 import { InfoSnackBarComponent } from './components/snack-bars/info-snack-bar/info-snack-bar.component';
 import { SuccessSnackBarComponent } from './components/snack-bars/success-snack-bar/success-snack-bar.component';
 import { WarningSnackBarComponent } from './components/snack-bars/warning-snack-bar/warning-snack-bar.component';
@@ -100,6 +101,7 @@ import { environment } from '../environments/environment';
     SuccessSnackBarComponent,
     ErrorSnackBarComponent,
     InfoSnackBarComponent,
+    ActionSnackBarComponent,
     CommonSnackBarComponent,
     WarningSnackBarComponent,
     ConfirmationDialogComponent,

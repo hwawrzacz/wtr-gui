@@ -4,7 +4,8 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
 export interface SnackBarData {
   message: string;
   details?: string;
-  action?: string;
+  actionText?: string;
+  actionFn?: (param: any) => void;
   actionIcon?: string;
 }
 
@@ -16,8 +17,9 @@ export interface SnackBarData {
 export class CommonSnackBarComponent {
   private _message: string;
   private _details: string;
-  private _action: string;
   private _actionIcon: string;
+  private _actionText: string;
+  private _actionFn: (param?: any) => void;
 
   get isError(): boolean {
     return this._snackClass == 'error';
@@ -35,8 +37,12 @@ export class CommonSnackBarComponent {
     return this._icon;
   }
 
-  get action(): string {
-    return this._action;
+  get actionText(): string {
+    return this._actionText;
+  }
+
+  get actionFn(): (param?: any) => void {
+    return this._actionFn;
   }
 
   get actionIcon(): string {
@@ -54,12 +60,17 @@ export class CommonSnackBarComponent {
     private _snackBarRef: MatSnackBarRef<CommonSnackBarComponent>,
   ) {
     this._message = data.message;
-    this._action = data.action;
     this._details = data.details;
+    this._actionText = data.actionText;
+    this._actionFn = data.actionFn;
     this._actionIcon = data.actionIcon;
   }
 
   public closeSnackBar() {
     this._snackBarRef.dismiss();
+  }
+
+  public fireAction(): void {
+    this._actionFn ? this._actionFn() : this.closeSnackBar()
   }
 }

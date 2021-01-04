@@ -4,7 +4,8 @@ import { ErrorSnackBarComponent } from '../components/snack-bars/error-snack-bar
 import { InfoSnackBarComponent } from '../components/snack-bars/info-snack-bar/info-snack-bar.component';
 import { SuccessSnackBarComponent } from '../components/snack-bars/success-snack-bar/success-snack-bar.component';
 import { WarningSnackBarComponent } from '../components/snack-bars/warning-snack-bar/warning-snack-bar.component';
-import { SUCCESS_SNACKBAR_DURATION, INFO_SNACKBAR_DURATION, WARNING_SNACKBAR_DURATION, ERROR_SNACKBAR_DURATION } from '../model/constants';
+import { SUCCESS_SNACKBAR_DURATION, INFO_SNACKBAR_DURATION, WARNING_SNACKBAR_DURATION, ERROR_SNACKBAR_DURATION, ACTION_SNACKBAR_DURATION } from '../model/constants';
+import { ActionSnackBarComponent } from '../components/snack-bars/action-snack-bar/action-snack-bar.component';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,18 @@ import { SUCCESS_SNACKBAR_DURATION, INFO_SNACKBAR_DURATION, WARNING_SNACKBAR_DUR
 export class SnackBarService {
 
   constructor(private _snackBar: MatSnackBar) { }
+
+  public openActionSnackBar(message: string, actionFn: (param: any) => void, actionText?: string, details?: string,): void {
+    this._snackBar.openFromComponent(ActionSnackBarComponent, {
+      data: {
+        message: message,
+        details: details,
+        actionFn: actionFn,
+        actionText: actionText,
+      },
+      duration: ACTION_SNACKBAR_DURATION,
+    });
+  }
 
   public openSuccessSnackBar(message: string, details?: string): void {
     this._snackBar.openFromComponent(SuccessSnackBarComponent, {
