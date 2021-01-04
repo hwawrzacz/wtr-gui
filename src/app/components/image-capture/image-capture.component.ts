@@ -19,6 +19,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   private _videoStream: MediaStream;
   private _devices$: BehaviorSubject<MediaDevice[]>;
   private _selectedDevice$: BehaviorSubject<MediaDevice>;
+  private _previouslySelectedDevice: MediaDevice;
 
   private _streamEmitterMode: boolean;
   private _frameEmitterMode: boolean;
@@ -155,7 +156,8 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (filteredDevices) {
           this._devices$.next(filteredDevices);
-          this._selectedDevice$.next(this._devices$.value[0]);
+          this._previouslySelectedDevice = this._selectedDevice$.value;
+          this._selectedDevice$.next(this._devices$.value[1]);
         } else {
           this._snackBarService.openErrorSnackBar('Brak dostępnych urządzeń.');
         }
@@ -207,13 +209,19 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
               setTimeout(() => this._changeDetector.detectChanges(), 0);
             })
             .catch(err => {
-              this._snackBarService.openErrorSnackBar('Nie można uzyskać dostępu do listy urządzeń. Sprawdź uprawnienia w ustawieniach przeglądarki.', err);
+              this._selectedDevice$.next(this._previouslySelectedDevice);
+              if (err.toString().includes('Could not start video source')) {
+                this._snackBarService.openErrorSnackBar('Nie można uzyskać dostępu do urządzenia.', 'Urządzenie może być używane przez inną aplikację.');
+              } else {
+                this._snackBarService.openErrorSnackBar('Nie można uzyskać dostępu do urządzenia.', err);
+              }
             });
         }
       });
   }
 
   public onInputDeviceChange(deviceId: string): void {
+    this._previouslySelectedDevice = this._selectedDevice$.value;
     this._selectedDevice$.next(this.devices.find(device => device.deviceId == deviceId) || this.devices[0]);
   }
   //#endregion
