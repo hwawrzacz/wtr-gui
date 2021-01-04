@@ -157,7 +157,7 @@ export class ImageCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
         if (filteredDevices) {
           this._devices$.next(filteredDevices);
           this._previouslySelectedDevice = this._selectedDevice$.value;
-          this._selectedDevice$.next(this._devices$.value[1]);
+          this._selectedDevice$.next(this._devices$.value[0]);
         } else {
           this._snackBarService.openErrorSnackBar('Brak dostępnych urządzeń.');
         }
