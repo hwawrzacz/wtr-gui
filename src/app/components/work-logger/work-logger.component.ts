@@ -22,6 +22,7 @@ export class WorkLoggerComponent implements OnInit {
   private _lastWorkLog: WorkLog;
   private _loadingCounter: number;
   private _taskStatus: Status;
+  private _canLog: boolean;
 
   @Output('workLogged') private _workLogEmitter: EventEmitter<void>;
   @Output('statusChanged') private _statusChanged: EventEmitter<Status>;
@@ -32,6 +33,14 @@ export class WorkLoggerComponent implements OnInit {
   }
   get taskId(): string {
     return this._taskId;
+  }
+
+  @Input('canLog')
+  set canLog(value: boolean) {
+    this._canLog = value;
+  }
+  get canLog(): boolean {
+    return this._canLog;
   }
 
   @Input('taskStatus')

@@ -49,8 +49,8 @@
       }}</span>
     <form [formGroup]="form" *ngIf="!isLoading && !error">
       <section class="work-logger">
-        <app-work-logger [taskId]="itemId" [taskStatus]="initialItem.status" (workLogged)="reloadWorkLogs()"
-          (statusChanged)="updateStatus($event)">
+        <app-work-logger [canLog]="canLog" [taskId]="itemId" [taskStatus]="initialItem.status"
+          (workLogged)="reloadWorkLogs()" (statusChanged)="updateStatus($event)">
         </app-work-logger>
       </section>
       <mat-form-field appearance="outline">

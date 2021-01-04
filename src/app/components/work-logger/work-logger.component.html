@@ -18,7 +18,7 @@
       </span>
     </div>
 
-    <div class="controls" *ngIf="!isClosed">
+    <div class="controls" *ngIf="!isClosed && canLog">
       <button mat-button color="primary" *ngIf="isPaused || isNew || !lastWorkLog" (click)="startWork()"
         [disabled]="isClosed">
         <mat-icon>play_arrow</mat-icon>

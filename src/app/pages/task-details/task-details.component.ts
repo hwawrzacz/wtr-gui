@@ -76,6 +76,10 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
     return DESCRIPTION_MAX_LENGTH;
   }
   //#endregion
+
+  get canLog(): boolean {
+    return this._initialItem.workers.filter(worker => worker._id === this._authService.userId).length > 0;
+  }
   //#endregion
 
   constructor(
