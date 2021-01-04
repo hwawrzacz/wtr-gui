@@ -3,6 +3,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Section } from './model/enums/section';
 import { NavigatorService } from './services/navigator.service';
 import { NetworkStateService } from './services/network-state.service';
+import { PwaUpdateService } from './services/pwa-update.service';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,11 @@ export class AppComponent implements AfterViewInit {
   }
   //#endregion
 
-  constructor(private _navigator: NavigatorService<any>, private _networkState: NetworkStateService) { }
+  constructor(
+    private _navigator: NavigatorService<any>,
+    private _networkState: NetworkStateService,
+    private _pwaUpdateService: PwaUpdateService,
+  ) { }
 
   ngAfterViewInit(): void {
     this.subscribeToHeaderClicksForHidingSidenav();
