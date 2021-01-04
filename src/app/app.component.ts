@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Section } from './model/enums/section';
 import { NavigatorService } from './services/navigator.service';
+import { NetworkStateService } from './services/network-state.service';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +10,11 @@ import { NavigatorService } from './services/navigator.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  //#region Fields definitions
   private _title = 'Somecompany';
   private _sidenavMode = 'push';
 
-  @ViewChild(MatSidenav)
-  private _sidenav: MatSidenav;
-
+  @ViewChild(MatSidenav) private _sidenav: MatSidenav;
   @ViewChild('header', { read: ElementRef }) private _header: ElementRef;
-  //#endregion
 
   //#region Getters and setters
   get loginAppBar(): boolean {
@@ -37,7 +34,7 @@ export class AppComponent implements AfterViewInit {
   }
   //#endregion
 
-  constructor(private _navigator: NavigatorService<any>) { }
+  constructor(private _navigator: NavigatorService<any>, private _networkState: NetworkStateService) { }
 
   ngAfterViewInit(): void {
     this.subscribeToHeaderClicksForHidingSidenav();
