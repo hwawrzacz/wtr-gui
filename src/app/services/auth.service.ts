@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, takeUntil } from 'rxjs/operators';
 import { HEADER_TOKEN } from '../model/constants';
 import { Position } from '../model/enums/position';
 import { Section } from '../model/enums/section';
@@ -57,6 +57,15 @@ export class AuthService {
   ) {
     this._user = this._storageService.getUser();
     this._token = this._storageService.getToken();
+    this.setUpLastUrlListener();
+  }
+
+  private setUpLastUrlListener(): void {
+    this._navigator.lastUrlInHistory$
+      .pipe(
+        tap(() => this.logout())
+      )
+      .subscribe
   }
 
   public faceLogIn(imageUrl: string): Observable<CommonResponse<any, User>> {
@@ -137,15 +146,12 @@ export class AuthService {
     this.clearData();
     this._snackBarService.openSuccessSnackBar('Wylogowano.');
     this._navigator.navigateToHomeScreen();
+    this._navigator.goToRootHistoryElement()
   }
 
   private onLogoutError(message: string): void {
     const parsedMessage = this.parseLogoutMessage(message);
     this._snackBarService.openErrorSnackBar('Nie udało się wylogować.');
-  }
-
-  private encryptPassword(password: string): string {
-    return btoa(password);
   }
 
   private clearData(): void {
