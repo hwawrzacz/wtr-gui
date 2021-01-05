@@ -8,9 +8,8 @@ import { ItemDetailsBrokerService } from './item-details-broker.service';
 @Injectable({
   providedIn: 'root'
 })
-export class NavigatorService<T> implements OnDestroy {
+export class NavigatorService<T> {
   public urlChanges$: Subject<any>;
-  public lastUrlInHistory$: Subject<any>;
 
   get activeSection(): Section {
     return this.getActiveSectionFromUrl();
@@ -21,24 +20,12 @@ export class NavigatorService<T> implements OnDestroy {
     private _itemDetailsBroker: ItemDetailsBrokerService<CommonItem>,
   ) {
     this.urlChanges$ = new Subject<any>();
-    this.lastUrlInHistory$ = new Subject<any>();
     this.setUpUrlChangeListener();
-    this.setUpNavigationBackListener();
   }
 
   //#region Initialization
   private setUpUrlChangeListener(): void {
     this._router.events.subscribe((e) => this.urlChanges$.next(e));
-  }
-
-  private setUpNavigationBackListener(): void {
-    window.addEventListener('hashchange', this.handlePotentialBackPressed)
-  }
-
-  private handlePotentialBackPressed = (): void => {
-    if (document.referrer === "" && this.activeSection !== Section.LOGIN) {
-      this.lastUrlInHistory$.next();
-    }
   }
   //#endregion
 
@@ -59,11 +46,6 @@ export class NavigatorService<T> implements OnDestroy {
     this._itemDetailsBroker.item = item;
     this._router.navigate([baseUrl, item['_id']]);
   }
-
-  public goToRootHistoryElement(): void {
-    const historySize = window.history.length;
-    window.history.go(-historySize + 1);
-  }
   //#endregion
 
   //#region Url operations
@@ -83,8 +65,4 @@ export class NavigatorService<T> implements OnDestroy {
     return params[2];
   }
   //#endregion
-
-  ngOnDestroy(): void {
-    window.removeEventListener('hashchange', this.handlePotentialBackPressed);
-  }
 }
