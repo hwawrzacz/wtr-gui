@@ -2,10 +2,17 @@
 @import '../../../variables';
 
 header {
-  margin-bottom: $h1-margin-bottom;
+  padding: $spacing-regular;
+  position: sticky;
+  top: 0;
+  z-index: 100;  
+  
+  // margin-bottom: $h1-margin-bottom;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  background-color: $bg-color-white;
 
   h1 {
     margin-bottom: 0 !important;
@@ -14,6 +21,10 @@ header {
   button {
     margin-left: $header-button-margin;
   } 
+}
+
+main {
+  padding: 0 $spacing-regular;
 }
 
 mat-form-field {

@@ -41,7 +41,7 @@
     </div>
   </header>
 
-  <div class="container">
+  <main>
     <form [formGroup]="form" *ngIf="!isLoading && !error" class="personal-details">
       <h2>Dane osobowe</h2>
 
@@ -124,7 +124,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader>
   <app-full-screen-error *ngIf="error" (reloadRequest)="reloadData()"></app-full-screen-error>

@@ -42,64 +42,66 @@
     </div>
   </header>
 
-  <section class="details">
-    <span *ngIf="!isLoading && !error"
-      [attr.class]="'status-label status-label--big status-label--' + initialItem.status">{{
-      getStatusString(initialItem.status)
-      }}</span>
-    <form [formGroup]="form" *ngIf="!isLoading && !error">
-      <section class="work-logger">
-        <app-work-logger [canLog]="canLog" [taskId]="itemId" [taskStatus]="initialItem.status"
-          (workLogged)="reloadWorkLogs()" (statusChanged)="updateStatus($event)">
-        </app-work-logger>
-      </section>
-      <mat-form-field appearance="outline">
-        <mat-label>Tytuł</mat-label>
-        <input matInput #titleInput type="text" formControlName="title" />
-        <mat-hint *ngIf="editMode">{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
-        <mat-error>{{ getErrorMessage('title') }}</mat-error>
-      </mat-form-field>
-
-
-      <div class="fifty-fifty-wrapper">
-        <mat-form-field appearance="outline" class="date">
-          <mat-label>Termin zakończenia</mat-label>
-          <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate"
-            [max]="maxDate">
-          <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
-          <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
-          <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
+  <main>
+    <section class="details">
+      <span *ngIf="!isLoading && !error"
+        [attr.class]="'status-label status-label--big status-label--' + initialItem.status">{{
+        getStatusString(initialItem.status)
+        }}</span>
+      <form [formGroup]="form" *ngIf="!isLoading && !error">
+        <section class="work-logger">
+          <app-work-logger [canLog]="canLog" [taskId]="itemId" [taskStatus]="initialItem.status"
+            (workLogged)="reloadWorkLogs()" (statusChanged)="updateStatus($event)">
+          </app-work-logger>
+        </section>
+        <mat-form-field appearance="outline">
+          <mat-label>Tytuł</mat-label>
+          <input matInput #titleInput type="text" formControlName="title" />
+          <mat-hint *ngIf="editMode">{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
+          <mat-error>{{ getErrorMessage('title') }}</mat-error>
         </mat-form-field>
+
+
+        <div class="fifty-fifty-wrapper">
+          <mat-form-field appearance="outline" class="date">
+            <mat-label>Termin zakończenia</mat-label>
+            <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate"
+              [max]="maxDate">
+            <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
+            <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
+            <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Priorytet</mat-label>
+            <mat-select formControlName="priority">
+              <mat-option *ngFor="let priority of priorities" name="priority" [value]="priority">
+                <span [attr.class]="'priority-label priority-label--' + priority">{{ getPriorityString(priority) |
+                  titlecase
+                  }}</span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
         <mat-form-field appearance="outline">
-          <mat-label>Priorytet</mat-label>
-          <mat-select formControlName="priority">
-            <mat-option *ngFor="let priority of priorities" name="priority" [value]="priority">
-              <span [attr.class]="'priority-label priority-label--' + priority">{{ getPriorityString(priority) |
-                titlecase
-                }}</span>
-            </mat-option>
-          </mat-select>
+          <mat-label>Opis</mat-label>
+          <textarea matInput #descriptionInput formControlName="description" cdkTextareaAutosize></textarea>
         </mat-form-field>
-      </div>
+      </form>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Opis</mat-label>
-        <textarea matInput #descriptionInput formControlName="description" cdkTextareaAutosize></textarea>
-      </mat-form-field>
-    </form>
-
-    <section [ngClass]="isLoading || error ? 'hidden' : ''">
-      <h3>Historia</h3>
-      <div class="task-history-wrapper">
-        <app-work-logs-list #workLogsList [taskId]="itemId"></app-work-logs-list>
-      </div>
+      <section [ngClass]="isLoading || error ? 'hidden' : ''">
+        <h3>Historia</h3>
+        <div class="task-history-wrapper">
+          <app-work-logs-list #workLogsList [taskId]="itemId"></app-work-logs-list>
+        </div>
+      </section>
     </section>
-  </section>
 
-  <app-workers-panel *ngIf="!isMobile" [selectedWorkers]="workers" [editMode]="editMode && !isSaving"
-    [canEdit]="canEdit()" (workersChange)="updateWorkers($event)">
-  </app-workers-panel>
+    <app-workers-panel *ngIf="!isMobile" [selectedWorkers]="workers" [editMode]="editMode && !isSaving"
+      [canEdit]="canEdit()" (workersChange)="updateWorkers($event)">
+    </app-workers-panel>
+  </main>
 </div>
 
 <app-full-screen-loader *ngIf="isLoading"></app-full-screen-loader>

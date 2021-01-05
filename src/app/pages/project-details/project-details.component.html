@@ -40,50 +40,52 @@
     </div>
   </header>
 
-  <form [formGroup]="form" *ngIf="!isLoading && !error">
-    <mat-form-field appearance="outline">
-      <mat-label>Tytuł</mat-label>
-      <input matInput #titleInput type="text" formControlName="title" />
-      <mat-hint *ngIf="editMode">{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
-      <mat-error>{{ getErrorMessage('title') }}</mat-error>
-    </mat-form-field>
-
-    <div class="manager">
-      <app-users-autocomplete [label]="'Menedżer'" [formControl]="managerFormControl" [onlyManagers]="true"
-        [singleSelection]="true" [initialValue]="project.idManager" (selectionChange)="updateTempManager($event)">
-      </app-users-autocomplete>
-    </div>
-
-    <mat-form-field appearance="outline" class="date">
-      <mat-label>Termin zakończenia</mat-label>
-      <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
-      <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
-      <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
-      <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
-    </mat-form-field>
-
-    <div class="editable-input-wrapper description-wrapper">
+  <main>
+    <form [formGroup]="form" *ngIf="!isLoading && !error">
       <mat-form-field appearance="outline">
-        <mat-label>Opis</mat-label>
-        <textarea matInput #descriptionInput formControlName="description" cdkTextareaAutosize></textarea>
-        <mat-hint *ngIf="editMode">{{ descriptionInput.value.length || 0}}/{{ descriptionMaxLength }}</mat-hint>
-        <mat-error>{{ getErrorMessage('description') }}</mat-error>
+        <mat-label>Tytuł</mat-label>
+        <input matInput #titleInput type="text" formControlName="title" />
+        <mat-hint *ngIf="editMode">{{ titleInput.value.length || 0}}/{{ titleMaxLength }}</mat-hint>
+        <mat-error>{{ getErrorMessage('title') }}</mat-error>
       </mat-form-field>
-    </div>
-  </form>
 
-  <section class="item-details__tasks" [ngClass]="isLoading || error ? 'hidden' : ''">
-    <header class="item-details__tasks__header">
-      <h3>Zadania</h3>
+      <div class="manager">
+        <app-users-autocomplete [label]="'Menedżer'" [formControl]="managerFormControl" [onlyManagers]="true"
+          [singleSelection]="true" [initialValue]="project.idManager" (selectionChange)="updateTempManager($event)">
+        </app-users-autocomplete>
+      </div>
 
-      <button mat-stroked-button color="primary" *ngIf="canEdit()" (click)="openTaskCreationDialog()">
-        <mat-icon>add</mat-icon>
-        <span>Dodaj zadanie</span>
-      </button>
-    </header>
-    <app-project-tasks-list #taskList [projectId]="itemId">
-    </app-project-tasks-list>
-  </section>
+      <mat-form-field appearance="outline" class="date">
+        <mat-label>Termin zakończenia</mat-label>
+        <input matInput [matDatepicker]="dutyDate" formControlName="dutyDate" readonly [min]="minDate">
+        <mat-datepicker-toggle matSuffix [for]="dutyDate"></mat-datepicker-toggle>
+        <mat-datepicker #dutyDate [disabled]="form.get('dutyDate').disabled"></mat-datepicker>
+        <mat-error>{{ getErrorMessage('dutyDate') }}</mat-error>
+      </mat-form-field>
+
+      <div class="editable-input-wrapper description-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Opis</mat-label>
+          <textarea matInput #descriptionInput formControlName="description" cdkTextareaAutosize></textarea>
+          <mat-hint *ngIf="editMode">{{ descriptionInput.value.length || 0}}/{{ descriptionMaxLength }}</mat-hint>
+          <mat-error>{{ getErrorMessage('description') }}</mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <section class="item-details__tasks" [ngClass]="isLoading || error ? 'hidden' : ''">
+      <header class="item-details__tasks__header">
+        <h3>Zadania</h3>
+
+        <button mat-stroked-button color="primary" *ngIf="canEdit()" (click)="openTaskCreationDialog()">
+          <mat-icon>add</mat-icon>
+          <span>Dodaj zadanie</span>
+        </button>
+      </header>
+      <app-project-tasks-list #taskList [projectId]="itemId">
+      </app-project-tasks-list>
+    </section>
+  </main>
 </div>
 
 <app-full-screen-loader *ngIf="isLoading && !error"></app-full-screen-loader>

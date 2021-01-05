@@ -6,18 +6,20 @@
   </button>
 </header>
 
-<app-common-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-common-search-bar>
+<main>
+  <app-common-search-bar [debounceTimeout]="500" (queryChange)="onQueryChanged($event)"></app-common-search-bar>
 
-<ng-container *ngIf="isMobile">
-  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
-  <app-project-card *ngFor="let project of dataSource.data.value" [project]="project"
-    (click)="navigateToDetails(project)"></app-project-card>
-</ng-container>
+  <ng-container *ngIf="isMobile">
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+    <app-project-card *ngFor="let project of dataSource.data.value" [project]="project"
+      (click)="navigateToDetails(project)"></app-project-card>
+  </ng-container>
 
-<app-projects-table *ngIf="!isMobile" [dataSource]="dataSource" [isLoading]="isLoading"
-  (itemDeleted)="onItemDeleted($event)">
-</app-projects-table>
+  <app-projects-table *ngIf="!isMobile" [dataSource]="dataSource" [isLoading]="isLoading"
+    (itemDeleted)="onItemDeleted($event)">
+  </app-projects-table>
 
-<mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-  (page)="onPaginationChange($event)">
-</mat-paginator>
+  <mat-paginator [length]="totalResults" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    (page)="onPaginationChange($event)">
+  </mat-paginator>
+</main>

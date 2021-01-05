@@ -19,8 +19,17 @@ app-workers-panel {
   border-left: 1px solid $bg-color-hover;
 }
 
-@media screen and (max-width: '768px') {
+@media screen and (max-width: $big-mobile-breakpoint) {
   mat-dialog-content {
     flex-direction: column;
+    
+    form {
+      margin-right: 0;
+    }
+    
+    app-workers-panel {
+      padding-left: 0;
+      border-left: none;
+    }
   }
 }

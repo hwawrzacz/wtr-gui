@@ -57,7 +57,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: $big-mobile-breakpoint) {
   .container {    
     position: static;
     margin-top: 0;

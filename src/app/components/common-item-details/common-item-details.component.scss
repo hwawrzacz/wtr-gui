@@ -3,14 +3,20 @@
 .item-details {
   display: flex;
   flex-wrap: wrap;
-
+  
   &__header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: $spacing-regular;
+    padding-top: 0;
+    
     flex: 1 1 100%;
-
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: $spacing-regular;
+
+    background-color: $bg-color-white;
   
     &__navigation {
       width: 100%;
@@ -55,6 +61,10 @@
       }
     }
   }
+}
+
+main {
+  padding: 0 $spacing-regular;
 }
 
 // Button spinner

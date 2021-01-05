@@ -1,3 +1,5 @@
+@import '../../../variables';
+
 .search-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -26,7 +28,7 @@
   }
 }
 
-@media screen and (max-width: 467px) {
+@media screen and (max-width: $small-mobile-breakpoint) {
     .filters-wrapper {
       flex-wrap: wrap;
   }
