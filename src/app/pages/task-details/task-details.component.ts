@@ -53,7 +53,7 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
   }
 
   get workers(): SimpleUser[] {
-    return this._form.get('workers').value;
+    return Object.assign([], this._form.get('workers').value);
   }
 
   get priorities(): Priority[] {
@@ -88,7 +88,8 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
         && (
           !!this.parentProject
           && !!this.parentProject.idManager
-          && this.parentProject.idManager as User)._id === this._authService.userId
+          && this.parentProject.idManager === this._authService.userId
+        )
       )
     );
   }
@@ -168,17 +169,17 @@ export class TaskDetailsComponent extends CommonItemDetailsComponent<Task> imple
 
   public canEdit(): boolean {
     return (
-      !this.isMobile
-      && (
-        this._authService.isAdmin
-        || (
-          // Current user is a manager of root project
-          this._authService.isManager
-          && this.parentProject
-          && this.parentProject.idManager
-          && (this.parentProject.idManager as User)._id === this._authService.userId
-        )
+      // // !this.isMobile
+      // && (
+      this._authService.isAdmin
+      || (
+        // Current user is a manager of root project
+        this._authService.isManager
+        && this.parentProject
+        && this.parentProject.idManager
+        && this.parentProject.idManager === this._authService.userId
       )
+      // )
       && this._initialItem && this._initialItem.status !== Status.DONE
     );
   }

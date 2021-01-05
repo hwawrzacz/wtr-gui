@@ -166,11 +166,14 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
 
   //#region Permission
   public canEdit(): boolean {
-    return !this.isMobile && (
+    return (
+      // !this.isMobile
+      // && (
       // If is admin
       this._authService.isAdmin
       // If users is viewing ites own profile
       || this._navigator.getIdFromUrl() === this._authService.user._id
+      // )
     );
   }
   public canDelete(): boolean {

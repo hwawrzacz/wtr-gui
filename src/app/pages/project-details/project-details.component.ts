@@ -137,17 +137,17 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
 
   public canEdit(): boolean {
     return (
-      !this.isMobile
-      && (
-        this._authService.isAdmin
-        || (
-          // Current user is a manager this project
-          this._authService.isManager
-          && this._initialItem
-          && this._initialItem.idManager
-          && (this._initialItem.idManager as User)._id === this._authService.userId
-        )
+      // !this.isMobile
+      // && (
+      this._authService.isAdmin
+      || (
+        // Current user is a manager this project
+        this._authService.isManager
+        && this._initialItem
+        && this._initialItem.idManager
+        && (this._initialItem.idManager as User)._id === this._authService.userId
       )
+      // )
     );
   }
 

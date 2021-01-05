@@ -79,7 +79,12 @@ export abstract class CommonListViewComponent<T> implements OnInit {
 
   // Permissions
   public canEdit(): boolean {
-    return !this.isMobile && (this._authService.isManager || this._authService.isAdmin);
+    return (
+      // // !this.isMobile 
+      // && (
+      this._authService.isManager || this._authService.isAdmin
+      // )
+    );
   }
 
   // Boolean calculated
