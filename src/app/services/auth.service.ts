@@ -137,15 +137,12 @@ export class AuthService {
     this.clearData();
     this._snackBarService.openSuccessSnackBar('Wylogowano.');
     this._navigator.navigateToHomeScreen();
+    this._navigator.goToRootHistoryElement()
   }
 
   private onLogoutError(message: string): void {
     const parsedMessage = this.parseLogoutMessage(message);
     this._snackBarService.openErrorSnackBar('Nie udało się wylogować.');
-  }
-
-  private encryptPassword(password: string): string {
-    return btoa(password);
   }
 
   private clearData(): void {

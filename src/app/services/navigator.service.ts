@@ -46,6 +46,11 @@ export class NavigatorService<T> {
     this._itemDetailsBroker.item = item;
     this._router.navigate([baseUrl, item['_id']]);
   }
+
+  public goToRootHistoryElement(): void {
+    const historySize = window.history.length;
+    window.history.go(-historySize + 1);
+  }
   //#endregion
 
   //#region Url operations
