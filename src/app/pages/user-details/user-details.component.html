@@ -1,5 +1,5 @@
 <div class="item-details">
-  <header class="item-details__header">
+  <header class="item-details__header" [ngClass]="isScrolled ? 'mat-elevation-z3' : ''">
     <p class="item-details__header__navigation">
       <a class="link" [routerLink]="'/users'">Użytkownicy</a> /
       <a class="link" [routerLink]="'/users/'+ itemId">{{ login

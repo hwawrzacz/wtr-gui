@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
@@ -7,20 +7,20 @@ import { CreationResponseParser } from 'src/app/helpers/parsers';
 import { Filter } from 'src/app/model/filter';
 import { Query } from 'src/app/model/query';
 import { PatchResponse, SingleItemResponse } from 'src/app/model/responses';
-import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ItemDetailsBrokerService } from 'src/app/services/item-details-broker.service';
+import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { CommonRestService } from 'src/app/services/rest/common-rest.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { ConfirmationDialogComponent, ConfirmationDialogData } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
-import { MobileDetectorService } from 'src/app/services/mobile-detector.service';
 
 @Component({
   selector: 'app-common-item-details',
   template: '',
   styleUrls: ['./common-item-details.component.scss']
 })
-export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy {
+export abstract class CommonItemDetailsComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   protected _loadingCounter: number;
   protected _isSaving: boolean;
   protected _isDeleting: boolean;
@@ -30,6 +30,9 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   protected _form: FormGroup;
   private _editMode: boolean;
   protected _destroyed: Subject<void>;
+
+  private _sidenavContent: HTMLElement;
+  private _isScrolled: boolean;
 
   //#region Getters and setters
   get itemId(): string {
@@ -50,6 +53,10 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
 
   get isDeleting(): boolean {
     return this._isDeleting;
+  }
+
+  get isScrolled(): boolean {
+    return this._isScrolled;
   }
 
   get error(): boolean {
@@ -92,6 +99,15 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
     this._editMode = false;
     this._form = this.buildForm();
     this.loadItem();
+  }
+
+  ngAfterViewInit(): void {
+    this._sidenavContent = document.querySelector('mat-sidenav-content');
+    this._sidenavContent.addEventListener('scroll', this.handleScroll);
+  }
+
+  private handleScroll = (): void => {
+    this._isScrolled = this._sidenavContent.scrollTop > 0;
   }
 
   //#region Initializers
@@ -339,7 +355,8 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   protected openErrorSnackBar = (message: string, details?: string): void => this._snackBarService.openErrorSnackBar(message, details);
   //#endregion
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
+    this._sidenavContent.removeEventListener('scroll', this.handleScroll);
     this._destroyed.next();
     this._destroyed.complete();
   }

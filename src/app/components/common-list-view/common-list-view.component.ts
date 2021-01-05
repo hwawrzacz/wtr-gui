@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { of, OperatorFunction } from 'rxjs';
@@ -21,7 +21,7 @@ import { ConfirmationDialogComponent, ConfirmationDialogData } from '../dialogs/
   template: '',
   styleUrls: ['./common-list-view.component.scss']
 })
-export abstract class CommonListViewComponent<T> implements OnInit {
+export abstract class CommonListViewComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   // Labels
   protected _pageTitle: string;
   protected _themeItemNameSingle: string;
@@ -38,12 +38,12 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   protected _query: Query;
   protected _pagination: Pagination
 
-  // Navigation
+  // Others
   protected _detailsUrl: string;
-
-  // Boolean
   protected _loadingCounter: number;
   protected _error: boolean;
+  private _isScrolled: boolean
+  private _sidenavContent: HTMLElement;
 
   //#region Getters and setters
   //# Labels
@@ -96,6 +96,10 @@ export abstract class CommonListViewComponent<T> implements OnInit {
     return this._loadingCounter > 0;
   }
 
+  get isScrolled(): boolean {
+    return this._isScrolled
+  }
+
   get hasError(): boolean {
     return this._error;
   }
@@ -119,6 +123,15 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   public ngOnInit(): void {
     this.updateRequiredFilters();
     this.loadData();
+  }
+
+  public ngAfterViewInit(): void {
+    this._sidenavContent = document.querySelector('mat-sidenav-content');
+    this._sidenavContent.addEventListener('scroll', this.handleScroll);
+  }
+
+  private handleScroll = (): void => {
+    this._isScrolled = this._sidenavContent.scrollTop > 0;
   }
 
   public loadData() {
@@ -259,6 +272,9 @@ export abstract class CommonListViewComponent<T> implements OnInit {
   private openErrorSnackBar(message: string, details?: string) {
     this._snackBarService.openErrorSnackBar(message, details);
   }
-
   //#endregion
+
+  ngOnDestroy(): void {
+    this._sidenavContent.removeEventListener('scroll', this.handleScroll);
+  }
 }

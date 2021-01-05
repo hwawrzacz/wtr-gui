@@ -7,12 +7,12 @@ header {
   top: 0;
   z-index: 100;  
   
-  // margin-bottom: $h1-margin-bottom;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 
   background-color: $bg-color-white;
+  transition: 100ms;
 
   h1 {
     margin-bottom: 0 !important;
