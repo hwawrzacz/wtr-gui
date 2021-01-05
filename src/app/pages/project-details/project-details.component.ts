@@ -93,7 +93,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   protected updateForm(project: Project): void {
     this._form.patchValue({
       title: project.title,
-      manager: project.idManager,
+      manager: Object.assign({}, project.idManager),
       dutyDate: project.dutyDate,
       description: project.description,
     });
@@ -109,6 +109,7 @@ export class ProjectDetailsComponent extends CommonItemDetailsComponent<Project>
   protected parseItemFromForm(): Project {
     return {
       title: this._form.get('title').value,
+      manager: this._form.get('manager').value,
       idManager: this._form.get('manager').value._id,
       dutyDate: this._form.get('dutyDate').value,
       description: this._form.get('description').value,

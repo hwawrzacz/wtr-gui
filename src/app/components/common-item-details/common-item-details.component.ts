@@ -171,10 +171,19 @@ export abstract class CommonItemDetailsComponent<T> implements OnInit, OnDestroy
   private saveAllChanges(): void {
     let patchObject = this.parseItemFromForm();
 
-    // Remove fields that hasn't changed, and update those that has.
     Object.keys(patchObject).forEach(key => {
-      if (patchObject[key] === this._initialItem[key] && typeof patchObject[key] !== 'object') delete patchObject[key];
-      else this._initialItem[key] = patchObject[key];
+      // Remove fields that hasn't changed
+      if (typeof patchObject[key] !== 'object' && patchObject[key] === this._initialItem[key]) {
+        delete patchObject[key];
+      } else if (
+        // Ugly hardcoded project manager update with conversion from managerId to manager
+        key === 'idManager'
+        && !!patchObject['manager']
+        && typeof this._initialItem['idManager'] === typeof patchObject['manager']
+      ) {
+        // Update fields that has changed
+        this._initialItem['idManager'] = patchObject['manager'];
+      } else this._initialItem[key] = patchObject[key];
     });
 
     this.patchObject<T>(patchObject);
