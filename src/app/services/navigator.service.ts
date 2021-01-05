@@ -36,7 +36,7 @@ export class NavigatorService<T> implements OnDestroy {
   }
 
   private handlePotentialBackPressed = (): void => {
-    if (document.referrer === "") {
+    if (document.referrer === "" && this.activeSection !== Section.LOGIN) {
       this.lastUrlInHistory$.next();
     }
   }
