@@ -1,9 +1,12 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import { AppCommonModule } from './app-common-module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,9 +31,9 @@ import { ProfileWidgetComponent } from './components/profile-widget/profile-widg
 import { ProjectAutocompleteComponent } from './components/project-autocomplete/project-autocomplete.component';
 import { ProjectTasksComponent } from './components/project-tasks/project-tasks.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { ActionSnackBarComponent } from './components/snack-bars/action-snack-bar/action-snack-bar.component';
 import { CommonSnackBarComponent } from './components/snack-bars/common-snack-bar/common-snack-bar.component';
 import { ErrorSnackBarComponent } from './components/snack-bars/error-snack-bar/error-snack-bar.component';
-import { ActionSnackBarComponent } from './components/snack-bars/action-snack-bar/action-snack-bar.component';
 import { InfoSnackBarComponent } from './components/snack-bars/info-snack-bar/info-snack-bar.component';
 import { SuccessSnackBarComponent } from './components/snack-bars/success-snack-bar/success-snack-bar.component';
 import { WarningSnackBarComponent } from './components/snack-bars/warning-snack-bar/warning-snack-bar.component';
@@ -40,6 +43,7 @@ import { WorkLoggerComponent } from './components/work-logger/work-logger.compon
 import { WorkLogsListComponent } from './components/work-logs-list/work-logs-list.component';
 import { WorkLogsTableComponent } from './components/work-logs-table/work-logs-table.component';
 import { WorkersPanelComponent } from './components/workers-panel/workers-panel.component';
+import { MatPaginatorPolishTranslation } from './helpers/mat-paginator-translator-pl';
 import { LoginComponent } from './pages/login/login.component';
 import { LoginModule } from './pages/login/login.module';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
@@ -54,8 +58,7 @@ import { UsersTableComponent } from './pages/users-list/users-table.component';
 import { UserPipe } from './pipes/user.pipe';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 import { ErrorInterceptor } from './services/interceptors/error.interceptor';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -122,7 +125,9 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: MatPaginatorIntl, useValue: new MatPaginatorPolishTranslation() },
+    { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
   ],
   bootstrap: [AppComponent]
 })
