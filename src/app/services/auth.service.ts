@@ -57,7 +57,7 @@ export class AuthService {
   ) {
     this._user = this._storageService.getUser();
     this._token = this._storageService.getToken();
-    this.setUpLastUrlListener();
+    // this.setUpLastUrlListener();
   }
 
   private setUpLastUrlListener(): void {
@@ -145,8 +145,8 @@ export class AuthService {
   private onLogoutSuccess(): void {
     this.clearData();
     this._snackBarService.openSuccessSnackBar('Wylogowano.');
-    this._navigator.navigateToHomeScreen();
     this._navigator.goToRootHistoryElement()
+    this._navigator.navigateToHomeScreen();
   }
 
   private onLogoutError(message: string): void {
