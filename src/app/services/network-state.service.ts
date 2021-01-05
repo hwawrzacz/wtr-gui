@@ -16,7 +16,14 @@ export class NetworkStateService implements OnDestroy {
   constructor(private _snackBarService: SnackBarService) {
     const networkState = this.getCurrentNetworkState();
     this.networkState$ = new BehaviorSubject<NetworkState>(networkState);
+    this.handleInitialNetworkState();
     this.subscribeToOfflineChanges();
+  }
+
+  private handleInitialNetworkState(): void {
+    this.networkState$.value
+      ? {}
+      : this.handleOffline();
   }
 
   private getCurrentNetworkState(): NetworkState {
