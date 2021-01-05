@@ -98,8 +98,8 @@
       </section>
     </section>
 
-    <app-workers-panel *ngIf="!isMobile" [selectedWorkers]="workers" [editMode]="editMode && !isSaving"
-      [canEdit]="canEdit()" (workersChange)="updateWorkers($event)">
+    <app-workers-panel [selectedWorkers]="workers" [editMode]="editMode && !isSaving" [canEdit]="canEdit()"
+      (workersChange)="updateWorkers($event)">
     </app-workers-panel>
   </main>
 </div>
