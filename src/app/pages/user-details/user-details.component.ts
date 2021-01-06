@@ -84,7 +84,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
 
   protected buildForm(): FormGroup {
     return this._formBuilder.group({
-      login: [{ value: '', disabled: true }, [Validators.required]],
       firstName: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(2)]],
       lastName: [{ value: '', disabled: true }, [Validators.required]],
       phoneNumber: [{ value: '', disabled: true }, [Validators.required, phoneNumberValidator()]],
@@ -95,7 +94,6 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
 
   protected updateForm(user: SimpleUser): void {
     this._form.patchValue({
-      login: user.login,
       firstName: user.firstName,
       lastName: user.lastName,
       phoneNumber: user.phoneNumber,

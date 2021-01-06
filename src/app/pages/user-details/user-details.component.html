@@ -48,8 +48,7 @@
       <div class="fifty-fifty-wrapper">
         <mat-form-field appearance="outline">
           <mat-label>Login</mat-label>
-          <input matInput formControlName="login" />
-          <mat-error>{{ getErrorMessage('login') }}</mat-error>
+          <input matInput [value]="login" disabled/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
