@@ -9,9 +9,9 @@ export class Encrypter {
 
     return message.split('').map((curr, index) => {
       const currCharCode = curr.charCodeAt(0);
-      const messageBasedSwap = message.charCodeAt(0) + message.charCodeAt(message.length - 1);
-      const messageLengthSwap = key.charCodeAt((index + message.length) % (key.length - 1));
-      const newCharIndex = (currCharCode + messageLengthSwap + messageBasedSwap) % characters.length - 1;
+      const messageContentBasedShift = currCharCode + message.charCodeAt(message.length - 1);
+      const messageLengthBasedShift = key.charCodeAt((index + message.length) % (key.length - 1));
+      const newCharIndex = (currCharCode + messageLengthBasedShift + messageContentBasedShift) % characters.length - 1;
 
       return characters[newCharIndex];
     })
