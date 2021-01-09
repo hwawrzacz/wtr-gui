@@ -7,8 +7,8 @@ import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { LoginComponent } from './pages/login/login.component';
-import { AuthGuard } from './auth/auth.guard';
-import { UsersGuard } from './auth/users.guard';
+import { AuthGuard } from './services/guards/auth.guard';
+import { UsersGuard } from './services/guards/users.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
