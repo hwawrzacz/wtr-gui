@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { takeUntil, tap } from 'rxjs/operators';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 import { PriorityStringifier } from 'src/app/helpers/parsers';
 import { Priority } from 'src/app/model/enums/priority';
 import { Status } from 'src/app/model/enums/status';
@@ -20,8 +20,12 @@ import { CommonCreationDialogComponent } from '../common-creation-dialog/common-
 })
 export class TaskCreationDialogComponent extends CommonCreationDialogComponent<Task> implements OnInit {
   //#region Getters and setters
+  get currentUserId(): string {
+    return this._authService.userId;
+  }
+
   get rootProject(): Project {
-    return this._rootProject;
+    return this._rootProject || this.projectFormControl.value;
   }
 
   get minDate(): Date {
@@ -72,6 +76,7 @@ export class TaskCreationDialogComponent extends CommonCreationDialogComponent<T
     this._form.get('project').valueChanges
       .pipe(
         takeUntil(this._destroyed$),
+        filter(value => typeof value === 'object'),
         tap((value) => {
           console.log(value);
           this._rootProject = value;

@@ -20,8 +20,8 @@
       <mat-error>{{ getErrorMessage('priority') }}</mat-error>
     </mat-form-field>
 
-    <app-project-autocomplete [formControl]="projectFormControl" [initialValue]="rootProject" [label]="'Projekt'"
-      [singleSelection]="true">
+    <app-project-autocomplete [formControl]="projectFormControl" [idManager]="currentUserId"
+      [initialValue]="rootProject" [label]="'Projekt'" [singleSelection]="true">
     </app-project-autocomplete>
 
     <mat-form-field appearance="outline">

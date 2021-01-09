@@ -31,10 +31,24 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
   set singleSelection(value: boolean) {
     this._singleSelection = value;
   }
+  get singleSelection(): boolean {
+    return this._singleSelection;
+  }
+
+  @Input('formControl')
+  set formControl(value: FormControl) {
+    this._formControl = value;
+  }
+  get formControl(): FormControl {
+    return this._formControl;
+  }
 
   @Input('initialValue')
   set initialValue(value: T) {
     this._selectedItem = value;
+  }
+  get initialValue(): T {
+    return this._selectedItem;
   }
 
   @Input('label')
@@ -61,24 +75,8 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
     return this._error;
   }
 
-  get singleSelection(): boolean {
-    return this._singleSelection;
-  }
-
-  get initialValue(): T {
-    return this._selectedItem;
-  }
-
   get filteredItems(): T[] {
     return this._filteredItems;
-  }
-
-  @Input('formControl')
-  set formControl(value: FormControl) {
-    this._formControl = value;
-  }
-  get formControl(): FormControl {
-    return this._formControl;
   }
 
   @Output('selectionChange') protected _selectionChangeEmitter: EventEmitter<T>;
@@ -113,8 +111,7 @@ export abstract class CommonAutocompleteComponent<T> implements OnInit {
 
   private handleResponseSuccess(res: ArrayResponse<T>, filter: string) {
     this._items = res.details.items;
-    this._filteredItems = this._items;
-    this.filterData(filter);
+    this._filteredItems = this.filterData(filter);
   }
 
   private handleResponseError(res: ArrayResponse<T>) {
