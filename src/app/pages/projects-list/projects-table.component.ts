@@ -68,7 +68,7 @@ export class ProjectsTableComponent extends CommonTableComponent<Project> {
       {
         icon: 'delete',
         action: (item: CommonItem) => {
-          this.delete(item._id);
+          this.emitDelete(item._id);
         },
         canDisplay: (): boolean => {
           return this.canDelete();

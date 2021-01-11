@@ -137,11 +137,7 @@ export class CommonTableComponent<T> {
     }
   }
 
-  protected delete(itemId: string): void {
-    this._itemDeletedEmitter.emit(itemId);
-  }
-
-  public emitItemDeleted(itemId: string): void {
+  protected emitDelete(itemId: string): void {
     this._itemDeletedEmitter.emit(itemId);
   }
 }

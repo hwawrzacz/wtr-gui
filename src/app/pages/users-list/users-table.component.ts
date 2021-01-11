@@ -72,7 +72,7 @@ export class UsersTableComponent extends CommonTableComponent<SimpleUser> {
       {
         icon: 'delete',
         action: (item: CommonItem) => {
-          this.delete(item._id);
+          this.emitDelete(item._id);
         },
         canDisplay: (): boolean => {
           return this.canDelete();
