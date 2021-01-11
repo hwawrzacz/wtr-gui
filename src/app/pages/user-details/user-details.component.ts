@@ -175,7 +175,7 @@ export class UserDetailsComponent extends CommonItemDetailsComponent<SimpleUser>
     );
   }
   public canDelete(): boolean {
-    return !this.isMobile && this._authService.isAdmin;
+    return this._authService.isAdmin;
   }
   //#endregion
 
