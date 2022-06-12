@@ -1,0 +1,20 @@
+[
+    {
+        "login": "ronase",
+        "password": "qwer",
+        "fullName": "Ronald Asel",
+        "role": "regular worker"
+    },
+    {
+        "login": "hubwaw",
+        "password": "qwer",
+        "fullName": "Hubert Wawrzacz",
+        "role": "admin"
+    },
+    {
+        "login": "piopio",
+        "password": "qwer",
+        "fullName": "Piotr Piotrowicz",
+        "role": "manager"
+    }
+]
